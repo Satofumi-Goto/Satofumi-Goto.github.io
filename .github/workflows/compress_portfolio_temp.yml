@@ -1,0 +1,34 @@
+name: Compress Portfolio Temp
+on:
+  push:
+    paths:
+      - '.github/workflows/compress_portfolio_temp.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Ghostscript
+        run: sudo apt-get update && sudo apt-get install -y ghostscript
+      - name: Compress portfolio
+        shell: bash
+        run: |
+          set -e
+          IN='Satofumi Goto_Portforio_20260824.pdf'
+          gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH \
+            -dDetectDuplicateImages=true -dCompressFonts=true -dSubsetFonts=true \
+            -dDownsampleColorImages=true -dColorImageResolution=110 -dColorImageDownsampleType=/Bicubic \
+            -dDownsampleGrayImages=true -dGrayImageResolution=110 -dGrayImageDownsampleType=/Bicubic \
+            -dDownsampleMonoImages=true -dMonoImageResolution=200 \
+            -dAutoFilterColorImages=false -dColorImageFilter=/DCTEncode -dJPEGQ=68 \
+            -dAutoFilterGrayImages=false -dGrayImageFilter=/DCTEncode \
+            -sOutputFile=portfolio_compressed.pdf "$IN"
+          ls -lh portfolio_compressed.pdf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-compressed
+          path: portfolio_compressed.pdf
+          retention-days: 1
