@@ -1,0 +1,45 @@
+name: Audit Toyota-adjacent wording
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit_toyota_adjacent_temp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract Toyota-adjacent wording
+        shell: bash
+        run: |
+          python -m pip install --quiet pypdf
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          from pypdf import PdfReader
+          files = [
+            Path("portfolio/Autonomous_Mobility_Business_Model_Design.pdf"),
+            Path("portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf"),
+          ]
+          pats = [
+            r"KAIZEN", r"ANZEN", r"Urban Engine", r"Infra Hub", r"Data Fabric",
+            r"Robot Platform", r"xEV", r"TPS", r"Arene", r"TRI", r"e-Palette",
+            r"Toyota", r"トヨタ", r"Woven", r"ウーブン", r"Mobility\s*3\.0",
+            r"Jidoka", r"Genchi", r"現地現物", r"Omotenashi"
+          ]
+          rx = re.compile("|".join(pats), re.I)
+          for path in files:
+              print("\n===== FILE:", path, "=====")
+              reader=PdfReader(str(path))
+              for i,p in enumerate(reader.pages,1):
+                  txt=(p.extract_text() or "").replace("\x00"," ")
+                  lines=[ln.strip() for ln in txt.splitlines() if ln.strip()]
+                  mm=[ln for ln in lines if rx.search(ln)]
+                  if mm:
+                      print(f"--- PAGE {i} ---")
+                      for m in mm: print(m)
+          PY
