@@ -1,0 +1,101 @@
+name: Replace Woven references with TIER IV
+
+on:
+  push:
+    paths:
+      - '.github/workflows/replace_woven_with_tier4_temp.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  replace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Replace Woven City references in portfolio PDF
+        shell: bash
+        run: |
+          python -m pip install --quiet pymupdf
+          python - <<'PY'
+          import fitz
+          from pathlib import Path
+
+          path = Path("portfolio/Autonomous_Mobility_Business_Model_Design.pdf")
+          doc = fitz.open(path)
+
+          replacements = {
+              "Woven City AI/IoT/Urban Engine・Behavior AI": "TIER IV Pilot.Auto / Autoware",
+              "Woven City Integrated ANZEN System": "TIER IV L4 V&V / Remote Support",
+              "Woven City Infra Hub・Woven City Data Fabric": "TIER IV Web.Auto / Co-MLOps",
+              "Woven City Digital KAIZEN Platform": "TIER IV Web.Auto DevOps Platform",
+              "Woven City xEV-VPP": "TIER IV Web.Auto Fleet System",
+              "Woven City Robot Platform": "TIER IV Edge.Auto Platform",
+              "Woven City Infra Hub／Woven City Data Fabric": "TIER IV Web.Auto / Co-MLOps",
+          }
+
+          changed = []
+          for page_index in range(len(doc)):
+              page = doc[page_index]
+              for old, new in replacements.items():
+                  rects = page.search_for(old)
+                  for rect in rects:
+                      page.add_redact_annot(rect, fill=(1,1,1))
+                      changed.append((page_index + 1, old, new, rect))
+              page.apply_redactions()
+
+              # after redaction, place replacement text in the original rectangles
+              page_changes = [x for x in changed if x[0] == page_index + 1]
+              for _, old, new, rect in page_changes:
+                  fontsize = max(5.0, min(11.0, rect.height * 0.78))
+                  # Slightly expand horizontally to preserve readability.
+                  box = fitz.Rect(rect.x0, rect.y0 - 0.5, min(page.rect.x1 - 4, rect.x1 + 55), rect.y1 + 1.0)
+                  page.insert_textbox(
+                      box,
+                      new,
+                      fontsize=fontsize,
+                      fontname="helv",
+                      color=(0,0,0),
+                      align=fitz.TEXT_ALIGN_LEFT,
+                  )
+
+          if not changed:
+              raise SystemExit("No Woven City strings found; PDF not changed.")
+
+          tmp = path.with_name(path.stem + "_tmp.pdf")
+          doc.save(tmp, garbage=4, deflate=True, clean=True)
+          doc.close()
+          tmp.replace(path)
+
+          print("Replacements:")
+          for p, old, new, _ in changed:
+              print(f"page {p}: {old} -> {new}")
+          PY
+
+      - name: Verify no Woven/Toyota wording remains
+        shell: bash
+        run: |
+          python - <<'PY'
+          import fitz, re
+          p="portfolio/Autonomous_Mobility_Business_Model_Design.pdf"
+          doc=fitz.open(p)
+          text="\n".join(page.get_text() for page in doc)
+          bad=re.findall(r"(?i)Woven|Toyota|トヨタ|ウーブン", text)
+          print("remaining direct references:", bad)
+          if bad:
+              raise SystemExit("Direct Toyota/Woven reference remains")
+          PY
+
+      - name: Commit updated PDF
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "portfolio/Autonomous_Mobility_Business_Model_Design.pdf"
+          if git diff --cached --quiet; then
+            echo "No PDF changes"
+            exit 0
+          fi
+          git commit -m "Replace Woven references with TIER IV"
+          git push
