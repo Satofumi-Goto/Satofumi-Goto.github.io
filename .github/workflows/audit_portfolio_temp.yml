@@ -1,0 +1,55 @@
+name: Audit portfolio for Toyota references
+
+on:
+  push:
+    paths:
+      - '.github/workflows/audit_portfolio_temp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract and scan
+        shell: bash
+        run: |
+          python -m pip install --quiet pypdf
+          python - <<'PY'
+          import re
+          from pathlib import Path
+          from pypdf import PdfReader
+
+          files = [
+            Path("portfolio/Autonomous_Mobility_Business_Model_Design.pdf"),
+            Path("portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf"),
+          ]
+          pats = [
+            r"Toyota", r"TOYOTA", r"トヨタ", r"Woven", r"ウーブン", r"\bTMC\b",
+            r"Toyota Connected", r"T-Connect", r"My Toyota", r"One ID",
+            r"Mobility\s*3\.0", r"Woven City", r"e-Palette", r"Lexus", r"レクサス",
+            r"Daihatsu", r"ダイハツ", r"TNGA", r"協豊会", r"豊田", r"Hino", r"日野"
+          ]
+          rx = re.compile("|".join(pats), re.I)
+
+          for path in files:
+              print("\n===== FILE:", path, "=====")
+              reader = PdfReader(str(path))
+              print("PAGES:", len(reader.pages))
+              total = 0
+              for i,p in enumerate(reader.pages, start=1):
+                  txt = (p.extract_text() or "").replace("\x00"," ")
+                  lines = [ln.strip() for ln in txt.splitlines() if ln.strip()]
+                  matches = []
+                  for ln in lines:
+                      if rx.search(ln):
+                          matches.append(ln)
+                  if matches:
+                      print(f"--- PAGE {i} MATCHES ---")
+                      for m in matches:
+                          print(m)
+                      total += len(matches)
+              print("TOTAL MATCHING LINES:", total)
+          PY
