@@ -4,45 +4,254 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Satofumi Goto's independent work on autonomous mobility business models, systems, and service prototypes.">
+  <meta name="theme-color" content="#f7f8f6">
   <title>Satofumi Goto | Autonomous Mobility Business Development</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --background: #f7f8f6;
+      --ink: #1b2d38;
+      --muted: #5b6b72;
+      --line: #d7dfdc;
+      --accent: #0c6f73;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--ink);
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 5px;
+    }
+
+    .wrap {
+      width: min(100% - 48px, 1080px);
+      margin-inline: auto;
+    }
+
+    .masthead {
+      border-bottom: 1px solid var(--line);
+    }
+
+    .masthead .wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 24px;
+      padding-block: 25px;
+    }
+
+    .name {
+      margin: 0;
+      font-size: 0.89rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .field {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.025em;
+    }
+
+    .intro {
+      padding-block: clamp(64px, 10vw, 130px) clamp(70px, 9vw, 112px);
+    }
+
+    .eyebrow, .section-label, .item-meta {
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow { margin: 0 0 24px; }
+
+    h1 {
+      max-width: 900px;
+      margin: 0;
+      font-size: clamp(2.6rem, 6.4vw, 5.3rem);
+      font-weight: 500;
+      letter-spacing: -0.058em;
+      line-height: 1.06;
+    }
+
+    .lead {
+      max-width: 710px;
+      margin: 32px 0 0;
+      color: #40535b;
+      font-size: clamp(1.04rem, 1.8vw, 1.25rem);
+      line-height: 1.7;
+    }
+
+    section {
+      display: grid;
+      grid-template-columns: minmax(155px, 1fr) minmax(0, 3fr);
+      gap: 40px;
+      border-top: 1px solid var(--line);
+      padding-block: 42px 64px;
+    }
+
+    .section-label {
+      margin: 4px 0 0;
+    }
+
+    .items {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 42px;
+    }
+
+    .item {
+      display: flex;
+      flex-direction: column;
+      min-height: 208px;
+      padding: 4px 0 26px;
+      text-decoration: none;
+    }
+
+    .item + .item { border-left: 1px solid var(--line); padding-left: 42px; }
+
+    .item-meta { display: block; margin-bottom: 15px; }
+
+    .item-title {
+      display: block;
+      margin: 0;
+      font-size: clamp(1.32rem, 2vw, 1.65rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.28;
+      text-wrap: balance;
+    }
+
+    .item-description {
+      display: block;
+      max-width: 360px;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.65;
+    }
+
+    .item-action {
+      display: inline-block;
+      align-self: flex-start;
+      margin-top: auto;
+      padding-top: 20px;
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .item:hover .item-title, .item:hover .item-action { color: var(--accent); }
+    .item-action span { display: inline-block; margin-left: 5px; transition: transform 160ms ease; }
+    .item:hover .item-action span { transform: translate(3px, -3px); }
+
+    .note {
+      display: grid;
+      grid-template-columns: minmax(155px, 1fr) minmax(0, 3fr);
+      gap: 40px;
+      border-top: 1px solid var(--line);
+      padding-block: 36px 74px;
+    }
+
+    .note p:last-child {
+      max-width: 680px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 700px) {
+      .wrap { width: min(100% - 36px, 1080px); }
+      .masthead .wrap { align-items: flex-start; flex-direction: column; gap: 2px; padding-block: 20px; }
+      .intro { padding-block: 68px 75px; }
+      .lead { margin-top: 25px; }
+      section, .note { display: block; padding-block: 28px 35px; }
+      .section-label { margin: 0 0 25px; }
+      .items { display: block; }
+      .item { min-height: 0; padding: 0 0 30px; }
+      .item + .item { border-left: 0; border-top: 1px solid var(--line); padding: 27px 0 30px; }
+      .item-action { margin-top: 0; }
+      .note p:last-child { margin-top: 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .item-action span { transition: none; }
+    }
+  </style>
 </head>
 <body>
+  <header class="masthead">
+    <div class="wrap">
+      <p class="name">SATOFUMI GOTO</p>
+      <p class="field">Autonomous Mobility Business Development</p>
+    </div>
+  </header>
 
-<h1>Satofumi Goto</h1>
-<h2>Autonomous Mobility Business Development</h2>
+  <main class="wrap">
+    <div class="intro">
+      <p class="eyebrow">Independent work &amp; prototypes</p>
+      <h1>Making autonomous mobility work as a business.</h1>
+      <p class="lead">I connect customer demand, service operations, vehicles, energy, and infrastructure with the KPIs and business economics needed to make mobility services viable.</p>
+    </div>
 
-<p>
-I connect customer demand, service operations, vehicles, energy, and infrastructure with the KPIs and business economics needed to make mobility services viable.
-</p>
+    <section aria-labelledby="portfolio-heading">
+      <h2 class="section-label" id="portfolio-heading">Portfolio</h2>
+      <div class="items">
+        <a class="item" href="Autonomous_Mobility_Business_Model_Design.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="item-meta">01 / Japanese PDF</span>
+          <span class="item-title">Autonomous Mobility Business Model Study</span>
+          <span class="item-description">An independent study of demand, vehicle utilization, service operations, and business economics.</span>
+          <span class="item-action">View study <span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="item" href="Autonomous_Mobility_System_Business_Feasibility.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="item-meta">02 / English PDF</span>
+          <span class="item-title">Autonomous Mobility System &amp; Business Feasibility</span>
+          <span class="item-description">A systems and feasibility study connecting mobility operations, infrastructure, energy, and financial conditions.</span>
+          <span class="item-action">View study <span aria-hidden="true">↗</span></span>
+        </a>
+      </div>
+    </section>
 
-<h3>Application Prototypes</h3>
-<ul>
-  <li>
-    <a href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">Seneschal</a><br>
-    A customer-facing concept for generating demand and matching mobility with services.
-  </li>
-  <li>
-    <a href="https://federation.base44.app/" target="_blank" rel="noopener noreferrer">Federation</a><br>
-    A framework for coordinating fleet operations, service nodes, and energy as one business system.
-  </li>
-</ul>
+    <section aria-labelledby="prototypes-heading">
+      <h2 class="section-label" id="prototypes-heading">Application Prototypes</h2>
+      <div class="items">
+        <a class="item" href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">
+          <span class="item-meta">01 / Customer experience</span>
+          <span class="item-title">Seneschal</span>
+          <span class="item-description">A customer-facing concept for generating demand and matching mobility with services.</span>
+          <span class="item-action">Explore prototype <span aria-hidden="true">↗</span></span>
+        </a>
+        <a class="item" href="https://federation.base44.app/" target="_blank" rel="noopener noreferrer">
+          <span class="item-meta">02 / Operations system</span>
+          <span class="item-title">Federation</span>
+          <span class="item-description">A framework for coordinating fleet operations, service nodes, and energy as one business system.</span>
+          <span class="item-action">Explore prototype <span aria-hidden="true">↗</span></span>
+        </a>
+      </div>
+    </section>
 
-<h3>Portfolio</h3>
-<ul>
-  <li>
-    <a href="Autonomous_Mobility_Business_Model_Design.pdf" target="_blank" rel="noopener noreferrer">Autonomous Mobility Business Model Study</a> (Japanese PDF)<br>
-    An independent study of demand, vehicle utilization, service operations, and business economics.
-  </li>
-  <li>
-    <a href="Autonomous_Mobility_System_Business_Feasibility.pdf" target="_blank" rel="noopener noreferrer">Autonomous Mobility System &amp; Business Feasibility</a> (English PDF)<br>
-    A systems and feasibility study connecting mobility operations, infrastructure, energy, and financial conditions.
-  </li>
-</ul>
-
-<h3>About This Work</h3>
-<p>
-These portfolios and prototypes are independent studies based on public information and original analysis. They explore the conditions for launching and sustaining autonomous mobility services.
-</p>
-
+    <footer class="note">
+      <p class="section-label">About this work</p>
+      <p>These portfolios and prototypes are independent studies based on public information and original analysis. They explore the conditions for launching and sustaining autonomous mobility services.</p>
+    </footer>
+  </main>
 </body>
 </html>
