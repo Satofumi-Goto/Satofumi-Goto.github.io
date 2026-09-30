@@ -22,6 +22,8 @@
     .section-head { margin-bottom: 16px; }
     h2 { margin: 0 0 5px; font-size: 1.45rem; line-height: 1.3; letter-spacing: -.025em; }
     .section-head p { margin: 0; color: var(--muted); }
+    .profile-text p { margin: 0 0 18px; }
+    .profile-text p:last-child { margin-bottom: 0; }
     .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
     .card { display: flex; flex-direction: column; min-height: 165px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); text-decoration: none; color: inherit; transition: border-color .15s, box-shadow .15s; }
     .card:hover { border-color: #76aebe; box-shadow: 0 6px 20px rgba(24, 44, 66, .07); }
@@ -45,6 +47,19 @@
   </header>
 
   <main class="wrap">
+    <section aria-labelledby="profile-heading">
+      <div class="section-head">
+        <h2 id="profile-heading">Profile</h2>
+      </div>
+      <div class="profile-text">
+        <p>I joined DENSO in 1997, working in automotive sales, and have been involved in business development in the CASE and MaaS domains since 2013.</p>
+        <p>At Honda, I currently work in next-generation business development, providing executive leadership with information for investment decisions and formulating strategies. Within this role, I am advancing FCAD-MaaS business development, examining autonomous-driving operations platforms, MaaS vehicles, and service hub development as an integrated whole.</p>
+        <p>The focus of value creation is shifting from the vehicle itself to the application of AI. Unless autonomous driving is connected to the AI-driven industrial revolution across society, it remains fundamentally the same transport business as before. This is why I want to expand my work from an automotive company into consulting, transforming industries and services across sector boundaries.</p>
+        <p>My strength is solving structural problems by working across domains. On the other hand, considering many different scenarios can make my explanations lengthy. By defining these scenarios as system requirements and implementing them to prevent operational breakdowns, I believe I can turn this weakness into a strength.</p>
+        <p>This is why I seek an environment where I can combine a broad range of AI technologies and expertise and take work from concept through implementation. My career aspiration is to build on my experience, use AI agents to transform transport and a wide range of services, and connect industries across sector boundaries.</p>
+      </div>
+    </section>
+
     <section aria-labelledby="value-heading">
       <div class="section-head">
         <h2 id="value-heading">Value Proposition</h2>
