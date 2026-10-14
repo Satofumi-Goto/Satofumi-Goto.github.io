@@ -32,6 +32,7 @@
     h3 { margin: 9px 0 6px; font-size: 1.2rem; line-height: 1.35; letter-spacing: -.02em; }
     .card p { margin: 0; color: var(--muted); }
     .action { margin-top: auto; padding-top: 14px; color: var(--accent); font-size: .94rem; font-weight: 650; }
+    .simulation-section { position: relative; left: 50%; transform: translateX(-50%); width: min(1200px, calc(100vw - 40px)); }
     .simulation-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; padding: 12px 16px; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; background: #fff; font-size: .82rem; color: var(--muted); }
     .simulation-toolbar a { font-weight: 650; }
     .simulation-frame { overflow: hidden; border: 1px solid var(--line); border-radius: 0 0 10px 10px; background: #faf9f6; }
@@ -65,7 +66,7 @@
       </div>
     </section>
 
-    <section aria-labelledby="simulation-heading">
+    <section class="simulation-section" aria-labelledby="simulation-heading">
       <div class="section-head">
         <span class="tag">Interactive business simulation · Japanese / English</span>
         <h2 id="simulation-heading">Mobility Business Lab</h2>
