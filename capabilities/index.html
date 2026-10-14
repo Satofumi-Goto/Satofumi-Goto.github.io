@@ -32,6 +32,11 @@
     h3 { margin: 9px 0 6px; font-size: 1.2rem; line-height: 1.35; letter-spacing: -.02em; }
     .card p { margin: 0; color: var(--muted); }
     .action { margin-top: auto; padding-top: 14px; color: var(--accent); font-size: .94rem; font-weight: 650; }
+    .simulation-toolbar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; padding: 12px 16px; border: 1px solid var(--line); border-bottom: 0; border-radius: 10px 10px 0 0; background: #fff; font-size: .82rem; color: var(--muted); }
+    .simulation-toolbar a { font-weight: 650; }
+    .simulation-frame { overflow: hidden; border: 1px solid var(--line); border-radius: 0 0 10px 10px; background: #faf9f6; }
+    .simulation-frame iframe { display: block; width: 100%; height: 900px; border: 0; }
+    @media (max-width: 680px) { .simulation-frame iframe { height: 780px; height: min(900px, 85svh); min-height: 600px; } }
     footer { border-top: 1px solid var(--line); padding: 25px 0 42px; color: var(--muted); font-size: .88rem; }
     footer p { margin: 0; }
     @media (max-width: 680px) { header { padding: 48px 0 54px; } main { padding-top: 38px; } .grid { grid-template-columns: 1fr; } .card, .card.featured { min-height: 0; } }
@@ -57,6 +62,21 @@
         <p>Building on these experiences, I aim to shift my focus to AI-driven transformation of businesses and services, following the shift in value creation from automobiles to operations and services as a whole, and connecting the industrial revolution brought about by AI with mobility.</p>
         <p>My strength is solving structural problems by working across domains. I translate a wide range of impacts and operating conditions into system requirements, connecting system-wide optimization with implementation.</p>
         <p>Looking ahead in my career, I aim to combine my experience with AI technologies and expertise across disciplines, taking an integrated approach to vehicles, operations, and services from concept through implementation. By transforming services through AI agents, I seek to create new customer value through autonomous driving.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="simulation-heading">
+      <div class="section-head">
+        <span class="tag">Interactive business simulation · Japanese / English</span>
+        <h2 id="simulation-heading">Mobility Business Lab</h2>
+        <p>Explore how demand, dispatch, vehicle mix, and energy infrastructure shape service performance and business economics. Change assumptions, replay operations, and compare scenarios in a fictional region.</p>
+      </div>
+      <div class="simulation-toolbar">
+        <span>Interactive demo · Illustrative assumptions</span>
+        <a href="https://mobility-lab-flow.base44.app/" target="_blank" rel="noopener noreferrer">Open full screen ↗</a>
+      </div>
+      <div class="simulation-frame">
+        <iframe src="https://mobility-lab-flow.base44.app/" title="Mobility Business Lab — interactive regional mobility simulator" loading="eager" allow="fullscreen" allowfullscreen></iframe>
       </div>
     </section>
 
@@ -107,12 +127,6 @@
         <h2 id="systems-heading">Systems &amp; Prototypes</h2>
         <p>Exploratory applications that make the service concepts tangible.</p>
       </div>
-      <a class="card featured" href="https://mobility-lab-flow.base44.app/" target="_blank" rel="noopener noreferrer" style="margin-bottom:16px">
-        <span class="tag">Interactive business simulation · Japanese / English</span>
-        <h3>Mobility Business Lab</h3>
-        <p>An interactive regional mobility simulator connecting demand, dispatch, vehicle mix, energy infrastructure, and business economics. Change fleet and charging conditions, replay daily operations, compare scenarios, and examine how service performance affects revenue, operating costs, and investment recovery. Built with Base44 using a fictional road network and explicit illustrative assumptions; results are exploratory, not forecasts.</p>
-        <span class="action">Explore Mobility Business Lab ↗</span>
-      </a>
       <div class="grid">
         <a class="card" href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">
           <span class="tag">Application prototype</span>
