@@ -272,15 +272,15 @@
         <span class="tag">Regional Mobility Lab · Interactive demo</span>
         <h2 id="simulation-heading">Can smarter operations make mobility viable?</h2>
         <p>Before adding vehicles, compare empty cruising with demand-led parking and shared night-time servicing.</p>
-        <p>Choose Tokyo, Nagoya or Toyota. Move parking hubs on a real map, replay fleet operations, and trace one booking from customer experience to dispatch and business results.</p>
-        <p style="font-size:.75rem">Real maps with synthetic demand and editable assumptions. Demo views share data internally; existing apps are not API-connected.</p>
+        <p>Choose Tokyo, Nagoya or Toyota. Compare operating models, search for conditions that meet your targets, and test how demand, parking and energy costs affect the result.</p>
+        <p style="font-size:.75rem">One simulator with shared regional inputs, map replay and editable assumptions. Maps show synthetic routes; real-time app integration is separate.</p>
       </div>
       <div class="simulation-stage">
         <div class="simulation-preview">
-          <div inert aria-hidden="true"><iframe src="/regional-demo/" tabindex="-1" title="Simulator preview" loading="lazy"></iframe></div>
+          <div inert aria-hidden="true"><iframe src="https://mobility-lab-flow.base44.app/planning" tabindex="-1" title="Simulator preview" loading="lazy"></iframe></div>
           <button class="simulation-open" type="button" aria-haspopup="dialog" aria-controls="simulation-dialog"><span>Expand &amp; explore ↗ · 拡大して操作</span></button>
         </div>
-        <div class="simulation-caption"><span>Tokyo / Nagoya / Toyota · <a href="/regional-demo/" target="_blank" rel="noopener">Open regional demo ↗</a></span><a href="https://mobility-lab-flow.base44.app/planning" target="_blank" rel="noopener noreferrer">Detailed simulator · JA / EN ↗</a></div>
+        <div class="simulation-caption"><span>Tokyo / Nagoya / Toyota · Shared scenario inputs</span><a href="https://mobility-lab-flow.base44.app/planning" target="_blank" rel="noopener noreferrer">Open simulator · JA / EN ↗</a></div>
       </div>
 
       <details class="business-case">
@@ -374,7 +374,7 @@
 
   <dialog id="simulation-dialog" class="simulation-dialog" aria-label="Regional mobility business simulator">
     <div class="simulation-dialog-bar"><strong>Regional Mobility Business Simulation</strong><button type="button" class="simulation-close" autofocus>Close × · 閉じる</button></div>
-    <iframe title="Interactive regional mobility simulator" data-src="/regional-demo/" allow="fullscreen" allowfullscreen></iframe>
+    <iframe title="Interactive regional mobility simulator" data-src="https://mobility-lab-flow.base44.app/planning" allow="fullscreen" allowfullscreen></iframe>
   </dialog>
   <script>
   (() => {
