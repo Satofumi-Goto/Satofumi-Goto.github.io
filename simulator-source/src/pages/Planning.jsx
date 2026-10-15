@@ -116,7 +116,7 @@ export default function Planning() {
 
   return (
     <div className="space-y-4 max-w-4xl mx-auto">
-      <section aria-label="Federation Live Mission" className="rounded-xl border overflow-hidden"><div className="p-3 bg-slate-900 text-white"><h2 className="font-semibold">Federation Live Mission — 都市運行の復旧実演</h2><p className="text-xs mt-1">SeneschalとFederation Operationを並べ、4アプリの連携で運行停止から復旧まで実演します。</p></div><iframe title="Federation Live Mission Simulator" src="https://federation.base44.app/?liveMission=1" className="w-full border-0" style={{height:1200}} loading="eager" /></section>
+      <section aria-label="Federation Live Mission" className="rounded-xl border overflow-hidden"><div className="p-3 bg-slate-900 text-white"><h2 className="font-semibold">Federation Live Mission — 都市運行の復旧実演</h2><p className="text-xs mt-1">Seneschalを独立表示し、活動・車両運用・サービス拠点・都市運用の4コンソールを同時表示。Federationが5アプリの受信を確認しながら復旧を進めます。</p></div><iframe title="Federation Live Mission Simulator" src="https://federation.base44.app/?liveMission=1" className="w-full border-0" style={{height:1200}} loading="eager" /></section>
       <div className="flex items-center gap-2 flex-wrap">
         <TestBadge />
         <h1 className="text-lg font-semibold">{lang === 'ja' ? '地域モビリティの事業シミュレーション' : 'Regional mobility business simulation'}</h1>
