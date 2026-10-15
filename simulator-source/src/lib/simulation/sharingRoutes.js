@@ -253,14 +253,14 @@ export function runParkingDay({requests,fleet:initialFleet,endTime,distance,path
      if(pickup-r.releaseT>a.maxWaitMin+1e-9||finish>endTime+1e-9)continue;
      if(!best||pickup<best.pickup)best={v,depart,pickup,finish,pickupKm,rideKm,startPosition:position(v)};
    }
-   if(!best){outcomes.push({id:r.id,releaseT:r.releaseT,status:'rejected'});continue;}
+   if(!best){outcomes.push({id:r.id,releaseT:r.releaseT,origin:r.origin,dest:r.dest,status:'rejected',reason:'No vehicle can satisfy pickup deadline and service end'});continue;}
    const {v,...trip}=best;
    // A busy vehicle is reserved after its already scheduled dropoff, never teleported.
    if(trip.depart>r.releaseT)v.clock=trip.depart;
    v.km+=trip.pickupKm+trip.rideKm;v.roadMinutes+=(trip.pickupKm+trip.rideKm)/speed*60;
    v.node=r.dest;v.edge=null;v.ready=trip.finish;v.clock=trip.finish;v.returningFromCruise=false;
    trips.push({...trip,vehicleId:v.id,requestId:r.id,releaseT:r.releaseT,origin:r.origin,dest:r.dest});
-   outcomes.push({id:r.id,status:'completed',wait:trip.pickup-r.releaseT});
+   outcomes.push({id:r.id,releaseT:r.releaseT,origin:r.origin,dest:r.dest,status:'completed',wait:trip.pickup-r.releaseT});
  }
  fleet.forEach(v=>advance(v,endTime));
  return {fleet:fleet.map(({rng,...v})=>({...v,endPosition:position(v)})),trips,outcomes,idleLegs};
@@ -272,9 +272,11 @@ export function runParkingComparison({cities,profile='2035',seeds=[42],assumptio
  if(!cities?.length||!seeds.length||seeds.some(s=>!Number.isFinite(s))||cities.length*seeds.length>100||cities.some(c=>c.demandPerDay===''||!Number.isInteger(Number(c.demandPerDay))||c.demandPerDay<0||c.demandPerDay>2500||!Number.isInteger(Number(c.fleetSize))||c.fleetSize<0||c.fleetSize>500||!Number.isFinite(Number(c.availability??1))||(c.availability??1)<0||(c.availability??1)>1))throw new Error('都市・需要・seedを確認（最大2,500件・500台/都市、100都市×seed）');
  if(cities.reduce((s,c)=>s+Number(c.fleetSize)*Math.max(1,Number(c.demandPerDay)),0)*seeds.length>5000000)throw new Error('計算上限：車両×需要×seedは500万以下 / Work limit exceeded');
  const cfg={...buildBaselineConfig(profile),fare:a.fare};cfg.electricityPrice*=a.electricityMultiplier;
- const graph=buildGraph(),dist=(x,y)=>distBetween(graph,x,y),path=(x,y)=>pathBetween(graph,x,y),homes=['res_n','res_s'],serviceHours=24-a.nightHours,endTime=serviceHours*60,runs=[];
- const neighbors=Object.fromEntries(homes.map(h=>[h,EDGES.filter(e=>e.includes(h)).map(e=>e.find(n=>n!==h)).filter(n=>NODES[n].kind!=='depot')]));
+ const graph=buildGraph(),dist=(x,y)=>distBetween(graph,x,y),path=(x,y)=>pathBetween(graph,x,y),serviceHours=24-a.nightHours,endTime=serviceHours*60,runs=[];
  for(const seed of seeds)for(const [ci,city] of cities.entries()){
+  const homes=city.parkingNodes??['res_n','res_s'],nightNode=city.nightNode??'depot_c';
+  if(!Array.isArray(homes)||homes.length!==2||new Set(homes).size!==2||homes.some(n=>!NODES[n])||!NODES[nightNode])throw new Error('Select two distinct parking nodes and a valid night site');
+  const neighbors=Object.fromEntries(homes.map(h=>[h,EDGES.filter(e=>e.includes(h)).map(e=>e.find(n=>n!==h)).filter(n=>NODES[h].kind==='depot'||NODES[n].kind!=='depot')]));
   const citySeed=(seed+ci*10007)>>>0,count=Math.floor(Number(city.fleetSize)*(city.availability??1)),bevCount=Math.round(count*cfg.bevShare);
   const hubs=[...new Set((city.hubIds||[]).filter(id=>city.hubs[id]?.active).map(id=>city.hubs[id].node).filter(n=>NODES[n]))];
   if(count&&!hubs.length)throw new Error('有効な作業拠点が必要 / Active service site required');
@@ -290,7 +292,7 @@ export function runParkingComparison({cities,profile='2035',seeds=[42],assumptio
    const trace=runParkingDay({requests:demand,fleet,endTime,distance:dist,path,neighbors,assumptions:a,speed:cfg.speed,seed:citySeed});
    const sum=(xs,f)=>xs.reduce((s,x)=>s+f(x),0);
    for(const v of trace.fleet){
-    const node=mode.night?'depot_c':hubs.reduce((best,h)=>dist(v.home,h)<dist(v.home,best)?h:best,hubs[0]);
+    const node=mode.night?nightNode:hubs.reduce((best,h)=>dist(v.home,h)<dist(v.home,best)?h:best,hubs[0]);
     const p=v.endPosition,toSite=p.node?dist(p.node,node):Math.min(p.progress+dist(p.from,node),p.length-p.progress+dist(p.to,node));
     v.nightKm=toSite+dist(node,v.home);v.km+=v.nightKm;v.roadMinutes+=v.nightKm/cfg.speed*60;
     v.bevKwh=v.bev?v.km*cfg.bevKwhPerKm+v.parkedMinutes/60*a.parkedAuxKw:0;
@@ -301,7 +303,7 @@ export function runParkingComparison({cities,profile='2035',seeds=[42],assumptio
    const totalKm=sum(trace.fleet,v=>v.km),nightKm=sum(trace.fleet,v=>v.nightKm),bevEnergyKwh=sum(trace.fleet,v=>v.bevKwh)/cfg.chargingEfficiency,hydrogenKg=sum(trace.fleet,v=>v.hydrogenKg);
    const laborCost=laborHours*a.hourlyWage,siteCost=count?(mode.night?a.nightLotHourly*a.nightHours:sites*a.serviceRentPerSiteDay):0,parkingCost=privateCount*a.privateHourly*serviceHours,serviceCapex=sites*a.equipmentPerSite;
    const metrics={requested:demand.length,completed:trace.trips.length,rejected:demand.length-trace.trips.length,waitSum:sum(trace.trips,t=>t.pickup-t.releaseT),pickupKm:sum(trace.trips,t=>t.pickupKm),totalKm,emptyKm:totalKm-sum(trace.trips,t=>t.rideKm),cruiseKm:sum(trace.fleet,v=>v.cruiseKm),relocationKm:sum(trace.fleet,v=>v.relocationKm),nightKm,roadVehicleHours:sum(trace.fleet,v=>v.roadMinutes)/60,cruiseVehicleHours:sum(trace.fleet,v=>v.cruiseMinutes)/60,parkedVehicleHours:sum(trace.fleet,v=>v.parkedMinutes)/60,bevEnergyKwh,hydrogenKg,laborHours,laborCost,siteCost,parkingCost,energyCost:bevEnergyKwh*cfg.electricityPrice+hydrogenKg*cfg.hydrogenPrice,maintenanceCost:totalKm*cfg.maintenancePerKm,serviceCapex,privateCount,nightOverrunMinutes,revenue:trace.trips.length*cfg.fare};
-   runs.push({seed,cityId:city.id,cityName:city.name,mode:mode.id,metrics,forecast:{seed:forecastSeed,weights,allocation},...trace});
+   runs.push({seed,cityId:city.id,cityName:city.name,mode:mode.id,metrics,forecast:{seed:forecastSeed,weights,allocation,homes,nightNode},...trace});
   }
  }
  // One installed inventory capacity per city/scenario, sized from the largest sampled day.
