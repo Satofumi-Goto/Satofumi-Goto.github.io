@@ -1,0 +1,96 @@
+name: Reclaim completed Pages deployment archives
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/pages-artifact-cleanup.yml']
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["pages build and deployment"]
+    types: [completed]
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: pages-artifact-cleanup
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Verify preserved evidence before deleting legacy artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        shell: python
+        run: |
+          import json, subprocess, os, pathlib, hashlib, zipfile, tempfile
+          repo=os.environ["GH_REPO"]
+          base="repos/"+repo
+          cutoff=os.environ["GITHUB_RUN_ID"] # inventory is filtered by completed deployment runs below
+          def api(path,*args):
+              return subprocess.check_output(["gh","api",path,*args])
+          def data(path):
+              return json.loads(api(path))
+          artifacts=[]
+          page=1
+          while True:
+              batch=data(base+"/actions/artifacts?per_page=100&page="+str(page))["artifacts"]
+              artifacts.extend(a for a in batch if not a["expired"] and a["name"]=="github-pages")
+              if len(batch)<100: break
+              page+=1
+          artifacts=[a for a in artifacts if data(base+"/actions/runs/"+str(a["workflow_run"]["id"]))["status"]=="completed"]
+          if not artifacts:
+              print("No unexpired legacy artifacts remain.")
+              raise SystemExit(0)
+          artifacts.sort(key=lambda a:(a["created_at"],a["id"]))
+          # Preserve the oldest extant evidence for each artifact family, plus named milestones.
+          keep={}
+          for a in artifacts:
+              keep.setdefault(a["name"],a)
+          selected={a["id"]:a for a in keep.values()}
+          selected[artifacts[-1]["id"]]=artifacts[-1]
+          for a in artifacts:
+              if any(k in a["name"].lower() for k in ("milestone","evidence","baseline")):
+                  selected[a["id"]]=a
+          tag="pages-evidence-20261016"
+          result=subprocess.run(["gh","api",base+"/releases/tags/"+tag],capture_output=True)
+          if result.returncode:
+              if b"HTTP 404" not in result.stderr: raise RuntimeError(result.stderr.decode())
+              subprocess.run(["gh","release","create",tag,"--target",os.environ["GITHUB_SHA"],"--title","Pages milestone evidence","--notes","Oldest and latest completed deployment archives verified before Actions storage cleanup.","--latest=false"],check=True)
+          release=data(base+"/releases/tags/"+tag)
+          assets={a["name"]:a for a in data(base+"/releases/"+str(release["id"])+"/assets?per_page=100")}
+          manifest=[]
+          with tempfile.TemporaryDirectory() as temp:
+              for a in selected.values():
+                  name="artifact-"+str(a["id"])+".zip"
+                  path=pathlib.Path(temp)/name
+                  payload=api(base+"/actions/artifacts/"+str(a["id"])+"/zip")
+                  path.write_bytes(payload)
+                  with zipfile.ZipFile(path) as archive:
+                      if archive.testzip() is not None: raise RuntimeError("Invalid archive "+name)
+                  digest=hashlib.sha256(payload).hexdigest()
+                  if name not in assets:
+                      subprocess.run(["gh","release","upload",tag,str(path)],check=True)
+                  current=data(base+"/releases/"+str(release["id"])+"/assets?per_page=100")
+                  remote=next(x for x in current if x["name"]==name)
+                  if remote["size"]!=len(payload): raise RuntimeError("Size mismatch "+name)
+                  remote_digest=remote.get("digest")
+                  if remote_digest:
+                      if remote_digest!="sha256:"+digest: raise RuntimeError("Digest mismatch "+name)
+                  else:
+                      check=api(base+"/releases/assets/"+str(remote["id"]),"-H","Accept: application/octet-stream")
+                      if hashlib.sha256(check).hexdigest()!=digest: raise RuntimeError("Verification failed "+name)
+                  manifest.append({"artifact_id":a["id"],"name":a["name"],"created_at":a["created_at"],"workflow_run":a.get("workflow_run"),"asset":name,"sha256":digest})
+              manifest_path=pathlib.Path(temp)/"manifest.json"
+              manifest_path.write_text(json.dumps(manifest,indent=2))
+              subprocess.run(["gh","release","upload",tag,str(manifest_path),"--clobber"],check=True)
+              # Every retained original has now been durably copied and verified.
+              reclaimed=0
+              for a in artifacts:
+                  subprocess.run(["gh","api","--method","DELETE",base+"/actions/artifacts/"+str(a["id"])],check=True)
+                  reclaimed+=a["size_in_bytes"]
+              summary="Preserved "+str(len(selected))+" milestone archives; deleted "+str(len(artifacts))+" Actions artifacts; released "+str(reclaimed)+" bytes."
+              print(summary)
+              with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f: f.write(summary+"\n")
+          
