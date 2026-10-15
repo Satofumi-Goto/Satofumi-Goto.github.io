@@ -58,6 +58,22 @@
     footer { border-top: 1px solid var(--line); padding: 25px 0 42px; color: var(--muted); font-size: .88rem; }
     footer p { margin: 0; }
     @media (max-width: 680px) { header { padding: 48px 0 54px; } main { padding-top: 38px; } .grid { grid-template-columns: 1fr; } .card, .card.featured { min-height: 0; } }
+
+    .business-case { grid-column:1 / -1; border-top:1px solid var(--line); padding-top:14px; }
+    .business-case summary { cursor:pointer; color:var(--accent); font-weight:650; font-size:.9rem; }
+    .business-case summary span { color:var(--muted); font-weight:400; font-size:.78rem; margin-left:14px; }
+    .business-case-intro { max-width:780px; padding:16px 0 8px; }
+    .business-case h3 { margin:8px 0; font-size:1.1rem; line-height:1.35; }
+    .business-case p { font-size:.88rem; line-height:1.65; color:var(--muted); margin:10px 0; }
+    .business-case-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .business-case-steps article { padding:18px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    .business-case .case-step { color:var(--accent); font-size:.7rem; font-weight:700; letter-spacing:.07em; }
+    .business-case strong { color:var(--ink); }
+    .business-case-footer { margin-top:16px; padding:16px 20px; background:#eef5f3; border-radius:10px; }
+    .business-case .case-scope { font-size:.75rem; }
+    .case-launch { border:0; border-radius:6px; background:#0c6f73; color:#fff; padding:11px 16px; cursor:pointer; font:600 .85rem Arial,sans-serif; }
+    @media(max-width:760px) { .business-case-steps { grid-template-columns:1fr; } .business-case summary span { display:block; margin:4px 0 0 18px; } }
+
   </style>
 </head>
 <body>
@@ -86,9 +102,9 @@
     <section class="simulation-section" aria-labelledby="simulation-heading">
       <div class="section-head">
         <span class="tag">Interactive business simulation · JA / EN</span>
-        <h2 id="simulation-heading">Explore Regional Mobility Business Design</h2>
-        <p>Connect demand, operations, vehicles and energy. Compare parking strategies, customer channels, ride pooling and passenger–cargo sharing.</p>
-        <p>Set regional assumptions, compare business performance, then inspect the daily operations behind each result.</p>
+        <h2 id="simulation-heading">Can smarter operations make mobility viable?</h2>
+        <p>Before adding vehicles, compare empty cruising with demand-led parking and shared night-time servicing.</p>
+        <p>Connect the operating results to business economics, partner responsibilities and a practical pilot. Also explore customer channels, ride pooling and passenger–cargo sharing.</p>
         <p style="font-size:.75rem">2030 / 2035 · Initial fleet and hub values follow the English portfolio. Scenario assumptions are editable.</p>
       </div>
       <div class="simulation-stage">
@@ -98,6 +114,42 @@
         </div>
         <div class="simulation-caption"><span>Preview · Scroll to explore the documents below</span><a href="https://mobility-lab-flow.base44.app/planning" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a></div>
       </div>
+
+      <details class="business-case">
+        <summary>From simulation to implementation <span>Comparison → Partnerships → Pilot decision</span></summary>
+        <div class="business-case-intro">
+          <h3>Before adding vehicles, improve how the fleet operates.</h3>
+          <p>Can demand-led parking and shared night-time servicing improve service availability and business contribution with the same fleet? Use the simulator to examine the trade-offs, then define the partnerships and evidence needed to test the concept.</p>
+        </div>
+        <div class="business-case-steps">
+          <article>
+            <p class="case-step">01 / COMPARE</p>
+            <h3>Test the operating model</h3>
+            <p>Hold potential demand and fleet size constant. Compare empty cruising, consolidated night-time inspection and cleaning, nearby private parking, and both measures together.</p>
+            <p><strong>Trace the economics:</strong> completed bookings and pickup waits → cruising distance and road use → energy consumption and storage CAPEX → daily contribution after parking and service costs.</p>
+            <p><strong>Challenge the assumptions:</strong> double the hourly parking rate; reduce the fleet; change available parking spaces. Rerun each case and examine where the benefit disappears.</p>
+          </article>
+          <article>
+            <p class="case-step">02 / STRUCTURE PARTNERSHIPS</p>
+            <h3>Build an executable agreement</h3>
+            <p><strong>Fleet operator:</strong> dispatch, vehicle availability, service standards and operating data. <strong>Parking owners:</strong> locations, time windows, access and fees.</p>
+            <p><strong>Inspection and cleaning partners:</strong> task scope, staffing, throughput and completion records. <strong>Municipality and local services:</strong> local demand, community coordination and suitable pickup locations.</p>
+            <p><strong>Business development role:</strong> bring the parties together, negotiate responsibilities and commercial terms, and connect operating requirements to system specifications and acceptance criteria.</p>
+          </article>
+          <article>
+            <p class="case-step">03 / VALIDATE</p>
+            <h3>Decide whether to scale</h3>
+            <p>Begin in one defined service area with a limited fleet and parking network. Establish a measured baseline, then compare matched operating periods while recording demand, fleet availability and service conditions.</p>
+            <p><strong>Measure:</strong> empty kilometres, pickup waits, completed bookings, energy use, parking costs and nightly service completion. Estimate storage requirements from measured energy profiles.</p>
+            <p><strong>Decision gate:</strong> agree targets before the pilot. Expand only if service quality, net contribution and nightly work capacity meet those targets; otherwise revise pricing, locations, staffing or fleet allocation and retest.</p>
+          </article>
+        </div>
+        <div class="business-case-footer">
+          <p><strong>A working discussion:</strong> start with a regional demand assumption, change one business constraint together, and identify what must be negotiated or measured next.</p>
+          <p class="case-scope">Independent concept using synthetic regions and editable assumptions, not operating results or confirmed partnerships. Road-use indicators do not predict congestion reduction. Storage CAPEX is a planning estimate; actual sizing requires measured energy profiles and engineering validation. Partnership and pilot steps are a proposed execution plan.</p>
+          <button type="button" class="case-launch">Test the assumptions in the simulator ↗</button>
+        </div>
+      </details>
     </section>
 
     <section aria-labelledby="planning-heading">
@@ -184,6 +236,7 @@
       dialog.showModal();
       document.body.classList.add('simulation-expanded');
     });
+    document.querySelector('.case-launch').addEventListener('click', () => open.click());
     dialog.querySelector('.simulation-close').addEventListener('click', () => dialog.close());
     dialog.addEventListener('close', () => {
       document.body.classList.remove('simulation-expanded');
