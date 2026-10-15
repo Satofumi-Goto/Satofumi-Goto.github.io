@@ -32,6 +32,30 @@ jobs:
               return subprocess.check_output(["gh","api",path,*args])
           def data(path):
               return json.loads(api(path))
+          tag="pages-evidence-20261016"
+          baseline="artifact-11937300166.zip"
+          expected="cb91ac233f0ba0e910f1dc278f559a837bc9ae094414791ce31921505bead664"
+          release=data(base+"/releases/tags/"+tag)
+          assets=data(base+"/releases/"+str(release["id"])+"/assets?per_page=100")
+          retained=next(a for a in assets if a["name"]==baseline)
+          payload=api(base+"/releases/assets/"+str(retained["id"]),"-H","Accept: application/octet-stream")
+          if hashlib.sha256(payload).hexdigest()!=expected: raise RuntimeError("Oldest evidence digest mismatch")
+          with tempfile.TemporaryDirectory() as temp:
+              path=pathlib.Path(temp)/baseline
+              path.write_bytes(payload)
+              with zipfile.ZipFile(path) as archive:
+                  if archive.testzip() is not None: raise RuntimeError("Invalid oldest evidence ZIP")
+              manifest={"policy":"Retain only the oldest historical PDF/deployment evidence; current published PDFs remain in main.","asset":baseline,"sha256":expected,"size_in_bytes":len(payload),"original_artifact_id":11937300166}
+              manifest_path=pathlib.Path(temp)/"manifest.json"
+              manifest_path.write_text(json.dumps(manifest,indent=2))
+              subprocess.run(["gh","release","upload",tag,str(manifest_path),"--clobber"],check=True)
+          removed_assets=0
+          removed_bytes=0
+          for asset in assets:
+              if asset["name"].startswith("artifact-") and asset["name"].endswith(".zip") and asset["name"]!=baseline:
+                  api(base+"/releases/assets/"+str(asset["id"]),"--method","DELETE")
+                  removed_assets+=1
+                  removed_bytes+=asset["size"]
           artifacts=[]
           page=1
           while True:
@@ -39,58 +63,14 @@ jobs:
               artifacts.extend(a for a in batch if not a["expired"] and a["name"]=="github-pages")
               if len(batch)<100: break
               page+=1
-          artifacts=[a for a in artifacts if data(base+"/actions/runs/"+str(a["workflow_run"]["id"]))["status"]=="completed"]
-          if not artifacts:
-              print("No unexpired legacy artifacts remain.")
-              raise SystemExit(0)
-          artifacts.sort(key=lambda a:(a["created_at"],a["id"]))
-          # Preserve the oldest extant evidence for each artifact family, plus named milestones.
-          keep={}
+          deleted=0
+          reclaimed=0
           for a in artifacts:
-              keep.setdefault(a["name"],a)
-          selected={a["id"]:a for a in keep.values()}
-          selected[artifacts[-1]["id"]]=artifacts[-1]
-          for a in artifacts:
-              if any(k in a["name"].lower() for k in ("milestone","evidence","baseline")):
-                  selected[a["id"]]=a
-          tag="pages-evidence-20261016"
-          result=subprocess.run(["gh","api",base+"/releases/tags/"+tag],capture_output=True)
-          if result.returncode:
-              if b"HTTP 404" not in result.stderr: raise RuntimeError(result.stderr.decode())
-              subprocess.run(["gh","release","create",tag,"--target",os.environ["GITHUB_SHA"],"--title","Pages milestone evidence","--notes","Oldest and latest completed deployment archives verified before Actions storage cleanup.","--latest=false"],check=True)
-          release=data(base+"/releases/tags/"+tag)
-          assets={a["name"]:a for a in data(base+"/releases/"+str(release["id"])+"/assets?per_page=100")}
-          manifest=[]
-          with tempfile.TemporaryDirectory() as temp:
-              for a in selected.values():
-                  name="artifact-"+str(a["id"])+".zip"
-                  path=pathlib.Path(temp)/name
-                  payload=api(base+"/actions/artifacts/"+str(a["id"])+"/zip")
-                  path.write_bytes(payload)
-                  with zipfile.ZipFile(path) as archive:
-                      if archive.testzip() is not None: raise RuntimeError("Invalid archive "+name)
-                  digest=hashlib.sha256(payload).hexdigest()
-                  if name not in assets:
-                      subprocess.run(["gh","release","upload",tag,str(path)],check=True)
-                  current=data(base+"/releases/"+str(release["id"])+"/assets?per_page=100")
-                  remote=next(x for x in current if x["name"]==name)
-                  if remote["size"]!=len(payload): raise RuntimeError("Size mismatch "+name)
-                  remote_digest=remote.get("digest")
-                  if remote_digest:
-                      if remote_digest!="sha256:"+digest: raise RuntimeError("Digest mismatch "+name)
-                  else:
-                      check=api(base+"/releases/assets/"+str(remote["id"]),"-H","Accept: application/octet-stream")
-                      if hashlib.sha256(check).hexdigest()!=digest: raise RuntimeError("Verification failed "+name)
-                  manifest.append({"artifact_id":a["id"],"name":a["name"],"created_at":a["created_at"],"workflow_run":a.get("workflow_run"),"asset":name,"sha256":digest})
-              manifest_path=pathlib.Path(temp)/"manifest.json"
-              manifest_path.write_text(json.dumps(manifest,indent=2))
-              subprocess.run(["gh","release","upload",tag,str(manifest_path),"--clobber"],check=True)
-              # Every retained original has now been durably copied and verified.
-              reclaimed=0
-              for a in artifacts:
-                  subprocess.run(["gh","api","--method","DELETE",base+"/actions/artifacts/"+str(a["id"])],check=True)
-                  reclaimed+=a["size_in_bytes"]
-              summary="Preserved "+str(len(selected))+" milestone archives; deleted "+str(len(artifacts))+" Actions artifacts; released "+str(reclaimed)+" bytes."
-              print(summary)
-              with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as f: f.write(summary+"\n")
-          
+              run=data(base+"/actions/runs/"+str(a["workflow_run"]["id"]))
+              if run["status"]!="completed": continue
+              api(base+"/actions/artifacts/"+str(a["id"]),"--method","DELETE")
+              deleted+=1
+              reclaimed+=a["size_in_bytes"]
+          summary=f"Verified oldest evidence; deleted {removed_assets} later evidence archives ({removed_bytes} bytes); deleted {deleted} completed Pages artifacts ({reclaimed} bytes)."
+          print(summary)
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a") as out: out.write(summary+"\n")
