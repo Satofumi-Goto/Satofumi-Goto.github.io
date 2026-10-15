@@ -2,7 +2,8 @@ name: Reclaim completed Pages deployment archives
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/pages-artifact-cleanup.yml']
+  schedule:
+    - cron: "17 2 * * *"
   workflow_dispatch:
   workflow_run:
     workflows: ["pages build and deployment"]
@@ -27,7 +28,6 @@ jobs:
           import json, subprocess, os, pathlib, hashlib, zipfile, tempfile
           repo=os.environ["GH_REPO"]
           base="repos/"+repo
-          cutoff=os.environ["GITHUB_RUN_ID"] # inventory is filtered by completed deployment runs below
           def api(path,*args):
               return subprocess.check_output(["gh","api",path,*args])
           def data(path):
