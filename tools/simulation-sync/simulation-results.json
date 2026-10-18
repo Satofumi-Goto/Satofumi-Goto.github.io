@@ -1,0 +1,322 @@
+{
+ "engine": "project-finance-1.0.0",
+ "sync": "simulation-sync-1.0.0",
+ "financialAssessment": {
+  "sourceId": "simulator-project-finance",
+  "calculatedBy": "project-finance-1.0.0",
+  "sourcePage": 14,
+  "projectIRRPercent": -12.13,
+  "NPV8_BJPY": -147.256,
+  "NPV12_BJPY": -147.16,
+  "FCF2035_BJPY": 40.575,
+  "cumulativeFCF2035_BJPY": -133.488,
+  "totalCapex2025to2035_BJPY": 310,
+  "nominalPaybackYear": 2039,
+  "discountedPaybackBy2035": false,
+  "payback": "not achieved through 2035; 2039 reference only with flat 2035 FCF and no renewal CAPEX/tax/WC",
+  "hurdle2035Percent": 12
+ },
+ "simulationResult": {
+  "engine": "project-finance-1.0.0",
+  "pnl": {
+   "2030": {
+    "revenue": 30.769,
+    "opex": 13.33,
+    "sga": 4.385,
+    "ebitda": 13.054,
+    "depreciation": 30.206,
+    "operatingProfit": -17.152,
+    "ebitdaMargin": 42.426,
+    "operatingMargin": -55.744,
+    "lines": {
+     "revenue.elecInternal": 7.2,
+     "revenue.elecExternal": 9,
+     "revenue.h2Internal": 0.714,
+     "revenue.h2External": 0.669,
+     "revenue.titanium": 1.728,
+     "revenue.hpc": 1.288,
+     "revenue.nightPassenger": 1.971,
+     "revenue.nightCargo": 0.438,
+     "revenue.mobileStorage": 0.192,
+     "revenue.autoLoading": 5.999,
+     "revenue.platformFee": 0.8,
+     "revenue.reservationFee": 0.35,
+     "revenue.nodeService": 0.42,
+     "opex.h2InternalCogs": -0.322,
+     "opex.h2ExternalCogs": -0.302,
+     "opex.elecInternal": -3.216,
+     "opex.elecExternal": -4.02,
+     "opex.titanium": -0.144,
+     "opex.materialCycle": -0.3,
+     "opex.nodeOptimization": -0.12,
+     "opex.energySync": -0.08,
+     "opex.maasOps": -2.025,
+     "opex.dispatchOps": -0.55,
+     "opex.remoteOps": -0.3,
+     "opex.platformOps": -1,
+     "opex.cloudOps": -0.731,
+     "opex.aiOps": -0.22,
+     "sga.energy": -1.931,
+     "sga.maintenance": -0.25,
+     "sga.maas": -0.39,
+     "sga.customerOps": -0.18,
+     "sga.platform": -1.514,
+     "sga.partnerOps": -0.12,
+     "depreciation.node": -1.333,
+     "depreciation.gtfc": -1.23,
+     "depreciation.mill": -0.06,
+     "depreciation.battery": -0.5,
+     "depreciation.magnetic": -0.3,
+     "depreciation.hts": -0.4,
+     "depreciation.water": -0.2,
+     "depreciation.hpc": -0.333,
+     "depreciation.energyDevice": -0.6,
+     "depreciation.vehicleDev": -10,
+     "depreciation.prototype": -2,
+     "depreciation.swapBody": -1.5,
+     "depreciation.platformDev": -8,
+     "depreciation.aiPlatform": -1.8,
+     "depreciation.controlOs": -1.2,
+     "depreciation.infraSync": -0.45,
+     "depreciation.revenueLogic": -0.3
+    }
+   },
+   "2035": {
+    "revenue": 146.761,
+    "opex": 71.593,
+    "sga": 22.593,
+    "ebitda": 52.575,
+    "depreciation": 93.19,
+    "operatingProfit": -40.615,
+    "ebitdaMargin": 35.824,
+    "operatingMargin": -27.674,
+    "lines": {
+     "revenue.elecInternal": 13.5,
+     "revenue.elecExternal": 15.75,
+     "revenue.h2Internal": 12.494,
+     "revenue.h2External": 11.602,
+     "revenue.titanium": 1.728,
+     "revenue.hpc": 15.61,
+     "revenue.nightPassenger": 39.42,
+     "revenue.nightCargo": 8.76,
+     "revenue.mobileStorage": 2.4,
+     "revenue.autoLoading": 11.997,
+     "revenue.platformFee": 6.5,
+     "revenue.reservationFee": 2.2,
+     "revenue.nodeService": 4.8,
+     "opex.h2InternalCogs": -5.628,
+     "opex.h2ExternalCogs": -5.226,
+     "opex.elecInternal": -6.03,
+     "opex.elecExternal": -7.035,
+     "opex.titanium": -0.144,
+     "opex.materialCycle": -1.8,
+     "opex.nodeOptimization": -0.95,
+     "opex.energySync": -0.6,
+     "opex.maasOps": -22.8,
+     "opex.dispatchOps": -4.2,
+     "opex.remoteOps": -2.1,
+     "opex.platformOps": -6,
+     "opex.cloudOps": -6.68,
+     "opex.aiOps": -2.4,
+     "sga.energy": -5.507,
+     "sga.maintenance": -1.8,
+     "sga.maas": -7.587,
+     "sga.customerOps": -1.5,
+     "sga.platform": -5.099,
+     "sga.partnerOps": -1.1,
+     "depreciation.node": -12,
+     "depreciation.gtfc": -2.23,
+     "depreciation.mill": -1.56,
+     "depreciation.battery": -1,
+     "depreciation.magnetic": -0.6,
+     "depreciation.hts": -0.8,
+     "depreciation.water": -0.4,
+     "depreciation.hpc": -3,
+     "depreciation.energyDevice": -3.6,
+     "depreciation.vehicleDev": -20,
+     "depreciation.prototype": -2,
+     "depreciation.swapBody": -5.2,
+     "depreciation.platformDev": -22,
+     "depreciation.aiPlatform": -8.5,
+     "depreciation.controlOs": -6.2,
+     "depreciation.infraSync": -2.6,
+     "depreciation.revenueLogic": -1.5
+    }
+   }
+  },
+  "hpc": {
+   "2030": {
+    "revenue": 1.288,
+    "ebitda": 1.056
+   },
+   "2035": {
+    "revenue": 15.61,
+    "ebitda": 12.73
+   }
+  },
+  "cashFlow": [
+   {
+    "year": 2025,
+    "revenue": 0,
+    "ebitda": -5,
+    "capex": 35,
+    "fcf": -40,
+    "discountFactor": 1,
+    "dcf": -40,
+    "cumulativeFcf": -40,
+    "cumulativeDcf": -40
+   },
+   {
+    "year": 2026,
+    "revenue": 0,
+    "ebitda": -6,
+    "capex": 40,
+    "fcf": -46,
+    "discountFactor": 0.926,
+    "dcf": -42.593,
+    "cumulativeFcf": -86,
+    "cumulativeDcf": -82.593
+   },
+   {
+    "year": 2027,
+    "revenue": 2,
+    "ebitda": -5,
+    "capex": 45,
+    "fcf": -50,
+    "discountFactor": 0.857,
+    "dcf": -42.867,
+    "cumulativeFcf": -136,
+    "cumulativeDcf": -125.46
+   },
+   {
+    "year": 2028,
+    "revenue": 8,
+    "ebitda": -2,
+    "capex": 40,
+    "fcf": -42,
+    "discountFactor": 0.794,
+    "dcf": -33.341,
+    "cumulativeFcf": -178,
+    "cumulativeDcf": -158.8
+   },
+   {
+    "year": 2029,
+    "revenue": 18,
+    "ebitda": 3,
+    "capex": 35,
+    "fcf": -32,
+    "discountFactor": 0.735,
+    "dcf": -23.521,
+    "cumulativeFcf": -210,
+    "cumulativeDcf": -182.321
+   },
+   {
+    "year": 2030,
+    "revenue": 30.769,
+    "ebitda": 13.054,
+    "capex": 28,
+    "fcf": -14.946,
+    "discountFactor": 0.681,
+    "dcf": -10.172,
+    "cumulativeFcf": -224.946,
+    "cumulativeDcf": -192.493
+   },
+   {
+    "year": 2031,
+    "revenue": 52.653,
+    "ebitda": 19.892,
+    "capex": 22,
+    "fcf": -2.108,
+    "discountFactor": 0.63,
+    "dcf": -1.328,
+    "cumulativeFcf": -227.054,
+    "cumulativeDcf": -193.822
+   },
+   {
+    "year": 2032,
+    "revenue": 74.761,
+    "ebitda": 26.91,
+    "capex": 20,
+    "fcf": 6.91,
+    "discountFactor": 0.583,
+    "dcf": 4.032,
+    "cumulativeFcf": -220.144,
+    "cumulativeDcf": -189.79
+   },
+   {
+    "year": 2033,
+    "revenue": 98.43,
+    "ebitda": 35.2,
+    "capex": 18,
+    "fcf": 17.2,
+    "discountFactor": 0.54,
+    "dcf": 9.293,
+    "cumulativeFcf": -202.944,
+    "cumulativeDcf": -180.497
+   },
+   {
+    "year": 2034,
+    "revenue": 122.583,
+    "ebitda": 43.881,
+    "capex": 15,
+    "fcf": 28.881,
+    "discountFactor": 0.5,
+    "dcf": 14.448,
+    "cumulativeFcf": -174.063,
+    "cumulativeDcf": -166.05
+   },
+   {
+    "year": 2035,
+    "revenue": 146.761,
+    "ebitda": 52.575,
+    "capex": 12,
+    "fcf": 40.575,
+    "discountFactor": 0.463,
+    "dcf": 18.794,
+    "cumulativeFcf": -133.488,
+    "cumulativeDcf": -147.256
+   }
+  ],
+  "paybackExtension": [
+   {
+    "year": 2036,
+    "cumulativeFcf": -92.913
+   },
+   {
+    "year": 2037,
+    "cumulativeFcf": -52.338
+   },
+   {
+    "year": 2038,
+    "cumulativeFcf": -11.763
+   },
+   {
+    "year": 2039,
+    "cumulativeFcf": 28.812
+   }
+  ],
+  "sensitivity": {
+   "noHpc": {
+    "irrPercent": -17.76,
+    "npv8": -165.851,
+    "npvHurdle": -160.829
+   },
+   "hpcConservative": {
+    "irrPercent": -15.67,
+    "npv8": -159.556,
+    "npvHurdle": -156.183
+   },
+   "hpcHigh": {
+    "irrPercent": -5.44,
+    "npv8": -114.503,
+    "npvHurdle": -122.932
+   },
+   "npvBreakEvenExtraEbitda": {
+    "extraEbitdaPerYear2030to2035": 43.337,
+    "irrPercent": 8,
+    "npv8": 0.001,
+    "npvHurdle": -33.927
+   }
+  }
+ }
+}
