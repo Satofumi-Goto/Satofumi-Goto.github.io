@@ -1,0 +1,28 @@
+name: Portfolio numbers follow the simulator
+on:
+  pull_request:
+    paths: ['tools/simulation-sync/**', '*.pdf', 'portfolio/*.pdf', '.github/workflows/portfolio-numbers.yml']
+  push:
+    branches: [main]
+    paths: ['tools/simulation-sync/**', '*.pdf', 'portfolio/*.pdf']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pikepdf fonttools pdfplumber pypdfium2 numpy
+      - name: Shown numbers equal the simulator results
+        run: python3 tools/simulation-sync/run.py --check
+      - name: Layout gate against the base branch (numbers only, no page drift)
+        if: github.event_name == 'pull_request'
+        run: tools/simulation-sync/gate.sh origin/${{ github.base_ref }}
