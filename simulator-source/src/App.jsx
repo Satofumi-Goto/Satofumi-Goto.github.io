@@ -77,7 +77,9 @@ const MISSION_LIMITS={parcels:[0,200],detour:[0,120],discount:[0,100],consent:[0
 function LiveMissionPage(){const {mission}=useParams();return <LiveMissionWorkspace key={mission} mode={['city','service','sharing','control'].includes(mission)?mission:'city'}/>;}
 function LiveMissionWorkspace({mode}){
  const {lang}=useSim(),frame=useRef(null),runRef=useRef(null),stateRef=useRef(null),[state,setState]=useState({settings:{...MISSION_DEFAULTS[mode]},revision:0}),[workspace,setWorkspace]=useState(null);
- stateRef.current=state;
+ // A locale change must not navigate the iframe and discard the running mission.
+ const [frameSrc]=useState(()=>ORIGIN+'/?liveMission=1&embedded=1&mission='+mode+'&language='+lang);
+ stateRef.current={...state,language:lang};
  const update=patch=>setState(old=>{const next={};for(const [key,value] of Object.entries(patch||{})){if(!(key in MISSION_DEFAULTS[mode]))continue;if(typeof MISSION_DEFAULTS[mode][key]==='boolean'){if(typeof value==='boolean')next[key]=value;}else if(typeof value==='number'&&Number.isFinite(value)){const [baseMin,baseMax]=MISSION_LIMITS[key];const min=baseMin,max=mode==='sharing'&&key==='demand'?2300:baseMax;next[key]=Math.round(Math.max(min,Math.min(max,value)));}}return {settings:{...old.settings,...next},revision:old.revision+1};});
  useEffect(()=>{const receive=e=>{const d=e.data;if(e.source!==frame.current?.contentWindow||e.origin!==ORIGIN||d?.channel!==CHANNEL||d.mode!==mode)return;if(d.type==='workspace.snapshot'){
  if(mode==='control'&&d.business?.runId&&runRef.current!==d.business.runId){runRef.current=d.business.runId;update(d.business.assumptions);}
@@ -85,7 +87,7 @@ function LiveMissionWorkspace({mode}){
  }else if(d.type==='settings.patch')update(d.patch);};window.addEventListener('message',receive);return()=>window.removeEventListener('message',receive);},[mode]);
  useEffect(()=>{frame.current?.contentWindow?.postMessage({channel:CHANNEL,type:'settings.snapshot',mode,...state,language:lang},ORIGIN);},[state,lang,mode]);
  const snapshot={...workspace,...state,mode,language:lang};
- return <div style={{position:'relative',height:'100%',width:'100%',overflow:'hidden'}}><iframe ref={frame} title="Demo — Live Mission" src={ORIGIN+'/?liveMission=1&embedded=1&mission='+mode+'&language='+lang} style={{width:'100%',height:'100%',border:0,display:'block'}}/>{['before','after'].map(side=>{const r=workspace?.rects?.[side];return r&&r.width>0&&r.height>0?<div key={side} style={{position:'absolute',left:r.x,top:r.y,width:r.width,height:r.height,background:'#fff',overflow:'hidden',borderRadius:4}}><MissionBusiness controlledSnapshot={snapshot} controlledSide={side} onPatch={update}/></div>:null;})}</div>;
+ return <div style={{position:'relative',height:'100%',width:'100%',overflow:'hidden'}}><iframe ref={frame} title="Demo — Live Mission" src={frameSrc} style={{width:'100%',height:'100%',border:0,display:'block'}}/>{['before','after'].map(side=>{const r=workspace?.rects?.[side];return r&&r.width>0&&r.height>0?<div key={side} style={{position:'absolute',left:r.x,top:r.y,width:r.width,height:r.height,background:'#fff',overflow:'hidden',borderRadius:4}}><MissionBusiness controlledSnapshot={snapshot} controlledSide={side} onPatch={update}/></div>:null;})}</div>;
 }
 
 const AuthenticatedApp = () => {

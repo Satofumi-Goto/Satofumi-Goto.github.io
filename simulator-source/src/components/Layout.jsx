@@ -21,9 +21,9 @@ export default function Layout() {
  const demoLinks=<section className="mt-3 border-t border-[#e6e0d6] pt-3"><div className="px-3 text-xs font-semibold mb-2">Demo — Live Mission</div>{[['service','Seneschal｜サービス予約・運行連携','Seneschal | Booking & operations'],['sharing','Seneschal｜相乗り・貨客混載','Seneschal | Pooling & cargo'],['city','Federation｜障害対応・復旧','Federation | Disruption & recovery'],['control','Federation｜運用崩壊・事前制御','Federation | Collapse prevention']].map(([id,ja,en])=><Link key={id} to={'/demo/'+id} className={'block px-3 py-2 rounded text-[13px] '+(location.pathname==='/demo/'+id?'bg-[#0d7d7a] text-white':'hover:bg-[#e8e2d6]')}>{lang==='ja'?ja:en}</Link>)}</section>;
 
   return (
-    <div className="min-h-screen bg-[#faf8f4] text-[#1a2238] flex flex-col md:flex-row">
+    <div className={(demo?'h-dvh overflow-hidden':'min-h-screen')+" bg-[#faf8f4] text-[#1a2238] flex flex-col md:flex-row"}>
       {/* Sidebar (desktop) */}
-      <aside className="hidden md:flex md:w-60 md:flex-col border-r border-[#e6e0d6] bg-[#f3efe7] flex-shrink-0">
+      <aside className="hidden md:flex md:w-60 md:flex-col md:overflow-y-auto border-r border-[#e6e0d6] bg-[#f3efe7] flex-shrink-0">
         <div className="px-5 py-5 border-b border-[#e6e0d6]">
           <div className="font-display text-[14px] font-semibold tracking-tight leading-tight break-words">Mobility Operations &amp; Business Simulation</div>
           <div className="text-[11px] text-[#6b7280] mt-0.5">{t('app_subtitle')}</div>
@@ -53,7 +53,7 @@ export default function Layout() {
       </aside>
 
       {/* Mobile top nav */}
-      <div className="md:hidden border-b border-[#e6e0d6] bg-[#f3efe7] sticky top-0 z-20">
+      <div className="md:hidden flex-shrink-0 border-b border-[#e6e0d6] bg-[#f3efe7] sticky top-0 z-20">
         <div className="flex items-center justify-between px-4 py-2.5">
           <div className="min-w-0 pr-2">
             <div className="font-display text-[13px] font-semibold leading-tight break-words">Mobility Operations &amp; Business Simulation</div>
@@ -83,9 +83,9 @@ export default function Layout() {
       </div>
 
       {/* Main */}
-      <div className="flex-1 min-w-0 flex flex-col">
+      <div className="flex-1 min-w-0 min-h-0 flex flex-col">
         {/* Desktop header */}
-        <header className="hidden md:flex items-center justify-between px-6 py-3 border-b border-[#e6e0d6] bg-[#faf8f4]">
+        <header className="hidden md:flex flex-shrink-0 items-center justify-between px-6 py-3 border-b border-[#e6e0d6] bg-[#faf8f4]">
           <div>
             <div className="font-display text-[17px] font-semibold">{t('app_title')}</div>
             <div className="text-[12px] text-[#6b7280]">{t('app_subtitle')}</div>
@@ -99,7 +99,7 @@ export default function Layout() {
             </button>
           </div>
         </header>
-        <main className={demo?"flex-1 min-h-0 overflow-hidden":"flex-1 overflow-auto p-4 md:p-6"} style={demo?{height:"calc(100dvh - 75px)",flex:"none"}:undefined}>
+        <main className={demo?"flex-1 min-h-0 overflow-hidden":"flex-1 overflow-auto p-4 md:p-6"}>
           {!demo && ["/","/planning"].includes(location.pathname)&&<section className="mb-4 rounded-lg border border-[#e6e0d6] bg-white p-4"><h2 className="font-semibold">{lang==="ja"?"まずは、Demoをご体験ください。":"Start with the Demo."}</h2><p className="text-sm mt-2">{lang==="ja"?"Seneschalと4つの運用コンソールの連携や、Federationによるデータ同期・運用制御の改修を体験できます。それらが事業性にどう効くかを、Before／Afterで比較し、設定を変えながら効果を確かめてください。":"Experience Seneschal working with four operations consoles, and Federation synchronizing data and updating operational controls. Compare the business impact before and after, and change the settings to explore the effects."}</p><Link to="/demo/city" className="inline-block mt-3 text-sm font-semibold text-[#0d7d7a]">{lang==="ja"?"Demoを始める →":"Start Demo →"}</Link></section>}
           <Outlet />
         </main>
