@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>後藤 悟文｜自動運転事業開発ポートフォリオ</title>
+
+<style>
+  .rev { margin:6px 0 14px; font-size:.92em; }
+  .rev summary { cursor:pointer; }
+  .rev summary span { margin-left:.6em; color:#666; font-size:.9em; }
+  .rev-head { font-weight:bold; margin:.6em 0; }
+  .rev ul { margin:.4em 0 .4em 0; }
+  .rev li { margin:.25em 0; }
+  .rev-note { color:#666; font-size:.9em; }
+</style>
 </head>
 <body>
 
@@ -22,14 +32,64 @@
 
 <h3>試作アプリケーション</h3>
 <ul>
-  <li><a href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">Seneschal</a></li>
-  <li><a href="https://federation.base44.app/" target="_blank" rel="noopener noreferrer">Federation</a></li>
+  <li><a href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">Seneschal</a>
+<details class="rev" data-rev="1">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月19日 · 9月以降の変更を集約</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">同じアプリを、実世界のデータにつなぎ、毎朝本番で確認される状態に作り替えました。</p>
+    <ul>
+      <li><strong>無料の公開データを取り込み</strong>：気象庁の警報・予報・地震・津波・台風・アメダス、暑さ指数、標高、日射量</li>
+      <li><strong>情報を行動へ</strong>：天気はカレンダーに、災害は黄色カードに、駐車・充電は予定に取り込み、渋滞込みの所要時間で予約を送信</li>
+      <li><strong>電力需給は全国9エリア</strong>に拡大し、国土交通省の交通量APIも追加（近くに観測点が無いときは検索範囲を約3kmから約8kmへ）</li>
+      <li><strong>Googleカレンダーと双方向同期</strong>（ログイン不要の公開サンプル）。変更通知と再送キューで取りこぼしを防止</li>
+      <li><strong>Squareの検索結果</strong>を読み取り専用で検索候補に追加</li>
+      <li><strong>予約を含む書き込み操作</strong>を、PRごとと毎朝の本番（実Chrome）で自動確認</li>
+      <li><strong>使われていない部品・ロジック・依存パッケージ280点超</strong>を、動作同一性テストと画面比較のもとで削除</li>
+      <li><strong>初期表示を高速化</strong>：AIアシスタント、Federation業務コンソール、QR作成、英語辞書（250KB）は必要なときだけ読み込み</li>
+      <li><strong>堅牢化</strong>：バックエンドが鍵を露出しないよう修正、地図上のHTMLをエスケープ、白画面だった問診をステップ式に刷新</li>
+    </ul>
+    <p class="rev-note">試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。</p>
+  </div>
+</details></li>
+  <li><a href="https://federation.base44.app/" target="_blank" rel="noopener noreferrer">Federation</a>
+<details class="rev" data-rev="1">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月19日 · 9月以降の変更を集約</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">Federationは、自らの数値を証明できるようになりました。正本の一本化、黒字化ゲート、独立レビュー付きのカード品質管理です。</p>
+    <ul>
+      <li><strong>計算結果の正本をシミュレータに一本化</strong>。指数はFederationで管理し、リアルタイムで受け渡し</li>
+      <li><strong>事業収支を一式計算</strong>：P/L 50項目、2025〜2035年のキャッシュフロー、IRR、NPV、感度分析</li>
+      <li><strong>2035年黒字化ゲート</strong>：売上と運行規模の整合、減価償却費が投資額と耐用年数から説明できることを検証してはじめて黒字を表示</li>
+      <li><strong>ゲートの結果</strong>：減価償却を投資額に整合させ、計画シナリオの2035年営業利益は+13.378 B JPY</li>
+      <li><strong>利益最大化探索</strong>はシミュレータ内で実行し、提案のみ（計画を勝手に書き換えない）</li>
+      <li><strong>外部情報による指数の更新提案</strong>を日付付きで作成（最新は10/19）。採否は人が判断</li>
+      <li><strong>カード品質ループ</strong>：BlueprintとArtifactを継続採点し、独立レビュー6回分を台帳に記録</li>
+      <li><strong>英文ポートフォリオとの整合チェック</strong>を自動化し、Blueprintカードを拡充</li>
+      <li><strong>Seneschalの数値基準</strong>もFederationとシミュレータの結果に追従</li>
+    </ul>
+    <p class="rev-note">編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。</p>
+  </div>
+</details></li>
 </ul>
 
 <h3>ポートフォリオ</h3>
 <ul>
   <li><a href="Autonomous_Mobility_Business_Model_Design.pdf" target="_blank" rel="noopener noreferrer">自動運転サービスのビジネスモデル検討</a></li>
-  <li><a href="Autonomous_Mobility_System_Business_Feasibility.pdf" target="_blank" rel="noopener noreferrer">自動運転事業のシステム・事業性検証</a></li>
+  <li><a href="Autonomous_Mobility_System_Business_Feasibility.pdf" target="_blank" rel="noopener noreferrer">自動運転事業のシステム・事業性検証</a>
+<details class="rev" data-rev="1">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月19日 · 9月以降の変更を集約</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">数値がシミュレータに追従し、レイアウトを1ピクセルも動かさない仕組みを備えました。</p>
+    <ul>
+      <li><strong>計算結果をシミュレータから自動反映</strong>（入力指数はFederationで手動管理）</li>
+      <li><strong>数字の字形だけを入れ替え</strong>。文字数・符号・字幅が変わる、または埋め込みフォントに無い字形が必要な書き換えは拒否</li>
+      <li><strong>レイアウトゲート</strong>：ページ数・文字位置・フォントが同一で、書き換えた数字以外に変化がなければ公開。1つでも失敗すれば従前のPDFを維持</li>
+      <li><strong>変更のたびに自動検証</strong>（PRごと・pushごと）</li>
+      <li><strong>減価償却を総投資額に整合</strong>。計画シナリオの2035年営業利益は+13.378 B JPY</li>
+    </ul>
+    <p class="rev-note">編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。</p>
+  </div>
+</details></li>
 </ul>
 
 <h3>本資料について</h3>
