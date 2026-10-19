@@ -7,3 +7,7 @@
   - 更新日 ＝ 監視パスの最終コミット日（JST）。非公開の他リポジトリ（seneschal / federation-portal / mobility-business-lab）は、
     Actionsのシークレット `UPSTREAM_READ_TOKEN`（読み取り専用）がある場合だけ参照する。
   - 手動実行の `touch` で任意のカードを今日にでき、`new_revision` を true にしたときだけ第N+1回に繰り上がる。
+
+## 本文を書くかどうかの判定
+- 更新日は変更があれば自動で進む。本文は `revisions/IMPACT-RULES.md` の採点基準で、既存項目に対するインパクトがあるときだけ書く。
+- 判定は毎朝の定期タスクが行い、結果を `revisions/decisions.jsonl` に残す（書かなかった判断も記録）。
