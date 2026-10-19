@@ -76,7 +76,7 @@
      },
      {
       "lead": "Project finance added.",
-      "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations."
+      "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations. Operating cost can now be itemised: MaaS operations splits into seven components (14 component indices in the bundled baseline), and four per-vehicle cost inputs (remote monitoring, insurance, maintenance, communications) are added at a default of zero. Totals are unchanged."
      },
      {
       "lead": "Provenance on every parameter.",
@@ -95,13 +95,13 @@
       "text": " A fleet-hub study dataset is published alongside the simulator."
      },
      {
-      "lead": "Polish.",
-      "text": " Mission state now survives a language switch, and the mobile layout was compacted."
+      "lead": "Three view modes.",
+      "text": " Quick, Standard and Detailed. Quick shows aggregated totals and four headline figures (IRR, NPV, 2035 free cash flow, payback year); Standard shows every P&L line; Detailed adds how each line is calculated and the cost mix. The model and numbers are the same in all three."
      }
     ],
     "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
    },
-   "reviewed_at": "2026-10-19T03:15:00Z"
+   "reviewed_at": "2026-10-19T20:48:00Z"
   },
   "value": {
    "updated": "2026-10-19",
@@ -250,7 +250,7 @@
    "reviewed_at": "2026-10-19T03:15:00Z"
   },
   "seneschal": {
-   "updated": "2026-10-19",
+   "updated": "2026-10-20",
    "watch": [],
    "upstream": [
     "Satofumi-Goto/seneschal"
@@ -267,12 +267,16 @@
       "text": " Weather appears on the calendar, disasters on a yellow alert card, and parking and charging are pulled into the schedule. Bookings are sent with congestion-aware travel time."
      },
      {
-      "lead": "Power and traffic.",
-      "text": " Electricity supply–demand now covers all nine grid areas (from one), and the traffic API of the Ministry of Land, Infrastructure, Transport and Tourism is added. If no station is near, the search radius widens from about 3 km to 8 km."
+      "lead": "Assistant proposals, applied only on approval.",
+      "text": " The integrated AI planner turns one request into schedule options. Nothing is written to the calendar until the user approves. Events marked as fixed are not moved, an outdated proposal can no longer be approved, ending the conversation discards pending proposals while keeping approved events, and a lost response after saving does not cause a double write. Behaviour is checked by an independent evaluation ledger of 119 cases (114 pass, 0 fail, 5 inconclusive) and a use-case ledger of 31 request scenarios (13 implemented, 12 waiting on external data). Both use fixed test data, not the published app or real calendars."
      },
      {
-      "lead": "Heat and load on the card.",
-      "text": " The yellow card also shows power-usage rate and heat index at severe level or above."
+      "lead": "Earthquake to family reunion (demonstration).",
+      "text": " The earthquake alert card offers a “consider going home or meeting” action that opens a proposal with a meeting candidate on the map. Roads of unknown condition are drawn dashed, a reported closure blocks selection, and selecting a candidate saves nothing until the normal approval step. It runs on demonstration data kept separate from normal events."
+     },
+     {
+      "lead": "Power and traffic.",
+      "text": " Electricity supply–demand now covers all nine grid areas (from one), and the traffic API of the Ministry of Land, Infrastructure, Transport and Tourism is added. If no station is near, the search radius widens from about 3 km to 8 km. The yellow card also shows power-usage rate and heat index at severe level or above."
      },
      {
       "lead": "Two-way Google Calendar sync, no login.",
@@ -287,16 +291,12 @@
       "text": " Every write operation, including bookings, is tested on each pull request and again every morning against the live app in a real Chrome."
      },
      {
-      "lead": "280+ dead items removed.",
-      "text": " Unreachable components, logic and unused packages were deleted behind behaviour-parity tests and before/after screen comparison."
-     },
-     {
       "lead": "Faster first screen.",
       "text": " The assistant, Federation console, wallet QR, side menu and the 250 KB English dictionary now load only when needed."
      },
      {
-      "lead": "Hardened.",
-      "text": " Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen was replaced by a step-by-step intake flow."
+      "lead": "Cleaned and hardened.",
+      "text": " 280+ unreachable components, logic and unused packages were deleted behind behaviour-parity tests and before/after screen comparison. Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen was replaced by a step-by-step intake flow."
      }
     ],
     "note": "Prototype with demonstration data where noted in the app. External-data features use free public APIs."
@@ -311,6 +311,14 @@
      {
       "lead": "情報を行動へ",
       "text": "：天気はカレンダーに、災害は黄色カードに、駐車・充電は予定に取り込み、渋滞込みの所要時間で予約を送信"
+     },
+     {
+      "lead": "AIアシスタントの提案は、承認してはじめて予定に反映",
+      "text": "：一つの依頼から予定の案を作り、承認までカレンダーには書き込まない。固定した予定は動かさず、古い提案は承認できず、会話を終えると未承認の提案を破棄（承認済みの予定は保持）、保存後に応答が失われても二重に書き込まない。独立評価台帳119件（合格114・不合格0・判定不能5）とユースケース台帳31件（実装13・外部データ待ち12）で確認（いずれも固定の試験データで、公開版や実カレンダーの確認ではない）"
+     },
+     {
+      "lead": "地震から家族の帰宅・合流までの提案（デモ）",
+      "text": "：地震の黄色カードから「帰宅・合流を検討」を開くと、地図上に合流候補つきの提案を表示。状態が不明な道は破線、通行止めの報告があれば選択不可。選択しただけでは保存せず、通常の承認手順を経る。通常の予定とは分離したデモデータで動作"
      },
      {
       "lead": "電力需給は全国9エリア",
@@ -329,24 +337,20 @@
       "text": "を、PRごとと毎朝の本番（実Chrome）で自動確認"
      },
      {
-      "lead": "使われていない部品・ロジック・依存パッケージ280点超",
-      "text": "を、動作同一性テストと画面比較のもとで削除"
-     },
-     {
       "lead": "初期表示を高速化",
       "text": "：AIアシスタント、Federation業務コンソール、QR作成、英語辞書（250KB）は必要なときだけ読み込み"
      },
      {
-      "lead": "堅牢化",
-      "text": "：バックエンドが鍵を露出しないよう修正、地図上のHTMLをエスケープ、白画面だった問診をステップ式に刷新"
+      "lead": "使われていない部品・ロジック・依存パッケージ280点超の削除と堅牢化",
+      "text": "：動作同一性テストと画面比較のもとで削除。バックエンドが鍵を露出しないよう修正、地図上のHTMLをエスケープ、白画面だった問診をステップ式に刷新"
      }
     ],
     "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
    },
-   "reviewed_at": "2026-10-19T03:15:00Z"
+   "reviewed_at": "2026-10-19T20:48:00Z"
   },
   "federation": {
-   "updated": "2026-10-19",
+   "updated": "2026-10-20",
    "watch": [],
    "upstream": [
     "Satofumi-Goto/federation-portal",
