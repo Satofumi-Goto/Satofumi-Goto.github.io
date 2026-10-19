@@ -34,26 +34,27 @@
 <ul>
   <li><a href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">Seneschal</a>
 <details class="rev" data-rev="1" data-card="seneschal">
-  <summary>改訂履歴 <span>第1回改訂 · 2026年10月19日更新</span></summary>
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月20日更新</span></summary>
   <div class="rev-body">
     <p class="rev-head">同じアプリを、実世界のデータにつなぎ、毎朝本番で確認される状態に作り替えました。</p>
     <ul>
       <li><strong>無料の公開データを取り込み</strong>：気象庁の警報・予報・地震・津波・台風・アメダス、暑さ指数、標高、日射量</li>
       <li><strong>情報を行動へ</strong>：天気はカレンダーに、災害は黄色カードに、駐車・充電は予定に取り込み、渋滞込みの所要時間で予約を送信</li>
+      <li><strong>AIアシスタントの提案は、承認してはじめて予定に反映</strong>：一つの依頼から予定の案を作り、承認までカレンダーには書き込まない。固定した予定は動かさず、古い提案は承認できず、会話を終えると未承認の提案を破棄（承認済みの予定は保持）、保存後に応答が失われても二重に書き込まない。独立評価台帳119件（合格114・不合格0・判定不能5）とユースケース台帳31件（実装13・外部データ待ち12）で確認（いずれも固定の試験データで、公開版や実カレンダーの確認ではない）</li>
+      <li><strong>地震から家族の帰宅・合流までの提案（デモ）</strong>：地震の黄色カードから「帰宅・合流を検討」を開くと、地図上に合流候補つきの提案を表示。状態が不明な道は破線、通行止めの報告があれば選択不可。選択しただけでは保存せず、通常の承認手順を経る。通常の予定とは分離したデモデータで動作</li>
       <li><strong>電力需給は全国9エリア</strong>に拡大し、国土交通省の交通量APIも追加（近くに観測点が無いときは検索範囲を約3kmから約8kmへ）</li>
       <li><strong>Googleカレンダーと双方向同期</strong>（ログイン不要の公開サンプル）。変更通知と再送キューで取りこぼしを防止</li>
       <li><strong>Squareの検索結果</strong>を読み取り専用で検索候補に追加</li>
       <li><strong>予約を含む書き込み操作</strong>を、PRごとと毎朝の本番（実Chrome）で自動確認</li>
-      <li><strong>使われていない部品・ロジック・依存パッケージ280点超</strong>を、動作同一性テストと画面比較のもとで削除</li>
       <li><strong>初期表示を高速化</strong>：AIアシスタント、Federation業務コンソール、QR作成、英語辞書（250KB）は必要なときだけ読み込み</li>
-      <li><strong>堅牢化</strong>：バックエンドが鍵を露出しないよう修正、地図上のHTMLをエスケープ、白画面だった問診をステップ式に刷新</li>
+      <li><strong>使われていない部品・ロジック・依存パッケージ280点超の削除と堅牢化</strong>：動作同一性テストと画面比較のもとで削除。バックエンドが鍵を露出しないよう修正、地図上のHTMLをエスケープ、白画面だった問診をステップ式に刷新</li>
     </ul>
     <p class="rev-note">試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。</p>
   </div>
 </details></li>
   <li><a href="https://federation.base44.app/" target="_blank" rel="noopener noreferrer">Federation</a>
 <details class="rev" data-rev="1" data-card="federation">
-  <summary>改訂履歴 <span>第1回改訂 · 2026年10月19日更新</span></summary>
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月20日更新</span></summary>
   <div class="rev-body">
     <p class="rev-head">Federationは、自らの数値を証明できるようになりました。正本の一本化、黒字化ゲート、独立レビュー付きのカード品質管理です。</p>
     <ul>
