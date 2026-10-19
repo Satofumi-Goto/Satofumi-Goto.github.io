@@ -1,5 +1,5 @@
 {
- "_readme": "改訂ログの単一データ源。ページ上の各カード下の折り畳み(.rev)はここから tools/revision-log/render.mjs が生成する。HTMLを直接編集しない。",
+ "_readme": "改訂ログの単一データ源。ページ上の各カード下の折り畳み(.rev)はここから tools/revision-log/render.mjs が生成する。HTMLを直接編集しない。更新日(updated)は自動、本文を書くかどうかは revisions/IMPACT-RULES.md の基準で判定し、結果を revisions/decisions.jsonl に残す。reviewed_at は、そのカードの変更を評価済みの時刻。",
  "revision": 1,
  "labels": {
   "en": {
@@ -100,7 +100,8 @@
      }
     ],
     "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
-   }
+   },
+   "reviewed_at": "2026-10-19T03:15:00Z"
   },
   "value": {
    "updated": "2026-10-19",
@@ -143,7 +144,8 @@
      }
     ],
     "note": ""
-   }
+   },
+   "reviewed_at": "2026-10-19T03:15:00Z"
   },
   "bmstudy": {
    "updated": "2026-10-19",
@@ -174,7 +176,8 @@
      }
     ],
     "note": ""
-   }
+   },
+   "reviewed_at": "2026-10-19T03:15:00Z"
   },
   "feasibility": {
    "updated": "2026-10-19",
@@ -243,7 +246,8 @@
      }
     ],
     "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
-   }
+   },
+   "reviewed_at": "2026-10-19T03:15:00Z"
   },
   "seneschal": {
    "updated": "2026-10-19",
@@ -338,13 +342,17 @@
      }
     ],
     "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
-   }
+   },
+   "reviewed_at": "2026-10-19T03:15:00Z"
   },
   "federation": {
    "updated": "2026-10-19",
    "watch": [],
    "upstream": [
-    "Satofumi-Goto/federation-portal"
+    "Satofumi-Goto/federation-portal",
+    "Satofumi-Goto/fleet-operations-console",
+    "Satofumi-Goto/service-hub-console",
+    "Satofumi-Goto/urban-operation-console"
    ],
    "en": {
     "head": "Federation now proves its own numbers: one source of truth, a profitability gate, and cards that are scored and independently reviewed.",
@@ -433,7 +441,8 @@
      }
     ],
     "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
-   }
+   },
+   "reviewed_at": "2026-10-19T03:15:00Z"
   },
   "bizdev": {
    "updated": "2026-10-19",
@@ -470,7 +479,8 @@
      }
     ],
     "note": ""
-   }
+   },
+   "reviewed_at": "2026-10-19T03:15:00Z"
   },
   "concept": {
    "updated": "2026-10-19",
@@ -507,7 +517,8 @@
      }
     ],
     "note": ""
-   }
+   },
+   "reviewed_at": "2026-10-19T03:15:00Z"
   }
  }
 }
