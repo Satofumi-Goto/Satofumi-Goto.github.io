@@ -1,0 +1,513 @@
+{
+ "_readme": "改訂ログの単一データ源。ページ上の各カード下の折り畳み(.rev)はここから tools/revision-log/render.mjs が生成する。HTMLを直接編集しない。",
+ "revision": 1,
+ "labels": {
+  "en": {
+   "summary": "Revision log",
+   "meta": "Rev. {rev} · updated {date} · all changes since September"
+  },
+  "ja": {
+   "summary": "改訂履歴",
+   "meta": "第{rev}回改訂 · {date}更新 · 9月以降の変更を集約"
+  }
+ },
+ "pages": {
+  "index.html": {
+   "lang": "en",
+   "cards": [
+    "sim",
+    "value",
+    "bmstudy",
+    "feasibility",
+    "seneschal",
+    "federation"
+   ]
+  },
+  "capabilities/index.html": {
+   "lang": "en",
+   "cards": [
+    "sim",
+    "bizdev",
+    "concept",
+    "bmstudy",
+    "feasibility",
+    "seneschal",
+    "federation"
+   ]
+  },
+  "portfolio/index.html": {
+   "lang": "ja",
+   "cards": [
+    "seneschal",
+    "federation",
+    "feasibility"
+   ]
+  }
+ },
+ "cards": {
+  "sim": {
+   "updated": "2026-10-19",
+   "watch": [
+    "simulator-source",
+    "regional-demo",
+    "capabilities/fleet-hub-study-20261015.json"
+   ],
+   "upstream": [
+    "Satofumi-Goto/mobility-business-lab"
+   ],
+   "en": {
+    "head": "One simulator, now a complete business-case engine: operations, finance and live inputs in a single run.",
+    "items": [
+     {
+      "lead": "One canonical simulator.",
+      "text": " The earlier standalone lab was retired and redirected. The portal now shows a single Base44 application through a scroll-safe preview that expands to full screen."
+     },
+     {
+      "lead": "Goal-based business design.",
+      "text": " Set a business target and the solver searches operating conditions, compares candidates and stress-tests them. The search runs in a background worker, so the screen never freezes."
+     },
+     {
+      "lead": "Three regions, one input set.",
+      "text": " Tokyo, Nagoya and Toyota share scenario inputs. Staging and night-time sites can be dragged on the map, and each booking can be traced from request to pickup."
+     },
+     {
+      "lead": "Resilience and touchpoint engines.",
+      "text": " An event-driven disruption model and a customer-touchpoint model show what owning the user interface changes in dispatch and revenue."
+     },
+     {
+      "lead": "Project finance added.",
+      "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations."
+     },
+     {
+      "lead": "Provenance on every parameter.",
+      "text": " A parameter registry records where each input came from, starting from the 2030 planning baseline."
+     },
+     {
+      "lead": "Live indices from Federation.",
+      "text": " Inputs are received in real time. The simulator's calculated results become the reference that the portfolio, Federation and Seneschal read."
+     },
+     {
+      "lead": "Profit search, proposal only.",
+      "text": " The search proposes better operating conditions but does not change the plan by itself."
+     },
+     {
+      "lead": "Evidence you can inspect.",
+      "text": " A fleet-hub study dataset is published alongside the simulator."
+     },
+     {
+      "lead": "Polish.",
+      "text": " Mission state now survives a language switch, and the mobile layout was compacted."
+     }
+    ],
+    "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
+   }
+  },
+  "value": {
+   "updated": "2026-10-19",
+   "watch": [
+    "capabilities/value-proposition.html",
+    "Value_Proposition_Toyota_Woven_20260930.pdf",
+    "portfolio/提供価値.pdf"
+   ],
+   "upstream": [],
+   "en": {
+    "head": "A sharper theme and one consistent voice, from the homepage to the PDF.",
+    "items": [
+     {
+      "lead": "30 Sept edition published",
+      "text": " as the entry document of the site."
+     },
+     {
+      "lead": "First page rewritten",
+      "text": " around the AI-and-mobility career theme."
+     },
+     {
+      "lead": "Detailed first page restored,",
+      "text": " with company-specific headings generalised."
+     },
+     {
+      "lead": "Business-expansion concept",
+      "text": " restored on page four in concrete, neutral wording."
+     },
+     {
+      "lead": "Profile refocused",
+      "text": " on connecting vehicles with the cities they operate in."
+     },
+     {
+      "lead": "Wording synchronised",
+      "text": " across the homepage, this overview and the portfolio descriptions."
+     },
+     {
+      "lead": "Target-company references removed",
+      "text": " from the public PDFs while system names were kept."
+     }
+    ],
+    "note": ""
+   }
+  },
+  "bmstudy": {
+   "updated": "2026-10-19",
+   "watch": [
+    "capabilities/Autonomous_Driving_Service_Business_Model_Study.pdf",
+    "Autonomous_Mobility_Business_Model_Design.pdf",
+    "portfolio/Autonomous_Mobility_Business_Model_Design.pdf"
+   ],
+   "upstream": [],
+   "en": {
+    "head": "The same argument, with consistent wording and cleaner public versions.",
+    "items": [
+     {
+      "lead": "Descriptions synchronised",
+      "text": " with the homepage and the value proposition."
+     },
+     {
+      "lead": "Target-company references removed",
+      "text": " from the public PDF; system names retained."
+     },
+     {
+      "lead": "FC skateboard illustration updated",
+      "text": " across the Japanese portfolio set."
+     },
+     {
+      "lead": "Published on its own path,",
+      "text": " independent of other versions of the portfolio."
+     }
+    ],
+    "note": ""
+   }
+  },
+  "feasibility": {
+   "updated": "2026-10-19",
+   "watch": [
+    "Autonomous_Mobility_System_Business_Feasibility.pdf",
+    "portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf",
+    "tools/simulation-sync"
+   ],
+   "upstream": [],
+   "en": {
+    "head": "Numbers now follow the simulator, with a layout gate that refuses to let the page move.",
+    "items": [
+     {
+      "lead": "Numbers follow the simulator.",
+      "text": " Calculated values flow from the simulator's project-finance engine into the PDF. Inputs stay under manual control in Federation."
+     },
+     {
+      "lead": "Digits only, never re-typeset.",
+      "text": " Only digit glyphs are exchanged inside the existing text. A rewrite that would change the character count, a sign or a glyph width, or that needs a glyph missing from the embedded font, is refused."
+     },
+     {
+      "lead": "Layout gate.",
+      "text": " The result must keep the page count, character positions and fonts, show only the planned text change, and alter no pixel outside the rewritten digits. If any check fails, the previous PDF stays published."
+     },
+     {
+      "lead": "Checked on every change.",
+      "text": " The same verification runs automatically on each pull request and each push."
+     },
+     {
+      "lead": "Depreciation aligned to total investment.",
+      "text": " The depreciation basis now matches the investment amount, and 2035 operating profit in the plan scenario is +13.378 B JPY."
+     },
+     {
+      "lead": "A planning assumption, stated as one.",
+      "text": " Hub unit cost (¥2.4B per node) is declared a planning assumption, then the footnote was simplified."
+     },
+     {
+      "lead": "One source for the whole system.",
+      "text": " Federation and Seneschal read their numerical baseline from this document."
+     }
+    ],
+    "note": "Figures are planning-scenario values from editable assumptions, not operating results."
+   },
+   "ja": {
+    "head": "数値がシミュレータに追従し、レイアウトを1ピクセルも動かさない仕組みを備えました。",
+    "items": [
+     {
+      "lead": "計算結果をシミュレータから自動反映",
+      "text": "（入力指数はFederationで手動管理）"
+     },
+     {
+      "lead": "数字の字形だけを入れ替え",
+      "text": "。文字数・符号・字幅が変わる、または埋め込みフォントに無い字形が必要な書き換えは拒否"
+     },
+     {
+      "lead": "レイアウトゲート",
+      "text": "：ページ数・文字位置・フォントが同一で、書き換えた数字以外に変化がなければ公開。1つでも失敗すれば従前のPDFを維持"
+     },
+     {
+      "lead": "変更のたびに自動検証",
+      "text": "（PRごと・pushごと）"
+     },
+     {
+      "lead": "減価償却を総投資額に整合",
+      "text": "。計画シナリオの2035年営業利益は+13.378 B JPY"
+     }
+    ],
+    "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
+   }
+  },
+  "seneschal": {
+   "updated": "2026-10-19",
+   "watch": [],
+   "upstream": [
+    "Satofumi-Goto/seneschal"
+   ],
+   "en": {
+    "head": "The same app, rebuilt for the real world: connected to live public data and checked against production every morning.",
+    "items": [
+     {
+      "lead": "Live public signals.",
+      "text": " Japan Meteorological Agency warnings, forecasts, earthquakes, tsunami, typhoons and AMeDAS observations, plus heat index, elevation and solar radiation."
+     },
+     {
+      "lead": "Signals become actions.",
+      "text": " Weather appears on the calendar, disasters on a yellow alert card, and parking and charging are pulled into the schedule. Bookings are sent with congestion-aware travel time."
+     },
+     {
+      "lead": "Power and traffic.",
+      "text": " Electricity supply–demand now covers all nine grid areas (from one), and the traffic API of the Ministry of Land, Infrastructure, Transport and Tourism is added. If no station is near, the search radius widens from about 3 km to 8 km."
+     },
+     {
+      "lead": "Heat and load on the card.",
+      "text": " The yellow card also shows power-usage rate and heat index at severe level or above."
+     },
+     {
+      "lead": "Two-way Google Calendar sync, no login.",
+      "text": " A public sample calendar syncs both ways, driven by change notifications with a retry queue, so nothing is lost."
+     },
+     {
+      "lead": "Search that reaches further.",
+      "text": " Square results join the search suggestions as read-only."
+     },
+     {
+      "lead": "Reservations verified automatically.",
+      "text": " Every write operation, including bookings, is tested on each pull request and again every morning against the live app in a real Chrome."
+     },
+     {
+      "lead": "280+ dead items removed.",
+      "text": " Unreachable components, logic and unused packages were deleted behind behaviour-parity tests and before/after screen comparison."
+     },
+     {
+      "lead": "Faster first screen.",
+      "text": " The assistant, Federation console, wallet QR, side menu and the 250 KB English dictionary now load only when needed."
+     },
+     {
+      "lead": "Hardened.",
+      "text": " Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen was replaced by a step-by-step intake flow."
+     }
+    ],
+    "note": "Prototype with demonstration data where noted in the app. External-data features use free public APIs."
+   },
+   "ja": {
+    "head": "同じアプリを、実世界のデータにつなぎ、毎朝本番で確認される状態に作り替えました。",
+    "items": [
+     {
+      "lead": "無料の公開データを取り込み",
+      "text": "：気象庁の警報・予報・地震・津波・台風・アメダス、暑さ指数、標高、日射量"
+     },
+     {
+      "lead": "情報を行動へ",
+      "text": "：天気はカレンダーに、災害は黄色カードに、駐車・充電は予定に取り込み、渋滞込みの所要時間で予約を送信"
+     },
+     {
+      "lead": "電力需給は全国9エリア",
+      "text": "に拡大し、国土交通省の交通量APIも追加（近くに観測点が無いときは検索範囲を約3kmから約8kmへ）"
+     },
+     {
+      "lead": "Googleカレンダーと双方向同期",
+      "text": "（ログイン不要の公開サンプル）。変更通知と再送キューで取りこぼしを防止"
+     },
+     {
+      "lead": "Squareの検索結果",
+      "text": "を読み取り専用で検索候補に追加"
+     },
+     {
+      "lead": "予約を含む書き込み操作",
+      "text": "を、PRごとと毎朝の本番（実Chrome）で自動確認"
+     },
+     {
+      "lead": "使われていない部品・ロジック・依存パッケージ280点超",
+      "text": "を、動作同一性テストと画面比較のもとで削除"
+     },
+     {
+      "lead": "初期表示を高速化",
+      "text": "：AIアシスタント、Federation業務コンソール、QR作成、英語辞書（250KB）は必要なときだけ読み込み"
+     },
+     {
+      "lead": "堅牢化",
+      "text": "：バックエンドが鍵を露出しないよう修正、地図上のHTMLをエスケープ、白画面だった問診をステップ式に刷新"
+     }
+    ],
+    "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
+   }
+  },
+  "federation": {
+   "updated": "2026-10-19",
+   "watch": [],
+   "upstream": [
+    "Satofumi-Goto/federation-portal"
+   ],
+   "en": {
+    "head": "Federation now proves its own numbers: one source of truth, a profitability gate, and cards that are scored and independently reviewed.",
+    "items": [
+     {
+      "lead": "Single source of truth.",
+      "text": " The simulator's project-finance engine is now the reference for calculated results. Indices stay in Federation and flow out in real time."
+     },
+     {
+      "lead": "Full project finance.",
+      "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated and fed back to the portfolio."
+     },
+     {
+      "lead": "2035 profitability gate.",
+      "text": " A 2035 profit can be shown only after full-system verification: revenue must reconcile with operating scale, and depreciation must be explainable from total investment and useful life."
+     },
+     {
+      "lead": "Result of the gate.",
+      "text": " Depreciation was rebased on the investment amount; 2035 operating profit in the plan scenario is +13.378 B JPY."
+     },
+     {
+      "lead": "Profit search, proposal only.",
+      "text": " A search for the most profitable conditions runs in the simulator and proposes changes without overwriting the plan."
+     },
+     {
+      "lead": "External information as index proposals.",
+      "text": " Outside data is gathered into dated proposals to update indices (latest 19 Oct), for a person to approve."
+     },
+     {
+      "lead": "Card Quality Loop.",
+      "text": " Blueprint and Artifact cards are scored continuously. Six rounds of independent review are recorded in a ledger, covering vehicle platforms, WBS, risk register, pricing and the control structure."
+     },
+     {
+      "lead": "Consistency with the English portfolio.",
+      "text": " An automatic check against the portfolio was introduced, and Blueprint cards were expanded to match it."
+     },
+     {
+      "lead": "Source images reconciled.",
+      "text": " Two original-application images were transcribed and checked against the canonical numbers."
+     },
+     {
+      "lead": "Baselines stay in step.",
+      "text": " Seneschal's numeric baseline now follows Federation and the simulator results."
+     }
+    ],
+    "note": "Planning-scenario values from editable assumptions, not operating results."
+   },
+   "ja": {
+    "head": "Federationは、自らの数値を証明できるようになりました。正本の一本化、黒字化ゲート、独立レビュー付きのカード品質管理です。",
+    "items": [
+     {
+      "lead": "計算結果の正本をシミュレータに一本化",
+      "text": "。指数はFederationで管理し、リアルタイムで受け渡し"
+     },
+     {
+      "lead": "事業収支を一式計算",
+      "text": "：P/L 50項目、2025〜2035年のキャッシュフロー、IRR、NPV、感度分析"
+     },
+     {
+      "lead": "2035年黒字化ゲート",
+      "text": "：売上と運行規模の整合、減価償却費が投資額と耐用年数から説明できることを検証してはじめて黒字を表示"
+     },
+     {
+      "lead": "ゲートの結果",
+      "text": "：減価償却を投資額に整合させ、計画シナリオの2035年営業利益は+13.378 B JPY"
+     },
+     {
+      "lead": "利益最大化探索",
+      "text": "はシミュレータ内で実行し、提案のみ（計画を勝手に書き換えない）"
+     },
+     {
+      "lead": "外部情報による指数の更新提案",
+      "text": "を日付付きで作成（最新は10/19）。採否は人が判断"
+     },
+     {
+      "lead": "カード品質ループ",
+      "text": "：BlueprintとArtifactを継続採点し、独立レビュー6回分を台帳に記録"
+     },
+     {
+      "lead": "英文ポートフォリオとの整合チェック",
+      "text": "を自動化し、Blueprintカードを拡充"
+     },
+     {
+      "lead": "Seneschalの数値基準",
+      "text": "もFederationとシミュレータの結果に追従"
+     }
+    ],
+    "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
+   }
+  },
+  "bizdev": {
+   "updated": "2026-10-19",
+   "watch": [
+    "capabilities/Business_Development_Capabilities_20261013.pdf"
+   ],
+   "upstream": [],
+   "en": {
+    "head": "The complete 14-page edition, led by customer value and tied to a testable pilot plan.",
+    "items": [
+     {
+      "lead": "13 Oct edition",
+      "text": " published on this page."
+     },
+     {
+      "lead": "Full document restored",
+      "text": " after an intermediate cut."
+     },
+     {
+      "lead": "Customer-focused value first.",
+      "text": " The page now opens with what business development delivers for customers."
+     },
+     {
+      "lead": "Business development defined",
+      "text": " through customer value and implementation, not job titles."
+     },
+     {
+      "lead": "Connected to the simulator:",
+      "text": " comparison, partnership structure and pilot decision gate form one path."
+     },
+     {
+      "lead": "Profile aligned",
+      "text": " with the AI-driven transformation direction."
+     }
+    ],
+    "note": ""
+   }
+  },
+  "concept": {
+   "updated": "2026-10-19",
+   "watch": [
+    "capabilities/System_Planning_Initial_Concept_20261012.pdf"
+   ],
+   "upstream": [],
+   "en": {
+    "head": "From a concept to an operating specification built on the same numerical baseline as the portfolio.",
+    "items": [
+     {
+      "lead": "One numerical baseline.",
+      "text": " The English portfolio is now the sole source of numbers; the Japanese portfolio and the concept follow it."
+     },
+     {
+      "lead": "Federation Design baseline",
+      "text": " (2026-10-15A) incorporated, with the shared basis explained across simulation, portfolio, concept and Federation."
+     },
+     {
+      "lead": "Pages 1–7 densified.",
+      "text": " Operating-specification detail was increased, with customer-touchpoint mechanisms and how each is validated."
+     },
+     {
+      "lead": "Shared rides and passenger–freight feasibility",
+      "text": " integrated, including capacity, service-quality and economic constraints."
+     },
+     {
+      "lead": "Service operating conditions enriched",
+      "text": " while the approved design was preserved."
+     },
+     {
+      "lead": "Annotation fit polished",
+      "text": " so specification callouts sit cleanly on the diagrams."
+     }
+    ],
+    "note": ""
+   }
+  }
+ }
+}

@@ -1,0 +1,71 @@
+name: Revision log stays current
+# 各カード下の改訂ログ(revisions/revisions.json が単一データ源)の更新日を自動で進め、3ページへ描画する。
+# 回(Rev.)の番号は、ここから「new_revision」を指定したときだけ繰り上がる。
+on:
+  pull_request:
+    paths: ['revisions/**', 'tools/revision-log/**', 'index.html', 'capabilities/index.html', 'portfolio/index.html', '.github/workflows/revision-log.yml']
+  push:
+    branches: [main]
+    paths:
+      - 'revisions/**'
+      - 'tools/revision-log/**'
+      - '*.pdf'
+      - 'portfolio/**'
+      - 'capabilities/**'
+      - 'simulator-source/**'
+      - 'regional-demo/**'
+      - 'tools/simulation-sync/**'
+  schedule:
+    - cron: '10 20 * * *'   # 毎日 05:10 JST（他リポジトリの変更の取り込み用）
+  workflow_dispatch:
+    inputs:
+      touch:
+        description: '更新日を今日(JST)にするカード（all またはカンマ区切りのキー。空欄なら自動判定のみ）'
+        required: false
+        default: ''
+      new_revision:
+        description: '第N+1回へ繰り上げる（ユーザーの指示があるときだけ true）'
+        type: boolean
+        default: false
+permissions:
+  contents: write
+concurrency:
+  group: revision-log
+  cancel-in-progress: false
+jobs:
+  revision-log:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: PR - the pages must match the data file
+        if: github.event_name == 'pull_request'
+        run: node tools/revision-log/render.mjs --check
+      - name: Advance update dates
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPSTREAM_READ_TOKEN: ${{ secrets.UPSTREAM_READ_TOKEN }}
+          TOUCH: ${{ github.event.inputs.touch }}
+          NEW_REV: ${{ github.event.inputs.new_revision }}
+        run: |
+          args=()
+          [ -n "$TOUCH" ] && args+=(--touch "$TOUCH")
+          [ "$NEW_REV" = "true" ] && args+=(--new-revision)
+          node tools/revision-log/update-dates.mjs "${args[@]}"
+          node tools/revision-log/render.mjs
+      - name: Commit when something changed
+        if: github.event_name != 'pull_request'
+        run: |
+          if git diff --quiet; then echo "nothing to commit"; exit 0; fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add revisions index.html capabilities/index.html portfolio/index.html
+          git commit -m "改訂ログの更新日を自動更新"
+          git pull --rebase origin main
+          git push origin HEAD:main
