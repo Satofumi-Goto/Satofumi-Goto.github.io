@@ -74,6 +74,23 @@
     .case-launch { border:0; border-radius:6px; background:#0c6f73; color:#fff; padding:11px 16px; cursor:pointer; font:600 .85rem Arial,sans-serif; }
     @media(max-width:760px) { .business-case-steps { grid-template-columns:1fr; } .business-case summary span { display:block; margin:4px 0 0 18px; } }
 
+
+    /* Revision log (Rev. 1, 19 Oct 2026) */
+    .card-wrap { display:flex; flex-direction:column; min-width:0; }
+    .card-wrap > .card { flex:1; border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom-style:dashed; }
+    .grid:has(.rev[open]) { align-items:start; }
+    .rev { border:1px solid var(--line); border-top:0; border-radius:0 0 10px 10px; background:var(--paper); padding:12px 24px; }
+    .rev summary { cursor:pointer; color:var(--accent); font-size:.88rem; font-weight:650; }
+    .rev summary span { color:var(--muted); font-weight:400; font-size:.76rem; margin-left:10px; }
+    .rev summary:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; border-radius:3px; }
+    .rev-body { padding:12px 0 4px; }
+    .rev-head { margin:0 0 10px; color:var(--ink); font-size:.95rem; font-weight:650; line-height:1.5; }
+    .rev ul { margin:0; padding-left:1.15em; color:var(--muted); font-size:.88rem; line-height:1.6; }
+    .rev li { margin:0 0 6px; }
+    .rev li strong { color:var(--ink); font-weight:650; }
+    .rev-note { margin:10px 0 0; color:var(--muted); font-size:.78rem; line-height:1.55; }
+    .simulation-section > .rev { grid-column:1 / -1; border:0; border-top:1px solid var(--line); border-radius:0; background:none; padding:14px 0 0; }
+    @media (max-width:680px) { .grid:has(.rev[open]) { align-items:stretch; } .rev { padding:12px 18px; } .simulation-section > .rev { padding:14px 0 0; } }
   </style>
 </head>
 <body>
@@ -150,6 +167,25 @@
           <button type="button" class="case-launch">Test the assumptions in the simulator ↗</button>
         </div>
       </details>
+      <details class="rev" data-rev="1">
+        <summary>Revision log <span>Rev. 1 · 19 Oct 2026 · all changes since September</span></summary>
+        <div class="rev-body">
+          <p class="rev-head">One simulator, now a complete business-case engine: operations, finance and live inputs in a single run.</p>
+          <ul>
+            <li><strong>One canonical simulator.</strong> The earlier standalone lab was retired and redirected. The portal now shows a single Base44 application through a scroll-safe preview that expands to full screen.</li>
+            <li><strong>Goal-based business design.</strong> Set a business target and the solver searches operating conditions, compares candidates and stress-tests them. The search runs in a background worker, so the screen never freezes.</li>
+            <li><strong>Three regions, one input set.</strong> Tokyo, Nagoya and Toyota share scenario inputs. Staging and night-time sites can be dragged on the map, and each booking can be traced from request to pickup.</li>
+            <li><strong>Resilience and touchpoint engines.</strong> An event-driven disruption model and a customer-touchpoint model show what owning the user interface changes in dispatch and revenue.</li>
+            <li><strong>Project finance added.</strong> A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations.</li>
+            <li><strong>Provenance on every parameter.</strong> A parameter registry records where each input came from, starting from the 2030 planning baseline.</li>
+            <li><strong>Live indices from Federation.</strong> Inputs are received in real time. The simulator&#x27;s calculated results become the reference that the portfolio, Federation and Seneschal read.</li>
+            <li><strong>Profit search, proposal only.</strong> The search proposes better operating conditions but does not change the plan by itself.</li>
+            <li><strong>Evidence you can inspect.</strong> A fleet-hub study dataset is published alongside the simulator.</li>
+            <li><strong>Polish.</strong> Mission state now survives a language switch, and the mobile layout was compacted.</li>
+          </ul>
+          <p class="rev-note">Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results.</p>
+        </div>
+      </details>
     </section>
 
     <section aria-labelledby="planning-heading">
@@ -158,18 +194,50 @@
         <p>Business development experience and approach, illustrated through a mobility service concept and its proposed system design.</p>
       </div>
       <div class="grid">
-        <a class="card" href="Business_Development_Capabilities_20261013.pdf" target="_blank" rel="noopener noreferrer">
+        <div class="card-wrap">
+<a class="card" href="Business_Development_Capabilities_20261013.pdf" target="_blank" rel="noopener noreferrer">
           <span class="tag">Capabilities · Japanese PDF · 14 pages</span>
           <h3>Business Development Capabilities</h3>
           <p>My experience and approach to connecting customer needs, technology, and service operations. Drawing on corporate sales, business planning, and technical planning, this document illustrates how I develop shared themes with customers and partners, coordinate responsibilities, and connect service launch, shared platforms, and infrastructure development with operating requirements, business viability, and future expansion.</p>
           <span class="action">View capabilities ↗</span>
         </a>
-        <a class="card" href="System_Planning_Initial_Concept_20261012.pdf" target="_blank" rel="noopener noreferrer">
+<details class="rev" data-rev="1">
+  <summary>Revision log <span>Rev. 1 · 19 Oct 2026 · all changes since September</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">The complete 14-page edition, led by customer value and tied to a testable pilot plan.</p>
+    <ul>
+      <li><strong>13 Oct edition</strong> published on this page.</li>
+      <li><strong>Full document restored</strong> after an intermediate cut.</li>
+      <li><strong>Customer-focused value first.</strong> The page now opens with what business development delivers for customers.</li>
+      <li><strong>Business development defined</strong> through customer value and implementation, not job titles.</li>
+      <li><strong>Connected to the simulator:</strong> comparison, partnership structure and pilot decision gate form one path.</li>
+      <li><strong>Profile aligned</strong> with the AI-driven transformation direction.</li>
+    </ul>
+  </div>
+</details>
+</div>
+        <div class="card-wrap">
+<a class="card" href="System_Planning_Initial_Concept_20261012.pdf" target="_blank" rel="noopener noreferrer">
           <span class="tag">Initial concept · English PDF · 30 pages</span>
           <h3>System Planning — Initial Concept</h3>
           <p>An initial planning concept for autonomous mobility services, connecting user journeys, MVP scope, and KPIs with a shared platform for reservations, dispatch, energy coordination, and remote support. Architecture diagrams, interaction flows, data contracts, and verification plans define operating responsibilities and phased deployment, including shared rides and passenger–freight services with capacity, service-quality, and economic constraints.</p>
           <span class="action">View initial concept ↗</span>
         </a>
+<details class="rev" data-rev="1">
+  <summary>Revision log <span>Rev. 1 · 19 Oct 2026 · all changes since September</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">From a concept to an operating specification built on the same numerical baseline as the portfolio.</p>
+    <ul>
+      <li><strong>One numerical baseline.</strong> The English portfolio is now the sole source of numbers; the Japanese portfolio and the concept follow it.</li>
+      <li><strong>Federation Design baseline</strong> (2026-10-15A) incorporated, with the shared basis explained across simulation, portfolio, concept and Federation.</li>
+      <li><strong>Pages 1–7 densified.</strong> Operating-specification detail was increased, with customer-touchpoint mechanisms and how each is validated.</li>
+      <li><strong>Shared rides and passenger–freight feasibility</strong> integrated, including capacity, service-quality and economic constraints.</li>
+      <li><strong>Service operating conditions enriched</strong> while the approved design was preserved.</li>
+      <li><strong>Annotation fit polished</strong> so specification callouts sit cleanly on the diagrams.</li>
+    </ul>
+  </div>
+</details>
+</div>
       </div>
     </section>
 
@@ -179,18 +247,50 @@
         <p>Independent studies of the business model and its operating conditions.</p>
       </div>
       <div class="grid">
-        <a class="card" href="Autonomous_Driving_Service_Business_Model_Study.pdf" target="_blank" rel="noopener noreferrer">
+        <div class="card-wrap">
+<a class="card" href="Autonomous_Driving_Service_Business_Model_Study.pdf" target="_blank" rel="noopener noreferrer">
           <span class="tag">Business model · Japanese PDF</span>
           <h3>Business Model Study for Autonomous Driving Services</h3>
           <p>This study explores business models that make autonomous mobility viable by connecting travel demand with diverse services and integrating vehicles, hubs, and energy. It outlines a framework for jointly advancing local infrastructure and mobility businesses, alongside an approach to expanding service hubs through adoption benefits that deliver economic value and everyday convenience to customers.</p>
           <span class="action">View study ↗</span>
         </a>
-        <a class="card" href="../portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf" target="_blank" rel="noopener noreferrer">
+<details class="rev" data-rev="1">
+  <summary>Revision log <span>Rev. 1 · 19 Oct 2026 · all changes since September</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">The same argument, with consistent wording and cleaner public versions.</p>
+    <ul>
+      <li><strong>Descriptions synchronised</strong> with the homepage and the value proposition.</li>
+      <li><strong>Target-company references removed</strong> from the public PDF; system names retained.</li>
+      <li><strong>FC skateboard illustration updated</strong> across the Japanese portfolio set.</li>
+      <li><strong>Published on its own path,</strong> independent of other versions of the portfolio.</li>
+    </ul>
+  </div>
+</details>
+</div>
+        <div class="card-wrap">
+<a class="card" href="../portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf" target="_blank" rel="noopener noreferrer">
           <span class="tag">System and feasibility · English PDF</span>
           <h3>Autonomous Mobility System &amp; Business Feasibility</h3>
           <p>This study translates autonomous mobility concepts into operational system requirements and conditions for business viability. It examines the relationships among demand, dispatch, vehicle utilization, and energy, and how operating constraints and KPIs affect revenue and costs, presenting an integrated approach to evaluating system design and business economics.</p>
           <span class="action">View study ↗</span>
         </a>
+<details class="rev" data-rev="1">
+  <summary>Revision log <span>Rev. 1 · 19 Oct 2026 · all changes since September</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">Numbers now follow the simulator, with a layout gate that refuses to let the page move.</p>
+    <ul>
+      <li><strong>Numbers follow the simulator.</strong> Calculated values flow from the simulator&#x27;s project-finance engine into the PDF. Inputs stay under manual control in Federation.</li>
+      <li><strong>Digits only, never re-typeset.</strong> Only digit glyphs are exchanged inside the existing text. A rewrite that would change the character count, a sign or a glyph width, or that needs a glyph missing from the embedded font, is refused.</li>
+      <li><strong>Layout gate.</strong> The result must keep the page count, character positions and fonts, show only the planned text change, and alter no pixel outside the rewritten digits. If any check fails, the previous PDF stays published.</li>
+      <li><strong>Checked on every change.</strong> The same verification runs automatically on each pull request and each push.</li>
+      <li><strong>Depreciation aligned to total investment.</strong> The depreciation basis now matches the investment amount, and 2035 operating profit in the plan scenario is +13.378 B JPY.</li>
+      <li><strong>A planning assumption, stated as one.</strong> Hub unit cost (¥2.4B per node) is declared a planning assumption, then the footnote was simplified.</li>
+      <li><strong>One source for the whole system.</strong> Federation and Seneschal read their numerical baseline from this document.</li>
+    </ul>
+    <p class="rev-note">Figures are planning-scenario values from editable assumptions, not operating results.</p>
+  </div>
+</details>
+</div>
       </div>
     </section>
 
@@ -200,18 +300,60 @@
         <p>Exploratory applications that make the service concepts tangible.</p>
       </div>
       <div class="grid">
-        <a class="card" href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">
+        <div class="card-wrap">
+<a class="card" href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">
           <span class="tag">Application prototype</span>
           <h3>Seneschal</h3>
           <p>Seneschal combines the one-stop convenience of MaaS with Activity-based Mobility, which organizes transportation around activities. It fills functional gaps that API integration alone cannot address, enabling users to compare activities, services, and transportation as complete options. It provides a consistent experience across delegating arrangements to AI, making choices and adjustments themselves, and checking the status of their services and journeys.</p>
           <span class="action">Explore Seneschal ↗</span>
         </a>
-        <a class="card" href="https://federation.base44.app/" target="_blank" rel="noopener noreferrer">
+<details class="rev" data-rev="1">
+  <summary>Revision log <span>Rev. 1 · 19 Oct 2026 · all changes since September</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">The same app, rebuilt for the real world: connected to live public data and checked against production every morning.</p>
+    <ul>
+      <li><strong>Live public signals.</strong> Japan Meteorological Agency warnings, forecasts, earthquakes, tsunami, typhoons and AMeDAS observations, plus heat index, elevation and solar radiation.</li>
+      <li><strong>Signals become actions.</strong> Weather appears on the calendar, disasters on a yellow alert card, and parking and charging are pulled into the schedule. Bookings are sent with congestion-aware travel time.</li>
+      <li><strong>Power and traffic.</strong> Electricity supply–demand now covers all nine grid areas (from one), and the traffic API of the Ministry of Land, Infrastructure, Transport and Tourism is added. If no station is near, the search radius widens from about 3 km to 8 km.</li>
+      <li><strong>Heat and load on the card.</strong> The yellow card also shows power-usage rate and heat index at severe level or above.</li>
+      <li><strong>Two-way Google Calendar sync, no login.</strong> A public sample calendar syncs both ways, driven by change notifications with a retry queue, so nothing is lost.</li>
+      <li><strong>Search that reaches further.</strong> Square results join the search suggestions as read-only.</li>
+      <li><strong>Reservations verified automatically.</strong> Every write operation, including bookings, is tested on each pull request and again every morning against the live app in a real Chrome.</li>
+      <li><strong>280+ dead items removed.</strong> Unreachable components, logic and unused packages were deleted behind behaviour-parity tests and before/after screen comparison.</li>
+      <li><strong>Faster first screen.</strong> The assistant, Federation console, wallet QR, side menu and the 250 KB English dictionary now load only when needed.</li>
+      <li><strong>Hardened.</strong> Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen was replaced by a step-by-step intake flow.</li>
+    </ul>
+    <p class="rev-note">Prototype with demonstration data where noted in the app. External-data features use free public APIs.</p>
+  </div>
+</details>
+</div>
+        <div class="card-wrap">
+<a class="card" href="https://federation.base44.app/" target="_blank" rel="noopener noreferrer">
           <span class="tag">Application prototype</span>
           <h3>Federation</h3>
           <p>Federation concretizes the “Industrial Revolution through AI utilization” as an operational foundation in which multiple AIs and systems work collaboratively. It is an integrated platform designed to comprehensively understand interdependencies and supply-demand and resource constraints that cannot be fully captured through individual automation, and to handle everything from detecting operational failures and their early signs to analyzing causes, coordinating responses, and restoring operations.</p>
           <span class="action">Explore Federation ↗</span>
         </a>
+<details class="rev" data-rev="1">
+  <summary>Revision log <span>Rev. 1 · 19 Oct 2026 · all changes since September</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">Federation now proves its own numbers: one source of truth, a profitability gate, and cards that are scored and independently reviewed.</p>
+    <ul>
+      <li><strong>Single source of truth.</strong> The simulator&#x27;s project-finance engine is now the reference for calculated results. Indices stay in Federation and flow out in real time.</li>
+      <li><strong>Full project finance.</strong> A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated and fed back to the portfolio.</li>
+      <li><strong>2035 profitability gate.</strong> A 2035 profit can be shown only after full-system verification: revenue must reconcile with operating scale, and depreciation must be explainable from total investment and useful life.</li>
+      <li><strong>Result of the gate.</strong> Depreciation was rebased on the investment amount; 2035 operating profit in the plan scenario is +13.378 B JPY.</li>
+      <li><strong>Profit search, proposal only.</strong> A search for the most profitable conditions runs in the simulator and proposes changes without overwriting the plan.</li>
+      <li><strong>External information as index proposals.</strong> Outside data is gathered into dated proposals to update indices (latest 19 Oct), for a person to approve.</li>
+      <li><strong>Card Quality Loop.</strong> Blueprint and Artifact cards are scored continuously. Six rounds of independent review are recorded in a ledger, covering vehicle platforms, WBS, risk register, pricing and the control structure.</li>
+      <li><strong>Consistency with the English portfolio.</strong> An automatic check against the portfolio was introduced, and Blueprint cards were expanded to match it.</li>
+      <li><strong>Source images reconciled.</strong> Two original-application images were transcribed and checked against the canonical numbers.</li>
+      <li><strong>Baselines stay in step.</strong> Seneschal&#x27;s numeric baseline now follows Federation and the simulator results.</li>
+    </ul>
+    <p class="rev-note">Planning-scenario values from editable assumptions, not operating results.</p>
+  </div>
+</details>
+</div>
       </div>
     </section>
   </main>
