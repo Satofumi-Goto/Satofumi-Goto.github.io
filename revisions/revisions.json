@@ -49,7 +49,7 @@
   },
   "cards": {
     "sim": {
-      "updated": "2026-10-19",
+      "updated": "2026-10-21",
       "watch": [
         "simulator-source",
         "regional-demo",
@@ -82,12 +82,12 @@
             "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations. Operating cost can now be itemised: MaaS operations splits into seven components (14 component indices in the bundled baseline), and four per-vehicle cost inputs (remote monitoring, insurance, maintenance, communications) are added at a default of zero. Totals are unchanged."
           },
           {
-            "lead": "Provenance on every parameter.",
-            "text": " A parameter registry records where each input came from, starting from the 2030 planning baseline."
+            "lead": "Live indices from Federation, with provenance.",
+            "text": " Inputs are received in real time, and a parameter registry records where each input came from, starting from the 2030 planning baseline. The simulator's calculated results become the reference that the portfolio, Federation and Seneschal read."
           },
           {
-            "lead": "Live indices from Federation.",
-            "text": " Inputs are received in real time. The simulator's calculated results become the reference that the portfolio, Federation and Seneschal read."
+            "lead": "Live Mission, run against Federation.",
+            "text": " Four missions (city, service, sharing, control) run as a Before/After comparison on the Planning page, driven by a demonstration in Federation. The result opens with a one-sentence conclusion, then a difference table with improved / worse / trade-off markers, completion shown as a fraction, and the spread across three random seeds. The simulator asks Federation for the items it needs to refine the model and shows where each value came from. A “maximise profit” result can be sent back to Federation as technical targets, and Federation's reply is reflected in the settings."
           },
           {
             "lead": "Profit search, proposal only.",
@@ -104,7 +104,7 @@
         ],
         "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
       },
-      "reviewed_at": "2026-10-19T20:48:00Z",
+      "reviewed_at": "2026-10-20T20:52:00Z",
       "ja": {
         "head": "運行・財務・リアルタイム入力を一つの計算に結び付ける、事業性検証シミュレータへ統合しました。",
         "items": [
@@ -129,12 +129,12 @@
             "text": "運行計算と同一条件でP/L 50項目、2025〜2035年のキャッシュフロー、IRR・NPV・感度分析を算出。MaaS運行費を7要素（標準条件の内訳指数14件）へ分解し、車両当たりの遠隔監視・保険・保守・通信の4費目を初期値ゼロで追加。合計額は変えません。"
           },
           {
-            "lead": "入力値の出所を記録。",
-            "text": "2030年の計画基準値から、各パラメータの出典を台帳で管理します。"
+            "lead": "Federationの指数をリアルタイム受信し、出所を記録。",
+            "text": "2030年の計画基準値から各パラメータの出典を台帳で管理します。シミュレータの計算結果を、ポートフォリオ・Federation・Seneschalが参照する共通の正本とします。"
           },
           {
-            "lead": "Federationの指数をリアルタイム受信。",
-            "text": "シミュレータの計算結果を、ポートフォリオ・Federation・Seneschalが参照する共通の正本とします。"
+            "lead": "Federationと連動するLive Mission。",
+            "text": "city・service・sharing・controlの4ミッションを、Federationの実演と連動してPlanningページでBefore/After比較。結論の一文、改善・悪化・代償を記号で示す差分表、完了率（分子/分母）、乱数3通りの幅を表示します。精緻化に必要な項目をFederationへ照会して出所つきで取り込み、「利益を最大化」の結果を技術目標値としてFederationへ送り、回答を設定へ反映します。"
           },
           {
             "lead": "利益探索は提案のみ。",
@@ -321,7 +321,7 @@
       "reviewed_at": "2026-10-19T03:15:00Z"
     },
     "seneschal": {
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "watch": [],
       "upstream": [
         "Satofumi-Goto/seneschal"
@@ -339,7 +339,7 @@
           },
           {
             "lead": "Assistant proposals, applied only on approval.",
-            "text": " The integrated AI planner turns one request into schedule options. Nothing is written to the calendar until the user approves. Events marked as fixed are not moved, an outdated proposal can no longer be approved, ending the conversation discards pending proposals while keeping approved events, and a lost response after saving does not cause a double write. Behaviour is checked by an independent evaluation ledger of 119 cases (114 pass, 0 fail, 5 inconclusive) and a use-case ledger of 31 request scenarios (13 implemented, 12 waiting on external data). Both use fixed test data, not the published app or real calendars."
+            "text": " The integrated AI planner turns one request into schedule options. Nothing is written to the calendar until the user approves. Events marked as fixed are not moved, an outdated proposal can no longer be approved, ending the conversation discards pending proposals while keeping approved events, and a lost response after saving does not cause a double write. Behaviour is checked by an independent evaluation ledger of 134 cases (129 pass, 0 fail, 5 inconclusive) and a use-case ledger of 31 request scenarios (13 implemented, 12 waiting on external data). Both use fixed test data, not the published app or real calendars."
           },
           {
             "lead": "Earthquake to family reunion (demonstration).",
@@ -351,11 +351,11 @@
           },
           {
             "lead": "Two-way Google Calendar sync, no login.",
-            "text": " A public sample calendar syncs both ways, driven by change notifications with a retry queue, so nothing is lost."
+            "text": " A public sample calendar syncs both ways, driven by change notifications with a retry queue, so nothing is lost. Square results also join the search suggestions, read-only."
           },
           {
-            "lead": "Search that reaches further.",
-            "text": " Square results join the search suggestions as read-only."
+            "lead": "Private conversations and projects.",
+            "text": " Consultations with the assistant are kept as private conversations in the leftmost Friends tab, grouped into projects, with guided example prompts beside them. Earlier Seneschal routes redirect there."
           },
           {
             "lead": "Reservations verified automatically.",
@@ -385,7 +385,7 @@
           },
           {
             "lead": "AIアシスタントの提案は、承認してはじめて予定に反映",
-            "text": "：一つの依頼から予定の案を作り、承認までカレンダーには書き込まない。固定した予定は動かさず、古い提案は承認できず、会話を終えると未承認の提案を破棄（承認済みの予定は保持）、保存後に応答が失われても二重に書き込まない。独立評価台帳119件（合格114・不合格0・判定不能5）とユースケース台帳31件（実装13・外部データ待ち12）で確認（いずれも固定の試験データで、公開版や実カレンダーの確認ではない）"
+            "text": "：一つの依頼から予定の案を作り、承認までカレンダーには書き込まない。固定した予定は動かさず、古い提案は承認できず、会話を終えると未承認の提案を破棄（承認済みの予定は保持）、保存後に応答が失われても二重に書き込まない。独立評価台帳134件（合格129・不合格0・判定不能5）とユースケース台帳31件（実装13・外部データ待ち12）で確認（いずれも固定の試験データで、公開版や実カレンダーの確認ではない）"
           },
           {
             "lead": "地震から家族の帰宅・合流までの提案（デモ）",
@@ -397,11 +397,11 @@
           },
           {
             "lead": "Googleカレンダーと双方向同期",
-            "text": "（ログイン不要の公開サンプル）。変更通知と再送キューで取りこぼしを防止"
+            "text": "（ログイン不要の公開サンプル）。変更通知と再送キューで取りこぼしを防止。Squareの検索結果も読み取り専用で検索候補に追加"
           },
           {
-            "lead": "Squareの検索結果",
-            "text": "を読み取り専用で検索候補に追加"
+            "lead": "非公開の会話とプロジェクト。",
+            "text": "アシスタントへの相談は、Friendsの左端のタブに非公開の会話として残り、プロジェクト単位にまとめられ、横に会話例が並びます。従来のSeneschalの入口はここへ転送されます。"
           },
           {
             "lead": "予約を含む書き込み操作",
@@ -418,10 +418,10 @@
         ],
         "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
       },
-      "reviewed_at": "2026-10-19T20:48:00Z"
+      "reviewed_at": "2026-10-20T20:52:00Z"
     },
     "federation": {
-      "updated": "2026-10-20",
+      "updated": "2026-10-21",
       "watch": [],
       "upstream": [
         "Satofumi-Goto/federation-portal",
@@ -434,7 +434,7 @@
         "items": [
           {
             "lead": "Single source of truth.",
-            "text": " The simulator's project-finance engine is now the reference for calculated results. Indices stay in Federation and flow out in real time."
+            "text": " The simulator's project-finance engine is now the reference for calculated results. Indices stay in Federation and flow out in real time. Seneschal's numeric baseline follows Federation and the simulator results too."
           },
           {
             "lead": "Full project finance.",
@@ -442,11 +442,7 @@
           },
           {
             "lead": "2035 profitability gate.",
-            "text": " A 2035 profit can be shown only after full-system verification: revenue must reconcile with operating scale, and depreciation must be explainable from total investment and useful life."
-          },
-          {
-            "lead": "Result of the gate.",
-            "text": " Depreciation was rebased on the investment amount; 2035 operating profit in the plan scenario is +13.378 B JPY."
+            "text": " A 2035 profit can be shown only after full-system verification: revenue must reconcile with operating scale, and depreciation must be explainable from total investment and useful life. Depreciation was rebased on the investment amount; 2035 operating profit in the plan scenario is +13.378 B JPY."
           },
           {
             "lead": "Profit search, proposal only.",
@@ -458,19 +454,23 @@
           },
           {
             "lead": "Card Quality Loop.",
-            "text": " Blueprint and Artifact cards are scored continuously. Six rounds of independent review are recorded in a ledger, covering vehicle platforms, WBS, risk register, pricing and the control structure."
+            "text": " Blueprint and Artifact cards are scored continuously. Independent reviews are recorded in a ledger for 36 cards (30 at 10/10, 6 with open findings), including vehicle platforms, WBS, risk register, pricing and the control structure."
           },
           {
             "lead": "Consistency with the English portfolio.",
-            "text": " An automatic check against the portfolio was introduced, and Blueprint cards were expanded to match it."
+            "text": " An automatic check against the portfolio was introduced, and Blueprint cards were expanded to match it. Two original-application images were transcribed and checked against the canonical numbers."
           },
           {
-            "lead": "Source images reconciled.",
-            "text": " Two original-application images were transcribed and checked against the canonical numbers."
+            "lead": "Runtime workspace.",
+            "text": " Seven Runtime tabs each have their own screen, following one operating flow from coordination and detection to cause analysis, candidate comparison and verification. Every result is labelled as coming from an execution record or as an estimate from current inputs. A hand-over list is carried through every tab, and the hand-over can be shared through Base44 so each person in charge sees the same inbox."
           },
           {
-            "lead": "Baselines stay in step.",
-            "text": " Seneschal's numeric baseline now follows Federation and the simulator results."
+            "lead": "Design from the specification.",
+            "text": " The Design section renders the v2 specification as a model-based view: state machines, sequence, use-case and activity diagrams, a requirement-to-evidence trace, consistency checks across the model, and change-impact analysis that traces upstream and downstream. Gaps and open questions are listed rather than hidden, and a desk check is never shown as field-verified."
+          },
+          {
+            "lead": "Knowledge graph.",
+            "text": " The note vault is shown as an Obsidian-style graph with hover preview, a neighbours-only view, and keyboard and pinch-zoom access. Notes with content were imported from the vault, and sourced service-operations notes for autonomous mobility are linked into the graph."
           }
         ],
         "note": "Planning-scenario values from editable assumptions, not operating results."
@@ -480,7 +480,7 @@
         "items": [
           {
             "lead": "計算結果の正本をシミュレータに一本化",
-            "text": "。指数はFederationで管理し、リアルタイムで受け渡し"
+            "text": "。指数はFederationで管理し、リアルタイムで受け渡し。Seneschalの数値基準もFederationとシミュレータの結果に追従"
           },
           {
             "lead": "事業収支を一式計算",
@@ -488,11 +488,7 @@
           },
           {
             "lead": "2035年黒字化ゲート",
-            "text": "：売上と運行規模の整合、減価償却費が投資額と耐用年数から説明できることを検証してはじめて黒字を表示"
-          },
-          {
-            "lead": "ゲートの結果",
-            "text": "：減価償却を投資額に整合させ、計画シナリオの2035年営業利益は+13.378 B JPY"
+            "text": "：売上と運行規模の整合、減価償却費が投資額と耐用年数から説明できることを検証してはじめて黒字を表示。減価償却を投資額に整合させ、計画シナリオの2035年営業利益は+13.378 B JPY"
           },
           {
             "lead": "利益最大化探索",
@@ -504,15 +500,23 @@
           },
           {
             "lead": "カード品質ループ",
-            "text": "：BlueprintとArtifactを継続採点し、独立レビュー6回分を台帳に記録"
+            "text": "：BlueprintとArtifactを継続採点し、独立レビューを36枚分台帳に記録（10/10が30枚、未解決の指摘ありが6枚）。車両プラットフォーム、WBS、リスク台帳、価格、制御構造などを含む"
           },
           {
             "lead": "英文ポートフォリオとの整合チェック",
-            "text": "を自動化し、Blueprintカードを拡充"
+            "text": "を自動化し、Blueprintカードを拡充。原本画像2点も転記して正本の数値と照合"
           },
           {
-            "lead": "Seneschalの数値基準",
-            "text": "もFederationとシミュレータの結果に追従"
+            "lead": "Runtimeワークスペース",
+            "text": "：7つのRuntimeタブがそれぞれ専用の画面を持ち、調整・検知から原因分析、候補比較、検証までを一つの運用の流れでたどれる。各結果は実行記録によるものか現在の入力からの推定かを明示。引継ぎ一覧は全タブに通し、Base44経由で共有して担当者全員が同じ受信箱を見られる"
+          },
+          {
+            "lead": "仕様書からのDesign",
+            "text": "：Designセクションが仕様書v2をモデルベースの画面として表示。状態機械・シーケンス図・ユースケース図・アクティビティ図、要求から証跡へのトレース、モデル全体の整合チェック、上流・下流をたどる変更影響分析。欠けや未決事項は隠さず一覧にし、机上確認を実機確認済みとは表示しない"
+          },
+          {
+            "lead": "ナレッジグラフ",
+            "text": "：ノートのボールトをObsidian風のグラフで表示（ホバープレビュー、隣接のみ表示、キーボードとピンチ操作）。本文のあるノートを取り込み、出典つきの自動運転サービス運用ノートをグラフに接続"
           }
         ],
         "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
