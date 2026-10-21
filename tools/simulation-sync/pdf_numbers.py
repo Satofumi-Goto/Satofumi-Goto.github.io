@@ -108,9 +108,9 @@ def page_chars(page, cache):
     for oi, (operands, op) in enumerate(ops):
         o = str(op)
         if o == 'q':
-            stack.append((fs, tc))
+            stack.append((fs, tc, current))
         elif o == 'Q' and stack:
-            fs, tc = stack.pop()
+            fs, tc, current = stack.pop()   # the font is graphics state too
         elif o == 'Tc':
             tc = float(operands[0])
         if o == 'Tf':
