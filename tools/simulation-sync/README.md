@@ -3,8 +3,8 @@
 Indices (inputs) are maintained by hand in Federation. Calculated values come from the
 simulator's project-finance engine; Federation delivers its output as `simulation-results.json`.
 
-`run.py` rewrites the changed numbers in the English portfolio PDFs: the Toyota / Woven version
-at the site root and the version under `/portfolio/` (also linked from `/capabilities/`).
+`run.py` rewrites the changed numbers in the English portfolio PDF. There is one copy, at the
+site root; the top page, `/portfolio/` and `/capabilities/` all link to it.
 Only digit glyphs are exchanged inside the existing text; a rewrite that would change the number
 of characters, a sign, a glyph width or need a glyph missing from the embedded font is refused.
 `verify_layout.py` then requires identical page count, character positions and fonts, the planned

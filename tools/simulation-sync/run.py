@@ -13,9 +13,8 @@ import json, os, shutil, subprocess, sys, tempfile
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 # One file per site page: / (Toyota / Woven), /portfolio/ (Honda) and /capabilities/ (general). Each is kept separately.
-TARGETS = ['Autonomous_Mobility_System_Business_Feasibility.pdf',
-           'portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf',
-           'capabilities/Autonomous_Mobility_System_Business_Feasibility.pdf']
+# One PDF at the site root; the /portfolio/ and /capabilities/ pages link to it.
+TARGETS = ['Autonomous_Mobility_System_Business_Feasibility.pdf']
 
 
 def main():
