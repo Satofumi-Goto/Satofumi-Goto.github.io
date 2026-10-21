@@ -139,9 +139,12 @@
     .profile-text .profile-overview { margin:20px 0 0; text-align:right; }
     .profile-overview a { color:var(--accent); font-size:.85rem; font-weight:650; text-decoration:none; }
     .profile-overview a:hover { text-decoration:underline; }
+    .film-language-label { display:flex; align-items:center; gap:10px; margin:0 0 14px; font-size:.85rem; color:var(--muted); }
+    .film-language { font:inherit; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:6px; padding:6px 10px; }
+    .film-language:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; }
 </style>
   <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
-  <script defer src="/media/film-player.js"></script>
+  <script defer src="/media/film-player.js?v=7"></script>
 </head>
 <body>
   <header>
@@ -170,13 +173,14 @@
     <div class="experience-pair">
     <section class="vision-film" id="vision-film" aria-labelledby="vision-film-heading">
       <div class="film-intro">
-      <p class="film-kicker">CONCEPT FILM · 5 MIN · JAPANESE</p>
+      <label class="film-language-label" for="film-language">Film language <select class="film-language" id="film-language" aria-label="Film language"><option value="ja">日本語</option><option value="en" selected>English</option></select></label>
+      <p class="film-kicker">CONCEPT FILM · 4:41 · JA / EN</p>
       <h2 id="vision-film-heading">From everyday life to a connected city.</h2>
       <p class="film-description">Children learning, neighbours gathering, and shops on the move. Follow everyday life supported by Seneschal as FC skateboards and connected Nodes grow into a city.</p>
       </div>
       <div class="film-player">
-        <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-v6.jpg" data-stream="/media/mobility-world-v6/film.m3u8" aria-label="From everyday life to a connected city." aria-describedby="vision-film-note"></video>
-        <button class="film-start" type="button" aria-controls="vision-film-video"><span>▶ Watch the 5-minute film</span></button>
+        <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-v6.jpg" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="From everyday life to a connected city." aria-describedby="vision-film-note"></video>
+        <button class="film-start" type="button" aria-controls="vision-film-video"><span>▶ Watch the film (4:41)</span></button>
       </div>
       <div class="film-meta">
         <span id="vision-film-note">Enjoy the music and the sounds of everyday life.</span>
