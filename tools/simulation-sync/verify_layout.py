@@ -24,8 +24,8 @@ def expected_text(text, steps, pno=None):
         if s.get('anchor'):
             if s.get('page') and s['page'] != pno:
                 continue
-            a = ''.join(re.escape(c) if ord(c) < 128 else '.' for c in s['anchor'])
-            out = re.sub('(' + a + ')' + re.escape(s['fromText']) + r'(?!\d)(?!\.\d)', lambda m: m.group(1) + s['toText'], out)
+            a = r'\s?'.join(re.escape(c) if ord(c) < 128 else '.' for c in s['anchor'] if not c.isspace())
+            out = re.sub('(' + a + r'\s?)' + re.escape(s['fromText']) + r'(?!\d)(?!\.\d)', lambda m: m.group(1) + s['toText'], out)
             continue
         out = re.sub(r'(?<![\d.])' + re.escape(s['fromText']) + r'(?!\d)(?!\.\d)', s['toText'], out)
     return out
