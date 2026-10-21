@@ -14,7 +14,7 @@ TARGETS.json: [{"page": 15, "top": 583.1, "size": 9.0, "x0": 0, "x1": 600, "old"
 Refused (exit 2, OUT not written) when the old text does not match exactly, a glyph is missing
 from the chosen embedded font, or the new text would run past max_right.
 """
-import json, sys, os
+import json, sys, os, re
 import pikepdf
 import pdfplumber
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -26,6 +26,20 @@ def line_chars(pl_page, t):
           if abs(c['top'] - t['top']) < 1.0 and t['x0'] - 0.5 <= c['x0'] and c['x1'] <= t['x1'] + 0.5
           and abs(c['size'] - t['size']) < 0.05]
     return cs
+
+
+def text_state_at(ops, index):
+    st = {'Tf': None, 'Tc': [0], 'Tw': [0]}
+    stack = []
+    for j in range(index):
+        o = str(ops[j][1])
+        if o == 'q':
+            stack.append(dict(st))
+        elif o == 'Q' and stack:
+            st = stack.pop()
+        elif o in st:
+            st[o] = list(ops[j][0])
+    return st
 
 
 def main(targets_path, src, dst):
@@ -46,15 +60,27 @@ def main(targets_path, src, dst):
             if not c[4].isspace():
                 flat.append(c[4]); where.append(k)
         flat = ''.join(flat)
+        plan = []
         for t in ts:
             sel = line_chars(pl.pages[pno - 1], t)
             got = ''.join(c['text'] for _, c in sel)
             if got.replace(' ', '') != t['old'].replace(' ', ''):
                 raise Refused(f'page {pno}: old text mismatch\n  found: {got}\n  want:  {t["old"]}')
             key = t['old'].replace(' ', '')
-            at = flat.find(key)
-            if at < 0 or flat.find(key, at + 1) >= 0:
-                raise Refused(f'page {pno}: the old text is not found exactly once in the content stream')
+            # Which occurrence on the page is this line? Count occurrences in drawing order
+            # (pdfplumber keeps content order) and take the same one in the content stream.
+            pflat, pidx = [], []
+            for k, c in enumerate(plc):
+                if not c['text'].isspace():
+                    pflat.append(c['text']); pidx.append(k)
+            pflat = ''.join(pflat)
+            sel_first = min(k for k, c in sel if not c['text'].isspace())
+            occ = [m.start() for m in re.finditer(re.escape(key), pflat)]
+            nth = next((i for i, a in enumerate(occ) if pidx[a] == sel_first), None)
+            hits = [m.start() for m in re.finditer(re.escape(key), flat)]
+            if nth is None or len(hits) != len(occ):
+                raise Refused(f'page {pno}: the old text cannot be matched one-to-one in the content stream')
+            at = hits[nth]
             idx = where[at:at + len(key)]
             # The line's glyphs must be contiguous in the content stream apart from spaces; anything
             # else drawn in between belongs to other text and stops the rewrite.
@@ -65,11 +91,26 @@ def main(targets_path, src, dst):
             start_x = next(c['x0'] for _, c in sel if not c['text'].isspace())
             first = min(idx)
             op_ids = sorted({chars[k][0] for k in idx})
-            # every glyph of these operations must belong to the line
+            # Every glyph of these operations must belong to the line, except that the last operation
+            # may continue after the line's end (e.g. 'x (1' when only 'x' is replaced): its remaining
+            # glyphs are kept and moved back to where they were with a TJ adjustment.
+            tail = None
             for oi in op_ids:
                 own = [k for k, c in enumerate(chars) if c[0] == oi]
-                if any(not chars[k][4].isspace() for k in set(own) - set(idx)):
+                rest = [k for k in own if k not in set(idx)]
+                if not any(not chars[k][4].isspace() for k in rest):
+                    continue
+                if oi != op_ids[-1] or min(rest) < max(k for k in own if k in set(idx)) or str(ops[oi][1]) != 'TJ':
                     raise Refused(f'page {pno}: an operation mixes this line with other text')
+                # x (user space) of the first kept glyph and of the op's first glyph, from pdfplumber
+                line = sorted([c for c in plc if abs(c['top'] - sel[0][1]['top']) < 0.5], key=lambda c: c['x0'])
+                last_sel_x = max(c['x1'] for _, c in sel)
+                keep_x = min(c['x0'] for c in line if c['x0'] >= last_sel_x - 0.05)  # first kept glyph, spaces included
+                first_in_op = min(own)
+                op_sel = [c for _, c in sel if not c['text'].isspace()]
+                n_before = sum(1 for k in own if k in set(idx) and not chars[k][4].isspace())
+                op_start_x = op_sel[len(op_sel) - n_before]['x0'] if n_before else keep_x
+                tail = (oi, own, rest, keep_x - op_start_x)
             # Fonts: the embedded subsets of the line's typeface (same BaseFont). Each glyph is drawn
             # from a subset that has it: one the page already draws it in, or a CID subset whose
             # outline is embedded. Runs switch font without moving the pen.
@@ -93,38 +134,59 @@ def main(targets_path, src, dst):
             right = start_x + width
             if right > t['max_right']:
                 raise Refused(f'page {pno}: new text ends at {right:.1f} > {t["max_right"]}')
-            # blank the old glyphs
+            plan.append((chars[first][0], op_ids, runs, shown_by, right, t, tail, size))
+        # Apply on the original parse, last operation first, so earlier indices stay valid.
+        used = [oi for e in plan for oi in e[1]]
+        if len(used) != len(set(used)):
+            raise Refused(f'page {pno}: two targets share a text operation')
+        names = {f.objgen: str(k) for k, f in page.Resources.Font.items()}
+        for first_op, op_ids, runs, shown_by, right, t, tail, size in sorted(plan, key=lambda e: -e[0]):
             for oi in op_ids:
                 operands, op = ops[oi]
+                if tail and oi == tail[0]:
+                    # keep the glyphs after the line; shift them right by the removed glyphs' advance
+                    _, own, rest, dx_user = tail
+                    fs = state[oi][0]
+                    scale = size / fs
+                    keep = set(rest)
+                    items, gi = [], 0
+                    order = own
+                    for part in list(operands[0]):
+                        if isinstance(part, pikepdf.String):
+                            dec_bytes = bytes(part)
+                            fi_ = chars[order[gi]][5]
+                            step = 2 if fi_.type0 else 1
+                            kept = b''
+                            for off in range(0, len(dec_bytes), step):
+                                if order[gi] in keep:
+                                    kept += dec_bytes[off:off + step]
+                                gi += 1
+                            if kept:
+                                items.append(pikepdf.String(kept))
+                        elif any(order[j] in keep for j in range(gi, len(order))) and items:
+                            items.append(part)
+                    n = -(dx_user / scale) * 1000 / fs
+                    ops[oi] = pikepdf.ContentStreamInstruction([pikepdf.Array([round(n, 4)] + items)], op)
+                    continue
                 if str(op) == 'TJ':
                     ops[oi] = pikepdf.ContentStreamInstruction([pikepdf.Array([pikepdf.String(b'')])], op)
                 else:
                     ops[oi] = pikepdf.ContentStreamInstruction(list(operands[:-1]) + [pikepdf.String(b'')], op)
             # draw the new text from the first operation's position, no extra spacing
-            first_op = chars[first][0]
-            names = {f.objgen: str(k) for k, f in page.Resources.Font.items()}
             new_ops = [pikepdf.ContentStreamInstruction([0], pikepdf.Operator('Tc')),
                        pikepdf.ContentStreamInstruction([0], pikepdf.Operator('Tw'))]
             for f, chs in runs:
                 sh = shown_by[id(f)]
                 new_ops.append(pikepdf.ContentStreamInstruction([pikepdf.Name(names[f.font.objgen]), 1], pikepdf.Operator('Tf')))
                 new_ops.append(pikepdf.ContentStreamInstruction([pikepdf.Array([pikepdf.String(b''.join(f.encode(ch, sh) for ch in chs))])], pikepdf.Operator('TJ')))
-            # Put the text state back for whatever this text object draws after the line.
-            restore = {}
-            for j in range(first_op - 1, -1, -1):
-                o = str(ops[j][1])
-                if o in ('Tf', 'Tc', 'Tw') and o not in restore:
-                    restore[o] = list(ops[j][0])
-                if len(restore) == 3:
-                    break
+            # Put the text state back for whatever this text object draws after the line: the
+            # font, character and word spacing in force at this operation (q/Q respected).
+            restore = text_state_at(ops, first_op)
             new_ops.append(ops[first_op])  # the original (already blanked) operation keeps its place
             for o in ('Tf', 'Tc', 'Tw'):
-                if o in restore:
+                if restore.get(o) is not None:
                     new_ops.insert(-1, pikepdf.ContentStreamInstruction(restore[o], pikepdf.Operator(o)))
             ops[first_op:first_op + 1] = new_ops
-            shift = len(new_ops) - 1  # the original op moved to the end of new_ops
-            chars = [(c[0] + shift if c[0] > first_op else c[0],) + tuple(c[1:]) for c in chars]
-            state = {(k + shift if k > first_op else k): v for k, v in state.items()}
             print(f'page {pno}: line at {t["top"]} replaced, new text ends at {right:.1f}')
         page.Contents = pdf.make_stream(pikepdf.unparse_content_stream(ops))
     pdf.save(dst)

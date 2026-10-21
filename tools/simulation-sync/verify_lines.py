@@ -18,8 +18,14 @@ SCALE = 2.0
 
 
 def in_target(c, t):
-    return (abs(c['top'] - t['top']) < 1.0 and t['x0'] - 0.5 <= c['x0'] and c['x1'] <= t['x1'] + 0.5
+    # glyphs that start inside the line's slot (from x0 up to the room it may use)
+    return (abs(c['top'] - t['top']) < 1.0 and t['x0'] - 0.5 <= c['x0'] <= max(t['x1'], t['max_right']) + 0.01
             and abs(c['size'] - t['size']) < 0.05)
+
+
+def ink(cs):
+    # spaces draw nothing; blanking an operation may drop a trailing space, which is not a change
+    return [c for c in cs if not c['text'].isspace()]
 
 
 def main(tp, before, after):
@@ -32,8 +38,10 @@ def main(tp, before, after):
             if (pa.width, pa.height) != (pb.width, pb.height):
                 problems.append(f'page {i}: size changed')
             ts = [t for t in targets if t['page'] == i]
-            keep_a = [c for c in pa.chars if not any(in_target(c, t) for t in ts)]
-            keep_b = [c for c in pb.chars if not any(in_target(c, t) for t in ts)]
+            # compared as sets of placed glyphs: re-emitting a kept glyph may change drawing order only
+            key = lambda c: (round(c['top'], 2), round(c['x0'], 2), c['text'])
+            keep_a = sorted(ink([c for c in pa.chars if not any(in_target(c, t) for t in ts)]), key=key)
+            keep_b = sorted(ink([c for c in pb.chars if not any(in_target(c, t) for t in ts)]), key=key)
             if len(keep_a) != len(keep_b):
                 problems.append(f'page {i}: {len(keep_a)} -> {len(keep_b)} characters outside the target lines'); continue
             for x, y in zip(keep_a, keep_b):
@@ -48,7 +56,7 @@ def main(tp, before, after):
                 o0 = next(c for c in old if not c['text'].isspace()); n0 = next(c for c in new if not c['text'].isspace())
                 if abs(n0['x0'] - o0['x0']) > 0.05 or abs(n0['top'] - o0['top']) > 0.05:
                     problems.append(f'page {i}: line {t["top"]} start moved')
-                if new and max(c['x1'] for c in new) > t['max_right'] + 0.01:
+                if ink(new) and max(c['x1'] for c in ink(new)) > t['max_right'] + 0.01:
                     problems.append(f'page {i}: line {t["top"]} ends past {t["max_right"]}')
                 if len({(c['fontname'], round(c['size'], 2)) for c in new}) > 1:
                     problems.append(f'page {i}: line {t["top"]} mixes fonts')
@@ -65,6 +73,8 @@ def main(tp, before, after):
             mask[max(0, int(t * SCALE) - 3):int(btm * SCALE) + 4, max(0, int(x0 * SCALE) - 3):int(x1 * SCALE) + 4] = True
         out = int((diff & ~mask).sum())
         if out:
+            ys, xs = np.nonzero(diff & ~mask)
+            print(f'page {i + 1}: changed pixels outside at x {xs.min() / SCALE:.1f}-{xs.max() / SCALE:.1f}, y {ys.min() / SCALE:.1f}-{ys.max() / SCALE:.1f}')
             problems.append(f'page {i + 1}: {out} pixels changed outside the target lines')
     if problems:
         print('FAIL'); print('\n'.join(problems[:30])); return 1
