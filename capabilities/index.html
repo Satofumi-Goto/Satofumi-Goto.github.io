@@ -110,7 +110,33 @@
     .vision-film .film-start span { color:#fff; background:#075b78ed; border:1px solid #ffffff66; border-radius:100px; padding:16px 28px; font:600 clamp(.9rem,2vw,1.1rem)/1.4 sans-serif; box-shadow:0 4px 28px #0004; }
     .vision-film .film-start:focus-visible { outline:3px solid #e5a64a; outline-offset:4px; }
     .vision-film .film-fullscreen { border:0; padding:0; background:none; color:var(--accent); font:inherit; text-decoration:underline; cursor:pointer; }
-  </style>
+  
+    /* Paired film and simulator: desktop columns, mobile stack. */
+    .experience-pair { min-width:0; }
+    @media (min-width: 960px) {
+      .experience-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 28px; align-items:start; }
+      .experience-pair > .vision-film,
+      .experience-pair > .simulation-section {
+        display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:subgrid;
+        grid-row:span 4; gap:18px; align-items:start; min-width:0;
+        margin:0; padding-block:28px; border-top:1px solid var(--line);
+      }
+      .experience-pair .film-intro { grid-row:1; }
+      .experience-pair .film-player { grid-row:2; }
+      .experience-pair .film-meta { grid-row:3; margin:0; }
+      .experience-pair .film-credits { grid-row:4; margin:0; }
+      .experience-pair .simulation-section > .section-head { grid-row:1; margin:0; }
+      .experience-pair .simulation-stage { grid-row:2; }
+      .experience-pair .business-case { grid-row:3; }
+      .experience-pair .simulation-section > .rev { grid-row:4; }
+      .experience-pair .simulation-preview { height:auto; aspect-ratio:16 / 9; }
+      .experience-pair h2 { font-size:1.55rem; line-height:1.3; }
+      .experience-pair .film-description { margin-bottom:0; font-size:.9rem; }
+      .experience-pair .business-case-steps { grid-template-columns:1fr; }
+    }
+
+    .experience-pair, .experience-pair + section { margin-top:48px; }
+</style>
   <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
   <script defer src="/media/film-player.js"></script>
 </head>
@@ -137,10 +163,13 @@
       </div>
     </section>
 
+    <div class="experience-pair">
     <section class="vision-film" id="vision-film" aria-labelledby="vision-film-heading">
+      <div class="film-intro">
       <p class="film-kicker">CONCEPT FILM · 5 MIN · JAPANESE</p>
       <h2 id="vision-film-heading">From everyday life to a connected city.</h2>
       <p class="film-description">Children learning, neighbours gathering, and shops on the move. Follow everyday life supported by Seneschal as FC skateboards and connected Nodes grow into a city.</p>
+      </div>
       <div class="film-player">
         <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-v6.jpg" data-stream="/media/mobility-world-v6/film.m3u8" aria-label="From everyday life to a connected city." aria-describedby="vision-film-note"></video>
         <button class="film-start" type="button" aria-controls="vision-film-video"><span>▶ Watch the 5-minute film</span></button>
@@ -226,6 +255,7 @@
         </div>
       </details>
     </section>
+    </div>
 
     <section aria-labelledby="planning-heading">
       <div class="section-head">
