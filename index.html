@@ -326,6 +326,7 @@
     .film-language { font:inherit; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:6px; padding:6px 10px; }
     .film-language:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; }
 </style>
+  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-1">
   <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
   <script defer src="/media/film-player.js?v=7"></script>
 </head>
@@ -359,10 +360,13 @@
     <div class="experience-pair">
     <section class="vision-film" id="vision-film" aria-labelledby="vision-film-heading">
       <div class="film-intro">
-      <label class="film-language-label" for="film-language">Film language <select class="film-language" id="film-language" aria-label="Film language"><option value="ja">日本語</option><option value="en" selected>English</option></select></label>
-      <p class="film-kicker">CONCEPT FILM · 4:41 · JA / EN</p>
-      <h2 id="vision-film-heading">From everyday life to a connected city.</h2>
-      <p class="film-description">Children learning, neighbours gathering, and shops on the move. Follow everyday life supported by Seneschal as FC skateboards and connected Nodes grow into a city.</p>
+        <p class="film-kicker">CONCEPT FILM · 4:41 · JA / EN</p>
+        <h2 id="vision-film-heading">From everyday life to a connected city.</h2>
+        <div class="film-copy">
+          <p class="film-description">Children learning, neighbours gathering, and shops on the move. Follow everyday life supported by Seneschal as FC skateboards and connected Nodes grow into a city.</p>
+          <p class="film-description">Explore how automated parking, modular shops and shared energy connect everyday services with the city’s operating infrastructure. <a class="film-overview" href="/Autonomous_Mobility_Overview.pdf" target="_blank" rel="noopener noreferrer">Concept overview · English PDF ↗</a></p>
+          <label class="film-language-label" for="film-language">Film language <select class="film-language" id="film-language" aria-label="Film language"><option value="ja">日本語</option><option value="en" selected>English</option></select></label>
+        </div>
       </div>
       <div class="film-player">
         <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-v6.jpg" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="From everyday life to a connected city." aria-describedby="vision-film-note"></video>
@@ -382,9 +386,11 @@
       <div class="section-head">
         <span class="tag">Regional Mobility Lab · Interactive demo</span>
         <h2 id="simulation-heading">Can smarter operations make mobility viable?</h2>
+        <div class="simulation-copy">
         <p>Before adding vehicles, compare empty cruising with demand-led parking and shared night-time servicing.</p>
         <p>Choose Tokyo, Nagoya or Toyota. Compare operating models, search for conditions that meet your targets, and test how demand, parking and energy costs affect the result.</p>
         <p style="font-size:.75rem">One simulator with shared regional inputs, map replay and editable assumptions. Maps show synthetic routes; real-time app integration is separate.</p>
+        </div>
       </div>
       <div class="simulation-stage">
         <div class="simulation-preview">

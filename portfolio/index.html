@@ -143,6 +143,7 @@
     .film-language { font:inherit; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:6px; padding:6px 10px; }
     .film-language:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; }
 </style>
+  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-1">
   <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
   <script defer src="/media/film-player.js?v=7"></script>
 </head>
@@ -173,10 +174,13 @@
     <div class="experience-pair">
     <section class="vision-film" id="vision-film" aria-labelledby="vision-film-heading">
       <div class="film-intro">
-      <label class="film-language-label" for="film-language">動画の言語 <select class="film-language" id="film-language" aria-label="動画の言語"><option value="ja" selected>日本語</option><option value="en">English</option></select></label>
-      <p class="film-kicker">未来構想アニメーション · 4分41秒 · 日本語／英語</p>
-      <h2 id="vision-film-heading">暮らしから、街をつくる。</h2>
-      <p class="film-description">子どもたちの学童、高齢者の集い、移動するお店。Seneschalが支える日常から、FCスケートボードとNodeがつながり、街が育っていく未来を描きます。</p>
+        <p class="film-kicker">未来構想アニメーション · 4分41秒 · 日本語／英語</p>
+        <h2 id="vision-film-heading">暮らしから、街をつくる。</h2>
+        <div class="film-copy">
+          <p class="film-description">子どもたちの学童、高齢者の集い、移動するお店。Seneschalが支える日常から、FCスケートボードとNodeがつながり、街が育っていく未来を描きます。</p>
+          <p class="film-description">自動駐車、店舗の載せ替え、エネルギーの共有が、日常のサービスと街の運行基盤をどう結ぶかを紹介します。 <a class="film-overview" href="/Autonomous_Mobility_Overview.pdf" target="_blank" rel="noopener noreferrer">構想の全体像（Overview・英語PDF）↗</a></p>
+          <label class="film-language-label" for="film-language">動画の言語 <select class="film-language" id="film-language" aria-label="動画の言語"><option value="ja" selected>日本語</option><option value="en">English</option></select></label>
+        </div>
       </div>
       <div class="film-player">
         <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-v6.jpg" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="暮らしから、街をつくる。" aria-describedby="vision-film-note"></video>
@@ -196,9 +200,11 @@
       <div class="section-head">
         <span class="tag">地域モビリティ・ラボ · 操作できるデモ</span>
         <h2 id="simulation-heading">運行を賢くすれば、モビリティ事業は成立するか。</h2>
+        <div class="simulation-copy">
         <p>車両を増やす前に、空車回送と需要に応じた駐車・夜間作業の集約を比較します。</p>
         <p>東京・名古屋・豊田を選び、運行方式を比較。目標を満たす条件を探索し、需要・駐車費・エネルギー費が事業性に与える影響を確認できます。</p>
         <p style="font-size:.75rem">地域別の共通入力、地図上の運行再生、編集可能な前提条件を備えた一つのシミュレータです。地図の経路は仮想データで、外部アプリとのリアルタイム連携とは区別しています。</p>
+        </div>
       </div>
       <div class="simulation-stage">
         <div class="simulation-preview">
