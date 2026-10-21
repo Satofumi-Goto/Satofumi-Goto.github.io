@@ -140,8 +140,10 @@ def build_regex(step):
     # An anchored step (index alignment) rewrites only the number that directly follows `anchor`
     # on `page`; non-ASCII characters in the anchor (such as the >= sign) match any glyph.
     if step.get('anchor'):
-        a = ''.join(re.escape(c) if ord(c) < 128 else '.' for c in step['anchor'])
-        return re.compile('(?P<a>' + a + ')(?P<n>' + re.escape(step['fromText']) + r')(?!\d)(?!\.\d)')
+        # The content stream has no inter-word spaces where pdfplumber inserts them, so whitespace is optional
+        # between anchor characters and before the number (the layout gate shares this function).
+        a = r'\s?'.join(re.escape(c) if ord(c) < 128 else '.' for c in step['anchor'] if not c.isspace())
+        return re.compile('(?P<a>' + a + r')\s?(?P<n>' + re.escape(step['fromText']) + r')(?!\d)(?!\.\d)')
     # sign: 'neg' rewrites only a number directly preceded by a minus sign (▲, −, -, optionally then ¥); 'pos' only one
     # without it. Used when the same digits are shown for a negative and a positive value. after: text that must follow.
     sign = ''
