@@ -18,16 +18,150 @@
  },
  "simulationResult": {
   "engine": "project-finance-1.0.0",
+  "breakdownDetail": {
+   "2030": {
+    "maasOps": {
+     "remote-labour": 0.041,
+     "maintenance-cleaning": 0,
+     "insurance": 0.002,
+     "comms-cloud": 0,
+     "energy": 0,
+     "vehicle-depreciation": 0,
+     "other": 1.983
+    },
+    "remoteOps": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 0.3
+    },
+    "dispatchOps": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 0.55
+    },
+    "maintenance": {
+     "labour": 0,
+     "parts-materials": 0,
+     "other": 0.25
+    },
+    "platformOps": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 1
+    },
+    "cloudOpsBase": {
+     "compute-storage": 0,
+     "network": 0,
+     "other": 0.5
+    },
+    "aiOps": {
+     "labour": 0,
+     "compute": 0,
+     "other": 0.22
+    },
+    "customerOps": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 0.18
+    },
+    "partnerOps": {
+     "labour": 0,
+     "commissions": 0,
+     "other": 0.12
+    },
+    "materialCycle": {
+     "labour": 0,
+     "materials": 0,
+     "other": 0.3
+    },
+    "nodeOptimization": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 0.12
+    },
+    "energySync": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 0.08
+    }
+   },
+   "2035": {
+    "maasOps": {
+     "remote-labour": 0.81,
+     "maintenance-cleaning": 0,
+     "insurance": 0.04,
+     "comms-cloud": 0,
+     "energy": 0,
+     "vehicle-depreciation": 0,
+     "other": 21.95
+    },
+    "remoteOps": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 2.1
+    },
+    "dispatchOps": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 4.2
+    },
+    "maintenance": {
+     "labour": 0,
+     "parts-materials": 0,
+     "other": 1.8
+    },
+    "platformOps": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 6
+    },
+    "cloudOpsBase": {
+     "compute-storage": 0,
+     "network": 0,
+     "other": 3.799
+    },
+    "aiOps": {
+     "labour": 0,
+     "compute": 0,
+     "other": 2.4
+    },
+    "customerOps": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 1.5
+    },
+    "partnerOps": {
+     "labour": 0,
+     "commissions": 0,
+     "other": 1.1
+    },
+    "materialCycle": {
+     "labour": 0,
+     "materials": 0,
+     "other": 1.8
+    },
+    "nodeOptimization": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 0.95
+    },
+    "energySync": {
+     "labour": 0,
+     "comms-cloud": 0,
+     "other": 0.6
+    }
+   }
+  },
   "pnl": {
    "2030": {
     "revenue": 30.769,
     "opex": 13.33,
     "sga": 4.385,
     "ebitda": 13.054,
-    "depreciation": 30.206,
-    "operatingProfit": -17.152,
+    "depreciation": 23.663,
+    "operatingProfit": -10.609,
     "ebitdaMargin": 42.426,
-    "operatingMargin": -55.744,
+    "operatingMargin": -34.48,
     "lines": {
      "revenue.elecInternal": 7.2,
      "revenue.elecExternal": 9,
@@ -62,7 +196,7 @@
      "sga.customerOps": -0.18,
      "sga.platform": -1.514,
      "sga.partnerOps": -0.12,
-     "depreciation.node": -1.333,
+     "depreciation.node": -0.64,
      "depreciation.gtfc": -1.23,
      "depreciation.mill": -0.06,
      "depreciation.battery": -0.5,
@@ -70,15 +204,15 @@
      "depreciation.hts": -0.4,
      "depreciation.water": -0.2,
      "depreciation.hpc": -0.333,
-     "depreciation.energyDevice": -0.6,
+     "depreciation.energyDevice": 0,
      "depreciation.vehicleDev": -10,
      "depreciation.prototype": -2,
-     "depreciation.swapBody": -1.5,
+     "depreciation.swapBody": 0,
      "depreciation.platformDev": -8,
-     "depreciation.aiPlatform": -1.8,
-     "depreciation.controlOs": -1.2,
-     "depreciation.infraSync": -0.45,
-     "depreciation.revenueLogic": -0.3
+     "depreciation.aiPlatform": 0,
+     "depreciation.controlOs": 0,
+     "depreciation.infraSync": 0,
+     "depreciation.revenueLogic": 0
     }
    },
    "2035": {
@@ -86,10 +220,10 @@
     "opex": 71.593,
     "sga": 22.593,
     "ebitda": 52.575,
-    "depreciation": 93.19,
-    "operatingProfit": -40.615,
+    "depreciation": 39.197,
+    "operatingProfit": 13.378,
     "ebitdaMargin": 35.824,
-    "operatingMargin": -27.674,
+    "operatingMargin": 9.116,
     "lines": {
      "revenue.elecInternal": 13.5,
      "revenue.elecExternal": 15.75,
@@ -124,23 +258,23 @@
      "sga.customerOps": -1.5,
      "sga.platform": -5.099,
      "sga.partnerOps": -1.1,
-     "depreciation.node": -12,
-     "depreciation.gtfc": -2.23,
-     "depreciation.mill": -1.56,
-     "depreciation.battery": -1,
-     "depreciation.magnetic": -0.6,
-     "depreciation.hts": -0.8,
-     "depreciation.water": -0.4,
+     "depreciation.node": -5.76,
+     "depreciation.gtfc": -1.507,
+     "depreciation.mill": -0.48,
+     "depreciation.battery": -0.64,
+     "depreciation.magnetic": -0.38,
+     "depreciation.hts": -0.51,
+     "depreciation.water": -0.26,
      "depreciation.hpc": -3,
-     "depreciation.energyDevice": -3.6,
-     "depreciation.vehicleDev": -20,
+     "depreciation.energyDevice": 0,
+     "depreciation.vehicleDev": -12.78,
      "depreciation.prototype": -2,
-     "depreciation.swapBody": -5.2,
-     "depreciation.platformDev": -22,
-     "depreciation.aiPlatform": -8.5,
-     "depreciation.controlOs": -6.2,
-     "depreciation.infraSync": -2.6,
-     "depreciation.revenueLogic": -1.5
+     "depreciation.swapBody": 0,
+     "depreciation.platformDev": -11.88,
+     "depreciation.aiPlatform": 0,
+     "depreciation.controlOs": 0,
+     "depreciation.infraSync": 0,
+     "depreciation.revenueLogic": 0
     }
    }
   },

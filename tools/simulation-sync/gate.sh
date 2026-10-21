@@ -5,6 +5,11 @@ set -euo pipefail
 BASE=${1:-origin/main}
 T=tools/simulation-sync
 W=$(mktemp -d)
+PDFS="Autonomous_Mobility_System_Business_Feasibility.pdf portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf"
+if git diff --quiet "$BASE" -- $PDFS; then
+  echo "PDFs unchanged from $BASE: nothing to gate (ledger-only change; run.py --check verifies the ledger)"
+  exit 0
+fi
 git show "$BASE:$T/published-values.json" > "$W/base-values.json" 2>/dev/null || cp "$T/bootstrap-values.json" "$W/base-values.json"  # numbers shown by the PDFs before this mechanism
 node --input-type=module -e "
 import fs from 'node:fs';
