@@ -109,6 +109,11 @@ def page_chars(page, cache):
 
 
 def build_regex(step):
+    # An anchored step (index alignment) rewrites only the number that directly follows `anchor`
+    # on `page`; non-ASCII characters in the anchor (such as the >= sign) match any glyph.
+    if step.get('anchor'):
+        a = ''.join(re.escape(c) if ord(c) < 128 else '.' for c in step['anchor'])
+        return re.compile('(?P<a>' + a + ')(?P<n>' + re.escape(step['fromText']) + r')(?!\d)(?!\.\d)')
     return re.compile(r'(?<![\d.])' + re.escape(step['fromText']) + r'(?!\d)(?!\.\d)')
 
 
@@ -126,9 +131,12 @@ def rewrite(plan, src, dst):
         text = ''.join(c[4] for c in chars)
         edits = {}
         for s in steps:
+            if s.get('page') and s['page'] != pno:
+                continue
             for m in build_regex(s).finditer(text):
+                base = m.start('n') if s.get('anchor') else m.start()
                 for k, (a, b) in enumerate(zip(s['fromText'], s['toText'])):
-                    idx = m.start() + k
+                    idx = base + k
                     if a == b:
                         continue
                     fi = chars[idx][5]
@@ -137,7 +145,7 @@ def rewrite(plan, src, dst):
                     if idx in edits and edits[idx] != b:
                         raise Refused(f'page {pno}: overlapping rewrites at {idx}')
                     edits[idx] = b
-                report['changes'].append({'page': pno, 'key': s['key'], 'from': s['fromText'], 'to': s['toText'], 'index': m.start()})
+                report['changes'].append({'page': pno, 'key': s['key'], 'from': s['fromText'], 'to': s['toText'], 'index': base})
         if not edits:
             continue
         # Apply byte edits per text string.
