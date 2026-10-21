@@ -317,14 +317,7 @@
 <details class="rev" data-rev="1" data-card="feasibility">
   <summary>改訂履歴 <span>第1回改訂 · 2026年10月21日更新</span></summary>
   <div class="rev-body">
-    <p class="rev-head">数値がシミュレータに追従し、レイアウトを1ピクセルも動かさない仕組みを備えました。</p>
-    <ul>
-      <li><strong>計算結果をシミュレータから自動反映</strong>（入力指数はFederationで手動管理）</li>
-      <li><strong>数字の字形だけを入れ替え</strong>。文字数・符号・字幅が変わる、または埋め込みフォントに無い字形が必要な書き換えは拒否</li>
-      <li><strong>レイアウトゲート</strong>：ページ数・文字位置・フォントが同一で、書き換えた数字以外に変化がなければ公開。1つでも失敗すれば従前のPDFを維持</li>
-      <li><strong>変更のたびに自動検証</strong>（PRごと・pushごと）</li>
-      <li><strong>減価償却を総投資額に整合</strong>。計画シナリオの2035年営業利益は+13.378 B JPY</li>
-    </ul>
+    <p class="rev-head">数値の整合を取る仕組みを入れました。</p>
     <p class="rev-note">編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。</p>
   </div>
 </details>

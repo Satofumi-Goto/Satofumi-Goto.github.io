@@ -501,16 +501,7 @@
 <details class="rev" data-rev="1" data-card="feasibility">
   <summary>Revision log <span>Rev. 1 · updated 21 Oct 2026</span></summary>
   <div class="rev-body">
-    <p class="rev-head">Numbers now follow the simulator, with a layout gate that refuses to let the page move.</p>
-    <ul>
-      <li><strong>Numbers follow the simulator.</strong> Calculated values flow from the simulator&#x27;s project-finance engine into the PDF. Inputs stay under manual control in Federation.</li>
-      <li><strong>Digits only, never re-typeset.</strong> Only digit glyphs are exchanged inside the existing text. A rewrite that would change the character count, a sign or a glyph width, or that needs a glyph missing from the embedded font, is refused.</li>
-      <li><strong>Layout gate.</strong> The result must keep the page count, character positions and fonts, show only the planned text change, and alter no pixel outside the rewritten digits. If any check fails, the previous PDF stays published.</li>
-      <li><strong>Checked on every change.</strong> The same verification runs automatically on each pull request and each push.</li>
-      <li><strong>Depreciation aligned to total investment.</strong> The depreciation basis now matches the investment amount, and 2035 operating profit in the plan scenario is +13.378 B JPY.</li>
-      <li><strong>A planning assumption, stated as one.</strong> Hub unit cost (¥2.4B per node) is declared a planning assumption, then the footnote was simplified.</li>
-      <li><strong>One source for the whole system.</strong> Federation and Seneschal read their numerical baseline from this document.</li>
-    </ul>
+    <p class="rev-head">Added a mechanism that keeps the numbers consistent with the simulator.</p>
     <p class="rev-note">Figures are planning-scenario values from editable assumptions, not operating results.</p>
   </div>
 </details>
