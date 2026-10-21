@@ -35,7 +35,7 @@ export function publishedValues(simulationResult, financialAssessment) {
     if (k === 'npvBreakEvenExtraEbitda') { put('sens.breakEven.extraEbitda', v.extraEbitdaPerYear2030to2035, 3); put('sens.breakEven.npvHurdle', v.npvHurdle, 3); continue; }
     put(`sens.${k}.irr`, v.irrPercent, 2); put(`sens.${k}.npv8`, v.npv8, 3); put(`sens.${k}.npvHurdle`, v.npvHurdle, 3);
   }
-  // The same amounts are also shown in 億円 (1 B JPY = 10 億円, two decimals), e.g. ▲406.16億円.
+  // The same amounts are also shown in 億円 (1 B JPY = 10 億円, two decimals), e.g. +133.78億円.
   for (const [key, v] of Object.entries({ ...out })) {
     if (/^(pnl\.\d{4}\.(revenue|ebitda|operatingProfit|opex|sga|depreciation)|cf\.\d{4}\.(fcf|cumulativeFcf))$/.test(key)) put(key + '.oku', v.value * 10, 2);
   }
