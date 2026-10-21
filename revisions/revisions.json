@@ -81,7 +81,7 @@
      },
      {
       "lead": "Project finance added.",
-      "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations. Operating cost can now be itemised: MaaS operations splits into seven components (14 component indices in the bundled baseline), and four per-vehicle cost inputs (remote monitoring, insurance, maintenance, communications) are added at a default of zero. Totals are unchanged."
+      "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations. Operating cost can now be itemised: MaaS operations splits into seven components (14 component indices in the bundled baseline), and four per-vehicle cost inputs (remote monitoring, insurance, maintenance, communications) are added at a default of zero. Totals are unchanged. An extended evaluation adds corporate tax with a loss carry-forward cap, renewal investment and a 2035 residual value; including renewal investment, payback moves from 2039 to 2045. Tax rate, carry-forward cap and growth rate are study assumptions, not Federation-registered values, and the baseline P/L, IRR and NPV are unchanged. IRR is flagged as reference-only when cash flow changes sign more than once, and the tool reports when break-even EBITDA lies outside the search range."
      },
      {
       "lead": "Live indices from Federation, with provenance.",
@@ -97,7 +97,7 @@
      },
      {
       "lead": "Evidence you can inspect.",
-      "text": " A fleet-hub study dataset is published alongside the simulator."
+      "text": " A fleet-hub study dataset is published alongside the simulator. After an independent review, a defect that completed no trips under the baseline settings was fixed: the 2030 and 2035 plans now complete every request (73 and 140 trips/day with 13 and 24 vehicles), and across three random seeds 82–89% and 87–89% of pickups meet the 6- and 3-minute waiting-time targets. Sensitivity sweeps run on three seeds and show a min–mean–max band, with pass/fail judged on the worst seed. Waiting-time limits, stop times and the peak speed factor are labelled as test assumptions."
      },
      {
       "lead": "Three view modes.",
@@ -106,7 +106,7 @@
     ],
     "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
    },
-   "reviewed_at": "2026-10-20T20:52:00Z",
+   "reviewed_at": "2026-10-21T20:51:00Z",
    "ja": {
     "head": "運行・財務・リアルタイム入力を一つの計算に結び付ける、事業性検証シミュレータへ統合しました。",
     "items": [
@@ -128,7 +128,7 @@
      },
      {
       "lead": "プロジェクト財務を追加。",
-      "text": "運行計算と同一条件でP/L 50項目、2025〜2035年のキャッシュフロー、IRR・NPV・感度分析を算出。MaaS運行費を7要素（標準条件の内訳指数14件）へ分解し、車両当たりの遠隔監視・保険・保守・通信の4費目を初期値ゼロで追加。合計額は変えません。"
+      "text": "運行計算と同一条件でP/L 50項目、2025〜2035年のキャッシュフロー、IRR・NPV・感度分析を算出。MaaS運行費を7要素（標準条件の内訳指数14件）へ分解し、車両当たりの遠隔監視・保険・保守・通信の4費目を初期値ゼロで追加。合計額は変えません。拡張評価として、繰越欠損金の控除上限つき法人税、更新投資、2035年の残存価値を追加（更新投資を含めると回収年は2039年から2045年）。税率・繰越上限・成長率は検討用の仮置きでFederation登録値ではなく、標準条件のP/L・IRR・NPVは変わりません。キャッシュフローの符号が複数回反転する場合はIRRを参考値と表示し、損益分岐EBITDAが探索範囲外の場合も報告します。"
      },
      {
       "lead": "Federationの指数をリアルタイム受信し、出所を記録。",
@@ -144,7 +144,7 @@
      },
      {
       "lead": "検証データも公開。",
-      "text": "フリート・拠点検討用のデータセットを、シミュレータと併せて公開しました。"
+      "text": "フリート・拠点検討用のデータセットを、シミュレータと併せて公開。独立レビューで見つかった「基準設定で完了が0件になる」欠陥を修正し、2030年（13台・73件/日）と2035年（24台・140件/日）はいずれも全件完了、乱数3通りで待ち時間の目標（6分・3分）以内に乗れた割合は82〜89%・87〜89%です。感度の掃引も乱数3通りで最小・平均・最大の帯を示し、合否は最も悪い乱数で判定します。待ち上限・停車時間・ピーク時の速度係数はテスト仮定として明示しています。"
      },
      {
       "lead": "3種類の表示モード。",
@@ -269,7 +269,7 @@
     "items": [],
     "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
    },
-   "reviewed_at": "2026-10-21T11:20:00Z"
+   "reviewed_at": "2026-10-21T20:51:00Z"
   },
   "seneschal": {
    "updated": "2026-10-21",
@@ -369,7 +369,7 @@
     ],
     "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
    },
-   "reviewed_at": "2026-10-20T20:52:00Z"
+   "reviewed_at": "2026-10-21T20:51:00Z"
   },
   "federation": {
    "updated": "2026-10-21",
@@ -405,7 +405,7 @@
      },
      {
       "lead": "Card Quality Loop.",
-      "text": " Blueprint and Artifact cards are scored continuously. Independent reviews are recorded in a ledger for 36 cards (30 at 10/10, 6 with open findings), including vehicle platforms, WBS, risk register, pricing and the control structure."
+      "text": " Blueprint and Artifact cards are scored on a 10-point rubric, and the official score is the independent review of the card's current content only. A quality workspace connects diagnosis, correction records, evidence and re-review, and reviews follow a convergence protocol with finding IDs, severity and a resolution check for each earlier finding. Reviewer accuracy is calibrated by planting known errors and measuring detection and false-alarm rates. The ledger now holds independent reviews for 97 cards: 9 at 10/10, 39 at 9, 42 at 8 and 7 at 7; every card below 10 has open findings."
      },
      {
       "lead": "Consistency with the English portfolio.",
@@ -417,7 +417,7 @@
      },
      {
       "lead": "Design from the specification.",
-      "text": " The Design section renders the v2 specification as a model-based view: state machines, sequence, use-case and activity diagrams, a requirement-to-evidence trace, consistency checks across the model, and change-impact analysis that traces upstream and downstream. Gaps and open questions are listed rather than hidden, and a desk check is never shown as field-verified."
+      "text": " The Design section renders the v2 specification as a model-based view: state machines, sequence, use-case and activity diagrams, a requirement-to-evidence trace, consistency checks across the model, and change-impact analysis that traces upstream and downstream. Gaps and open questions are listed rather than hidden, and a desk check is never shown as field-verified. It now also carries engineering trial models: a 2035 vehicle model that chains driving, fuel cell, on-board milling, storage, refuelling and heat to a bill-of-materials mass with eight pass/fail checks, and a mass model for the MH chassis whose published 490–860 kg range is checked against the model in CI. A decision board lists each design decision (DD-xx) with the impact of every option, a recommended option shown as provisional until decided, a due date and a recorded outcome."
      },
      {
       "lead": "Knowledge graph.",
@@ -451,7 +451,7 @@
      },
      {
       "lead": "カード品質ループ",
-      "text": "：BlueprintとArtifactを継続採点し、独立レビューを36枚分台帳に記録（10/10が30枚、未解決の指摘ありが6枚）。車両プラットフォーム、WBS、リスク台帳、価格、制御構造などを含む"
+      "text": "：BlueprintカードとArtifactカードを10点満点で採点し、正式点は最新内容に対する独立レビューの点のみとします。診断・修正記録・証跡・再レビューをつなぐ品質ワークスペースを備え、レビューは指摘ID・重大度・前回指摘の解消判定を持つ収束プロトコルで行います。レビュアーの精度は、既知の誤りを植え込んで検出率と誤検出率で校正します。台帳には97枚の独立レビューがあり、10点は9枚、9点は39枚、8点は42枚、7点は7枚で、10点未満のカードはすべて未解決の指摘を残しています。"
      },
      {
       "lead": "英文ポートフォリオとの整合チェック",
@@ -463,7 +463,7 @@
      },
      {
       "lead": "仕様書からのDesign",
-      "text": "：Designセクションが仕様書v2をモデルベースの画面として表示。状態機械・シーケンス図・ユースケース図・アクティビティ図、要求から証跡へのトレース、モデル全体の整合チェック、上流・下流をたどる変更影響分析。欠けや未決事項は隠さず一覧にし、机上確認を実機確認済みとは表示しない"
+      "text": "：Designセクションが仕様書v2をモデルベースの画面として表示。状態機械・シーケンス図・ユースケース図・アクティビティ図、要求から証跡へのトレース、モデル全体の整合チェック、上流・下流をたどる変更影響分析。欠けや未決事項は隠さず一覧にし、机上確認を実機確認済みとは表示しない。あわせて工学的な試算モデルを搭載：走行・燃料電池・車載ミル・貯蔵・補給・排熱を部品表の質量までつなぐ2035年車両の統合モデル（判定8件）と、公開値490〜860kgをCIでモデルの下限・上限と照合するMH骨格の質量モデル。判断ボードは設計判断（DD-xx）ごとに、選択肢ごとの影響、決定までは暫定採用と表示する推奨案、期限、決定の記録を示します"
      },
      {
       "lead": "ナレッジグラフ",
