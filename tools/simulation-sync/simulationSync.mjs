@@ -97,8 +97,21 @@ export function rewritePlan(previous, next) {
     const k = (strict ? (n.value < 0 ? '-' : '+') : '') + t;
     if (byToken.has(k)) problems.push(`ambiguous: ${t} changes for ${byToken.get(k).key} but stays for ${key}`);
   }
+  // The cash-flow extension marks the first year whose cumulative FCF is non-negative with a
+  // PAYBACK label. When that year's value turns negative the label goes with it; when a year
+  // becomes the first non-negative one it gains the label.
+  const cum = (set) => Object.entries(set).map(([k, v]) => [k.match(/^cf\.(\d{4})\.cumulativeFcf$/)?.[1], v.value]).filter(([y]) => y).sort();
+  const firstPos = (set) => cum(set).find(([, v]) => v >= 0)?.[0];
+  const oldYear = firstPos(previous), newYear = firstPos(next);
+  for (const step of byToken.values()) {
+    const y = step.key.match(/^cf\.(\d{4})\.cumulativeFcf$/)?.[1];
+    if (!y || oldYear === newYear) continue;
+    if (y === oldYear) step.dropAfter = PAYBACK_LABEL;
+    if (y === newYear) step.addAfter = PAYBACK_LABEL;
+  }
   return { steps: [...byToken.values()], problems };
 }
+const PAYBACK_LABEL = ' PAYBACK';
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const NEG = '▲−-';
@@ -111,19 +124,23 @@ export function applyPlan(text, steps) {
   let out = text, count = 0; const perStep = {}, signReview = [];
   for (const step of steps) {
     const after = step.after ? `(?=${esc(step.after)})` : '';
-    const re = new RegExp(`([${NEG}]?)(\\s?¥?)(?<![\\d.])${esc(step.fromText)}(?![\\d])(?!\\.\\d)${after}`, 'g');
+    // A PAYBACK label follows the unit (¥28.812B PAYBACK); the unit is kept and the label dropped or added.
+    const labelled = step.dropAfter || step.addAfter;
+    const drop = labelled ? `(?:(B|%)?${step.dropAfter ? esc(step.dropAfter) : ''})?` : '';
+    const re = new RegExp(`([${NEG}]?)(\\s?¥?)(?<![\\d.])${esc(step.fromText)}(?![\\d])(?!\\.\\d)${after}${drop}`, 'g');
     let n = 0;
     const flips = (step.from < 0) !== (step.to < 0);
-    out = out.replace(re, (all, sign, mid) => {
+    out = out.replace(re, (all, sign, mid, unitGroup) => {
+      const add = labelled && typeof unitGroup === 'string' ? unitGroup + (step.addAfter ?? '') : '';
       // Sign-strict steps (the number is also shown with the other sign) skip occurrences of the other sign.
       if (step.sign === 'neg' && !sign) return all;
       if (step.sign === 'pos' && sign) return all;
       n += 1;
-      if (!flips) return sign + mid + step.toText;
-      if (sign) return mid.trimStart() + step.toText;
-      if (step.to < 0 && mid.includes('¥')) return '▲' + mid.trimStart() + step.toText;
+      if (!flips) return sign + mid + step.toText + add;
+      if (sign) return mid.trimStart() + step.toText + add;
+      if (step.to < 0 && mid.includes('¥')) return '▲' + mid.trimStart() + step.toText + add;
       signReview.push(step.key);
-      return sign + mid + step.toText;
+      return sign + mid + step.toText + add;
     });
     perStep[step.key] = n; count += n;
   }
