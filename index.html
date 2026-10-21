@@ -37,7 +37,7 @@
     }
 
     .wrap {
-      width: min(100% - 48px, 1080px);
+      width: calc(100% - 40px);
       margin-inline: auto;
     }
 
@@ -82,7 +82,7 @@
     .eyebrow { margin: 0 0 16px; }
 
     h1 {
-      max-width: 900px;
+      max-width: none;
       margin: 0;
       font-size: clamp(2.4rem, 4.2vw, 3.65rem);
       font-weight: 500;
@@ -91,7 +91,7 @@
     }
 
     .lead {
-      max-width: 710px;
+      max-width: none;
       margin: 22px 0 0;
       color: #40535b;
       font-size: clamp(1rem, 1.5vw, 1.13rem);
@@ -144,7 +144,7 @@
 
     .item-description {
       display: block;
-      max-width: 360px;
+      max-width: none;
       margin-top: 14px;
       color: var(--muted);
       font-size: 0.96rem;
@@ -175,14 +175,14 @@
     }
 
     .note p:last-child {
-      max-width: 680px;
+      max-width: none;
       margin: 0;
       color: var(--muted);
       font-size: 0.9rem;
     }
 
     @media (max-width: 700px) {
-      .wrap { width: min(100% - 36px, 1080px); }
+      .wrap { width: calc(100% - 40px); }
       .masthead .wrap { align-items: flex-start; flex-direction: column; gap: 2px; padding-block: 20px; }
       .intro { padding-block: 44px 52px; }
       .lead { margin-top: 20px; }
@@ -215,7 +215,7 @@
     .simulation-open:focus-visible { outline:3px solid #0c6f73; outline-offset:-4px; }
     .simulation-caption { padding:10px 14px; color:var(--muted); font-size:.75rem; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
     .simulation-caption a { color:var(--accent); }
-    .simulation-dialog { padding:0; border:1px solid var(--line); border-radius:12px; width:calc(100vw - 32px); max-width:1600px; height:calc(100dvh - 32px); max-height:none; overflow:hidden; background:#faf9f6; }
+    .simulation-dialog { padding:0; border:1px solid var(--line); border-radius:12px; width:calc(100vw - 32px); max-width: none; height:calc(100dvh - 32px); max-height:none; overflow:hidden; background:#faf9f6; }
     .simulation-dialog::backdrop { background:#102c38b8; }
     .simulation-dialog[open] { display:flex; flex-direction:column; }
     .simulation-dialog-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; background:white; border-bottom:1px solid var(--line); font-size:.85rem; }
@@ -227,7 +227,7 @@
     .business-case { grid-column:1 / -1; border-top:1px solid var(--line); padding-top:14px; }
     .business-case summary { cursor:pointer; color:var(--accent); font-weight:650; font-size:.9rem; }
     .business-case summary span { color:var(--muted); font-weight:400; font-size:.78rem; margin-left:14px; }
-    .business-case-intro { max-width:780px; padding:16px 0 8px; }
+    .business-case-intro { max-width: none; padding:16px 0 8px; }
     .business-case h3 { margin:8px 0; font-size:1.1rem; line-height:1.35; }
     .business-case p { font-size:.88rem; line-height:1.65; color:var(--muted); margin:10px 0; }
     .business-case-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
@@ -281,7 +281,7 @@
     .vision-film { display:block; min-width:0; }
     .vision-film .film-kicker { margin:0 0 10px; color:var(--accent); font-size:.75rem; font-weight:700; letter-spacing:.09em; }
     .vision-film h2 { margin:0 0 12px; color:var(--ink); font-size:clamp(1.6rem,3.4vw,2.3rem); line-height:1.25; letter-spacing:-.025em; }
-    .vision-film .film-description { max-width:760px; margin:0 0 22px; color:var(--muted); line-height:1.7; }
+    .vision-film .film-description { max-width: none; margin:0 0 22px; color:var(--muted); line-height:1.7; }
     .vision-film video { display:block; width:100%; height:auto; aspect-ratio:16 / 9; background:#14253c; border:1px solid var(--line); border-radius:12px; box-shadow:0 12px 34px #183c4214; }
     .vision-film video:focus-visible, .vision-film summary:focus-visible { outline:3px solid #e5a64a; outline-offset:4px; }
     .vision-film .film-meta { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; margin:12px 0 0; color:var(--muted); font-size:.8rem; }
@@ -326,7 +326,7 @@
     .film-language { font:inherit; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:6px; padding:6px 10px; }
     .film-language:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; }
 </style>
-  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-1">
+  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-2">
   <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
   <script defer src="/media/film-player.js?v=7"></script>
 </head>
@@ -369,7 +369,7 @@
         </div>
       </div>
       <div class="film-player">
-        <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-v6.jpg" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="From everyday life to a connected city." aria-describedby="vision-film-note"></video>
+        <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-city.webp" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="From everyday life to a connected city." aria-describedby="vision-film-note"></video>
         <button class="film-start" type="button" aria-controls="vision-film-video"><span>▶ Watch the film (4:41)</span></button>
       </div>
       <div class="film-meta">

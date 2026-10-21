@@ -113,3 +113,11 @@
   .experience-pair .simulation-section > .rev { grid-row: 6; align-self: start; margin: 0; }
   .experience-pair .business-case-steps { grid-template-columns: 1fr; }
 }
+
+/* Use the available page width for every portfolio section and card. */
+.wrap { width: calc(100% - 40px); max-width: none; }
+main.wrap > section, main.wrap > footer.note { display: block; }
+main.wrap > section > .section-label { margin: 0 0 20px; }
+main.wrap > footer.note > .section-label { margin-bottom: 16px; }
+.card, .item, .card-wrap, .item-wrap, .items, .grid { min-width: 0; max-width: none; }
+@media (max-width: 680px) { .wrap { width: calc(100% - 32px); } }
