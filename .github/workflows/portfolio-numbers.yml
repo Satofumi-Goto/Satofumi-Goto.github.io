@@ -1,10 +1,10 @@
 name: Portfolio numbers follow the simulator
 on:
   pull_request:
-    paths: ['tools/simulation-sync/**', '*.pdf', 'portfolio/*.pdf', '.github/workflows/portfolio-numbers.yml']
+    paths: ['tools/simulation-sync/**', 'tools/index-alignment/**', '*.pdf', 'portfolio/*.pdf', '.github/workflows/portfolio-numbers.yml']
   push:
     branches: [main]
-    paths: ['tools/simulation-sync/**', '*.pdf', 'portfolio/*.pdf']
+    paths: ['tools/simulation-sync/**', 'tools/index-alignment/**', '*.pdf', 'portfolio/*.pdf']
 permissions:
   contents: read
 jobs:
@@ -23,6 +23,8 @@ jobs:
       - run: pip install pikepdf fonttools pdfplumber pypdfium2 numpy
       - name: Shown numbers equal the simulator results
         run: python3 tools/simulation-sync/run.py --check
+      - name: Phase targets (P10) are not weaker than the minimum gates (P1)
+        run: python3 tools/index-alignment/align_targets.py --check
       - name: Layout gate against the base branch (numbers only, no page drift)
         if: github.event_name == 'pull_request'
         run: tools/simulation-sync/gate.sh origin/${{ github.base_ref }}

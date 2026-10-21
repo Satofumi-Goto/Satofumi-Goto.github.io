@@ -18,9 +18,15 @@ import numpy as np
 SCALE = 2.0
 
 
-def expected_text(text, steps):
+def expected_text(text, steps, pno=None):
     out = text
     for s in steps:
+        if s.get('anchor'):
+            if s.get('page') and s['page'] != pno:
+                continue
+            a = ''.join(re.escape(c) if ord(c) < 128 else '.' for c in s['anchor'])
+            out = re.sub('(' + a + ')' + re.escape(s['fromText']) + r'(?!\d)(?!\.\d)', lambda m: m.group(1) + s['toText'], out)
+            continue
         out = re.sub(r'(?<![\d.])' + re.escape(s['fromText']) + r'(?!\d)(?!\.\d)', s['toText'], out)
     return out
 
@@ -38,7 +44,7 @@ def main(plan_path, before, after):
             if len(ca) != len(cb):
                 problems.append(f'page {i}: {len(ca)} -> {len(cb)} characters'); continue
             ta = ''.join(c['text'] for c in ca); tb = ''.join(c['text'] for c in cb)
-            if expected_text(ta, steps) != tb:
+            if expected_text(ta, steps, i) != tb:
                 problems.append(f'page {i}: text differs from the planned rewrite')
             boxes = []
             for x, y in zip(ca, cb):
