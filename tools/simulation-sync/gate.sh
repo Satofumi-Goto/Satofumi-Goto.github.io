@@ -5,7 +5,7 @@ set -euo pipefail
 BASE=${1:-origin/main}
 T=tools/simulation-sync
 W=$(mktemp -d)
-PDFS="Autonomous_Mobility_System_Business_Feasibility.pdf portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf"
+PDFS="Autonomous_Mobility_System_Business_Feasibility.pdf"
 if git diff --quiet "$BASE" -- $PDFS; then
   echo "PDFs unchanged from $BASE: nothing to gate (ledger-only change; run.py --check verifies the ledger)"
   exit 0
@@ -31,7 +31,8 @@ plan['steps'] += new
 json.dump(plan, open(w + '/plan.json', 'w'))
 print(f'{len(new)} anchored index-alignment changes')
 PY
-for f in Autonomous_Mobility_System_Business_Feasibility.pdf portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf; do
+for f in $PDFS; do
+  # A page that gets its own file for the first time is compared with the file it used to link (the /portfolio/ version).
   git show "$BASE:$f" > "$W/base.pdf"
   if cmp -s "$W/base.pdf" "$f"; then echo "$f unchanged"; continue; fi
   python3 $T/verify_layout.py "$W/plan.json" "$W/base.pdf" "$f"

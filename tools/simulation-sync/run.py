@@ -4,16 +4,17 @@
   python3 tools/simulation-sync/run.py            rewrite, verify, then replace files
   python3 tools/simulation-sync/run.py --check    fail if the shown numbers differ from the results
 
-Targets: the Toyota / Woven version at the site root (/) and the version under /portfolio/,
-which /capabilities/ also links. A PDF is replaced only after the layout gate passes;
+Targets: the Toyota / Woven version at the site root (/), the version under /portfolio/ and the
+version under /capabilities/ (each page keeps its own file). A PDF is replaced only after the layout gate passes;
 if any target fails, nothing is replaced and the ledger is left unchanged.
 """
 import json, os, shutil, subprocess, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-TARGETS = ['Autonomous_Mobility_System_Business_Feasibility.pdf',
-           'portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf']
+# One file per site page: / (Toyota / Woven), /portfolio/ (Honda) and /capabilities/ (general). Each is kept separately.
+# One PDF at the site root; the /portfolio/ and /capabilities/ pages link to it.
+TARGETS = ['Autonomous_Mobility_System_Business_Feasibility.pdf']
 
 
 def main():
