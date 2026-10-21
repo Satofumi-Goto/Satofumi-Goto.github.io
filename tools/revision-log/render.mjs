@@ -35,10 +35,13 @@ function renderBlock(key, lang, indent) {
     `${i1}<summary>${esc(label.summary)} <span>${esc(meta)}</span></summary>`,
     `${i1}<div class="rev-body">`,
     `${i2}<p class="rev-head">${esc(body.head)}</p>`,
-    `${i2}<ul>`,
-    ...body.items.map((it) =>
-      `${i3}<li>${it.lead ? `<strong>${esc(it.lead)}</strong>` : ''}${esc(it.text)}</li>`),
-    `${i2}</ul>`,
+    // A one-line entry (no items) has no list.
+    ...(body.items.length ? [
+      `${i2}<ul>`,
+      ...body.items.map((it) =>
+        `${i3}<li>${it.lead ? `<strong>${esc(it.lead)}</strong>` : ''}${esc(it.text)}</li>`),
+      `${i2}</ul>`,
+    ] : []),
   ];
   if (body.note) lines.push(`${i2}<p class="rev-note">${esc(body.note)}</p>`);
   lines.push(`${i1}</div>`, `${indent}</details>`);

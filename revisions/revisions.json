@@ -260,66 +260,16 @@
    ],
    "upstream": [],
    "en": {
-    "head": "Numbers now follow the simulator, with a layout gate that refuses to let the page move.",
-    "items": [
-     {
-      "lead": "Numbers follow the simulator.",
-      "text": " Calculated values flow from the simulator's project-finance engine into the PDF. Inputs stay under manual control in Federation."
-     },
-     {
-      "lead": "Digits only, never re-typeset.",
-      "text": " Only digit glyphs are exchanged inside the existing text. A rewrite that would change the character count, a sign or a glyph width, or that needs a glyph missing from the embedded font, is refused."
-     },
-     {
-      "lead": "Layout gate.",
-      "text": " The result must keep the page count, character positions and fonts, show only the planned text change, and alter no pixel outside the rewritten digits. If any check fails, the previous PDF stays published."
-     },
-     {
-      "lead": "Checked on every change.",
-      "text": " The same verification runs automatically on each pull request and each push."
-     },
-     {
-      "lead": "Depreciation aligned to total investment.",
-      "text": " The depreciation basis now matches the investment amount, and 2035 operating profit in the plan scenario is +13.378 B JPY."
-     },
-     {
-      "lead": "A planning assumption, stated as one.",
-      "text": " Hub unit cost (¥2.4B per node) is declared a planning assumption, then the footnote was simplified."
-     },
-     {
-      "lead": "One source for the whole system.",
-      "text": " Federation and Seneschal read their numerical baseline from this document."
-     }
-    ],
+    "head": "Added a mechanism that keeps the numbers consistent with the simulator.",
+    "items": [],
     "note": "Figures are planning-scenario values from editable assumptions, not operating results."
    },
    "ja": {
-    "head": "数値がシミュレータに追従し、レイアウトを1ピクセルも動かさない仕組みを備えました。",
-    "items": [
-     {
-      "lead": "計算結果をシミュレータから自動反映",
-      "text": "（入力指数はFederationで手動管理）"
-     },
-     {
-      "lead": "数字の字形だけを入れ替え",
-      "text": "。文字数・符号・字幅が変わる、または埋め込みフォントに無い字形が必要な書き換えは拒否"
-     },
-     {
-      "lead": "レイアウトゲート",
-      "text": "：ページ数・文字位置・フォントが同一で、書き換えた数字以外に変化がなければ公開。1つでも失敗すれば従前のPDFを維持"
-     },
-     {
-      "lead": "変更のたびに自動検証",
-      "text": "（PRごと・pushごと）"
-     },
-     {
-      "lead": "減価償却を総投資額に整合",
-      "text": "。計画シナリオの2035年営業利益は+13.378 B JPY"
-     }
-    ],
+    "head": "数値の整合を取る仕組みを入れました。",
+    "items": [],
     "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
    },
-   "reviewed_at": "2026-10-19T03:15:00Z"
+   "reviewed_at": "2026-10-21T11:20:00Z"
   },
   "seneschal": {
    "updated": "2026-10-21",
