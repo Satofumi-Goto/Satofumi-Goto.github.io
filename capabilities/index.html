@@ -143,9 +143,9 @@
     .film-language { font:inherit; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:6px; padding:6px 10px; }
     .film-language:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; }
 </style>
-  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-2">
+  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-3">
   <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
-  <script defer src="/media/film-player.js?v=7"></script>
+  <script defer src="/media/film-player.js?v=8"></script>
 </head>
 <body>
   <header>
@@ -174,17 +174,17 @@
     <div class="experience-pair">
     <section class="vision-film" id="vision-film" aria-labelledby="vision-film-heading">
       <div class="film-intro">
-        <p class="film-kicker">CONCEPT FILM · 4:41 · JA / EN</p>
+        <p class="film-kicker">CONCEPT FILM · JA / EN</p>
         <h2 id="vision-film-heading">From everyday life to a connected city.</h2>
         <div class="film-copy">
-          <p class="film-description">Children learning, neighbours gathering, and shops on the move. Follow everyday life supported by Seneschal as FC skateboards and connected Nodes grow into a city.</p>
+          <p class="film-description">A concept film of approximately 5 minutes (4:41). Children learning, neighbours gathering, and shops on the move. Follow everyday life supported by Seneschal as FC skateboards and connected Nodes grow into a city.</p>
           <p class="film-description">Explore how automated parking, modular shops and shared energy connect everyday services with the city’s operating infrastructure. <a class="film-overview" href="/Autonomous_Mobility_Overview.pdf" target="_blank" rel="noopener noreferrer">Concept overview · English PDF ↗</a></p>
           <label class="film-language-label" for="film-language">Film language <select class="film-language" id="film-language" aria-label="Film language"><option value="ja">日本語</option><option value="en" selected>English</option></select></label>
         </div>
       </div>
       <div class="film-player">
         <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-city.webp" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="From everyday life to a connected city." aria-describedby="vision-film-note"></video>
-        <button class="film-start" type="button" aria-controls="vision-film-video"><span>▶ Watch the film (4:41)</span></button>
+        <button class="film-start" type="button" aria-controls="vision-film-video" aria-label="Play film"><span aria-hidden="true">▶︎</span></button>
       </div>
       <div class="film-meta">
         <span id="vision-film-note">Enjoy the music and the sounds of everyday life.</span>

@@ -29,7 +29,7 @@
       video.currentTime = Math.min(position, Math.max(0, (video.duration || 300) - .1));
       start.disabled = false;
       if (resume) video.play().catch(showRetry);
-      else { start.hidden = position > 0; start.querySelector('span').textContent = ja ? '▶ 映像を見る（4分41秒）' : '▶ Watch the film (4:41)'; }
+      else { start.hidden = position > 0; start.querySelector('span').textContent = '▶︎'; }
     };
     if (window.Hls && Hls.isSupported()) {
       player = new Hls({ maxBufferLength: 20, maxMaxBufferLength: 40 });
