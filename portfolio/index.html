@@ -91,7 +91,28 @@
     .rev-note { margin:10px 0 0; color:var(--muted); font-size:.78rem; line-height:1.55; }
     .simulation-section > .rev { grid-column:1 / -1; border:0; border-top:1px solid var(--line); border-radius:0; background:none; padding:14px 0 0; }
     @media (max-width:680px) { .grid:has(.rev[open]) { align-items:stretch; } .rev { padding:12px 18px; } .simulation-section > .rev { padding:14px 0 0; } }
+
+    /* Mobility World — concept film */
+    .vision-film { display:block; min-width:0; }
+    .vision-film .film-kicker { margin:0 0 10px; color:var(--accent); font-size:.75rem; font-weight:700; letter-spacing:.09em; }
+    .vision-film h2 { margin:0 0 12px; color:var(--ink); font-size:clamp(1.6rem,3.4vw,2.3rem); line-height:1.25; letter-spacing:-.025em; }
+    .vision-film .film-description { max-width:760px; margin:0 0 22px; color:var(--muted); line-height:1.7; }
+    .vision-film video { display:block; width:100%; height:auto; aspect-ratio:16 / 9; background:#14253c; border:1px solid var(--line); border-radius:12px; box-shadow:0 12px 34px #183c4214; }
+    .vision-film video:focus-visible, .vision-film summary:focus-visible { outline:3px solid #e5a64a; outline-offset:4px; }
+    .vision-film .film-meta { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; margin:12px 0 0; color:var(--muted); font-size:.8rem; }
+    .vision-film .film-credits { margin-top:14px; color:var(--muted); font-size:.76rem; line-height:1.6; }
+    .vision-film .film-credits summary { width:fit-content; cursor:pointer; color:var(--accent); }
+    .vision-film .film-credits p { margin:10px 0 0; font-size:inherit; line-height:inherit; }
+
+    .vision-film .film-player { position:relative; }
+    .vision-film .film-start { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; border:0; border-radius:12px; background:linear-gradient(transparent 40%,#102c3833); cursor:pointer; }
+    .vision-film .film-start[hidden] { display:none; }
+    .vision-film .film-start span { color:#fff; background:#075b78ed; border:1px solid #ffffff66; border-radius:100px; padding:16px 28px; font:600 clamp(.9rem,2vw,1.1rem)/1.4 sans-serif; box-shadow:0 4px 28px #0004; }
+    .vision-film .film-start:focus-visible { outline:3px solid #e5a64a; outline-offset:4px; }
+    .vision-film .film-fullscreen { border:0; padding:0; background:none; color:var(--accent); font:inherit; text-decoration:underline; cursor:pointer; }
   </style>
+  <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
+  <script defer src="/media/film-player.js"></script>
 </head>
 <body>
   <header>
@@ -114,6 +135,24 @@
         <p>私の強みは、領域を横断して構造的な課題を解決することです。さまざまな影響要因と運行条件をシステム要件へ落とし込み、全体最適と実装をつなぎます。</p>
         <p>今後はAI技術と各分野の知見を組み合わせ、車両・運行・サービスを構想から実装まで総合的に捉えます。AIエージェントによってサービスを変革し、自動運転による新たな顧客価値を生み出すことを目指します。</p>
       </div>
+    </section>
+
+    <section class="vision-film" id="vision-film" aria-labelledby="vision-film-heading">
+      <p class="film-kicker">未来構想アニメーション · 5分</p>
+      <h2 id="vision-film-heading">暮らしから、街をつくる。</h2>
+      <p class="film-description">子どもたちの学童、高齢者の集い、移動するお店。Seneschalが支える日常から、FCスケートボードとNodeがつながり、街が育っていく未来を描きます。</p>
+      <div class="film-player">
+        <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-v6.jpg" data-stream="/media/mobility-world-v6/film.m3u8" aria-label="暮らしから、街をつくる。" aria-describedby="vision-film-note"></video>
+        <button class="film-start" type="button" aria-controls="vision-film-video"><span>▶ ５分の映像を見る</span></button>
+      </div>
+      <div class="film-meta">
+        <span id="vision-film-note">音楽と街の音も、一緒にお楽しみください。</span>
+        <button class="film-fullscreen" type="button">全画面で見る ↗</button>
+      </div>
+      <details class="film-credits">
+        <summary>音楽・環境音クレジット</summary>
+        <p>“Felicity”, “Where Stars Fall”, “Born Of The Sky” by <a href="https://www.scottbuckley.com.au/">Scott Buckley</a> — released under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>.<br>楽曲の一部を使用し、クロスフェード・音量調整・環境音とのミックスを行っています。 <a href="/media/mobility-world-credits.txt">クレジット全文</a></p>
+      </details>
     </section>
 
     <section class="simulation-section" aria-labelledby="simulation-heading">
