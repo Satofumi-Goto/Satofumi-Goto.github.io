@@ -49,6 +49,10 @@ export function publishedValues(simulationResult, financialAssessment) {
 
 // Integer values that may change, and the text that must follow them where they are rewritten.
 const YEAR_KEYS = { 'project.paybackYear': ' (reference)' };
+// Occurrences that show the same digits but mean something else, told apart by the text that follows.
+// The depreciation basis stays at the old total: the engine depreciates nodes and HPC by vintage and does
+// not depreciate the 2033-2035 CAPEX added by the node alignment, so "rebased to ¥310.000B" stays true.
+const NOT_FOLLOWED_BY = { 'project.totalCapex': ['B total investment (node'] };
 const fmt = (abs, dp) => abs.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp, useGrouping: false });
 
 // Build the list of textual rewrites between two published-value sets.
@@ -65,11 +69,10 @@ export function rewritePlan(previous, next) {
       }
       problems.push(`${key}: ${p.value} -> ${n.value} is a year/integer change; rewrite needs review`); continue;
     }
-    plan.push({ key, from: p.value, to: n.value, dp: n.dp, fromText: fmt(Math.abs(p.value), n.dp), toText: fmt(Math.abs(n.value), n.dp) });
+    plan.push({ key, from: p.value, to: n.value, dp: n.dp, fromText: fmt(Math.abs(p.value), n.dp), toText: fmt(Math.abs(n.value), n.dp), ...(NOT_FOLLOWED_BY[key] ? { notFollowedBy: NOT_FOLLOWED_BY[key] } : {}) });
   }
   // A number shown both as a negative (▲, −, -) and as a positive value is told apart by its sign: such steps rewrite
   // only the occurrences with the matching sign. Same-sign collisions are still refused below.
-  const signedOf = (v, dp) => `${v < 0 ? '-' : '+'}${fmt(Math.abs(v), dp)}`;
   const tokens = new Map();
   for (const [key, n] of Object.entries(next)) {
     if (n.dp === 0) continue;
@@ -127,7 +130,8 @@ export function applyPlan(text, steps) {
     // A PAYBACK label follows the unit (¥28.812B PAYBACK); the unit is kept and the label dropped or added.
     const labelled = step.dropAfter || step.addAfter;
     const drop = labelled ? `(?:(B|%)?${step.dropAfter ? esc(step.dropAfter) : ''})?` : '';
-    const re = new RegExp(`([${NEG}]?)(\\s?¥?)(?<![\\d.])${esc(step.fromText)}(?![\\d])(?!\\.\\d)${after}${drop}`, 'g');
+    const not = (step.notFollowedBy ?? []).map((t) => `(?!${esc(t)})`).join('');
+    const re = new RegExp(`([${NEG}]?)(\\s?¥?)(?<![\\d.])${esc(step.fromText)}(?![\\d])(?!\\.\\d)${not}${after}${drop}`, 'g');
     let n = 0;
     const flips = (step.from < 0) !== (step.to < 0);
     out = out.replace(re, (all, sign, mid, unitGroup) => {
@@ -138,7 +142,7 @@ export function applyPlan(text, steps) {
       n += 1;
       if (!flips) return sign + mid + step.toText + add;
       if (sign) return mid.trimStart() + step.toText + add;
-      if (step.to < 0 && mid.includes('¥')) return '▲' + mid.trimStart() + step.toText + add;
+      if (step.to < 0 && mid.includes('¥')) return mid.slice(0, mid.length - mid.trimStart().length) + '▲' + mid.trimStart() + step.toText + add;
       signReview.push(step.key);
       return sign + mid + step.toText + add;
     });

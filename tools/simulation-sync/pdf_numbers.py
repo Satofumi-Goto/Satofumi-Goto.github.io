@@ -150,6 +150,8 @@ def build_regex(step):
     elif step.get('sign') == 'pos':
         sign = r'(?<![▲−-])(?<![▲−-]¥)(?<![▲−-] ¥)'
     after = '(?=' + re.escape(step['after']) + ')' if step.get('after') else ''
+    # notFollowedBy: the same digits with another meaning (the depreciation basis), left as they are.
+    after += ''.join('(?!' + re.escape(t) + ')' for t in step.get('notFollowedBy', []))
     return re.compile(sign + r'(?<![\d.])' + re.escape(step['fromText']) + r'(?!\d)(?!\.\d)' + after)
 
 
