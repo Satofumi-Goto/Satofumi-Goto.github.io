@@ -31,9 +31,25 @@ plan['steps'] += new
 json.dump(plan, open(w + '/plan.json', 'w'))
 print(f'{len(new)} anchored index-alignment changes')
 PY
+# Wording changes (whole lines, mirroring the Word master) newly added to wording-changes.json since the base.
+git show "$BASE:$T/wording-changes.json" > "$W/base-wording.json" 2>/dev/null || echo '{"changes":[]}' > "$W/base-wording.json"
+python3 - "$W" <<'PY'
+import json, sys
+w = sys.argv[1]
+base = {c['id'] for c in json.load(open(w + '/base-wording.json'))['changes']}
+new = [c for c in json.load(open('tools/simulation-sync/wording-changes.json'))['changes'] if c['id'] not in base]
+json.dump(new, open(w + '/wording.json', 'w'))
+print(f'{len(new)} wording changes')
+PY
 for f in $PDFS; do
-  # A page that gets its own file for the first time is compared with the file it used to link (the /portfolio/ version).
   git show "$BASE:$f" > "$W/base.pdf"
   if cmp -s "$W/base.pdf" "$f"; then echo "$f unchanged"; continue; fi
-  python3 $T/verify_layout.py "$W/plan.json" "$W/base.pdf" "$f"
+  if [ "$(python3 -c "import json;print(len(json.load(open('$W/wording.json'))))")" != "0" ]; then
+    # Replay the wording changes on the base, check them, then check the numbers against that.
+    python3 $T/pdf_lines.py "$W/wording.json" "$W/base.pdf" "$W/mid.pdf"
+    python3 $T/verify_lines.py "$W/wording.json" "$W/base.pdf" "$W/mid.pdf"
+    python3 $T/verify_layout.py "$W/plan.json" "$W/mid.pdf" "$f"
+  else
+    python3 $T/verify_layout.py "$W/plan.json" "$W/base.pdf" "$f"
+  fi
 done
