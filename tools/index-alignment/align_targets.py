@@ -16,7 +16,7 @@ import pdfplumber
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 SYNC = os.path.join(ROOT, 'tools', 'simulation-sync')
-TARGETS = ['Autonomous_Mobility_System_Business_Feasibility.pdf', 'portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf']
+TARGETS = ['Autonomous_Mobility_System_Business_Feasibility.pdf', 'portfolio/Autonomous_Mobility_System_Business_Feasibility.pdf', 'capabilities/Autonomous_Mobility_System_Business_Feasibility.pdf']
 M = json.load(open(os.path.join(HERE, 'manifest.json')))
 
 
