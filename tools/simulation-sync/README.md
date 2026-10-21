@@ -17,6 +17,9 @@ are kept.
 
 ## 運用（2026-10-21 管理者決定）
 
+- **英文ポートフォリオの正本は、ポートフォリオサイト（このリポジトリ）に置く Word とする（2026-10-21 管理者決定・固定）。** PDF はその Word に従う。Word がまだ置かれていない間に PDF を直した場合は、同じ変更を Word に入れてから置く。
+- 句の差し替え（`tools/text-revision/pdf_text.py`）：表のセルや段落の句を、元の句の幅（またはその右の空白）に収めて書き直す。必要なら横幅だけ縮める（80% まで）。計画は `tools/text-revision/*-plan.json` に残し、`gate.sh` が再現して `verify_text_layout.py` で検査する（他の文字・画素は不変、新しい句は元の枠の中）。
+
 - 英文ポートフォリオの正本は Word（ドキュメント名「Satofumi Goto_Portfolio」、レジュメ部は含めない）。
 - Claude がその Word を書き換え、PDF 化して、サイト直下の
   `Autonomous_Mobility_System_Business_Feasibility.pdf` として掲載する。PDF はこの 1 つだけで、

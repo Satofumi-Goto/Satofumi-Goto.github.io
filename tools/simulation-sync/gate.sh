@@ -41,9 +41,27 @@ new = [c for c in json.load(open('tools/simulation-sync/wording-changes.json'))[
 json.dump(new, open(w + '/wording.json', 'w'))
 print(f'{len(new)} wording changes')
 PY
+# Phrase rewrites (tools/text-revision): plans newly added since the base are replayed and checked by
+# verify_text_layout.py (independent pdfplumber/pdfium check: other characters and pixels unchanged).
+NEWPLANS=$(git diff --name-only --diff-filter=A "$BASE" -- 'tools/text-revision/*-plan.json' | grep -v revision-E-plan.json || true)
 for f in $PDFS; do
   git show "$BASE:$f" > "$W/base.pdf"
   if cmp -s "$W/base.pdf" "$f"; then echo "$f unchanged"; continue; fi
+  if [ -n "$NEWPLANS" ]; then
+    cp "$W/base.pdf" "$W/cur.pdf"
+    for pl in $NEWPLANS; do
+      python3 tools/text-revision/pdf_text.py apply "$pl" "$W/cur.pdf" "$W/next.pdf" "$W/rep.json"
+      python3 tools/text-revision/verify_text_layout.py "$pl" "$W/cur.pdf" "$W/next.pdf"
+      mv "$W/next.pdf" "$W/cur.pdf"
+    done
+    python3 - "$W/cur.pdf" "$f" <<'PY'
+import sys, pdfplumber
+a, b = (pdfplumber.open(x) for x in sys.argv[1:3])
+ok = all([(c['text'], round(c['x0'], 1), round(c['top'], 1)) for c in pa.chars] == [(c['text'], round(c['x0'], 1), round(c['top'], 1)) for c in pb.chars] for pa, pb in zip(a.pages, b.pages))
+print('PASS replayed phrase rewrites match the PR PDF' if ok else 'FAIL the PR PDF differs from the replayed phrase rewrites'); sys.exit(0 if ok else 1)
+PY
+    continue
+  fi
   if [ "$(python3 -c "import json;print(len(json.load(open('$W/wording.json'))))")" != "0" ]; then
     # Replay the wording changes on the base, check them, then check the numbers against that.
     python3 $T/pdf_lines.py "$W/wording.json" "$W/base.pdf" "$W/mid.pdf"
