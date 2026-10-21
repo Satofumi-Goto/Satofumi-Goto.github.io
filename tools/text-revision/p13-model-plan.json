@@ -1,0 +1,123 @@
+{
+ "revision": "2026-10-21-p13-model",
+ "note": "p.13: integrated 2035 vehicle model at default settings (vehicle2035Model.js, Federation). Not a finance change.",
+ "steps": [
+  {
+   "page": 13,
+   "old": "48.1kg/day (=1,200÷33.3÷0.75). With a 400kWh air-battery contribution, net PCFC energy is 800kWh",
+   "new": "48.0kg/day (=1,200÷33.3÷0.75). Net of the 400kWh air battery, plus 178kWh of regen lost to the mills and"
+  },
+  {
+   "page": 13,
+   "old": "and net H2 demand is 32.0kg/day. Six mills at 0.865kg/h for 12.5h produce 64.9kg/day, leaving a 32.9kg/day gross surplus before",
+   "new": "1,113kWh to release H2 from the MH at 0.5V, the PCFC must deliver 2,091kWh: 83.7kg/day of H2. The six mills (rated 64.9kg/day)"
+  },
+  {
+   "page": 13,
+   "old": "process losses. The 10–15kg LH2 buffer still requires about 340L; the envelope is corrected to 350×850×1,200mm (357L). Rejected",
+   "new": "get only 0.03kg/day from braking energy, so Node refuelling supplies 83.7kg/day (5 stops of 20kg). The 10-15kg LH2 buffer needs ≈340L"
+  },
+  {
+   "page": 13,
+   "old": "heat at 240kW and 75% efficiency is approximately 80kW.",
+   "new": "(350×850×1,200mm, 357L). Peak heat is ≈121kW: PCFC 80, mill 19, MH 13, drive 9kW.",
+   "extendTo": 572.0
+  },
+  {
+   "page": 13,
+   "old": "48.1kg-H2",
+   "new": "48.0kg-H2"
+  },
+  {
+   "page": 13,
+   "old": "1,200−400",
+   "new": "net + regen + MH",
+   "within": "Net PCFC energy",
+   "extendTo": 220.5
+  },
+  {
+   "page": 13,
+   "old": "-",
+   "new": "800+178+1,113",
+   "within": "Net PCFC energy",
+   "extendTo": 305.5,
+   "occurrence": 1
+  },
+  {
+   "page": 13,
+   "old": "800kWh",
+   "new": "2,091kWh",
+   "within": "Net PCFC energy",
+   "extendTo": 400.5
+  },
+  {
+   "page": 13,
+   "old": "800÷(33.3×0.75)",
+   "new": "2,091÷(33.3×0.75)",
+   "extendTo": 305.5
+  },
+  {
+   "page": 13,
+   "old": "32.0kg-H2",
+   "new": "83.7kg-H2",
+   "extendTo": 400.5
+  },
+  {
+   "page": 13,
+   "old": "0.865×6×12.5",
+   "new": "238kWh÷8,305",
+   "within": "Hydrogen generation",
+   "extendTo": 305.5
+  },
+  {
+   "page": 13,
+   "old": "64.9kg-H2",
+   "new": "0.03kg-H2 (64.9 rated)",
+   "within": "Hydrogen generation",
+   "extendTo": 400.5
+  },
+  {
+   "page": 13,
+   "old": "Gross surplus",
+   "new": "Node refuel"
+  },
+  {
+   "page": 13,
+   "old": "before process losses",
+   "new": "5 stops × 20kg MH",
+   "within": "Gross surplus",
+   "extendTo": 220.5
+  },
+  {
+   "page": 13,
+   "old": "64.9−32.0",
+   "new": "83.7−0.03",
+   "extendTo": 305.5
+  },
+  {
+   "page": 13,
+   "old": "32.9kg-H2",
+   "new": "83.7kg-H2",
+   "extendTo": 400.5
+  },
+  {
+   "page": 13,
+   "old": "rejected heat",
+   "new": "PCFC+mill+MH+drive",
+   "within": "Radiator",
+   "extendTo": 220.5
+  },
+  {
+   "page": 13,
+   "old": "240×(1/0.75−1)",
+   "new": "80+19+13+9",
+   "extendTo": 305.5
+  },
+  {
+   "page": 13,
+   "old": "≈80kW",
+   "new": "≈121kW",
+   "extendTo": 400.5
+  }
+ ]
+}
