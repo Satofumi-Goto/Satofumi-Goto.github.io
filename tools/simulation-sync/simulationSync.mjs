@@ -47,6 +47,8 @@ export function publishedValues(simulationResult, financialAssessment) {
   return out;
 }
 
+// Integer values that may change, and the text that must follow them where they are rewritten.
+const YEAR_KEYS = { 'project.paybackYear': ' (reference)' };
 const fmt = (abs, dp) => abs.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp, useGrouping: false });
 
 // Build the list of textual rewrites between two published-value sets.
@@ -55,13 +57,33 @@ export function rewritePlan(previous, next) {
   for (const [key, n] of Object.entries(next)) {
     const p = previous[key];
     if (!p || p.value === n.value) continue;
-    if (n.dp === 0) { problems.push(`${key}: ${p.value} -> ${n.value} is a year/integer change; rewrite needs review`); continue; }
+    if (n.dp === 0) {
+      // The payback year is the only integer that may change, and only where it is labelled as the reference year.
+      if (YEAR_KEYS[key] && /^\d{4}$/.test(String(p.value)) && /^\d{4}$/.test(String(n.value))) {
+        plan.push({ key, from: p.value, to: n.value, dp: 0, fromText: String(p.value), toText: String(n.value), after: YEAR_KEYS[key] });
+        continue;
+      }
+      problems.push(`${key}: ${p.value} -> ${n.value} is a year/integer change; rewrite needs review`); continue;
+    }
     plan.push({ key, from: p.value, to: n.value, dp: n.dp, fromText: fmt(Math.abs(p.value), n.dp), toText: fmt(Math.abs(n.value), n.dp) });
   }
+  // A number shown both as a negative (▲, −, -) and as a positive value is told apart by its sign: such steps rewrite
+  // only the occurrences with the matching sign. Same-sign collisions are still refused below.
+  const signedOf = (v, dp) => `${v < 0 ? '-' : '+'}${fmt(Math.abs(v), dp)}`;
+  const tokens = new Map();
+  for (const [key, n] of Object.entries(next)) {
+    if (n.dp === 0) continue;
+    const p = previous[key] ?? n;
+    const t = fmt(Math.abs(p.value), n.dp);
+    if (!tokens.has(t)) tokens.set(t, new Set());
+    tokens.get(t).add(p.value < 0 ? '-' : '+');
+  }
+  for (const step of plan) if (step.dp > 0 && tokens.get(step.fromText)?.size === 2) step.sign = step.from < 0 ? 'neg' : 'pos';
   // One old token may only map to one new value (compared by digits; sign style comes from the text).
   const byToken = new Map();
+  const keyOf = (step) => (step.sign ? (step.sign === 'neg' ? '-' : '+') : '') + step.fromText + (step.after ? '|' + step.after : '');
   for (const step of plan) {
-    const k = step.fromText;
+    const k = keyOf(step);
     const seen = byToken.get(k);
     if (seen && seen.to !== step.to) problems.push(`ambiguous: ${step.fromText} is ${seen.key} -> ${seen.to} and ${step.key} -> ${step.to}`);
     else byToken.set(k, step);
@@ -69,9 +91,11 @@ export function rewritePlan(previous, next) {
   // A token that changes must not also be an unchanged value elsewhere.
   for (const [key, n] of Object.entries(next)) {
     const p = previous[key];
-    if (!p || p.value !== n.value) continue;
-    const k = fmt(Math.abs(n.value), n.dp);
-    if (byToken.has(k)) problems.push(`ambiguous: ${fmt(Math.abs(n.value), n.dp)} changes for ${byToken.get(k).key} but stays for ${key}`);
+    if (!p || p.value !== n.value || n.dp === 0) continue;
+    const t = fmt(Math.abs(n.value), n.dp);
+    const strict = tokens.get(t)?.size === 2;
+    const k = (strict ? (n.value < 0 ? '-' : '+') : '') + t;
+    if (byToken.has(k)) problems.push(`ambiguous: ${t} changes for ${byToken.get(k).key} but stays for ${key}`);
   }
   return { steps: [...byToken.values()], problems };
 }
@@ -86,10 +110,14 @@ const NEG = '▲−-';
 export function applyPlan(text, steps) {
   let out = text, count = 0; const perStep = {}, signReview = [];
   for (const step of steps) {
-    const re = new RegExp(`([${NEG}]?)(\\s?¥?)(?<![\\d.])${esc(step.fromText)}(?![\\d])(?!\\.\\d)`, 'g');
+    const after = step.after ? `(?=${esc(step.after)})` : '';
+    const re = new RegExp(`([${NEG}]?)(\\s?¥?)(?<![\\d.])${esc(step.fromText)}(?![\\d])(?!\\.\\d)${after}`, 'g');
     let n = 0;
     const flips = (step.from < 0) !== (step.to < 0);
     out = out.replace(re, (all, sign, mid) => {
+      // Sign-strict steps (the number is also shown with the other sign) skip occurrences of the other sign.
+      if (step.sign === 'neg' && !sign) return all;
+      if (step.sign === 'pos' && sign) return all;
       n += 1;
       if (!flips) return sign + mid + step.toText;
       if (sign) return mid.trimStart() + step.toText;

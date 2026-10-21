@@ -114,7 +114,15 @@ def build_regex(step):
     if step.get('anchor'):
         a = ''.join(re.escape(c) if ord(c) < 128 else '.' for c in step['anchor'])
         return re.compile('(?P<a>' + a + ')(?P<n>' + re.escape(step['fromText']) + r')(?!\d)(?!\.\d)')
-    return re.compile(r'(?<![\d.])' + re.escape(step['fromText']) + r'(?!\d)(?!\.\d)')
+    # sign: 'neg' rewrites only a number directly preceded by a minus sign (▲, −, -, optionally then ¥); 'pos' only one
+    # without it. Used when the same digits are shown for a negative and a positive value. after: text that must follow.
+    sign = ''
+    if step.get('sign') == 'neg':
+        sign = r'(?:(?<=[▲−-])|(?<=[▲−-]¥)|(?<=[▲−-] ¥))'
+    elif step.get('sign') == 'pos':
+        sign = r'(?<![▲−-])(?<![▲−-]¥)(?<![▲−-] ¥)'
+    after = '(?=' + re.escape(step['after']) + ')' if step.get('after') else ''
+    return re.compile(sign + r'(?<![\d.])' + re.escape(step['fromText']) + r'(?!\d)(?!\.\d)' + after)
 
 
 def rewrite(plan, src, dst):
