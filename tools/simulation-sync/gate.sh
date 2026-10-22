@@ -44,8 +44,22 @@ PY
 # Phrase rewrites (tools/text-revision): plans newly added since the base are replayed and checked by
 # verify_text_layout.py (independent pdfplumber/pdfium check: other characters and pixels unchanged).
 NEWPLANS=$(git diff --name-only --diff-filter=A "$BASE" -- 'tools/text-revision/*-plan.json' | grep -v revision-E-plan.json || true)
+# Whole-page removals (page-changes.json) newly added since the base are applied to the base PDF first.
+git show "$BASE:$T/page-changes.json" > "$W/base-pages.json" 2>/dev/null || echo '{"changes":[]}' > "$W/base-pages.json"
 for f in $PDFS; do
   git show "$BASE:$f" > "$W/base.pdf"
+  python3 - "$W/base-pages.json" "$T/page-changes.json" "$W/base.pdf" <<'PY'
+import json, sys, pikepdf
+base = {c['id'] for c in json.load(open(sys.argv[1]))['changes']}
+new = [c for c in json.load(open(sys.argv[2]))['changes'] if c['id'] not in base]
+if new:
+    pdf = pikepdf.open(sys.argv[3], allow_overwriting_input=True)
+    for c in new:
+        for n in sorted(c['remove'], reverse=True):
+            del pdf.pages[n - 1]
+        print(f"page removal {c['id']}: pages {c['remove']} removed from the base")
+    pdf.save(sys.argv[3])
+PY
   if cmp -s "$W/base.pdf" "$f"; then echo "$f unchanged"; continue; fi
   if [ -n "$NEWPLANS" ]; then
     cp "$W/base.pdf" "$W/cur.pdf"
