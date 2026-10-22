@@ -188,6 +188,26 @@ def main(targets_path, src, dst):
                     new_ops.insert(-1, pikepdf.ContentStreamInstruction(restore[o], pikepdf.Operator(o)))
             ops[first_op:first_op + 1] = new_ops
             print(f'page {pno}: line at {t["top"]} replaced, new text ends at {right:.1f}')
+        # Optional per target: erase filled rectangles drawn on the line (e.g. a hyperlink underline),
+        # given in PDF user space [x, y, w, h], and remove link annotations over the line band.
+        for t in ts:
+            for r in t.get('erase_fills', []):
+                hit = [i for i, (o, op) in enumerate(ops) if str(op) == 're' and len(o) == 4
+                       and all(abs(float(o[j]) - r[j]) < 0.02 for j in range(4))
+                       and i + 1 < len(ops) and str(ops[i + 1][1]) in ('f', 'f*', 'F')]
+                if len(hit) != 1:
+                    raise Refused(f'page {pno}: fill {r} found {len(hit)} times')
+                del ops[hit[0]:hit[0] + 2]
+                print(f'page {pno}: fill {r} erased')
+            if t.get('remove_links'):
+                ph = float(page.obj.MediaBox[3])
+                y0, y1 = ph - t['top'] - t['size'] * 1.3, ph - t['top'] + t['size'] * 0.3
+                annots = page.obj.get('/Annots')
+                if annots is not None:
+                    keep = [a for a in annots if not (a.get('/Subtype') == '/Link'
+                            and float(a.Rect[1]) < y1 and float(a.Rect[3]) > y0)]
+                    print(f'page {pno}: {len(annots) - len(keep)} link annotation(s) removed at {t["top"]}')
+                    page.obj.Annots = pikepdf.Array(keep)
         page.Contents = pdf.make_stream(pikepdf.unparse_content_stream(ops))
     pdf.save(dst)
 
