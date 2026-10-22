@@ -143,9 +143,9 @@
     .film-language { font:inherit; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:6px; padding:6px 10px; }
     .film-language:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; }
 </style>
-  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-4">
+  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-5">
   <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
-  <script defer src="/media/film-player.js?v=9"></script>
+  <script defer src="/media/film-player.js?v=10"></script>
 </head>
 <body>
   <header>
@@ -183,7 +183,7 @@
         </div>
       </div>
       <div class="film-player">
-        <video id="vision-film-video" controls playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-city.webp" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="暮らしから、街をつくる。" aria-describedby="vision-film-note"></video>
+        <video id="vision-film-video" playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-city.webp" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="暮らしから、街をつくる。" aria-describedby="vision-film-note"></video>
         <button class="film-start" type="button" aria-controls="vision-film-video"><span>再生して見る▶︎</span></button>
       </div>
       <div class="film-meta">
@@ -202,16 +202,16 @@
         <h2 id="simulation-heading">運行を賢くすれば、モビリティ事業は成立するか。</h2>
         <div class="simulation-copy">
         <p>車両を増やす前に、空車回送と需要に応じた駐車・夜間作業の集約を比較します。</p>
-        <p>東京・名古屋・豊田を選び、運行方式を比較。目標を満たす条件を探索し、需要・駐車費・エネルギー費が事業性に与える影響を確認できます。</p>
+        <p>同じ需要・車両条件で運行方式を比較。駐車待機、点検・清掃の集約、相乗り・貨客混載が、サービス水準・運行費用・事業成立性に与える影響を検討できます。</p>
         <p style="font-size:.75rem">地域別の共通入力、地図上の運行再生、編集可能な前提条件を備えた一つのシミュレータです。地図の経路は仮想データで、外部アプリとのリアルタイム連携とは区別しています。</p>
         </div>
       </div>
       <div class="simulation-stage">
         <div class="simulation-preview">
-          <div inert aria-hidden="true"><iframe src="https://mobility-lab-flow.base44.app/planning" tabindex="-1" title="シミュレータのプレビュー" loading="lazy"></iframe></div>
+          <img class="simulation-preview-image" src="https://satofumi-goto.github.io/media/simulator-comparison-preview.jpg" alt="シミュレータの操作画面：駐車・運行方式の比較と成立条件の探索" width="1348" height="926">
           <button class="simulation-open" type="button" aria-haspopup="dialog" aria-controls="simulation-dialog"><span>拡大して操作 ↗</span></button>
         </div>
-        <div class="simulation-caption"><span>東京／名古屋／豊田 · 共通シナリオ入力</span><a href="https://mobility-lab-flow.base44.app/planning" target="_blank" rel="noopener noreferrer">シミュレータを開く · 日本語／英語 ↗</a></div>
+        <div class="simulation-caption"><span>運行方式と事業成立性を比較</span><a href="https://mobility-lab-flow.base44.app/planning" target="_blank" rel="noopener noreferrer">シミュレータを開く · 日本語／英語 ↗</a></div>
       </div>
 
       <details class="business-case">
@@ -256,7 +256,7 @@
           <ul>
             <li><strong>正本となるシミュレータを一本化。</strong>旧独立版ラボを終了して統合先へ誘導。スクロールしやすいプレビューからBase44アプリを全画面で操作できます。</li>
             <li><strong>目標から逆算する事業設計。</strong>事業目標を入力すると運行条件を探索し、候補を比較してストレステストを実施。探索処理はワーカーで実行し、画面操作を妨げません。</li>
-            <li><strong>3地域で入力条件を共通化。</strong>東京・名古屋・豊田の共通シナリオ。待機・夜間拠点を地図上で移動でき、予約受付から乗車までの経過を確認できます。</li>
+            <li><strong>同じ前提で運行方式を比較。</strong>需要・車両・拠点の条件を揃えて検討。待機・夜間拠点を地図上で移動でき、予約受付から乗車までの経過を確認できます。</li>
             <li><strong>レジリエンスと顧客接点。</strong>イベント起点の運行障害モデルと顧客接点モデルにより、利用者接点の保有が配車と収益に与える影響を検討できます。</li>
             <li><strong>プロジェクト財務を追加。</strong>運行計算と同一条件でP/L 50項目、2025〜2035年のキャッシュフロー、IRR・NPV・感度分析を算出。MaaS運行費を7要素（標準条件の内訳指数14件）へ分解し、車両当たりの遠隔監視・保険・保守・通信の4費目を初期値ゼロで追加。合計額は変えません。</li>
             <li><strong>Federationの指数をリアルタイム受信し、出所を記録。</strong>2030年の計画基準値から各パラメータの出典を台帳で管理します。シミュレータの計算結果を、ポートフォリオ・Federation・Seneschalが参照する共通の正本とします。</li>
@@ -441,14 +441,14 @@
   </dialog>
   <script>
   (() => {
-    const preview = document.querySelector('.simulation-preview');
-    const previewFrame = preview.querySelector('iframe');
-    const fit = () => { previewFrame.style.transform = 'scale(' + preview.clientWidth / 1280 + ')'; };
-    new ResizeObserver(fit).observe(preview); fit();
     const dialog = document.getElementById('simulation-dialog');
     const open = document.querySelector('.simulation-open');
     const frame = dialog.querySelector('iframe');
     open.addEventListener('click', () => {
+      if (location.hostname !== 'satofumi-goto.github.io') {
+        window.open('https://mobility-lab-flow.base44.app/planning', '_blank', 'noopener,noreferrer');
+        return;
+      }
       if (!frame.src) frame.src = frame.dataset.src;
       dialog.showModal();
       document.body.classList.add('simulation-expanded');

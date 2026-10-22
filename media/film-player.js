@@ -29,7 +29,7 @@
       video.currentTime = Math.min(position, Math.max(0, (video.duration || 300) - .1));
       start.disabled = false;
       if (resume) video.play().catch(showRetry);
-      else { start.hidden = position > 0; start.querySelector('span').textContent = ja ? '再生して見る▶︎' : 'Play & watch ▶︎ · 再生して見る▶︎'; }
+      else { start.hidden = position > 0; start.querySelector('span').textContent = ja ? '再生して見る▶︎' : 'Play & watch ▶︎'; }
     };
     if (window.Hls && Hls.isSupported()) {
       player = new Hls({ maxBufferLength: 20, maxMaxBufferLength: 40 });
@@ -48,7 +48,7 @@
       start.querySelector('span').textContent = ja ? '最新のブラウザーでご覧ください' : 'Please use a current browser';
     }
   };
-  const play = () => initialized ? video.play().catch(showRetry) : load();
+  const play = () => { video.controls = true; return initialized ? video.play().catch(showRetry) : load(); };
   language.addEventListener('change', () => {
     video.lang = language.value;
     if (initialized) load(video.currentTime, !video.paused);
