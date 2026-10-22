@@ -431,20 +431,20 @@
         </div>
       </details>
       <details class="rev" data-rev="1" data-card="sim">
-        <summary>Revision log <span>Rev. 1 · updated 21 Oct 2026</span></summary>
+        <summary>Revision log <span>Rev. 1 · updated 22 Oct 2026</span></summary>
         <div class="rev-body">
-          <p class="rev-head">One simulator, now a complete business-case engine: operations, finance and live inputs in a single run.</p>
+          <p class="rev-head">One simulator that takes a business from target to investment case in a single run: operations, finance and live inputs together.</p>
           <ul>
-            <li><strong>One canonical simulator.</strong> The earlier standalone lab was retired and redirected. The portal now shows a single Base44 application through a scroll-safe preview that expands to full screen.</li>
-            <li><strong>Goal-based business design.</strong> Set a business target and the solver searches operating conditions, compares candidates and stress-tests them. The search runs in a background worker, so the screen never freezes.</li>
-            <li><strong>Three regions, one input set.</strong> Tokyo, Nagoya and Toyota share scenario inputs. Staging and night-time sites can be dragged on the map, and each booking can be traced from request to pickup.</li>
-            <li><strong>Resilience and touchpoint engines.</strong> An event-driven disruption model and a customer-touchpoint model show what owning the user interface changes in dispatch and revenue.</li>
-            <li><strong>Project finance added.</strong> A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations. Operating cost can now be itemised: MaaS operations splits into seven components (14 component indices in the bundled baseline), and four per-vehicle cost inputs (remote monitoring, insurance, maintenance, communications) are added at a default of zero. Totals are unchanged. An extended evaluation now carries the case through the questions an investment committee asks: after-tax results with a loss carry-forward cap, renewal investment and a 2035 residual value, with payback recalculated to include renewal. Tax rate and similar inputs are working values that can be replaced by registering them in Federation.</li>
-            <li><strong>Live indices from Federation, with provenance.</strong> Inputs are received in real time, and a parameter registry records where each input came from, starting from the 2030 planning baseline. The simulator&#x27;s calculated results become the reference that the portfolio, Federation and Seneschal read.</li>
-            <li><strong>Live Mission, run against Federation.</strong> Four missions (city, service, sharing, control) run as a Before/After comparison on the Planning page, driven by a demonstration in Federation. The result opens with a one-sentence conclusion, then a difference table with improved / worse / trade-off markers, completion shown as a fraction, and the spread across three random seeds. The simulator asks Federation for the items it needs to refine the model and shows where each value came from. A “maximise profit” result can be sent back to Federation as technical targets, and Federation&#x27;s reply is reflected in the settings.</li>
-            <li><strong>Profit search, proposal only.</strong> The search proposes better operating conditions but does not change the plan by itself.</li>
-            <li><strong>Evidence you can inspect.</strong> A fleet-hub study dataset is published alongside the simulator. The baseline operation was re-examined so that the 2030 and 2035 plans now complete every planned trip. Sensitivity sweeps show a min–mean–max band over three random seeds and are judged on the worst seed, so a conclusion never rests on one lucky run.</li>
-            <li><strong>Three view modes.</strong> Quick, Standard and Detailed. Quick shows aggregated totals and four headline figures (IRR, NPV, 2035 free cash flow, payback year); Standard shows every P&amp;L line; Detailed adds how each line is calculated and the cost mix. The model and numbers are the same in all three.</li>
+            <li><strong>One place to work.</strong> The earlier standalone lab is retired. A single Base44 application opens full-screen from a scroll-friendly preview, so there is one version to try and one set of numbers behind it.</li>
+            <li><strong>Start from the target, get the conditions.</strong> Enter a business target and the simulator searches operating conditions, compares candidates and stress-tests them. The search runs in a background worker, so the screen stays responsive throughout.</li>
+            <li><strong>Three regions, one scenario.</strong> Tokyo, Nagoya and Toyota run on shared inputs. Drag staging and night-time sites on the map and follow any booking from request to pickup.</li>
+            <li><strong>What owning the customer touchpoint is worth.</strong> A disruption model and a customer-touchpoint model show how holding the user interface changes dispatch and revenue, and how operations hold up when events hit.</li>
+            <li><strong>From operations to an investment case.</strong> The run that dispatches the vehicles also produces a 50-line P/L, 2025–2035 cash flow, IRR, NPV and sensitivity. It goes on to the questions an investment committee asks: after-tax results with loss carry-forward, renewal investment, a 2035 residual value and payback including renewal. MaaS operating cost splits into seven components so you can see what drives it, and four per-vehicle cost inputs are ready to be filled in. Tax rate and similar inputs are working values that can be replaced by registering them in Federation.</li>
+            <li><strong>Live inputs, every one traceable.</strong> Indices arrive in real time from Federation, and a parameter registry records where each input came from, starting from the 2030 planning baseline. The simulator&#x27;s results are what the portfolio, Federation and Seneschal read.</li>
+            <li><strong>Before and after, with the reasoning.</strong> Four missions (city, service, sharing, control) run as a Before/After comparison on the Planning page, driven by a live demonstration in Federation. Each result opens with a one-sentence conclusion, then a table marking what improved, worsened or traded off, completion as a fraction and the spread over three random seeds. The simulator asks Federation for what it needs to sharpen the model, shows where each value came from, and sends a “maximise profit” result back as technical targets that Federation answers.</li>
+            <li><strong>A profit search that proposes, never overrides.</strong> Better operating conditions are suggested, and the plan changes only when you decide.</li>
+            <li><strong>Results that do not rest on one lucky run.</strong> A fleet-hub study dataset is published alongside the simulator. The baseline operation was re-examined so the 2030 and 2035 plans complete every planned trip, and sensitivity sweeps show a min–mean–max band over three random seeds, judged on the worst seed.</li>
+            <li><strong>Skim in seconds, audit in depth.</strong> Quick shows four headline figures (IRR, NPV, 2035 free cash flow, payback year); Standard shows every P&amp;L line; Detailed adds how each line is calculated and the cost mix. The model and numbers are the same in all three.</li>
           </ul>
           <p class="rev-note">Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results.</p>
         </div>
@@ -466,16 +466,15 @@
           <span class="action">View capabilities ↗</span>
         </a>
 <details class="rev" data-rev="1" data-card="bizdev">
-  <summary>Revision log <span>Rev. 1 · updated 19 Oct 2026</span></summary>
+  <summary>Revision log <span>Rev. 1 · updated 22 Oct 2026</span></summary>
   <div class="rev-body">
-    <p class="rev-head">The complete 14-page edition, led by customer value and tied to a testable pilot plan.</p>
+    <p class="rev-head">Customer value first, carried through to a testable pilot plan: the complete 14-page edition.</p>
     <ul>
-      <li><strong>13 Oct edition</strong> published on this page.</li>
-      <li><strong>Full document restored</strong> after an intermediate cut.</li>
-      <li><strong>Customer-focused value first.</strong> The page now opens with what business development delivers for customers.</li>
-      <li><strong>Business development defined</strong> through customer value and implementation, not job titles.</li>
-      <li><strong>Connected to the simulator:</strong> comparison, partnership structure and pilot decision gate form one path.</li>
-      <li><strong>Profile aligned</strong> with the AI-driven transformation direction.</li>
+      <li><strong>Opens with what customers get.</strong> The page begins with the value business development delivers for customers.</li>
+      <li><strong>A role defined by outcome, not title.</strong> Business development is described through creating customer value and carrying it into execution.</li>
+      <li><strong>One path from comparison to a pilot decision.</strong> Connected to the simulator, comparison, partnership structure and the pilot decision gate form a single path.</li>
+      <li><strong>The complete 14 pages.</strong> The 13 Oct edition is published in full, including the parts previously cut.</li>
+      <li><strong>A profile that points one way.</strong> The profile is aligned to one direction: AI-driven transformation of business and services.</li>
     </ul>
   </div>
 </details>
@@ -488,16 +487,15 @@
           <span class="action">View initial concept ↗</span>
         </a>
 <details class="rev" data-rev="1" data-card="concept">
-  <summary>Revision log <span>Rev. 1 · updated 19 Oct 2026</span></summary>
+  <summary>Revision log <span>Rev. 1 · updated 22 Oct 2026</span></summary>
   <div class="rev-body">
-    <p class="rev-head">From a concept to an operating specification built on the same numerical baseline as the portfolio.</p>
+    <p class="rev-head">A concept turned into an operating specification, on the same numerical baseline as the portfolio.</p>
     <ul>
-      <li><strong>One numerical baseline.</strong> The English portfolio is now the sole source of numbers; the Japanese portfolio and the concept follow it.</li>
-      <li><strong>Federation Design baseline</strong> (2026-10-15A) incorporated, with the shared basis explained across simulation, portfolio, concept and Federation.</li>
-      <li><strong>Pages 1–7 densified.</strong> Operating-specification detail was increased, with customer-touchpoint mechanisms and how each is validated.</li>
-      <li><strong>Shared rides and passenger–freight feasibility</strong> integrated, including capacity, service-quality and economic constraints.</li>
-      <li><strong>Service operating conditions enriched</strong> while the approved design was preserved.</li>
-      <li><strong>Annotation fit polished</strong> so specification callouts sit cleanly on the diagrams.</li>
+      <li><strong>One set of numbers throughout.</strong> The English portfolio is the sole source of numbers, and the Japanese portfolio and the concept follow it.</li>
+      <li><strong>Linked to Federation&#x27;s design baseline.</strong> The shared 2026-10-15A baseline is incorporated, with the relationship across simulation, portfolio, concept and Federation explained.</li>
+      <li><strong>Pages 1–7: from idea to operating detail.</strong> More operating-specification detail, including how the customer-touchpoint mechanisms work and how each is validated.</li>
+      <li><strong>When shared rides and passenger–freight service pay off.</strong> The conditions are set out, with capacity, service-quality and economic constraints.</li>
+      <li><strong>Operating conditions filled out, approved design intact.</strong> Service operating conditions are enriched while the approved design is preserved.</li>
     </ul>
   </div>
 </details>
@@ -516,14 +514,14 @@
           <span class="item-action">View study <span aria-hidden="true">↗</span></span>
         </a>
 <details class="rev" data-rev="1" data-card="bmstudy">
-  <summary>Revision log <span>Rev. 1 · updated 19 Oct 2026</span></summary>
+  <summary>Revision log <span>Rev. 1 · updated 22 Oct 2026</span></summary>
   <div class="rev-body">
-    <p class="rev-head">The same argument, with consistent wording and cleaner public versions.</p>
+    <p class="rev-head">The same argument, presented more cleanly and consistently for public reading.</p>
     <ul>
-      <li><strong>Descriptions synchronised</strong> with the homepage and the value proposition.</li>
-      <li><strong>Target-company references removed</strong> from the public PDF; system names retained.</li>
-      <li><strong>FC skateboard illustration updated</strong> across the Japanese portfolio set.</li>
-      <li><strong>Published on its own path,</strong> independent of other versions of the portfolio.</li>
+      <li><strong>Consistent from the homepage to the study.</strong> Descriptions are synchronised with the homepage and the value proposition.</li>
+      <li><strong>Safe to share publicly.</strong> Target-company references are removed from the public PDF, with system names retained.</li>
+      <li><strong>A refreshed FC skateboard illustration.</strong> Updated and consistent across the Japanese portfolio set.</li>
+      <li><strong>Its own address, its own version.</strong> Published on its own path, independent of other versions of the portfolio.</li>
     </ul>
   </div>
 </details>
@@ -536,9 +534,9 @@
           <span class="item-action">View study <span aria-hidden="true">↗</span></span>
         </a>
 <details class="rev" data-rev="1" data-card="feasibility">
-  <summary>Revision log <span>Rev. 1 · updated 21 Oct 2026</span></summary>
+  <summary>Revision log <span>Rev. 1 · updated 22 Oct 2026</span></summary>
   <div class="rev-body">
-    <p class="rev-head">Added a mechanism that keeps the numbers consistent with the simulator.</p>
+    <p class="rev-head">Numbers stay in step with the simulator by design.</p>
     <p class="rev-note">Figures are planning-scenario values from editable assumptions, not operating results.</p>
   </div>
 </details>
@@ -557,20 +555,20 @@
           <span class="item-action">Explore prototype <span aria-hidden="true">↗</span></span>
         </a>
 <details class="rev" data-rev="1" data-card="seneschal">
-  <summary>Revision log <span>Rev. 1 · updated 21 Oct 2026</span></summary>
+  <summary>Revision log <span>Rev. 1 · updated 22 Oct 2026</span></summary>
   <div class="rev-body">
-    <p class="rev-head">The same app, rebuilt for the real world: connected to live public data and checked against production every morning.</p>
+    <p class="rev-head">A scheduling app rebuilt for real life: it reads live public data, turns it into action, and is re-checked against production every morning.</p>
     <ul>
-      <li><strong>Live public signals.</strong> Japan Meteorological Agency warnings, forecasts, earthquakes, tsunami, typhoons and AMeDAS observations, plus heat index, elevation and solar radiation.</li>
-      <li><strong>Signals become actions.</strong> Weather appears on the calendar, disasters on a yellow alert card, and parking and charging are pulled into the schedule. Bookings are sent with congestion-aware travel time.</li>
-      <li><strong>Assistant proposals, applied only on approval.</strong> The integrated AI planner turns one request into schedule options. Nothing is written to the calendar until the user approves. Events marked as fixed are not moved, an outdated proposal can no longer be approved, ending the conversation discards pending proposals while keeping approved events, and a lost response after saving does not cause a double write. Behaviour is checked by an independent evaluation ledger of 134 cases (129 pass, 0 fail, 5 inconclusive) and a use-case ledger of 31 request scenarios (13 implemented, 12 waiting on external data). Both use fixed test data, not the published app or real calendars.</li>
-      <li><strong>Earthquake to family reunion (demonstration).</strong> The earthquake alert card offers a “consider going home or meeting” action that opens a proposal with a meeting candidate on the map. Roads of unknown condition are drawn dashed, a reported closure blocks selection, and selecting a candidate saves nothing until the normal approval step. It runs on demonstration data kept separate from normal events.</li>
-      <li><strong>Power and traffic.</strong> Electricity supply–demand now covers all nine grid areas (from one), and the traffic API of the Ministry of Land, Infrastructure, Transport and Tourism is added. If no station is near, the search radius widens from about 3 km to 8 km. The yellow card also shows power-usage rate and heat index at severe level or above.</li>
-      <li><strong>Two-way Google Calendar sync, no login.</strong> A public sample calendar syncs both ways, driven by change notifications with a retry queue, so nothing is lost. Square results also join the search suggestions, read-only.</li>
-      <li><strong>Private conversations and projects.</strong> Consultations with the assistant are kept as private conversations in the leftmost Friends tab, grouped into projects, with guided example prompts beside them. Earlier Seneschal routes redirect there.</li>
-      <li><strong>Reservations verified automatically.</strong> Every write operation, including bookings, is tested on each pull request and again every morning against the live app in a real Chrome.</li>
-      <li><strong>Faster first screen.</strong> The assistant, Federation console, wallet QR, side menu and the 250 KB English dictionary now load only when needed.</li>
-      <li><strong>Cleaned and hardened.</strong> 280+ unreachable components, logic and unused packages were deleted behind behaviour-parity tests and before/after screen comparison. Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen was replaced by a step-by-step intake flow.</li>
+      <li><strong>Real-world signals, built in.</strong> Warnings, forecasts, earthquakes, tsunami, typhoons and AMeDAS observations from the Japan Meteorological Agency, plus heat index, elevation and solar radiation, all from free public data.</li>
+      <li><strong>From information to action.</strong> Weather lands on the calendar, disasters on a yellow alert card, and parking and charging in the schedule. Bookings go out with congestion-aware travel time.</li>
+      <li><strong>An AI planner you can trust with your calendar.</strong> One request becomes schedule options, and nothing is written until you approve. Fixed events never move, a stale proposal cannot be approved, ending the conversation discards unapproved proposals while keeping approved events, and a lost response after saving cannot cause a double write. Behaviour is checked by an independent evaluation ledger of 134 cases (129 pass, 0 fail, 5 inconclusive) and a use-case ledger of 31 request scenarios (13 implemented, 12 waiting on external data), using fixed test data rather than the published app or real calendars.</li>
+      <li><strong>From an earthquake alert to meeting up (demonstration).</strong> The alert card offers “consider going home or meeting” and opens a proposal with a meeting candidate on the map. Roads of unknown condition are dashed, a reported closure blocks selection, and nothing is saved before the normal approval step. It runs on demonstration data kept apart from real events.</li>
+      <li><strong>Wider coverage: power and traffic.</strong> Electricity supply–demand now covers all nine grid areas (up from one) and the Ministry of Land, Infrastructure, Transport and Tourism traffic API is added. Where no station is near, the search widens from about 3 km to 8 km, and the yellow card flags power-usage rate and severe heat index.</li>
+      <li><strong>Two-way calendar sync, no login.</strong> A public sample Google Calendar syncs both ways through change notifications with a retry queue, so nothing is lost. Square results also join the search suggestions, read-only.</li>
+      <li><strong>Ask privately, stay organised.</strong> Consultations with the assistant are kept as private conversations in the leftmost Friends tab, grouped into projects, with example prompts alongside. Earlier Seneschal routes redirect there.</li>
+      <li><strong>Every booking checked every morning.</strong> Every write operation, including bookings, is tested on each pull request and again each morning against the live app in a real Chrome.</li>
+      <li><strong>Quick from the first screen.</strong> The assistant, Federation console, wallet QR, side menu and the 250 KB English dictionary load only when needed.</li>
+      <li><strong>Lean and hardened.</strong> 280+ unused components, logic and packages were removed under behaviour-parity tests and before/after screen comparison. Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen is now a step-by-step intake.</li>
     </ul>
     <p class="rev-note">Prototype with demonstration data where noted in the app. External-data features use free public APIs.</p>
   </div>
@@ -584,20 +582,20 @@
           <span class="item-action">Explore prototype <span aria-hidden="true">↗</span></span>
         </a>
 <details class="rev" data-rev="1" data-card="federation">
-  <summary>Revision log <span>Rev. 1 · updated 21 Oct 2026</span></summary>
+  <summary>Revision log <span>Rev. 1 · updated 22 Oct 2026</span></summary>
   <div class="rev-body">
     <p class="rev-head">Federation now proves its own numbers: one source of truth, a profitability gate, and cards that are scored and independently reviewed.</p>
     <ul>
-      <li><strong>Single source of truth.</strong> The simulator&#x27;s project-finance engine is now the reference for calculated results. Indices stay in Federation and flow out in real time. Seneschal&#x27;s numeric baseline follows Federation and the simulator results too.</li>
-      <li><strong>Full project finance.</strong> A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated and fed back to the portfolio.</li>
-      <li><strong>2035 profitability gate.</strong> A 2035 profit can be shown only after full-system verification: revenue must reconcile with operating scale, and depreciation must be explainable from total investment and useful life. Depreciation was rebased on the investment amount; 2035 operating profit in the plan scenario is +13.378 B JPY.</li>
-      <li><strong>Profit search, proposal only.</strong> A search for the most profitable conditions runs in the simulator and proposes changes without overwriting the plan.</li>
-      <li><strong>External information as index proposals.</strong> Outside data is gathered into dated proposals to update indices (latest 19 Oct), for a person to approve.</li>
-      <li><strong>Card Quality Loop.</strong> Blueprint and Artifact cards are scored continuously on a 10-point rubric, and only the independent review of a card&#x27;s current content counts. Diagnosis, correction, evidence and re-review are traced in one workspace, and reviewers themselves are measured by planting known errors. With 97 cards in the ledger, each carrying its score and open findings, quality is something you can check rather than a claim.</li>
-      <li><strong>Consistency with the English portfolio.</strong> An automatic check against the portfolio was introduced, and Blueprint cards were expanded to match it. Two original-application images were transcribed and checked against the canonical numbers.</li>
-      <li><strong>Runtime workspace.</strong> Seven Runtime tabs each have their own screen, following one operating flow from coordination and detection to cause analysis, candidate comparison and verification. Every result is labelled as coming from an execution record or as an estimate from current inputs. A hand-over list is carried through every tab, and the hand-over can be shared through Base44 so each person in charge sees the same inbox.</li>
-      <li><strong>Design from the specification.</strong> The Design section renders the v2 specification as a model-based view: state machines, sequence, use-case and activity diagrams, a requirement-to-evidence trace, consistency checks across the model, and change-impact analysis that traces upstream and downstream. Gaps and open questions are listed rather than hidden, and a desk check is never shown as field-verified. Beyond reading the specification, it now lets you work with it: a 2035 vehicle model ties driving, fuel cell, storage, refuelling and heat to bill-of-materials mass, and a decision board lays out, for each design decision, what every option changes, a recommended option and a due date, so choices are made with their consequences in view.</li>
-      <li><strong>Knowledge graph.</strong> The note vault is shown as an Obsidian-style graph with hover preview, a neighbours-only view, and keyboard and pinch-zoom access. Notes with content were imported from the vault, and sourced service-operations notes for autonomous mobility are linked into the graph.</li>
+      <li><strong>One source of truth.</strong> The simulator&#x27;s project-finance engine is the reference for calculated results. Indices stay in Federation and flow out in real time, and Seneschal&#x27;s numeric baseline follows both.</li>
+      <li><strong>Full project finance, fed back.</strong> A 50-line P/L, 2025–2035 cash flow, IRR, NPV and sensitivity are calculated and fed back into the portfolio.</li>
+      <li><strong>A profit is shown only when it holds up.</strong> A 2035 profit appears only after full-system verification: revenue must reconcile with operating scale, and depreciation must be explainable from total investment and useful life. With depreciation rebased on the investment amount, 2035 operating profit in the plan scenario is +13.378 B JPY.</li>
+      <li><strong>A profit search that only proposes.</strong> The search for the most profitable conditions runs in the simulator and suggests changes without overwriting the plan.</li>
+      <li><strong>Fresh outside information, approved by a person.</strong> Outside data is gathered into dated proposals to update indices (latest 19 Oct), and a person approves each one.</li>
+      <li><strong>Quality you can check, not just claim.</strong> Blueprint and Artifact cards are scored continuously on a 10-point rubric, and only the independent review of a card&#x27;s current content counts. Diagnosis, correction, evidence and re-review are traced in one workspace, and reviewers themselves are measured by planting known errors. With 97 cards in the ledger, each carrying its score and open findings, quality is something you can check rather than a claim.</li>
+      <li><strong>Documents and numbers kept in step.</strong> An automatic check against the English portfolio keeps the Blueprint cards consistent with it, and the cards were expanded to match. Two original-application images were transcribed and checked against the canonical numbers.</li>
+      <li><strong>From detection to verification in one flow.</strong> Seven Runtime tabs each have their own screen and follow one operating flow: coordination and detection, cause analysis, candidate comparison, verification. Every result says whether it comes from an execution record or an estimate from current inputs. A hand-over list runs through every tab and can be shared through Base44, so each person in charge sees the same inbox.</li>
+      <li><strong>From specification to decisions.</strong> The Design section renders the v2 specification as a model: state machines, sequence, use-case and activity diagrams, a requirement-to-evidence trace, consistency checks and upstream-and-downstream change-impact analysis. Gaps and open questions are listed, and a desk check is never shown as field-verified. It also lets you work with the specification: a 2035 vehicle model ties driving, fuel cell, storage, refuelling and heat to bill-of-materials mass, and a decision board shows, for each design decision, what every option changes, a recommended option and a due date.</li>
+      <li><strong>Notes you can navigate.</strong> The note vault is an Obsidian-style graph with hover preview, a neighbours-only view, and keyboard and pinch-zoom access. Notes with content were imported, and sourced service-operations notes for autonomous mobility are linked in.</li>
     </ul>
     <p class="rev-note">Planning-scenario values from editable assumptions, not operating results.</p>
   </div>
