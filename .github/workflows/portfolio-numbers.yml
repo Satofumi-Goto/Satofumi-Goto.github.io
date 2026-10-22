@@ -23,7 +23,7 @@ jobs:
       - run: pip install pikepdf fonttools pdfplumber pypdfium2 numpy
       - name: Shown numbers equal the simulator results
         run: python3 tools/simulation-sync/run.py --check
-      - name: Phase targets (P10) are not weaker than the minimum gates (P1)
+      - name: Phase targets (P9) are not weaker than the minimum gates (Overview)
         run: python3 tools/index-alignment/align_targets.py --check
       - name: Layout gate against the base branch (numbers only, no page drift)
         if: github.event_name == 'pull_request'

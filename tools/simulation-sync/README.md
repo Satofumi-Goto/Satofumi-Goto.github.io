@@ -25,10 +25,13 @@ are kept.
   `Autonomous_Mobility_System_Business_Feasibility.pdf` として掲載する。PDF はこの 1 つだけで、
   トップ・`/portfolio/`・`/capabilities/` の 3 ページともここへリンクする。
 - ページ崩れは絶対に起こさない。掲載前の合格条件：
-  1. ページ数が 16。
+  1. ページ数が 15。
   2. 各ページ末尾の「Satofumi Goto」の上端位置（pt、ページ上端から）が次の値と ±0.5 以内で一致。
-     P1 は 29.2（ページ上部）、P2 から P16 は
+     P1 から P15 は
      819.0, 822.2, 822.0, 820.5, 823.4, 824.2, 825.0, 819.2, 820.3, 818.4, 824.0, 822.6, 824.5, 824.6, 825.8。
+- Overview（1ページ）は英文ポートフォリオに含めない（2026-10-22）。正本は Word「Autonomous_Mobility_Overview.docx」、
+  掲載PDFは `Autonomous_Mobility_Overview.pdf`。Overview の KPI 表は `tools/index-alignment` の最低基準として使う。
+- ページ単位の削除は `page-changes.json` に追記し、`gate.sh` が基準側の PDF から同じページを外してから比較する。
   3. 書き換えた箇所以外の文字が、前の版と 1 文字ずつ一致。
 - Word から PDF への変換は Word で行う（LibreOffice は同じ文書でも位置が最大 36pt ずれるため使わない）。
   Word のある PC がこのセッションに接続されていればそこで変換する。

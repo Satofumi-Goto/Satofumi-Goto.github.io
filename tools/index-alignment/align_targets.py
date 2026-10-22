@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Keep the English portfolio's phase targets (P10) consistent with its minimum gates (P1).
+"""Keep the English portfolio's phase targets (P9) consistent with the minimum gates in the Overview.
 
-  python3 tools/index-alignment/align_targets.py --check    fail if a 2030 / 2035 phase target is weaker than the P1 gate
+  python3 tools/index-alignment/align_targets.py --check    fail if a 2030 / 2035 phase target is weaker than the Overview gate
   python3 tools/index-alignment/align_targets.py --fix      raise the weaker target to the gate (digits only), verify the
                                                               layout gate, replace both PDFs, append to applied.json
-  python3 tools/index-alignment/align_targets.py --federation FILE.json   also compare the P1 gates with Federation's
+  python3 tools/index-alignment/align_targets.py --federation FILE.json   also compare the Overview gates with Federation's
                                                               parameterRegistry export (list of {id,value}); Federation owns the indices
 
-The gate (P1) is the index held in Federation, so P10 is the side that is rewritten. A target that equals the gate is allowed.
+The gate (Overview KPI table) is the index held in Federation, so the portfolio's P9 is the side that is rewritten. A target that equals the gate is allowed.
 Only digit glyphs are exchanged, through tools/simulation-sync (same refusal rules and layout gate).
 """
 import json, os, re, shutil, subprocess, sys, tempfile
@@ -17,13 +17,15 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 SYNC = os.path.join(ROOT, 'tools', 'simulation-sync')
 TARGETS = ['Autonomous_Mobility_System_Business_Feasibility.pdf']
+OVERVIEW = 'Autonomous_Mobility_Overview.pdf'  # holds the KPI gates; not part of the portfolio PDF
 M = json.load(open(os.path.join(HERE, 'manifest.json')))
 
 
 def parse(pdf_path):
+    with pdfplumber.open(os.path.join(ROOT, OVERVIEW)) as o:
+        p1 = o.pages[0].extract_text().split('\n')
     with pdfplumber.open(pdf_path) as p:
-        p1 = p.pages[0].extract_text().split('\n')
-        p10 = p.pages[9].extract_text().split('\n')
+        p10 = p.pages[8].extract_text().split('\n')
     gates = {}
     for pr in M['pairs']:
         for l in p1:
@@ -50,10 +52,10 @@ def findings(pdf_path):
             sym, val = t[yi]
             weaker = float(val) < float(g[1]) if g[0] == '≥' else float(val) > float(g[1])
             if weaker:
-                out.append(f"{pr['item']} {year}: target {sym}{val} is weaker than the P1 gate {g[0]}{g[1]} ({pr['kpi']})")
+                out.append(f"{pr['item']} {year}: target {sym}{val} is weaker than the Overview gate {g[0]}{g[1]} ({pr['kpi']})")
                 if len(val) == len(g[1]):
                     anchor = pr['formula'] + ' ' + g[0] + (t[0][1] + ' ' + t[0][0] if yi else '')
-                    steps.append({'key': f"align.{pr['item']}.{year}", 'page': 10, 'anchor': anchor, 'fromText': val, 'toText': g[1], 'from': float(val), 'to': float(g[1]), 'dp': 2})
+                    steps.append({'key': f"align.{pr['item']}.{year}", 'page': 9, 'anchor': anchor, 'fromText': val, 'toText': g[1], 'from': float(val), 'to': float(g[1]), 'dp': 2})
     return out, steps
 
 
@@ -67,11 +69,11 @@ def main():
         for pid, kpi in (('p-demand-generation-rate', 'Demand generation rate'), ('p-conversion-rate', 'Conversion rate'), ('p-matching-rate', 'Matching rate'), ('p-trip-request-rate', 'Trip request rate')):
             g = gates.get(kpi)
             if g and fed.get(pid, '').lstrip('≥≤') != g[1]:
-                out.append(f'{kpi}: Federation {fed.get(pid)} differs from the P1 gate {g[0]}{g[1]}')
+                out.append(f'{kpi}: Federation {fed.get(pid)} differs from the Overview gate {g[0]}{g[1]}')
     if '--fix' not in args:
         if out:
             print('Phase targets and gates are inconsistent:'); print('\n'.join('  ' + o for o in out)); print('Run: python3 tools/index-alignment/align_targets.py --fix'); return 1
-        print('Phase targets (P10) are consistent with the minimum gates (P1).'); return 0
+        print('Phase targets (P9) are consistent with the minimum gates (Overview).'); return 0
     if not steps:
         print('Nothing to rewrite.'); return 0 if not out else 1
     tmp = tempfile.mkdtemp(); plan = os.path.join(tmp, 'plan.json'); json.dump({'steps': steps}, open(plan, 'w'))
