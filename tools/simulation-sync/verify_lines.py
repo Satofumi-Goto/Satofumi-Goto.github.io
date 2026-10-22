@@ -51,10 +51,24 @@ def main(tp, before, after):
                 old = [c for c in pa.chars if in_target(c, t)]
                 new = [c for c in pb.chars if in_target(c, t)]
                 text = ''.join(c['text'] for c in new)
+                if not t['new'].strip():
+                    # a blanking target: none of its old glyphs may remain (another target on the same
+                    # baseline may draw new text across this slot; that target checks its own text)
+                    left = [c for c in ink(new) if any(c['text'] == o['text'] and abs(c['x0'] - o['x0']) < 0.05
+                                                         and c['fontname'] == o['fontname'] for o in ink(old))]
+                    if left:
+                        problems.append(f'page {i}: line {t["top"]} still shows {"".join(c["text"] for c in left)!r}')
+                    x0 = min(c['x0'] for c in old); x1 = max(c['x1'] for c in old)
+                    bands.setdefault(i, []).append((x0, min(c['top'] for c in old), x1, max(c['bottom'] for c in old)))
+                    continue
                 if text.replace(' ', '') != t['new'].replace(' ', ''):
                     problems.append(f'page {i}: line {t["top"]} reads {text!r}')
-                o0 = next(c for c in old if not c['text'].isspace()); n0 = next(c for c in new if not c['text'].isspace())
-                if abs(n0['x0'] - o0['x0']) > 0.05 or abs(n0['top'] - o0['top']) > 0.05:
+                o0 = next(c for c in old if not c['text'].isspace())
+                n0 = next((c for c in new if not c['text'].isspace()), None)
+                if n0 is None:
+                    if t['new'].strip():
+                        problems.append(f'page {i}: line {t["top"]} is empty')
+                elif abs(n0['x0'] - o0['x0']) > 0.05 or abs(n0['top'] - o0['top']) > 0.05:
                     problems.append(f'page {i}: line {t["top"]} start moved')
                 if ink(new) and max(c['x1'] for c in ink(new)) > t['max_right'] + 0.01:
                     problems.append(f'page {i}: line {t["top"]} ends past {t["max_right"]}')
