@@ -147,3 +147,108 @@ main.wrap > footer.note > .section-label { margin-bottom: 16px; }
 .experience-pair .simulation-open:hover span { background: #08595c; }
 
 .simulation-preview-image { display:block; width:100%; height:100%; object-fit:cover; object-position:top; }
+
+/* One card system for documents, studies and applications on every page. */
+main.wrap :is(.grid, .items) {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:20px;
+  align-items:stretch;
+}
+main.wrap :is(.card-wrap, .item-wrap) {
+  display:flex;
+  flex-direction:column;
+  padding:0;
+  border:1px solid #dbe4ed;
+  border-radius:12px;
+  background:#fff;
+  color:#17243a;
+  overflow:hidden;
+}
+main.wrap :is(.card-wrap, .item-wrap):hover {
+  border-color:#76aebe;
+  box-shadow:0 6px 20px rgba(24,44,66,.07);
+}
+main.wrap :is(.card-wrap, .item-wrap) > :is(.card, .item) {
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  min-height:0;
+  margin:0;
+  padding:24px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  color:inherit;
+  text-decoration:none;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+main.wrap :is(.card, .item) > :is(.tag, .item-meta) {
+  display:block;
+  margin:0 0 10px;
+  color:#4d7280;
+  font-size:.74rem;
+  font-weight:700;
+  line-height:1.5;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+main.wrap :is(.card, .item) > :is(h3, .item-title) {
+  display:block;
+  margin:0 0 12px;
+  color:#17243a;
+  font-size:1.2rem;
+  font-weight:650;
+  line-height:1.35;
+  letter-spacing:-.02em;
+  text-wrap:initial;
+}
+main.wrap :is(.card, .item) > :is(p, .item-description) {
+  display:block;
+  margin:0;
+  color:#536277;
+  font-size:.95rem;
+  line-height:1.65;
+}
+main.wrap :is(.card, .item) > :is(.action, .item-action) {
+  display:block;
+  align-self:flex-start;
+  margin-top:auto;
+  padding-top:20px;
+  color:#075b78;
+  font-size:.9rem;
+  font-weight:650;
+  line-height:1.5;
+  letter-spacing:0;
+}
+main.wrap :is(.card-wrap, .item-wrap) > .rev {
+  margin:0;
+  padding:14px 24px;
+  border:0;
+  border-top:1px solid #dbe4ed;
+  border-radius:0;
+  background:#fff;
+}
+main.wrap :is(.card-wrap, .item-wrap) > .rev summary {
+  color:#075b78;
+  font-size:.85rem;
+  font-weight:650;
+  line-height:1.5;
+  letter-spacing:0;
+}
+main.wrap :is(.card-wrap, .item-wrap) > .rev summary span {
+  color:#536277;
+  font-size:.75rem;
+  font-weight:400;
+  margin-left:10px;
+}
+main.wrap :is(.card-wrap, .item-wrap) .rev-body { padding:12px 0 4px; }
+main.wrap :is(.card-wrap, .item-wrap) .rev-head { margin:0 0 10px; font-size:.9rem; line-height:1.5; color:#17243a; }
+main.wrap :is(.card-wrap, .item-wrap) .rev ul { margin:0; padding-left:1.15em; font-size:.85rem; line-height:1.6; color:#536277; }
+main.wrap :is(.card-wrap, .item-wrap) .rev-note { margin:10px 0 0; font-size:.76rem; line-height:1.55; color:#536277; }
+@media(max-width:680px) {
+  main.wrap :is(.grid, .items) { grid-template-columns:1fr; gap:16px; }
+  main.wrap :is(.card-wrap, .item-wrap) > :is(.card, .item) { padding:20px; }
+  main.wrap :is(.card-wrap, .item-wrap) > .rev { padding:14px 20px; }
+}
