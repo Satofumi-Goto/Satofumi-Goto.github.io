@@ -81,7 +81,7 @@
      },
      {
       "lead": "Project finance added.",
-      "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations. Operating cost can now be itemised: MaaS operations splits into seven components (14 component indices in the bundled baseline), and four per-vehicle cost inputs (remote monitoring, insurance, maintenance, communications) are added at a default of zero. Totals are unchanged."
+      "text": " A 50-line P/L, cash flow for 2025–2035, IRR, NPV and sensitivity are calculated from the same run as the operations. Operating cost can now be itemised: MaaS operations splits into seven components (14 component indices in the bundled baseline), and four per-vehicle cost inputs (remote monitoring, insurance, maintenance, communications) are added at a default of zero. Totals are unchanged. An extended evaluation now carries the case through the questions an investment committee asks: after-tax results with a loss carry-forward cap, renewal investment and a 2035 residual value, with payback recalculated to include renewal. Tax rate and similar inputs are working values that can be replaced by registering them in Federation."
      },
      {
       "lead": "Live indices from Federation, with provenance.",
@@ -97,7 +97,7 @@
      },
      {
       "lead": "Evidence you can inspect.",
-      "text": " A fleet-hub study dataset is published alongside the simulator."
+      "text": " A fleet-hub study dataset is published alongside the simulator. The baseline operation was re-examined so that the 2030 and 2035 plans now complete every planned trip. Sensitivity sweeps show a min–mean–max band over three random seeds and are judged on the worst seed, so a conclusion never rests on one lucky run."
      },
      {
       "lead": "Three view modes.",
@@ -106,7 +106,7 @@
     ],
     "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
    },
-   "reviewed_at": "2026-10-20T20:52:00Z",
+   "reviewed_at": "2026-10-21T20:51:00Z",
    "ja": {
     "head": "運行・財務・リアルタイム入力を一つの計算に結び付ける、事業性検証シミュレータへ統合しました。",
     "items": [
@@ -128,7 +128,7 @@
      },
      {
       "lead": "プロジェクト財務を追加。",
-      "text": "運行計算と同一条件でP/L 50項目、2025〜2035年のキャッシュフロー、IRR・NPV・感度分析を算出。MaaS運行費を7要素（標準条件の内訳指数14件）へ分解し、車両当たりの遠隔監視・保険・保守・通信の4費目を初期値ゼロで追加。合計額は変えません。"
+      "text": "運行計算と同一条件でP/L 50項目、2025〜2035年のキャッシュフロー、IRR・NPV・感度分析を算出。MaaS運行費を7要素（標準条件の内訳指数14件）へ分解し、車両当たりの遠隔監視・保険・保守・通信の4費目を初期値ゼロで追加。合計額は変えません。さらに、投資判断で必ず問われる「税引後で、設備の更新まで含めて、本当に回収できるか」まで同じ画面で確認できる拡張評価を追加。繰越欠損金の控除上限つき法人税、更新投資、2035年の残存価値を織り込み、更新投資を含めた回収年を算出します。税率などの入力値はFederationへの登録で差し替えられます。"
      },
      {
       "lead": "Federationの指数をリアルタイム受信し、出所を記録。",
@@ -144,7 +144,7 @@
      },
      {
       "lead": "検証データも公開。",
-      "text": "フリート・拠点検討用のデータセットを、シミュレータと併せて公開しました。"
+      "text": "フリート・拠点検討用のデータセットを、シミュレータと併せて公開。基準設定の運行を見直し、2030年・2035年の計画どおり全件を完了する状態にしました。感度の掃引は乱数3通りの最小・平均・最大の帯で示し、合否は最も悪い乱数で判定するため、結論が一度の好結果に左右されません。"
      },
      {
       "lead": "3種類の表示モード。",
@@ -269,7 +269,7 @@
     "items": [],
     "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
    },
-   "reviewed_at": "2026-10-21T11:20:00Z"
+   "reviewed_at": "2026-10-21T20:51:00Z"
   },
   "seneschal": {
    "updated": "2026-10-21",
@@ -369,7 +369,7 @@
     ],
     "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
    },
-   "reviewed_at": "2026-10-20T20:52:00Z"
+   "reviewed_at": "2026-10-21T20:51:00Z"
   },
   "federation": {
    "updated": "2026-10-21",
@@ -405,7 +405,7 @@
      },
      {
       "lead": "Card Quality Loop.",
-      "text": " Blueprint and Artifact cards are scored continuously. Independent reviews are recorded in a ledger for 36 cards (30 at 10/10, 6 with open findings), including vehicle platforms, WBS, risk register, pricing and the control structure."
+      "text": " Blueprint and Artifact cards are scored continuously on a 10-point rubric, and only the independent review of a card's current content counts. Diagnosis, correction, evidence and re-review are traced in one workspace, and reviewers themselves are measured by planting known errors. With 97 cards in the ledger, each carrying its score and open findings, quality is something you can check rather than a claim."
      },
      {
       "lead": "Consistency with the English portfolio.",
@@ -417,7 +417,7 @@
      },
      {
       "lead": "Design from the specification.",
-      "text": " The Design section renders the v2 specification as a model-based view: state machines, sequence, use-case and activity diagrams, a requirement-to-evidence trace, consistency checks across the model, and change-impact analysis that traces upstream and downstream. Gaps and open questions are listed rather than hidden, and a desk check is never shown as field-verified."
+      "text": " The Design section renders the v2 specification as a model-based view: state machines, sequence, use-case and activity diagrams, a requirement-to-evidence trace, consistency checks across the model, and change-impact analysis that traces upstream and downstream. Gaps and open questions are listed rather than hidden, and a desk check is never shown as field-verified. Beyond reading the specification, it now lets you work with it: a 2035 vehicle model ties driving, fuel cell, storage, refuelling and heat to bill-of-materials mass, and a decision board lays out, for each design decision, what every option changes, a recommended option and a due date, so choices are made with their consequences in view."
      },
      {
       "lead": "Knowledge graph.",
@@ -451,7 +451,7 @@
      },
      {
       "lead": "カード品質ループ",
-      "text": "：BlueprintとArtifactを継続採点し、独立レビューを36枚分台帳に記録（10/10が30枚、未解決の指摘ありが6枚）。車両プラットフォーム、WBS、リスク台帳、価格、制御構造などを含む"
+      "text": "：BlueprintカードとArtifactカードを10点満点で継続的に採点し、点数は最新内容に対する独立レビューの結果だけを採用。診断から修正・証跡・再レビューまでを一つの作業台でたどれ、レビュアーの見落としも既知の誤りを植え込んで測ります。97枚のカードに点数と未解決の指摘が台帳として残り、品質は主張ではなく確認できるものになっています。"
      },
      {
       "lead": "英文ポートフォリオとの整合チェック",
@@ -463,7 +463,7 @@
      },
      {
       "lead": "仕様書からのDesign",
-      "text": "：Designセクションが仕様書v2をモデルベースの画面として表示。状態機械・シーケンス図・ユースケース図・アクティビティ図、要求から証跡へのトレース、モデル全体の整合チェック、上流・下流をたどる変更影響分析。欠けや未決事項は隠さず一覧にし、机上確認を実機確認済みとは表示しない"
+      "text": "：Designセクションが仕様書v2をモデルベースの画面として表示。状態機械・シーケンス図・ユースケース図・アクティビティ図、要求から証跡へのトレース、モデル全体の整合チェック、上流・下流をたどる変更影響分析。欠けや未決事項は隠さず一覧にし、机上確認を実機確認済みとは表示しない。仕様を読むだけでなく、使って判断できるように：走行・燃料電池・貯蔵・補給・排熱を部品表の質量までつなぐ2035年車両の統合モデルと、設計判断ごとに選択肢の影響・推奨案・期限を並べる判断ボードを追加。何を決めれば何が変わるかを見比べて意思決定できます"
      },
      {
       "lead": "ナレッジグラフ",
