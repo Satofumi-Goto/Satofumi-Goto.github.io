@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Liquid-hydrogen-cooled operational node: device configuration, temperature stages, seven gated mesh stages, cold and power balance. Satofumi Goto.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Autono-MaaS Node Mesh</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* Layout: engineering datasheet — one reading column with full-width schematic plates; lanes = subsystems, color strips = temperature stage */
+:root{
+  --bg:#eef2f5; --surface:#ffffff; --sunk:#e3e9ee; --ink:#13202b; --muted:#566878; --line:#c9d3dc;
+  --accent:#0a6a86; --accent-ink:#ffffff;
+  --t-amb:#b8640f; --t-fw:#0d8a7a; --t-20:#2a62c9; --t-4:#5a3fb8; --t-15:#a1338c; --t-mix:#6b7a88;
+  --l-power:#c46a0a; --l-h2:#2a62c9; --l-data:#6b4fbf; --l-q:#0d8a6a;
+  --ev-src:#13202b; --ev-prop:#0a6a86; --ev-tgt:#a8620c; --ev-pend:#7a8794;
+  --warn-bg:#fff6e6; --warn-line:#e5b766;
+  --f-display:"Barlow Condensed","Arial Narrow","Noto Sans JP",sans-serif;
+  --f-body:"Noto Sans JP","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0d141a; --surface:#141e26; --sunk:#1b2731; --ink:#e2e9ef; --muted:#93a4b3; --line:#2b3a46;
+  --accent:#4cb3d2; --accent-ink:#06131a;
+  --t-amb:#e39a4b; --t-fw:#3cc2ae; --t-20:#6c9cf2; --t-4:#9f87ee; --t-15:#e07ac9; --t-mix:#8d9cab;
+  --l-power:#ea9a43; --l-h2:#6c9cf2; --l-data:#a68cf0; --l-q:#3ccf9f;
+  --ev-src:#e2e9ef; --ev-prop:#4cb3d2; --ev-tgt:#e3a24f; --ev-pend:#8d9cab;
+  --warn-bg:#2a2214; --warn-line:#7a5c22; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0d141a; --surface:#141e26; --sunk:#1b2731; --ink:#e2e9ef; --muted:#93a4b3; --line:#2b3a46;
+  --accent:#4cb3d2; --accent-ink:#06131a;
+  --t-amb:#e39a4b; --t-fw:#3cc2ae; --t-20:#6c9cf2; --t-4:#9f87ee; --t-15:#e07ac9; --t-mix:#8d9cab;
+  --l-power:#ea9a43; --l-h2:#6c9cf2; --l-data:#a68cf0; --l-q:#3ccf9f;
+  --ev-src:#e2e9ef; --ev-prop:#4cb3d2; --ev-tgt:#e3a24f; --ev-pend:#8d9cab;
+  --warn-bg:#2a2214; --warn-line:#7a5c22; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+html[lang="ja"] .l-en{display:none} html:not([lang="ja"]) .l-ja{display:none}
+a{color:var(--accent);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto}
+.col{max-width:72ch}
+h1,h2,h3{font-family:var(--f-display);font-weight:600;letter-spacing:.01em;text-wrap:balance;line-height:1.1;margin:0}
+html[lang="ja"] h1,html[lang="ja"] h2,html[lang="ja"] h3{font-family:var(--f-body);font-weight:700;letter-spacing:0}
+h1{font-size:clamp(34px,6vw,56px)}
+h2{font-size:clamp(24px,3.4vw,32px)}
+h3{font-size:19px}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.bar nav{display:flex;gap:4px 14px;flex-wrap:wrap;font-size:13px;flex:1;min-width:0}
+.bar nav a{color:var(--muted);text-decoration:none}
+.bar nav a:hover{color:var(--ink)}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;flex:none}
+.lang button{all:unset;cursor:pointer;font-family:var(--f-mono);font-size:12px;padding:4px 12px;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+
+header.hero{padding-block:36px 26px;display:grid;gap:18px}
+.hero .lede{font-size:17px;max-width:68ch}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.ev{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-family:var(--f-mono);border-radius:999px;padding:2px 9px;border:1px solid currentColor;white-space:nowrap;line-height:1.6}
+.ev::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.ev.src{color:var(--ev-src)} .ev.prop{color:var(--ev-prop);border-style:dashed} .ev.tgt{color:var(--ev-tgt)} .ev.pend{color:var(--ev-pend);border-style:dotted}
+.ev.pend::before{background:transparent;border:1px solid currentColor}
+
+section{padding-block:34px;border-top:1px solid var(--line);display:grid;gap:16px}
+.sec-head{display:grid;gap:6px}
+
+/* thesis */
+.thesis{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:22px}
+.thesis > *{min-width:0}
+@media (max-width:760px){.thesis{grid-template-columns:1fr}}
+.thesis p+p{margin-top:10px}
+.factrow{display:grid;gap:8px;align-content:start}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;gap:2px}
+.fact b{font-family:var(--f-mono);font-weight:500;font-size:20px;font-variant-numeric:tabular-nums}
+.fact span{font-size:13px;color:var(--muted)}
+
+/* plates (diagrams) */
+.plate{background:var(--surface);border:1px solid var(--line);border-radius:var(--r)}
+.plate > svg{display:block;margin:0 auto}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+svg text{font-family:var(--f-body)}
+.svgnode{cursor:pointer}
+.svgnode rect.box{fill:var(--surface);stroke:var(--line);stroke-width:1.2}
+.svgnode:hover rect.box,.svgnode:focus rect.box{stroke:var(--accent)}
+.svgnode.sel rect.box{stroke:var(--accent);stroke-width:2.4}
+.svgnode.dashed rect.box{stroke-dasharray:4 3}
+.svgnode:focus{outline:none}
+.svgnode:focus-visible rect.box{stroke:var(--accent);stroke-width:2.4}
+.lane-bg{fill:var(--sunk)}
+.lane-lab{fill:var(--muted);font-size:11.5px;font-weight:700}
+.nlab{fill:var(--ink);font-size:12px}
+.ntemp{font-family:var(--f-mono)!important;font-size:10.5px}
+.edge{stroke:var(--muted);stroke-width:1.4;fill:none}
+.edge.cold{stroke:var(--t-20);stroke-width:2}
+.edge.heat{stroke:var(--t-fw);stroke-width:2}
+.edge.ctl{stroke:var(--muted);stroke-dasharray:2 4}
+.edge.opt{stroke:var(--l-data);stroke-width:2}
+
+.diagram-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.detail .kv{grid-template-columns:110px minmax(0,1fr)}
+@media (min-width:900px){.detail{grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);column-gap:28px}.detail > .kv{grid-column:2;grid-row:1 / span 4}}
+.diagram-grid > *{min-width:0}
+.detail{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px;align-content:start}
+.detail h3{font-size:20px}
+.kv{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 10px;font-size:13.5px}
+.kv dt{color:var(--muted);font-size:12px;padding-top:2px}
+.kv dd{margin:0}
+.tchip{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px}
+.tchip i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.chiplist{display:flex;flex-wrap:wrap;gap:6px}
+.chiplist button{all:unset;cursor:pointer;font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--surface)}
+.chiplist button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:700}
+.chiplist button:focus-visible{outline:2px solid var(--accent)}
+.templegend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted)}
+
+.refcard{border:1px solid var(--t-4);border-left-width:4px;border-radius:var(--r);padding:14px 16px;background:var(--surface);display:grid;gap:6px}
+.refcard .eyebrow{color:var(--t-4)}
+.callout{background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:var(--r);padding:10px 14px;font-size:13.5px}
+
+/* tables */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--sunk)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td a.jump{font-size:12.5px;white-space:nowrap}
+
+/* stages */
+.stagebar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+@media (max-width:640px){.stagebar{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.stagebar button{all:unset;cursor:pointer;border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:8px 8px 9px;display:grid;gap:2px;min-width:0}
+.stagebar button b{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:500}
+.stagebar button span{font-size:12.5px;line-height:1.3}
+.stagebar button[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 -3px 0 var(--accent)}
+.stagebar button.done{background:var(--sunk)}
+.stagebar button:focus-visible{outline:2px solid var(--accent)}
+.stagepanel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.stagepanel{grid-template-columns:1fr}}
+.stagepanel > div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;min-width:0;display:grid;gap:6px;align-content:start}
+.stagepanel ul{margin:0;padding-left:1.1em;font-size:14px}
+.stagepanel li+li{margin-top:3px}
+.stagepanel .gate{border-color:var(--accent)}
+.stagepanel .gate h3{color:var(--accent)}
+.stagepanel .wide{grid-column:1/-1}
+
+/* mesh */
+.mesh-ctl{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:13px}
+.mesh-ctl label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.mesh-ctl input{accent-color:var(--accent);width:16px;height:16px}
+.sw{width:22px;height:0;border-top:3px solid;display:inline-block}
+
+/* calc */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:820px){.calc{grid-template-columns:1fr}}
+.calc > *{min-width:0}
+.inputs{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.inrow{display:grid;grid-template-columns:minmax(0,1fr) 112px 70px;gap:8px;align-items:center;font-size:13.5px}
+.inrow input,.inrow select{width:100%;font:inherit;font-family:var(--f-mono);font-size:13.5px;padding:4px 6px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);text-align:right}
+.inrow select{text-align:left}
+.inrow .u{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.inrow small{display:block;color:var(--muted);font-size:11.5px;line-height:1.35}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button{all:unset;cursor:pointer;font-family:var(--f-mono);font-size:12.5px;padding:3px 12px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.outputs{display:grid;gap:10px;align-content:start}
+.out{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:grid;gap:4px}
+.out .v{font-family:var(--f-mono);font-size:24px;font-variant-numeric:tabular-nums}
+.out .f{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);overflow-wrap:anywhere}
+.meter{height:10px;border-radius:5px;background:var(--sunk);overflow:hidden;display:flex}
+.meter i{display:block;height:100%}
+
+/* proposal */
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.opts{grid-template-columns:1fr}}
+.opt{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:8px;align-content:start;min-width:0}
+.opt.rec{border:2px solid var(--accent)}
+.opt ol,.opt ul{margin:0;padding-left:1.2em;font-size:14px}
+.badge{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);border-radius:3px;padding:1px 7px;justify-self:start}
+
+.srclist{display:grid;gap:8px;font-size:13.5px;margin:0;padding:0;list-style:none}
+.srclist li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:8px}
+.srclist .id{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.srclist .url{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);overflow-wrap:anywhere}
+
+.print-only{display:none}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .bar,.chiplist,.stagebar,.mesh-ctl,.no-print{display:none!important}
+  .print-only{display:block}
+  section{break-inside:auto;padding-block:16px}
+  .plate,.detail,.stagepanel>div,.opt,.out,.fact,.refcard{break-inside:avoid}
+  a[href^="http"]::after{content:" <" attr(href) ">";font-family:var(--f-mono);font-size:8pt;color:#444;overflow-wrap:anywhere}
+  .scroll-x,.tbl{overflow:visible}
+}
+</style>
+
+</head>
+<body>
+<div class="bar">
+  <div class="bar-in">
+    <nav aria-label="Sections">
+      <a href="#thesis"><span class="l-en">Overview</span><span class="l-ja">全体像</span></a>
+      <a href="#node"><span class="l-en">Node</span><span class="l-ja">Node構成</span></a>
+      <a href="#roadmap"><span class="l-en">Roadmap &amp; mesh</span><span class="l-ja">ロードマップ・メッシュ</span></a>
+      <a href="#balance"><span class="l-en">Cold &amp; power balance</span><span class="l-ja">冷熱・電力収支</span></a>
+      <a href="#carry"><span class="l-en">Carry-over</span><span class="l-ja">引継ぎ対応</span></a>
+      <a href="#layout"><span class="l-en">Composition</span><span class="l-ja">構成提案</span></a>
+      <a href="#sources"><span class="l-en">Sources</span><span class="l-ja">出典</span></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" id="lang-en" aria-pressed="true">EN</button>
+      <button type="button" id="lang-ja" aria-pressed="false">日本語</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Satofumi Goto · Autono-MaaS · <span class="l-en">Node detail, draft 1 · 2026-10-22</span><span class="l-ja">Node詳細 初稿 · 2026-10-22</span></div>
+  <h1><span class="l-en">Autono-MaaS Node Mesh</span><span class="l-ja">Autono-MaaS Nodeメッシュ</span></h1>
+  <p class="lede">
+    <span class="l-en">How one liquid-hydrogen-cooled operational node is built, what each device does at which temperature, and the gated order in which nodes join into a power, hydrogen, data and quantum mesh that carries infrastructure-coordinated autonomous mobility.</span>
+    <span class="l-ja">液体水素で冷却する運用拠点（Node）1か所の機器構成、各機器の役割と温度帯、そしてNodeが電力・水素・データ・量子の網へ段階的につながり、インフラ協調型の自動運転モビリティを支えるまでの順序と進行条件を示します。</span>
+  </p>
+  <div class="legend" aria-label="Evidence classes">
+    <span class="ev src"><span class="l-en">Public primary source</span><span class="l-ja">公開一次情報</span></span>
+    <span class="ev prop"><span class="l-en">Integration proposal</span><span class="l-ja">今回の統合提案</span></span>
+    <span class="ev tgt"><span class="l-en">Overview target</span><span class="l-ja">元Overviewの目標</span></span>
+    <span class="ev pend"><span class="l-en">Pending validation</span><span class="l-ja">実証待ち</span></span>
+  </div>
+</header>
+
+<!-- THESIS -->
+<section id="thesis">
+  <div class="sec-head">
+    <div class="eyebrow"><span class="l-en">Carried from the 1-page Overview</span><span class="l-ja">1ページOverviewから引継ぎ</span></div>
+    <h2><span class="l-en">Autono-MaaS business logic</span><span class="l-ja">Autono-MaaSの事業ロジック</span></h2>
+  </div>
+  <div class="thesis">
+    <div class="col">
+      <p><span class="l-en">Autono-MaaS succeeds or fails on a business structure that converts operation into profit, not on driving technology alone. Once automation removes driver labor, energy becomes the dominant operating cost; vehicle utilization recovers CAPEX and load factor raises revenue per trip.</span><span class="l-ja">Autono-MaaSの成否を決めるのは自動運転技術そのものではなく、運行を利益に変える事業構造です。自動化で運転者の人件費が下がると、運行費の中心はエネルギー費になります。車両稼働率でCAPEXを回収し、乗車率で1運行当たりの収入を上げます。</span></p>
+      <p><span class="l-en">Next-generation vehicle technology is first developed for stationary use, then moved into service vehicles. The node is where that happens: renewable PPA, micro-hydropower, hydrogen production, magnetic refrigeration and liquid-hydrogen-cooled HPC share one site, and the site later joins others through superconducting cables and LH₂ pipelines.</span><span class="l-ja">次世代の車両技術はまず定置用途で開発し、準備ができたものからサービス車両へ載せます。その場がNodeです。再エネPPA、マイクロ水力、水素製造、磁気冷凍、液体水素冷却HPCを1拠点に集め、その拠点を超電導ケーブルと液体水素パイプラインで他拠点とつなぎます。</span></p>
+      <p><span class="l-en">This page expands the Overview's infrastructure layer into a concrete node build and a staged mesh roadmap. Any ODD expansion remains subject to scenario coverage, V&amp;V evidence, a validated safety case and regulatory approval.</span><span class="l-ja">本ページは、Overviewのインフラ層を、具体的なNode構成と段階的なメッシュ展開に展開したものです。ODD拡大は、シナリオ網羅、V&amp;Vの根拠、検証済みのセーフティケース、規制当局の承認を条件とします。</span></p>
+      <p class="muted" style="font-size:13.5px">
+        <span class="l-en">Original Overview:</span><span class="l-ja">元のOverview：</span>
+        <a href="https://satofumi-goto.github.io/Autonomous_Mobility_Overview.pdf">Autonomous_Mobility_Overview.pdf</a> ·
+        Seneschal <a href="https://seneschal.base44.app">seneschal.base44.app</a> ·
+        Federation <a href="https://federation.base44.app">federation.base44.app</a>
+      </p>
+    </div>
+    <div class="factrow">
+      <div class="fact"><b>104.1 / 171.2 <small class="mono" style="font-size:13px">kg/day</small></b><span><span class="l-en">H₂ demand 2030 / 2035 if SOFC supplies all power (Federation master values). Sets how much LH₂ cold a node can recover.</span><span class="l-ja">2030／2035年の水素需要（全量SOFC供給時、Federation正本値）。Nodeが回収できるLH₂冷熱の上限を決める。</span></span></div>
+      <div class="fact"><b>≥99.9%</b><span><span class="l-en">HPC Node AI compute availability (Overview target)</span><span class="l-ja">HPC NodeのAI計算可用性（Overview目標）</span></span></div>
+      <div class="fact"><b>≥80% · ≥70%</b><span><span class="l-en">Superconducting cable / LH₂ pipeline utilization (Overview targets)</span><span class="l-ja">超電導ケーブル／LH₂パイプラインの利用率（Overview目標）</span></span></div>
+      <div class="fact"><b>≤¥500 <small class="mono" style="font-size:13px">/trip</small></b><span><span class="l-en">Energy cost per trip (Overview target)</span><span class="l-ja">1運行当たりのエネルギー費（Overview目標）</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- NODE -->
+<section id="node">
+  <div class="sec-head">
+    <div class="eyebrow"><span class="l-en">Stage 1 build · single node</span><span class="l-ja">Stage 1の構成 · 単一Node</span></div>
+    <h2><span class="l-en">Initial node configuration</span><span class="l-ja">初期Nodeの構成</span></h2>
+    <p class="col muted"><span class="l-en">Select a device to read its role, temperature stage, connections, basis and open items. Lanes are subsystems; the colored strip on each device is its temperature stage. HPC runs at ordinary liquid-cooling temperatures: LH₂ cold reaches it only indirectly through the facility loop, and no GPU is assumed to run at 20 K.</span><span class="l-ja">機器を選ぶと、役割・温度帯・接続先・根拠・未確定事項を表示します。横の帯が系統、各機器の左端の色が温度帯です。HPCは通常の液冷温度で動かします。LH₂の冷熱は施設側ループを通じて間接的に使うだけで、GPUを20Kで動かす前提にはしていません。</span></p>
+  </div>
+  <div class="templegend" id="temp-legend"></div>
+  <div class="diagram-grid">
+    <div style="display:grid;gap:10px;min-width:0">
+      <div class="plate scroll-x"><svg id="node-svg" viewBox="0 0 940 600" width="940" height="600" role="group" aria-label="Node configuration diagram"></svg></div>
+      <div class="chiplist no-print" id="node-chips" aria-label="Devices"></div>
+    </div>
+    <aside class="detail" id="node-detail" aria-live="polite"></aside>
+  </div>
+
+  <div class="refcard" id="ref-4k">
+    <div class="eyebrow"><span class="l-en">Quantum reference point · 4 K</span><span class="l-ja">量子系の参照点 · 4K</span></div>
+    <h3><span class="l-en">Diamond spin qubit and its cryo-CMOS controller in one 4 K stage</span><span class="l-ja">ダイヤモンドスピン量子ビットと制御用cryo-CMOSを同じ4K環境で動作</span></h3>
+    <p><span class="l-en">Fujitsu and QuTech announced on 20 February 2024 that a cryo-CMOS circuit placed inside the cryogenic refrigerator drove a diamond spin qubit, with both operating at 4 K. Single-qubit control was shown; two-qubit operation and read-out were named as next steps.</span><span class="l-ja">富士通とQuTechは2024年2月20日、冷凍機内に置いたcryo-CMOS回路でダイヤモンドスピン量子ビットを駆動し、両者を4Kで動作させた成果を発表しました。示されたのは1量子ビットの制御で、2量子ビット動作と読み出しは今後の課題とされています。</span></p>
+    <p><a href="https://info.archives.global.fujitsu/global/about/resources/news/press-releases/2024/0220-01.html"><span class="l-en">Fujitsu press release, 20 Feb 2024: “Fujitsu collaborates with QuTech in development of new technology for freezing electronics to control diamond spin qubits”</span><span class="l-ja">富士通 公式発表（2024年2月20日）：QuTechとのダイヤモンドスピン量子ビット制御用の極低温エレクトロニクス開発</span></a></p>
+    <p class="callout"><span class="l-en">Scope: this source is a 4 K laboratory result. It does not demonstrate a node that combines LH₂ pre-cooling with a 4 K stage; that combination is this page's proposal and awaits validation. Fujitsu's 2026 tin-vacancy prototype is announced at about −271.6 °C (≈1.55 K), a separate condition below the 4.2 K cryocoolers shown here.</span><span class="l-ja">範囲：この出典は4Kでの研究成果です。LH₂予冷と4K段を組み合わせたNodeの実証ではありません。その組合せは本ページの提案で、実証待ちです。また富士通の2026年のSnVプロトタイプの公表温度は約−271.6℃（約1.55K）で、本図の4.2K冷凍機とは別条件です。</span></p>
+  </div>
+
+  <div class="sec-head" style="margin-top:6px">
+    <h3><span class="l-en">Data path, room temperature</span><span class="l-ja">通常データ通信の経路（常温）</span></h3>
+  </div>
+  <div class="plate scroll-x" style="padding:14px">
+    <svg id="path-svg" viewBox="0 0 900 150" width="900" height="150" aria-label="Optical data path"></svg>
+  </div>
+  <p class="col" style="font-size:14px"><span class="l-en">Amplifiers, ROADMs and OEO/3R regeneration (re-amplify, reshape, retime) are added only where distance, loss and signal quality call for them. A path with electrical regeneration in the middle is kept distinct from an all-photonics optical path with no intermediate O-E-O conversion. Cooling a receiver part is evaluated by its effect on whole-path capacity and total power, including the cryocooler; no speed multiplier is assumed.</span><span class="l-ja">光増幅器、ROADM、OEO・3R再生（再増幅・波形整形・タイミング再生）は、距離・損失・品質から必要な区間にだけ追加します。途中で電気に戻して再生する経路と、中間の光電変換を行わないAPN光パスは区別します。受信部品を低温化する効果は、冷凍機を含む経路全体の容量と総消費電力で評価し、「冷やせば何倍」という値は置きません。</span></p>
+</section>
+
+<!-- ROADMAP & MESH -->
+<section id="roadmap">
+  <div class="sec-head">
+    <div class="eyebrow"><span class="l-en">Seven gated stages</span><span class="l-ja">進行条件つきの7段階</span></div>
+    <h2><span class="l-en">From one node to a mobility mesh</span><span class="l-ja">単一Nodeからモビリティのメッシュへ</span></h2>
+    <p class="col muted"><span class="l-en">Pick a stage. The map shows what exists at that stage; the panels list the added equipment, its use, what is verified and the condition for moving on. Power, hydrogen and data networks are each laid only where demand and economics have been confirmed.</span><span class="l-ja">Stageを選ぶと、その時点のメッシュと、追加設備・用途・検証項目・次へ進む条件が表示されます。光通信網・電力網・水素網は、それぞれ需要と採算を確認した区間にだけ重ねます。</span></p>
+  </div>
+  <div class="stagebar" id="stagebar" role="group" aria-label="Stage"></div>
+  <div class="mesh-ctl no-print" id="mesh-ctl"></div>
+  <div class="plate scroll-x"><svg id="mesh-svg" viewBox="0 0 900 360" width="900" height="360" aria-label="Node mesh"></svg></div>
+  <div class="stagepanel" id="stagepanel"></div>
+  <div class="print-only" id="print-stages"></div>
+</section>
+
+<!-- BALANCE -->
+<section id="balance">
+  <div class="sec-head">
+    <div class="eyebrow"><span class="l-en">Evaluation sheet</span><span class="l-ja">評価欄</span></div>
+    <h2><span class="l-en">Cold recovery and node power</span><span class="l-ja">冷熱回収量とNodeの総電力</span></h2>
+    <p class="col muted"><span class="l-en">Every number below is an editable input. Values marked “provisional” are working assumptions to be replaced by measured or datasheet values; they are not results.</span><span class="l-ja">下の数値はすべて変更できる入力です。「仮入力」は実測値や仕様書の値に置き換える前提の作業値で、結果ではありません。</span></p>
+  </div>
+  <div class="calc">
+    <div class="inputs" id="calc-in"></div>
+    <div class="outputs" id="calc-out"></div>
+  </div>
+</section>
+
+<!-- CARRY-OVER -->
+<section id="carry">
+  <div class="sec-head">
+    <div class="eyebrow"><span class="l-en">Nothing from the Overview is dropped</span><span class="l-ja">元Overviewの内容はすべて引継ぎ</span></div>
+    <h2><span class="l-en">Where the Overview content went</span><span class="l-ja">既存Overviewの内容の引継ぎ先</span></h2>
+  </div>
+  <h3><span class="l-en">Infrastructure layer table</span><span class="l-ja">インフラ層の表</span></h3>
+  <div class="tbl"><table id="tbl-infra"></table></div>
+  <h3><span class="l-en">AVP-to-MaaS logic and KPI table</span><span class="l-ja">AVPからMaaSへの論理とKPI表</span></h3>
+  <div class="tbl"><table id="tbl-kpi"></table></div>
+  <h3><span class="l-en">Text sections</span><span class="l-ja">本文</span></h3>
+  <div class="tbl"><table id="tbl-text"></table></div>
+</section>
+
+<!-- LAYOUT PROPOSAL -->
+<section id="layout">
+  <div class="sec-head">
+    <div class="eyebrow"><span class="l-en">Judged after building this page</span><span class="l-ja">本ページを作った上での判断</span></div>
+    <h2><span class="l-en">How the Overview should be composed</span><span class="l-ja">Overviewの構成提案</span></h2>
+  </div>
+  <div class="tbl"><table id="tbl-judge"></table></div>
+  <div class="opts" id="opts"></div>
+</section>
+
+<!-- SOURCES -->
+<section id="sources">
+  <div class="sec-head">
+    <h2><span class="l-en">Sources</span><span class="l-ja">出典</span></h2>
+    <p class="col muted"><span class="l-en">Sources are also linked next to the statement they support. Each line says what to look for on the page.</span><span class="l-ja">出典は、根拠とする記述のすぐそばにもリンクしています。各行に、そのページで確認する箇所を記載しています。</span></p>
+  </div>
+  <ul class="srclist" id="srclist"></ul>
+</section>
+
+<div class="print-only" id="print-nodes"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var LANG = "en";
+try{ var s = localStorage.getItem("nm-lang"); if(s==="ja"||s==="en") LANG=s; }catch(e){}
+try{ var q = new URLSearchParams(location.search).get("lang"); if(q==="ja"||q==="en") LANG=q; }catch(e){}
+function T(o){ return (o && typeof o==="object") ? (o[LANG]||o.en) : (o||""); }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function L(en,ja){ return {en:en, ja:ja}; }
+var NS="http://www.w3.org/2000/svg";
+
+/* ---------- sources ---------- */
+var SRC = {
+  fj24:{url:"https://info.archives.global.fujitsu/global/about/resources/news/press-releases/2024/0220-01.html",
+    name:L("Fujitsu press release, 20 Feb 2024 — QuTech collaboration on cryo electronics for diamond spin qubits","富士通 公式発表 2024年2月20日：QuTechと共同のダイヤモンドスピン量子ビット制御用極低温エレクトロニクス"),
+    where:L("Body: cryo-CMOS and qubit both at 4 K in one refrigerator; single-qubit control; next steps.","本文：cryo-CMOSと量子ビットがともに4Kで同じ冷凍機内、1量子ビット制御、今後の課題。")},
+  qt24:{url:"https://qutech.nl/2024/02/20/freezing-electronics-to-control-diamond-spin-qubits/",
+    name:L("QuTech news, 20 Feb 2024 — Freezing electronics to control diamond spin qubits","QuTech ニュース 2024年2月20日：ダイヤモンドスピン量子ビット制御用の極低温エレクトロニクス"),
+    where:L("Why cryo-CMOS cuts wiring; two-qubit operation and read-out listed as next steps.","cryo-CMOSで配線数を減らす理由、2量子ビット動作と読み出しが次の課題とされている箇所。")},
+  fj26:{url:"https://global.fujitsu/en-global/pr/news/2026/09/08-01",
+    name:L("Fujitsu press release, 8 Sep 2026 — diamond spin (SnV) quantum computer prototype","富士通 公式発表 2026年9月8日：ダイヤモンドスピン（SnV）量子コンピュータ試作機"),
+    where:L("Operating temperature stated as −271.6 °C (≈1.55 K).","動作温度 −271.6℃（約1.55K）の記載。")},
+  shi412:{url:"https://shicryogenics.com/?p=73",
+    name:L("SHI Cryogenics — RDE-412D4 4K cryocooler series","住友重機械 SHI Cryogenics：RDE-412D4 4K冷凍機"),
+    where:L("Specification: 2nd stage 1.25 W at 4.2 K; 1st stage 53/60 W at 43 K (50/60 Hz); compatible compressors. Power draw not listed.","仕様欄：第2段 1.25W＠4.2K、第1段 53／60W＠43K（50／60Hz）、適合圧縮機。消費電力の記載なし。")},
+  shi082:{url:"https://shicryogenics.com/?p=136",
+    name:L("SHI Cryogenics — RP-082B2 4K pulse tube cryocooler series","住友重機械 SHI Cryogenics：RP-082B2 4Kパルス管冷凍機"),
+    where:L("Specification: 2nd stage 1.0 W at 4.2 K; 1st stage 40 W at 45 K; F-70 / FA-70 compressors.","仕様欄：第2段 1.0W＠4.2K、第1段 40W＠45K、F-70／FA-70圧縮機。")},
+  nims22:{url:"https://www.nims.go.jp/eng/press/2022/04/202204110.html",
+    name:L("NIMS press release, 11 Apr 2022 — hydrogen liquefaction by active magnetic regenerative refrigeration","NIMS 発表 2022年4月11日：能動的蓄冷式磁気冷凍（AMRR）による水素液化"),
+    where:L("First liquefaction of hydrogen by AMRR; HoAl₂ particles; >50% liquefaction efficiency stated as theoretically possible (not measured).","AMRRによる水素液化の成功、HoAl₂磁性粒子、液化効率50%超は理論上の可能性（実測値ではない）。")},
+  nist21:{url:"https://www.nist.gov/node/1654346",
+    name:L("NIST news, 24 Mar 2021 — Optical fiber could boost power of superconducting quantum computers","NIST ニュース 2021年3月24日：光ファイバーによる超伝導量子ビットの制御・読み出し"),
+    where:L("Fiber plus cryogenic photodetector replaced coax; read-out accuracy matched the coax line.","光ファイバーと低温光検出器で同軸ケーブルを置換、読み出し精度が同軸と同等。")},
+  vertiv:{url:"https://www.vertiv.com/jp-asia/insights/articles/blog-posts/deploying-liquid-cooling-in-data-centers-installing-and-managing-coolant-distribution-units-cdus2/",
+    name:L("Vertiv — Deploying liquid cooling: installing and managing CDUs","Vertiv：液冷の導入とCDUの設置・管理"),
+    where:L("CDU isolates the facility water loop from the secondary loop to cold plates; supply temperature kept above dew point.","CDUが施設側冷水と機器側二次ループを分離、供給温度を露点より上に保つ記述。")},
+  ntt:{url:"https://www.rd.ntt/e/forum/2022/keynote_2.html",
+    name:L("NTT R&D Forum 2022 — Road to IOWN (All-Photonics Network)","NTT R&Dフォーラム2022：Road to IOWN（オールフォトニクス・ネットワーク）"),
+    where:L("APN section: replacing repeated electro-optical conversion with a direct optical path.","APNの節：経路途中の光電変換を直接の光パスに置き換える説明。")},
+  ov:{url:"https://satofumi-goto.github.io/Autonomous_Mobility_Overview.pdf",
+    name:L("Autonomous Mobility Overview (1 page, Satofumi Goto)","Autonomous Mobility Overview（1ページ、後藤悟文）"),
+    where:L("Infrastructure layer table and AVP-to-MaaS KPI table.","インフラ層の表、AVP-to-MaaSのKPI表。")},
+  fed:{url:"https://federation.base44.app",
+    name:L("Federation — integrated design and operations verification","Federation：統合設計・運用検証"),
+    where:L("Inputs: 2030 / 2035 hydrogen demand at full SOFC supply.","Inputs：2030／2035年の全量SOFC供給時の水素需要。")}
+};
+function srcLink(id){ var s=SRC[id]; return '<a href="'+esc(s.url)+'">'+esc(T(s.name))+'</a>'; }
+
+/* ---------- temperature stages ---------- */
+var TEMP = {
+  amb:{c:"var(--t-amb)", s:"300 K", l:L("≈300 K ambient","約300K 常温")},
+  fw:{c:"var(--t-fw)", s:"H₂O", l:L("liquid-cooling water","液冷の水温帯")},
+  k20:{c:"var(--t-20)", s:"20 K", l:L("≈20 K LH₂","約20K LH₂")},
+  k4:{c:"var(--t-4)", s:"4.2 K", l:L("4.2 K stage","4.2K段")},
+  k15:{c:"var(--t-15)", s:"1.55 K", l:L("≈1.55 K (separate)","約1.55K（別条件）")},
+  mix:{c:"var(--t-mix)", s:"multi", l:L("spans stages","複数の温度帯")}
+};
+var EVN = {src:L("Public primary source","公開一次情報"),prop:L("Integration proposal","今回の統合提案"),tgt:L("Overview target","元Overviewの目標"),pend:L("Pending validation","実証待ち")};
+function evChips(list){ return list.map(function(k){return '<span class="ev '+k+'">'+esc(T(EVN[k]))+'</span>';}).join(" "); }
+
+/* ---------- node devices ---------- */
+var LANES = [
+  {y:20,  h:100, l:L("LH₂ supply · cold recovery","LH₂供給・冷熱回収")},
+  {y:130, h:100, l:L("HPC cooling","通常HPCの冷却")},
+  {y:240, h:100, l:L("Cryogenic optics · quantum","低温光・量子デバイス")},
+  {y:350, h:100, l:L("Data communication","通常データ通信")},
+  {y:460, h:120, l:L("Node control · metering","Node制御・計測")}
+];
+var BW=104, BH=58;
+function bx(i){ return 134+i*114; }
+var DEV = [
+ {id:"tank",lane:0,x:bx(0),t:"k20",lab:L(["LH₂ receiving","& storage"],["LH₂受入","・貯蔵"]),
+  role:L("Receives delivered LH₂ and holds it in a vacuum-insulated tank. The liquid's cold is the node's cold source.","配送されたLH₂を真空断熱タンクで受け入れ、貯蔵する。液体が持ち込む冷熱がNodeの冷熱源になる。"),
+  conn:["meter","bog","precool"],basis:[],ev:["prop"],
+  open:L("Delivery cycle versus hydrogen demand timing; tank size; heat-leak rate.","配送周期と水素需要の時間的な一致、タンク容量、侵入熱量。")},
+ {id:"meter",lane:0,x:bx(1),t:"k20",lab:L(["P / T / flow","metering"],["圧力・温度・","流量計測"]),
+  role:L("Measures pressure, temperature and mass flow so recovered cold and delivered hydrogen can be computed, not estimated.","圧力・温度・質量流量を計測し、回収冷熱量と供給水素量を推定ではなく計算で出す。"),
+  conn:["hx","ctrl"],basis:[],ev:["prop"],open:L("Metering class for custody transfer of hydrogen.","水素の取引計量に必要な計量精度。")},
+ {id:"hx",lane:0,x:bx(2),t:"k20",lab:L(["Isolated heat","exchanger"],["隔離した","熱交換器"]),
+  role:L("Transfers LH₂ cold into an intermediate loop. Hydrogen and water never share a fluid; staging keeps water from freezing against a 20 K surface.","LH₂の冷熱を中間ループへ渡す。水素と水は流体を共有しない。段階的に温度を上げ、20Kの面で水が凍結しないようにする。"),
+  conn:["vap","inter"],basis:[],ev:["prop","pend"],
+  open:L("Intermediate medium and number of stages; freeze protection; hydrogen leak detection on the secondary side.","中間媒体と段数、凍結防止、二次側での水素漏れ検知。")},
+ {id:"vap",lane:0,x:bx(3),t:"amb",lab:L(["Vaporizer &","temp. trim"],["気化・","温度調整"]),
+  role:L("Brings hydrogen to the delivery temperature and pressure. An ambient vaporizer backs up the heat exchanger when HPC heat load is low.","水素を供給先の温度・圧力に合わせる。HPCの発熱が少ない時間帯は大気式気化器で補う。"),
+  conn:["demand"],basis:[],ev:["prop"],open:L("Backup vaporizer capacity at minimum HPC load.","HPC最小負荷時の補助気化能力。")},
+ {id:"demand",lane:0,x:bx(4),t:"amb",lab:L(["H₂ demand","SOFC · fueling"],["水素需要先","SOFC・充填"]),
+  role:L("Hydrogen consumption sets how much cold is available. Federation's master values: 104.1 kg/day (2030) and 171.2 kg/day (2035) if SOFC supplies all power.","水素の消費量が使える冷熱量を決める。Federation正本値：全量SOFC供給時 2030年 104.1kg/日、2035年 171.2kg/日。"),
+  conn:[],basis:["fed"],ev:["tgt"],open:L("Hourly demand profile versus HPC heat profile.","時間別の水素需要とHPC発熱の重なり。")},
+ {id:"bog",lane:0,x:bx(5),t:"k20",lab:L(["Boil-off gas","handling"],["蒸発ガス","の扱い"]),
+  role:L("Heat leak vaporizes LH₂ continuously. Boil-off is routed to the demand side or re-liquefied (Stage 2 AMR); venting is not the default.","侵入熱でLH₂は常に蒸発する。蒸発ガスは需要先へ回すか再液化（Stage 2のAMR）し、放出を前提にしない。"),
+  conn:["demand"],basis:[],ev:["prop","pend"],open:L("Boil-off rate at low-demand hours; re-liquefaction energy.","低需要時間帯の蒸発量、再液化のエネルギー。")},
+
+ {id:"cp",lane:1,x:bx(0),t:"fw",lab:L(["GPU / CPU","cold plates"],["GPU・CPU","コールドプレート"]),
+  role:L("Liquid-cooled plates on processors. HPC runs at ordinary liquid-cooling temperatures; no GPU is assumed to run at 20 K.","プロセッサに取り付ける液冷板。HPCは通常の液冷温度で動作し、GPUを20Kで動かす前提はない。"),
+  conn:["tcs"],basis:["vertiv"],ev:["src"],open:L("Supply temperature window of the selected HPC platform.","採用するHPC機種の供給水温の許容範囲。")},
+ {id:"tcs",lane:1,x:bx(1),t:"fw",lab:L(["Equipment-side","cooling loop"],["機器側","冷却ループ"]),
+  role:L("Secondary loop between the cold plates and the CDU, held above dew point.","コールドプレートとCDUを結ぶ二次ループ。露点より上の温度に保つ。"),
+  conn:["cdu"],basis:["vertiv"],ev:["src"],open:L("Coolant chemistry and filtration.","冷却液の種類とろ過。")},
+ {id:"cdu",lane:1,x:bx(2),t:"fw",lab:L(["CDU","coolant distrib."],["CDU","冷却液分配"]),
+  role:L("Separates facility water from the IT loop and regulates supply temperature, pressure and flow as compute load swings.","施設側の水と機器側ループを分離し、計算負荷の変動に応じて供給温度・圧力・流量を制御する。"),
+  conn:["fws"],basis:["vertiv"],ev:["src"],open:L("Control response to fast load steps.","急な負荷変動への制御応答。")},
+ {id:"fws",lane:1,x:bx(3),t:"fw",lab:L(["Facility-side","cooling loop"],["施設側","冷却ループ"]),
+  role:L("Rejects HPC heat, normally to a chiller or cooling tower. LH₂ cold offsets part of this load.","HPCの熱を通常は冷凍機・冷却塔へ排出する。LH₂の冷熱でその一部を肩代わりする。"),
+  conn:["inter"],basis:["vertiv"],ev:["src","prop"],open:L("Share of heat LH₂ can actually absorb at each hour (see evaluation sheet).","時間ごとにLH₂が吸収できる熱の割合（評価欄）。")},
+ {id:"inter",lane:1,x:bx(4),t:"mix",lab:L(["LH₂-cold","intermediate loop"],["LH₂冷熱の","中間ループ"]),
+  role:L("Carries cold from the isolated heat exchanger to the facility loop indirectly. This link is the integration proposal of this page.","隔離した熱交換器から施設側ループへ冷熱を間接的に運ぶ。この接続が本ページの統合提案。"),
+  conn:["hx","fws"],basis:[],ev:["prop","pend"],open:L("Medium, staging temperatures, and control when hydrogen flow stops.","媒体、各段の温度、水素流量が止まった時の制御。")},
+
+ {id:"precool",lane:2,x:bx(0),t:"k20",lab:L(["20 K pre-cool","/ heat shield"],["20K予冷","・熱シールド"]),
+  role:L("Candidate use of LH₂ cold to intercept heat at the cryostat's shield stage and reduce the 4 K cryocooler's load. The cryocoolers' first stages sit at 43–45 K, so LH₂ at about 20 K is colder than that stage.","LH₂の冷熱でクライオスタットの熱シールド段の侵入熱を受け、4K冷凍機の負荷を下げる利用候補。冷凍機の第1段は43〜45Kなので、約20KのLH₂はそれより低温。"),
+  conn:["cryo"],basis:["shi412","shi082"],ev:["prop","pend"],open:L("Measured reduction of 4 K load and compressor power per watt of shield heat removed.","シールド熱1W除去当たりの4K負荷と圧縮機電力の実測削減量。")},
+ {id:"cryo",lane:2,x:bx(1),t:"k4",lab:L(["4 K cryocooler","GM / pulse tube"],["4K冷凍機","GM・パルス管"]),
+  role:L("A dedicated cryocooler provides the 4 K stage; LH₂ alone cannot reach 4 K. Spec examples for comparison: RDE-412D4 two-stage GM, 1.25 W at 4.2 K; RP-082B2 pulse tube, 1.0 W at 4.2 K. These are comparison examples, not the units used in the Fujitsu work.","4K段は専用の冷凍機で作る。LH₂だけでは4Kに届かない。比較用の仕様例：RDE-412D4（二段GM）1.25W＠4.2K、RP-082B2（パルス管）1.0W＠4.2K。富士通の実験で使われた型番ではない。"),
+  conn:["qubit","optrx"],basis:["shi412","shi082"],ev:["src"],
+  open:L("Compressor power (not on the product pages); heat load from wiring, supports and control electronics; vibration (GM vs pulse tube).","圧縮機の消費電力（製品ページに記載なし）、配線・支持材・制御回路からの熱負荷、振動（GMとパルス管の差）。")},
+ {id:"qubit",lane:2,x:bx(2),t:"k4",lab:L(["cryo-CMOS +","diamond qubit"],["cryo-CMOS＋","ダイヤ量子ビット"]),
+  role:L("Research reference: Fujitsu and QuTech ran a diamond spin qubit and its cryo-CMOS controller in the same 4 K environment (single-qubit control). A 4 K research result, not a demonstration of an LH₂-pre-cooled node.","研究の参照点：富士通とQuTechが、ダイヤモンドスピン量子ビットと制御用cryo-CMOSを同じ4K環境で動作させた（1量子ビットの制御）。4Kの研究成果であり、LH₂予冷を組み合わせたNodeの実証ではない。"),
+  conn:["ctrl"],basis:["fj24","qt24"],ev:["src","pend"],open:L("Two-qubit operation and read-out (named as next steps by the source).","2量子ビット動作と読み出し（出典が今後の課題としている）。")},
+ {id:"optrx",lane:2,x:bx(3),t:"k4",lab:L(["Cryo optical","link devices"],["低温光接続","デバイス"]),
+  role:L("Fiber into the cryostat with cryogenic photodetectors instead of coax. NIST controlled and read a superconducting qubit this way. In the node, measure whether better sensitivity, noise and loss change whole-path capacity and total power.","同軸の代わりに光ファイバーと低温光検出器で冷凍機内へ信号を送る。NISTはこの方式で超伝導量子ビットを制御・読み出した。Nodeでは、受信感度・雑音・損失の改善が経路全体の容量と総電力を変えるかを測る。"),
+  conn:["sw"],basis:["nist21"],ev:["src","pend"],open:L("Which node devices benefit at all; cryocooler power included in the comparison.","どのNode機器に効果があるか、冷凍機電力を含めた比較。")},
+ {id:"snv",lane:2,x:bx(4),t:"k15",dashed:true,lab:L(["SnV prototype","≈1.55 K"],["SnV試作機","約1.55K"]),
+  role:L("Fujitsu's 2026 tin-vacancy diamond spin prototype is announced at about −271.6 °C (≈1.55 K). Shown as a separate condition: it is not drawn as running on the 4.2 K cryocoolers.","富士通の2026年のSnVダイヤモンドスピン試作機の公表温度は約−271.6℃（約1.55K）。別条件として示し、4.2K冷凍機で動く形には描かない。"),
+  conn:[],basis:["fj26"],ev:["src"],open:L("Cooling method and stage below 4.2 K.","4.2K未満を作る冷却方式と段構成。")},
+
+ {id:"hpc",lane:3,x:bx(0),t:"amb",lab:L(["HPC /","storage"],["HPC・","ストレージ"]),
+  role:L("Compute and storage for infrastructure AI. Same racks as the cold-plate lane. Overview target: AI compute availability ≥99.9%.","インフラAI向けの計算・保存。コールドプレートの系統と同じラック。Overview目標：AI計算可用性99.9%以上。"),
+  conn:["sw","cp"],basis:["ov"],ev:["tgt"],open:L("Job mix and its heat profile.","ジョブ構成と発熱の時間変化。")},
+ {id:"sw",lane:3,x:bx(1),t:"amb",lab:L(["Ethernet switch","/ router"],["Ethernet","スイッチ／ルータ"]),
+  role:L("Aggregates node traffic and routes it toward the wide-area link.","Node内の通信を集約し、広域回線へ経路制御する。"),conn:["coh"],basis:[],ev:["prop"],open:L("Redundancy level for ≥99.9% availability.","可用性99.9%以上に必要な冗長度。")},
+ {id:"coh",lane:3,x:bx(2),t:"amb",lab:L(["Coherent TRx","DSP · FEC"],["コヒーレント","DSP・FEC"]),
+  role:L("Digital coherent transceiver: the DSP compensates fiber impairments and FEC corrects bit errors.","デジタルコヒーレント送受信器。DSPが伝送路の劣化を補償し、FECが誤りを訂正する。"),conn:["wdm"],basis:[],ev:["prop"],open:L("Modulation format per span length.","区間長ごとの変調方式。")},
+ {id:"wdm",lane:3,x:bx(3),t:"amb",lab:L(["WDM","mux / demux"],["WDM","多重・分離"]),
+  role:L("Multiplexes wavelengths onto one fiber pair.","複数の波長を1対の光ファイバーに多重する。"),conn:["fiber"],basis:[],ev:["prop"],open:L("Channel plan shared with quantum links in Stage 4.","Stage 4の量子リンクと共用する波長配置。")},
+ {id:"fiber",lane:3,x:bx(4),t:"amb",lab:L(["Optical fiber","room temp."],["光ファイバー","常温"]),
+  role:L("Ordinary room-temperature fiber between nodes.","Node間の通常の常温光ファイバー。"),conn:["line"],basis:[],ev:["prop"],open:L("Route and span loss.","ルートと区間損失。")},
+ {id:"line",lane:3,x:bx(5),t:"amb",dashed:true,lab:L(["Amp · ROADM","OEO / 3R"],["増幅・ROADM","OEO／3R"]),
+  role:L("Added only where distance, loss and quality require. 3R = re-amplify, reshape, retime. A path with mid-route O-E-O regeneration is kept distinct from an all-photonics path with no intermediate conversion.","距離・損失・品質から必要な場合のみ追加。3R＝再増幅・波形整形・タイミング再生。途中でOEO再生する経路と、中間の光電変換を行わないAPN光パスを区別する。"),
+  conn:["peer"],basis:["ntt"],ev:["src","prop"],open:L("Whether node spacing needs any regeneration.","Node間隔で再生が必要になるか。")},
+
+ {id:"ctrl",lane:4,x:bx(0),t:"mix",lab:L(["Node controller & metering — H₂ flow · recovered cold · temperatures · compute load","cooling / cryocooler / network power · link quality · fault states → Federation Runtime"],["Node制御・計測：水素流量・回収冷熱・温度・計算負荷","冷却／冷凍機／通信の電力・通信品質・障害状態 → Federation Runtime"]),
+  role:L("One controller for the whole node. It records the quantities each stage gate needs and passes them to Federation's Runtime section.","Node全体を管理する制御系。各Stageの進行判定に必要な量を記録し、FederationのRuntimeへ渡す。"),
+  conn:["meter","cdu","cryo","sw"],basis:["fed"],ev:["prop"],open:L("Data contract with Federation and the four operation consoles.","Federationと4コンソールとのデータ契約。")}
+];
+/* peer node shown as external */
+DEV.push({id:"peer",lane:3,x:bx(6)-14,w:96,t:"amb",lab:L(["Peer node","receive chain"],["相手Node","受信系"]),
+  role:L("The other node's receive chain: WDM, coherent receiver, switch.","相手Nodeの受信系（WDM、コヒーレント受信器、スイッチ）。"),conn:[],basis:[],ev:["prop"],open:L("Stage 3 decides which sites connect.","接続する拠点はStage 3で決める。")});
+var DMAP={}; DEV.forEach(function(d){ d.w=d.w||BW; DMAP[d.id]=d; });
+DMAP.ctrl.w = 114*5+BW; /* spans five columns */
+
+var selDev = "qubit";
+
+function center(d){ var L0=LANES[d.lane]; return {x:d.x+d.w/2, y:L0.y+(L0.h-BH)/2+BH/2, top:L0.y+(L0.h-BH)/2, bot:L0.y+(L0.h-BH)/2+BH}; }
+function el(tag,attrs,parent){ var e=document.createElementNS(NS,tag); for(var k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+function drawNode(){
+  var svg=document.getElementById("node-svg"); svg.innerHTML="";
+  LANES.forEach(function(ln){
+    el("rect",{x:4,y:ln.y,width:932,height:ln.h,rx:5,class:"lane-bg"},svg);
+    var t=el("text",{x:10,y:ln.y+15,class:"lane-lab"},svg); t.textContent=T(ln.l);
+  });
+  var g=el("g",{},svg);
+  function line(a,b,cls,path){ el("path",{d:path,class:"edge "+cls},g); }
+  // same-lane chain edges
+  [["tank","meter","cold"],["meter","hx","cold"],["hx","vap",""],["vap","demand",""],
+   ["cp","tcs","heat"],["tcs","cdu","heat"],["cdu","fws","heat"],["inter","fws","cold"],
+   ["precool","cryo","cold"],["cryo","qubit",""],["cryo","optrx",""],
+   ["hpc","sw","opt"],["sw","coh","opt"],["coh","wdm","opt"],["wdm","fiber","opt"],["fiber","line","opt"],["line","peer","opt"]].forEach(function(p){
+    var a=center(DMAP[p[0]]), b=center(DMAP[p[1]]);
+    var x1=DMAP[p[0]].x+DMAP[p[0]].w, x2=DMAP[p[1]].x;
+    if(p[0]==="inter"){ x1=DMAP.inter.x; x2=DMAP.fws.x+DMAP.fws.w; }
+    if(p[0]==="cryo"&&p[1]==="optrx"){ line(0,0,p[2],"M"+(DMAP.cryo.x+DMAP.cryo.w/2)+" "+a.bot+" V"+(a.bot+14)+" H"+(DMAP.optrx.x+DMAP.optrx.w/2)+" V"+b.bot); return; }
+    line(0,0,p[2],"M"+x1+" "+a.y+" H"+x2);
+  });
+  // bog: from tank top arcing to bog top, bog to demand
+  var t0=center(DMAP.tank), bg=center(DMAP.bog), dm=center(DMAP.demand);
+  line(0,0,"","M"+(DMAP.tank.x+DMAP.tank.w/2)+" "+t0.top+" V"+(t0.top-10)+" H"+(DMAP.bog.x+DMAP.bog.w/2)+" V"+bg.top);
+  line(0,0,"","M"+DMAP.bog.x+" "+(bg.y+12)+" H"+(DMAP.demand.x+DMAP.demand.w));
+  // hx down to inter
+  var hx=center(DMAP.hx), it=center(DMAP.inter);
+  line(0,0,"cold","M"+(DMAP.hx.x+DMAP.hx.w/2)+" "+hx.bot+" V"+(hx.bot+20)+" H"+(DMAP.inter.x+DMAP.inter.w/2)+" V"+it.top);
+  // tank down to precool via left rail
+  var pc=center(DMAP.precool);
+  line(0,0,"cold","M"+(DMAP.tank.x+80)+" "+t0.bot+" V"+(t0.bot+12)+" H"+(DMAP.tank.x+DMAP.tank.w+5)+" V"+(pc.top-8)+" H"+(DMAP.precool.x+80)+" V"+pc.top);
+  // hpc to cold plate (same racks) dashed
+  // optrx to switch
+  var ox=center(DMAP.optrx), sw=center(DMAP.sw);
+  line(0,0,"opt","M"+(DMAP.optrx.x+20)+" "+(ox.bot)+" V"+(ox.bot+26)+" H"+(DMAP.sw.x+30)+" V"+sw.top);
+  // controller dashed up to meter column
+  var ct=center(DMAP.ctrl);
+  line(0,0,"ctl","M"+(DMAP.ctrl.x+DMAP.ctrl.w)+" "+ct.y+" H930 V40");
+
+  DEV.forEach(function(d){
+    var c=center(d);
+    var n=el("g",{class:"svgnode"+(d.dashed?" dashed":"")+(d.id===selDev?" sel":""),tabindex:"0",role:"button","aria-label":T(d.lab).join(" "),"data-id":d.id},svg);
+    el("rect",{x:d.x,y:c.top,width:d.w,height:BH,rx:4,class:"box"},n);
+    el("rect",{x:d.x,y:c.top,width:5,height:BH,rx:1.5,fill:TEMP[d.t].c},n);
+    var lines=T(d.lab);
+    var big = d.id==="ctrl";
+    lines.forEach(function(s,i){ var tx=el("text",{x:d.x+12,y:c.top+(big?24:20)+i*16,class:"nlab"},n); tx.textContent=s; });
+    if(!big){ var tt=el("text",{x:d.x+d.w-6,y:c.top+BH-5,"text-anchor":"end",class:"ntemp",fill:TEMP[d.t].c},n); tt.textContent=TEMP[d.t].s; }
+    n.addEventListener("click",function(){ selectDev(d.id); });
+    n.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); selectDev(d.id);} });
+  });
+}
+function detailHTML(d,forPrint){
+  var conns=d.conn.map(function(id){ var x=DMAP[id]; return x?esc(T(x.lab)[0].split(" — ")[0].split("：")[0]+(id==="ctrl"?"":" "+T(x.lab)[1])):""; }).filter(Boolean).join(" · ")||"—";
+  var basis=d.basis.length? d.basis.map(srcLink).join("<br>") : '<span class="muted">'+esc(T(L("No external source; integration proposal of this page.","外部出典なし。本ページの統合提案。")))+'</span>';
+  var h = '<div class="eyebrow">'+esc(T(LANES[d.lane].l))+'</div><h3>'+esc(T(d.lab).join(" "))+'</h3>'+
+    '<div>'+evChips(d.ev)+'</div>'+
+    '<dl class="kv"><dt>'+esc(T(L("Role","役割")))+'</dt><dd>'+esc(T(d.role))+'</dd>'+
+    '<dt>'+esc(T(L("Temperature","温度帯")))+'</dt><dd><span class="tchip"><i style="background:'+TEMP[d.t].c+'"></i>'+esc(T(TEMP[d.t].l))+'</span></dd>'+
+    '<dt>'+esc(T(L("Connects to","接続先")))+'</dt><dd>'+conns+'</dd>'+
+    '<dt>'+esc(T(L("Basis","根拠")))+'</dt><dd>'+basis+'</dd>'+
+    '<dt>'+esc(T(L("Open items","未確定事項")))+'</dt><dd>'+esc(T(d.open))+'</dd></dl>';
+  if(d.id==="qubit"&&!forPrint) h+='<p class="callout">'+esc(T(L("Official 4 K announcement: ","4Kの公式発表："))) +srcLink("fj24")+'</p>';
+  return h;
+}
+function selectDev(id){
+  selDev=id;
+  document.getElementById("node-detail").innerHTML=detailHTML(DMAP[id]);
+  Array.prototype.forEach.call(document.querySelectorAll("#node-svg .svgnode"),function(n){ n.classList.toggle("sel",n.getAttribute("data-id")===id); });
+  Array.prototype.forEach.call(document.querySelectorAll("#node-chips button"),function(b){ b.setAttribute("aria-pressed",String(b.getAttribute("data-id")===id)); });
+}
+function drawChips(){
+  var c=document.getElementById("node-chips"); c.innerHTML="";
+  DEV.forEach(function(d){ var b=document.createElement("button"); b.type="button"; b.setAttribute("data-id",d.id); b.textContent=T(d.lab).join(" ").replace(/ — .*/,"").slice(0,40); b.addEventListener("click",function(){selectDev(d.id);}); c.appendChild(b); });
+  var lg=document.getElementById("temp-legend"); lg.innerHTML="";
+  Object.keys(TEMP).forEach(function(k){ var s=document.createElement("span"); s.className="tchip"; s.innerHTML='<i style="background:'+TEMP[k].c+'"></i>'+esc(T(TEMP[k].l)); lg.appendChild(s); });
+}
+
+/* ---------- data path strip ---------- */
+function drawPath(){
+  var svg=document.getElementById("path-svg"); svg.innerHTML="";
+  var steps=[L("HPC / storage","HPC・ストレージ"),L("Switch / router","スイッチ／ルータ"),L("Coherent TRx\nDSP · FEC","コヒーレント送受信器\nDSP・FEC"),L("WDM","WDM"),L("Fiber, room temp.","常温光ファイバー"),L("Peer node\nreceive chain","相手Node\n受信系")];
+  var w=124,g=28,y=22,h=52;
+  steps.forEach(function(s,i){
+    var x=8+i*(w+g);
+    el("rect",{x:x,y:y,width:w,height:h,rx:4,fill:"var(--surface)",stroke:"var(--l-data)","stroke-width":1.4},svg);
+    T(s).split("\n").forEach(function(line,j,arr){ var t=el("text",{x:x+w/2,y:y+h/2+5+(j-(arr.length-1)/2)*15,"text-anchor":"middle",class:"nlab"},svg); t.textContent=line; });
+    if(i<steps.length-1) el("path",{d:"M"+(x+w)+" "+(y+h/2)+" H"+(x+w+g-4)+" l-6 -4 M"+(x+w+g-4)+" "+(y+h/2)+" l-6 4",class:"edge opt"},svg);
+  });
+  // insert points
+  var x4=8+4*(w+g);
+  el("path",{d:"M"+(x4+w/2)+" "+(y+h)+" V"+(y+h+22),class:"edge ctl"},svg);
+  var t=el("text",{x:x4+w/2,y:y+h+38,"text-anchor":"middle",class:"nlab"},svg);
+  t.textContent=T(L("+ amplifier · ROADM · OEO/3R where needed","＋必要区間に 光増幅器・ROADM・OEO／3R"));
+  var t2=el("text",{x:x4+w/2,y:y+h+54,"text-anchor":"middle",class:"ntemp",fill:"var(--muted)"},svg);
+  t2.textContent=T(L("or APN optical path: no mid-route O-E-O","またはAPN光パス：途中の光電変換なし"));
+}
+
+/* ---------- stages ---------- */
+var STAGES=[
+ {n:1,name:L("LH₂-cooled node","LH₂冷却Node"),topo:L("Single node","単一Node"),
+  build:[L("LH₂ receiving, metering, isolated heat exchanger, vaporizer","LH₂受入・計測・隔離した熱交換器・気化器"),L("HPC liquid cooling: cold plates → CDU → facility loop, with LH₂ cold fed indirectly","HPC液冷：コールドプレート→CDU→施設側ループ、LH₂冷熱を間接投入"),L("Room-temperature optical link to the carrier network","通信事業者網への常温光通信"),L("Node controller and metering","Node制御・計測")],
+  use:[L("Infrastructure-AI compute at a parking-operator site that already receives hydrogen for fueling","充填用に水素を受け入れている駐車場運営拠点でのインフラAI計算"),L("AVP-integrated fueling (Overview logic B, C)","AVP連携の充填（Overview論理B・C）")],
+  verify:[L("Recovered cold [kW] versus HPC heat [kW], hour by hour","時間ごとの回収冷熱[kW]とHPC発熱[kW]"),L("Total node power and chiller power avoided","Node総電力と冷凍機電力の削減量"),L("Compute delivered and availability","処理した計算量と可用性"),L("Operating burden of hydrogen handling","水素取扱いの運用負担")],
+  gate:[L("Hydrogen demand and HPC heat overlap in time","水素需要とHPC発熱が時間的に重なる"),L("Recovered cold and power saving are measured, not estimated","回収熱量と電力削減が実測で確認できる"),L("AI compute availability ≥99.9% sustained","AI計算可用性99.9%以上を維持"),L("Operations workload acceptable to the site operator","拠点運営者が受け入れられる運用負担")],
+  logic:"B, C, D", infra:["Cooling","HPC Node"], ev:["prop","tgt","pend"]},
+ {n:2,name:L("Water-pipe mill + rotary AMR","水道管ミル＋回転式AMR"),topo:L("Single node, own H₂ and LH₂","単一Node、水素とLH₂を自給"),
+  build:[L("Micro-hydro / wind rotation taken mechanically from the water main or turbine","水道管マイクロ水力・風力の回転を機械的に取り出す"),L("Process 1 — mill-based hydrogen production driven by the shaft","工程1：軸動力で回すミルによる水素製造"),L("Process 2 — rotary active magnetic regenerative refrigerator (AMR) for refrigeration and liquefaction","工程2：回転式の能動的蓄冷式磁気冷凍（AMR）による冷凍・液化"),L("Re-liquefaction of boil-off gas","蒸発ガスの再液化")],
+  use:[L("Local LH₂ supply that reduces delivered-LH₂ dependence","配送LH₂への依存を下げる地産のLH₂供給"),L("Distributed baseload from water infrastructure","水インフラ由来の分散型ベースロード")],
+  verify:[L("Power and material flows: shaft power to each process, H₂ mass out","動力と物質の流れ：各工程への軸動力、水素の生成量"),L("Production versus liquefaction quantities","製造量と液化量の釣り合い"),L("Auxiliary electric power (pumps, magnets, controls)","補機電力（ポンプ・磁石駆動・制御）"),L("Stability under variable flow","流量変動下での安定性")],
+  gate:[L("Liquefied quantity matches node demand within the balance","液化量がNodeの需要に見合う"),L("Auxiliary power lower than buying equivalent LH₂ energy","補機電力が同等のLH₂購入より小さい"),L("Stable operation across seasonal water flow","季節の流量変化を通じて安定運転")],
+  logic:"—", infra:["Water Infrastructure","Hydrogen Production","Cooling"], ev:["src","prop","pend"], amr:true},
+ {n:3,name:L("HTS cable / LH₂ pipeline","HTSケーブル／LH₂パイプライン"),topo:L("Two sites linked","2拠点接続"),
+  build:[L("Short superconducting cable cooled by the LH₂ it runs beside, between two sites with demand","需要のある2拠点間に、並走するLH₂で冷やす短距離の超電導ケーブル"),L("LH₂ pipeline on the same limited section","同じ限定区間のLH₂パイプライン"),L("Fiber on the same route","同ルートの光ファイバー")],
+  use:[L("Inter-node power sharing and hydrogen distribution","Node間の電力融通と水素配送")],
+  verify:[L("Distance and heat ingress per metre","距離とメートル当たりの侵入熱"),L("Electrical and hydrogen losses","電力・水素の損失"),L("Asset utilization (targets ≥80% cable, ≥70% pipeline)","設備利用率（目標：ケーブル80%以上、パイプライン70%以上）"),L("Maintenance and cost","維持管理と費用")],
+  gate:[L("Utilization reaches the Overview targets","利用率がOverview目標に届く"),L("Loss and heat ingress below the trucked alternative","損失と侵入熱が陸送より小さい"),L("Cost per kWh and per kg below separate supply","kWh当たり・kg当たり費用が個別供給より安い")],
+  logic:"—", infra:["Energy Network","Hydrogen Network"], ev:["tgt","prop","pend"]},
+ {n:4,name:L("Cryogenic optics + quantum comm","低温光ネットワーク＋量子通信"),topo:L("Two sites, quantum link","2拠点、量子リンク"),
+  build:[L("Node-local cryogenic optical devices on a 4 K cryocooler, with LH₂ shield pre-cool as a candidate","4K冷凍機上のNode局所の低温光デバイス、LH₂によるシールド予冷を候補として併用"),L("QKD on the A–B route","A–B間のQKD"),L("Quantum optical interconnect test bed (4 K reference: Fujitsu/QuTech)","量子光接続の試験系（4Kの参照点：富士通・QuTech）")],
+  use:[L("Key distribution for vehicle–infrastructure messages","車両・インフラ間メッセージの鍵配送"),L("Learning which devices gain from cooling","低温化で効果の出る機器の見極め")],
+  verify:[L("Link quality (QBER, key rate for QKD; fidelity for quantum links)","通信品質（QKDはQBER・鍵生成率、量子リンクは忠実度）"),L("Power including cryocooler compressors","冷凍機の圧縮機を含む消費電力"),L("Per-method quantum metrics, never a generic speed multiplier","方式ごとの量子通信指標。一律の速度倍率は使わない")],
+  gate:[L("Key rate meets the message volume of Stage 5","鍵生成率がStage 5の通信量を満たす"),L("Cryocooler power justified by the measured gain","測定した効果が冷凍機電力に見合う")],
+  logic:"F", infra:["HPC Node"], ev:["src","prop","pend"], ref4k:true},
+ {n:5,name:L("RSU link · distributed compute · quantum expansion","RSU連携・分散計算・量子系の拡張"),topo:L("Three+ sites with alternate routes","3拠点以上と代替経路"),
+  build:[L("Third node closing a ring so every link has an alternate route","3拠点目を加えて環状にし、全区間に代替経路を持たせる"),L("Job placement across nodes","Node間のジョブ配置"),L("Roadside units (RSU) connected to the nearest node","最寄りNodeへ接続する路側機（RSU）")],
+  use:[L("Infrastructure AI close to the road","道路近くでのインフラAI"),L("Container exchange by time of day (Overview logic D)","時間帯による機能コンテナの入替（Overview論理D）")],
+  verify:[L("Latency under congestion and failure (node latency ≤50 ms)","混雑・障害時の遅延（Node遅延50ms以下）"),L("Switchover time","切替時間"),L("Job completion and node utilization ≥0.80","ジョブ完了率とNode利用率0.80以上"),L("Total cost","総費用")],
+  gate:[L("Single-link failure causes no loss of service","1区間の障害でサービスが止まらない"),L("Node latency and utilization at target","Node遅延と利用率が目標値")],
+  logic:"C, D", infra:["HPC Node","Infrastructure Coordination"], ev:["tgt","prop","pend"]},
+ {n:6,name:L("Infrastructure coordination","インフラ協調"),topo:L("Mesh + RSU + vehicles","メッシュ＋RSU＋車両"),
+  build:[L("Vehicle ↔ RSU ↔ regional node ↔ operations management on limited uses","限定用途で車両・RSU・地域Node・運行管理を連携")],
+  use:[L("AVP and depot movements first, then limited public-road segments","AVPと車庫内移動から始め、限定的な公道区間へ")],
+  verify:[L("Division of roles between vehicle and infrastructure","車両とインフラの役割分担"),L("Behavior when communication drops","通信断時の動作"),L("Verification inside the ODD; response latency ≤1 s","ODD内での検証、応答遅延1秒以下"),L("Responsibility boundaries","責任分界")],
+  gate:[L("Vehicle reaches a minimal-risk condition without the infrastructure","インフラなしでも車両が最小リスク状態に移れる"),L("ODD expansion supported by scenario coverage, V&V evidence, validated safety case, regulatory approval","ODD拡大がシナリオ網羅・V&V・検証済みセーフティケース・規制承認に裏付けられる")],
+  logic:"E", infra:["Infrastructure Coordination","Autonomous Mobility"], ev:["tgt","pend"]},
+ {n:7,name:L("Dynamic formation transit","動的編成による新交通"),topo:L("City-wide flows","都市全体の流れ"),
+  build:[L("Demand-driven dispatch, joining and splitting of vehicles","需要に応じた配車・合流・分岐"),L("Passenger, freight and service modules on shared carriers","旅客・貨物・サービスを共通の車体で運用")],
+  use:[L("New transport built on coordinated flows and shared infrastructure","協調した流れと共有インフラによる新交通")],
+  verify:[L("Utilization ≥0.75, wait time, transport quality","稼働率0.75以上、待ち時間、輸送品質"),L("Spacing variance ≤5%, throughput ≥40 veh/h","車間ばらつき5%以下、処理能力40台/h以上"),L("Service switchover","サービス切替"),L("Business P&L; energy cost ≤¥500/trip","事業収支、エネルギー費500円/運行以下")],
+  gate:[L("P&L positive on Federation's master plan","Federation正本計画で収支が成立")],
+  logic:"F, G, H", infra:["Autonomous Mobility"], ev:["tgt","pend"]}
+];
+var stageSel=1;
+function drawStagebar(){
+  var b=document.getElementById("stagebar"); b.innerHTML="";
+  STAGES.forEach(function(s){
+    var x=document.createElement("button"); x.type="button";
+    x.setAttribute("aria-pressed",String(s.n===stageSel)); if(s.n<stageSel) x.className="done";
+    x.innerHTML='<b>STAGE '+s.n+'</b><span>'+esc(T(s.name))+'</span>';
+    x.addEventListener("click",function(){ stageSel=s.n; renderStage(); });
+    b.appendChild(x);
+  });
+}
+function ul(arr){ return "<ul>"+arr.map(function(i){return "<li>"+esc(T(i))+"</li>";}).join("")+"</ul>"; }
+function stageHTML(s){
+  var h='<div><div class="eyebrow">'+esc(T(L("Stage","Stage")))+' '+s.n+' · '+esc(T(s.topo))+'</div><h3>'+esc(T(L("Added equipment","追加設備")))+'</h3>'+ul(s.build)+'<div>'+evChips(s.ev)+'</div></div>'+
+   '<div><h3>'+esc(T(L("Use","用途")))+'</h3>'+ul(s.use)+'<p class="muted" style="font-size:13px">'+esc(T(L("Overview logic: ","Overview論理："))) +s.logic+' · '+esc(T(L("Infrastructure rows: ","インフラ層の行："))) +s.infra.join(", ")+'</p></div>'+
+   '<div><h3>'+esc(T(L("Verify","検証項目")))+'</h3>'+ul(s.verify)+'</div>'+
+   '<div class="gate"><h3>'+esc(T(L("Condition to move on","次へ進む条件")))+'</h3>'+ul(s.gate)+'</div>';
+  if(s.amr) h+='<div class="wide"><h3>'+esc(T(L("Stage 2 power and material flow","Stage 2の動力と物質の流れ")))+'</h3><div class="scroll-x"><svg viewBox="0 0 860 190" width="860" height="190" id="amr-svg-'+s.n+'"></svg></div><p style="font-size:13.5px">'+esc(T(L("Basis: NIMS liquefied hydrogen with an active magnetic regenerative refrigerator (2022). The higher efficiency the source mentions is a theoretical possibility, not a measured figure. Driving the AMR's magnetization cycle directly from a water-main or wind shaft, and the mill process, are this plan's own concepts and are pending validation.","根拠：NIMSは能動的蓄冷式磁気冷凍で水素を液化した（2022年）。出典が触れる高い液化効率は理論上の可能性で、実測値ではない。水道管・風の回転軸でAMRの磁化サイクルを直接回す構成とミル工程は本計画の構想で、実証待ち。")))+' '+srcLink("nims22")+'</p></div>';
+  if(s.ref4k) h+='<div class="wide refcard"><div class="eyebrow">'+esc(T(L("4 K reference for this stage","このStageの4K参照点")))+'</div><p>'+esc(T(L("Diamond spin qubit and cryo-CMOS controller operated together at 4 K (single-qubit control). This is a research result at 4 K, not a demonstration of the LH₂-pre-cooled node.","ダイヤモンドスピン量子ビットとcryo-CMOS制御回路を4Kで同時に動作（1量子ビット制御）。4Kの研究成果であり、LH₂予冷を組み合わせたNodeの実証ではない。")))+'</p><p>'+srcLink("fj24")+'</p><p class="muted" style="font-size:13px">'+esc(T(L("Cryogenic optical link reference: ","低温光接続の参照："))) +srcLink("nist21")+'</p></div>';
+  return h;
+}
+function drawAMR(n){
+  var svg=document.getElementById("amr-svg-"+n); if(!svg) return;
+  function box(x,y,w,txt,col){ el("rect",{x:x,y:y,width:w,height:44,rx:4,fill:"var(--surface)",stroke:col,"stroke-width":1.5},svg);
+    T(txt).split("\n").forEach(function(s,j,a){ var t=el("text",{x:x+w/2,y:y+26+(j-(a.length-1)/2)*14,"text-anchor":"middle",class:"nlab"},svg); t.textContent=s; }); }
+  function arr(d,col,lab,lx,ly){ el("path",{d:d,fill:"none",stroke:col,"stroke-width":2},svg); if(lab){ var t=el("text",{x:lx,y:ly,class:"ntemp",fill:col},svg); t.textContent=T(lab);} }
+  box(10,72,120,L("Water main /\nwind flow","水道管・\n風の流れ"),"var(--t-fw)");
+  box(170,72,120,L("Rotating shaft","回転軸"),"var(--muted)");
+  box(350,14,150,L("Mill\n(H₂ production)","ミル\n（水素製造）"),"var(--l-h2)");
+  box(350,130,150,L("Rotary AMR\n(magnet rotation)","回転式AMR\n（磁石の回転）"),"var(--t-20)");
+  box(560,14,130,L("H₂ gas","水素ガス"),"var(--l-h2)");
+  box(560,130,130,L("Refrigeration\n→ liquefaction","冷凍\n→ 液化"),"var(--t-20)");
+  box(730,72,120,L("LH₂ storage\n(Node)","LH₂貯蔵\n（Node）"),"var(--t-20)");
+  arr("M130 94 H170","var(--muted)");
+  arr("M290 94 H320 V36 H350","var(--muted)",L("torque","トルク"),296,58);
+  arr("M320 94 V152 H350","var(--muted)",L("torque","トルク"),296,140);
+  arr("M500 36 H560","var(--l-h2)");
+  arr("M500 152 H560","var(--t-20)",L("heat lift","吸熱"),510,145);
+  arr("M625 58 V130","var(--l-h2)",L("gas to liquefy","液化する気体"),632,100);
+  arr("M690 152 H710 V106 H730","var(--t-20)");
+}
+function renderStage(){
+  drawStagebar();
+  var s=STAGES[stageSel-1];
+  document.getElementById("stagepanel").innerHTML=stageHTML(s);
+  if(s.amr) drawAMR(s.n);
+  drawMesh();
+}
+
+/* ---------- mesh ---------- */
+var LAYERS={power:{c:"var(--l-power)",dash:"",l:L("Power (HTS)","電力（HTS）"),on:true},
+  h2:{c:"var(--l-h2)",dash:"8 4",l:L("Hydrogen (LH₂)","水素（LH₂）"),on:true},
+  data:{c:"var(--l-data)",dash:"",l:L("Data (fiber)","通常通信（光）"),on:true},
+  q:{c:"var(--l-q)",dash:"2 4",l:L("Quantum (QKD)","量子系（QKD）"),on:true}};
+var MN={A:{x:200,y:190,from:1},B:{x:520,y:90,from:3},C:{x:560,y:280,from:5},W:{x:60,y:60,from:1,ext:true}};
+var LINKS=[
+ {a:"A",b:"W",k:"data",from:1},
+ {a:"A",b:"B",k:"power",from:3,o:-10},{a:"A",b:"B",k:"h2",from:3,o:-3},{a:"A",b:"B",k:"data",from:3,o:4},{a:"A",b:"B",k:"q",from:4,o:11},
+ {a:"B",b:"C",k:"power",from:5,o:-8},{a:"B",b:"C",k:"data",from:5,o:0},{a:"B",b:"C",k:"q",from:5,o:8},
+ {a:"A",b:"C",k:"power",from:5,o:-8},{a:"A",b:"C",k:"h2",from:5,o:0},{a:"A",b:"C",k:"data",from:5,o:8}
+];
+function drawMeshCtl(){
+  var c=document.getElementById("mesh-ctl"); c.innerHTML="";
+  Object.keys(LAYERS).forEach(function(k){
+    var id="layer-"+k, lab=document.createElement("label");
+    lab.innerHTML='<input type="checkbox" id="'+id+'"'+(LAYERS[k].on?" checked":"")+'><span class="sw" style="border-top-color:'+LAYERS[k].c+';border-top-style:'+(LAYERS[k].dash?(k==="q"?"dotted":"dashed"):"solid")+'"></span>'+esc(T(LAYERS[k].l));
+    lab.querySelector("input").addEventListener("change",function(e){ LAYERS[k].on=e.target.checked; drawMesh(); });
+    c.appendChild(lab);
+  });
+}
+function drawMesh(){
+  var svg=document.getElementById("mesh-svg"); svg.innerHTML="";
+  var st=stageSel;
+  // roads
+  el("path",{d:"M20 330 C 260 300, 420 330, 880 300",fill:"none",stroke:"var(--line)","stroke-width":10,"stroke-linecap":"round"},svg);
+  var rl=el("text",{x:24,y:352,class:"ntemp",fill:"var(--muted)"},svg); rl.textContent=T(L("road","道路"));
+  LINKS.forEach(function(l){
+    if(l.from>st||!LAYERS[l.k].on) return;
+    var a=MN[l.a],b=MN[l.b]; var dx=b.x-a.x,dy=b.y-a.y,len=Math.sqrt(dx*dx+dy*dy),nx=-dy/len,ny=dx/len,o=l.o||0;
+    el("line",{x1:a.x+nx*o,y1:a.y+ny*o,x2:b.x+nx*o,y2:b.y+ny*o,stroke:LAYERS[l.k].c,"stroke-width":3,"stroke-dasharray":LAYERS[l.k].dash,"stroke-linecap":"round"},svg);
+  });
+  // RSU
+  if(st>=5){ [[300,318],[470,322],[680,312],[820,302]].forEach(function(p,i){
+      el("rect",{x:p[0]-5,y:p[1]-22,width:10,height:22,fill:"var(--muted)"},svg);
+      if(LAYERS.data.on){ var near=p[0]<380?MN.A:(p[0]<600?MN.C:MN.C); el("line",{x1:p[0],y1:p[1]-22,x2:near.x,y2:near.y,stroke:"var(--l-data)","stroke-width":1.2,"stroke-dasharray":"3 3",opacity:.8},svg);} });
+    var rt=el("text",{x:836,y:282,class:"ntemp",fill:"var(--muted)"},svg); rt.textContent="RSU"; }
+  if(st>=6){ [[360,322],[390,321],[600,317]].forEach(function(p){ el("rect",{x:p[0]-9,y:p[1]-6,width:18,height:12,rx:3,fill:"var(--accent)"},svg); }); }
+  if(st>=7){ [[700,309],[722,308],[744,307],[766,306]].forEach(function(p){ el("rect",{x:p[0]-9,y:p[1]-6,width:18,height:12,rx:3,fill:"var(--accent)"},svg); });
+    var pt=el("text",{x:700,y:290,class:"ntemp",fill:"var(--accent)"},svg); pt.textContent=T(L("formation","編成")); }
+  Object.keys(MN).forEach(function(k){
+    var n=MN[k];
+    if(n.from>st){ if(n.ext) return; el("circle",{cx:n.x,cy:n.y,r:32,fill:"none",stroke:"var(--line)","stroke-width":1.5,"stroke-dasharray":"4 4"},svg);
+      var g1=el("text",{x:n.x,y:n.y+5,"text-anchor":"middle",class:"ntemp",fill:"var(--muted)"},svg); g1.textContent="Node "+k+" · S"+n.from; return; }
+    if(n.ext){ el("rect",{x:n.x-40,y:n.y-16,width:80,height:32,rx:16,fill:"var(--surface)",stroke:"var(--line)"},svg);
+      var t=el("text",{x:n.x,y:n.y+4,"text-anchor":"middle",class:"nlab"},svg); t.textContent=T(L("Carrier WAN","通信事業者網")); return; }
+    el("circle",{cx:n.x,cy:n.y,r:34,fill:"var(--surface)",stroke:"var(--ink)","stroke-width":2},svg);
+    var t2=el("text",{x:n.x,y:n.y+6,"text-anchor":"middle",style:"font-family:var(--f-display);font-size:16px;font-weight:600",fill:"var(--ink)"},svg); t2.textContent="Node "+k;
+    var sub=[];
+    if(k==="A") sub.push(T(L("LH₂ · HPC","LH₂・HPC")));
+    if(k==="A"&&st>=2) sub.push(T(L("+ mill · AMR","＋ミル・AMR")));
+    if(st>=4&&(k==="A"||k==="B")) sub.push(T(L("+ 4 K stage","＋4K段")));
+    sub.forEach(function(s,i){ var tt=el("text",{x:n.x,y:n.y+50+i*14,"text-anchor":"middle",class:"ntemp",fill:"var(--muted)"},svg); tt.textContent=s; });
+  });
+  var cap=el("text",{x:880,y:24,"text-anchor":"end",class:"nlab",style:"font-weight:700"},svg);
+  cap.textContent="Stage "+st+" · "+T(STAGES[st-1].topo);
+}
+
+/* ---------- calculator ---------- */
+var C={year:2035, h2:171.2, lat:446, sens:3500, eff:50, hpc:50, cop:4.0, cdu:1.0, net:2.0, load4k:0.8, model:"412", margin:1.5, comp:7.5, ctrl:0.5};
+var H2Y={2030:104.1,2035:171.2};
+var CAP={"412":{w:1.25,n:"RDE-412D4 (GM) 1.25 W @4.2 K"},"082":{w:1.0,n:"RP-082B2 (PT) 1.0 W @4.2 K"}};
+var INROWS=[
+ {k:"h2",u:"kg/day",l:L("Hydrogen throughput","水素の通過量"),note:L("Federation master value at full SOFC supply (year buttons above)","Federation正本値、全量SOFC供給時（上の年ボタン）"),step:0.1},
+ {k:"lat",u:"kJ/kg",l:L("Latent heat of vaporization","蒸発潜熱"),note:L("Provisional; approximate property of para-H₂ at boiling point","仮入力：沸点でのパラ水素の概略物性値"),step:1},
+ {k:"sens",u:"kJ/kg",l:L("Gas sensible heat, ≈20 K → ≈280 K","ガス顕熱 約20K→約280K"),note:L("Provisional; to be replaced by a property-table integral","仮入力：物性表の積分値に置換予定"),step:10},
+ {k:"eff",u:"%",l:L("Share of that cold delivered to the facility loop","施設側ループへ渡せる冷熱の割合"),note:L("Provisional; the 20 K end is used for shield pre-cool or lost in staging","仮入力：20K側はシールド予冷に使うか段階的な熱交換で失われる"),step:1},
+ {k:"hpc",u:"kW",l:L("HPC IT load (≈ heat to remove)","HPCの電力（≒除去する熱）"),note:L("Provisional","仮入力"),step:1},
+ {k:"cop",u:"—",l:L("Chiller COP for the remaining heat","残りの熱を処理する冷凍機COP"),note:L("Provisional","仮入力"),step:0.1},
+ {k:"cdu",u:"kW",l:L("CDU and pumps","CDU・ポンプ"),note:L("Provisional","仮入力"),step:0.1},
+ {k:"net",u:"kW",l:L("Network equipment","通信機器"),note:L("Provisional","仮入力"),step:0.1},
+ {k:"load4k",u:"W",l:L("Heat load at 4.2 K (devices + wiring + supports)","4.2K段の熱負荷（機器・配線・支持材）"),note:L("Provisional","仮入力"),step:0.05},
+ {k:"model",u:"",l:L("Cryocooler spec example","冷凍機の仕様例"),note:L("Public spec (2nd-stage capacity)","公開仕様（第2段の冷凍能力）"),sel:true},
+ {k:"margin",u:"×",l:L("Design margin on 4 K capacity","4K能力の設計余裕"),note:L("Provisional","仮入力"),step:0.1},
+ {k:"comp",u:"kW/unit",l:L("Compressor power per cryocooler","冷凍機1台の圧縮機電力"),note:L("Provisional; not on SHI product pages — take from compressor datasheet","仮入力：SHIの製品ページに記載なし。圧縮機の仕様書から取る"),step:0.1},
+ {k:"ctrl",u:"kW",l:L("Control and metering","制御・計測"),note:L("Provisional","仮入力"),step:0.1}
+];
+function drawInputs(){
+  var c=document.getElementById("calc-in");
+  var h='<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="eyebrow">'+esc(T(L("Inputs","入力")))+'</span><span class="seg" role="group" aria-label="Year">'+
+    [2030,2035].map(function(y){return '<button type="button" data-y="'+y+'" aria-pressed="'+(C.year===y)+'">'+y+'</button>';}).join("")+'</span></div>';
+  INROWS.forEach(function(r){
+    var id="in-"+r.k;
+    var ctl = r.sel ? '<select id="'+id+'" style="grid-column:2/4">'+Object.keys(CAP).map(function(k){return '<option value="'+k+'"'+(C.model===k?" selected":"")+'>'+CAP[k].n+'</option>';}).join("")+'</select>'
+      : '<input id="'+id+'" type="number" inputmode="decimal" step="'+r.step+'" min="0" value="'+C[r.k]+'"><span class="u">'+r.u+'</span>';
+    h+='<div class="inrow"><label for="'+id+'">'+esc(T(r.l))+'<small>'+esc(T(r.note))+'</small></label>'+ctl+'</div>';
+  });
+  h+='<p class="muted" style="font-size:12px">'+esc(T(L("Cryocooler specs: ","冷凍機の仕様："))) +srcLink("shi412")+' · '+srcLink("shi082")+'</p>';
+  c.innerHTML=h;
+  Array.prototype.forEach.call(c.querySelectorAll(".seg button"),function(b){ b.addEventListener("click",function(){ C.year=+b.getAttribute("data-y"); C.h2=H2Y[C.year]; drawInputs(); calc(); }); });
+  INROWS.forEach(function(r){ var e=document.getElementById("in-"+r.k); e.addEventListener(r.sel?"change":"input",function(){ if(r.sel) C[r.k]=e.value; else { var v=parseFloat(e.value); C[r.k]=isFinite(v)?v:0; } calc(); }); });
+}
+function f(n,d){ return n.toLocaleString(LANG==="ja"?"ja-JP":"en-US",{minimumFractionDigits:d,maximumFractionDigits:d}); }
+function compute(c){
+  var coldTotal_kW = c.h2*(c.lat+c.sens)/86400;           // kJ/day -> kW
+  var coldUsed_kW  = coldTotal_kW*c.eff/100;
+  var share = c.hpc>0 ? Math.min(coldUsed_kW/c.hpc,1) : 0;
+  var remain_kW = Math.max(c.hpc-coldUsed_kW,0);
+  var chiller_kW = c.cop>0 ? remain_kW/c.cop : 0;
+  var saved_kW = c.cop>0 ? Math.min(coldUsed_kW,c.hpc)/c.cop : 0;
+  var cap = CAP[c.model].w;
+  var units = c.load4k>0 ? Math.ceil(c.load4k*c.margin/cap) : 0;
+  var cryo_kW = units*c.comp;
+  var total_kW = c.hpc+chiller_kW+c.cdu+c.net+cryo_kW+c.ctrl;
+  return {coldTotal_kW:coldTotal_kW,coldUsed_kW:coldUsed_kW,share:share,chiller_kW:chiller_kW,saved_kW:saved_kW,units:units,cap:cap,cryo_kW:cryo_kW,total_kW:total_kW,daily:total_kW*24};
+}
+function calc(){
+  var r=compute(C), o=document.getElementById("calc-out");
+  var parts=[["hpc",C.hpc,"var(--t-amb)",L("HPC","HPC")],["ch",r.chiller_kW,"var(--t-fw)",L("Chiller","冷凍機")],["cdu",C.cdu+C.ctrl,"var(--muted)",L("CDU · control","CDU・制御")],["net",C.net,"var(--l-data)",L("Network","通信")],["cr",r.cryo_kW,"var(--t-4)",L("4 K cryocoolers","4K冷凍機")]];
+  var meter=parts.map(function(p){ return '<i style="width:'+(r.total_kW>0?p[1]/r.total_kW*100:0)+'%;background:'+p[2]+'" title="'+esc(T(p[3]))+'"></i>'; }).join("");
+  var leg=parts.map(function(p){ return '<span class="tchip"><i style="background:'+p[2]+'"></i>'+esc(T(p[3]))+' '+f(p[1],1)+'</span>'; }).join(" ");
+  o.innerHTML=
+   '<div class="out"><span class="eyebrow">'+esc(T(L("LH₂ cold carried in (daily average)","LH₂が持ち込む冷熱（日平均）")))+'</span><span class="v">'+f(r.coldTotal_kW,2)+' kW</span><span class="f">= ṁ × (h_lat + h_sens) ÷ 86,400 = '+f(C.h2,1)+' × ('+f(C.lat,0)+' + '+f(C.sens,0)+') ÷ 86,400</span></div>'+
+   '<div class="out"><span class="eyebrow">'+esc(T(L("Delivered to facility loop · share of HPC heat","施設側ループへ渡せる冷熱 · HPC発熱に対する割合")))+'</span><span class="v">'+f(r.coldUsed_kW,2)+' kW · '+f(r.share*100,1)+'%</span><span class="f">= '+f(r.coldTotal_kW,2)+' × '+f(C.eff,0)+'% ; '+f(r.coldUsed_kW,2)+' ÷ '+f(C.hpc,1)+' kW</span><div class="meter" aria-hidden="true"><i style="width:'+(r.share*100)+'%;background:var(--t-20)"></i></div></div>'+
+   '<div class="out"><span class="eyebrow">'+esc(T(L("4 K cryocoolers needed","必要な4K冷凍機")))+'</span><span class="v">'+r.units+' × '+f(C.comp,1)+' kW = '+f(r.cryo_kW,1)+' kW</span><span class="f">= ceil('+f(C.load4k,2)+' W × '+f(C.margin,1)+' ÷ '+f(r.cap,2)+' W)</span></div>'+
+   '<div class="out"><span class="eyebrow">'+esc(T(L("Node total power","Nodeの総電力")))+'</span><span class="v">'+f(r.total_kW,1)+' kW · '+f(r.daily,0)+' kWh/day</span><span class="f">= HPC + (HPC − cold)/COP + CDU + network + cryocoolers + control ; '+esc(T(L("chiller power avoided by LH₂ cold: ","LH₂冷熱で減る冷凍機電力：")))+f(r.saved_kW,2)+' kW</span><div class="meter" aria-hidden="true">'+meter+'</div><div class="templegend">'+leg+'</div></div>'+
+   '<p class="callout">'+esc(T(L("Reading: at fueling-scale hydrogen flow, LH₂ cold covers only a small part of an HPC heat load of this size. This is why Stage 1's gate is the time overlap between hydrogen demand and HPC heat, and why the 20 K end is better spent on cryostat shields than on water loops. Replace provisional values with measurements before using any result.","読み方：充填規模の水素流量では、LH₂の冷熱が賄えるのはこの規模のHPC発熱の一部にとどまる。そのためStage 1の進行条件は水素需要とHPC発熱の時間的な一致であり、20K側は水ループよりクライオスタットの熱シールドに使う方が効く。結果を使う前に、仮入力を実測値に置き換える。")))+'</p>';
+}
+
+/* ---------- carry-over tables ---------- */
+var INFRA=[
+ ["Renewable PPA","Renewable supply ratio","Maximize","Low-cost renewable electricity","#balance",L("Evaluation sheet (power inputs)","評価欄（電力入力）")],
+ ["Water Infrastructure","Micro-hydropower output","Maximize","Distributed baseload generation","#roadmap",L("Stage 2","Stage 2")],
+ ["Hydrogen Production","Electrolysis utilization","Maximize","Hydrogen production","#roadmap",L("Stage 2 (mill route added beside electrolysis)","Stage 2（電解に加えミル経路）")],
+ ["Cooling","Magnetic refrigeration efficiency","Maximize","LH₂ production & HPC cooling","#node",L("Node: HPC cooling lane; Stage 1–2","Node：HPC冷却系統、Stage 1–2")],
+ ["Energy Network","Superconducting cable utilization","≥80%","Inter-node power sharing","#roadmap",L("Stage 3 gate","Stage 3の進行条件")],
+ ["Hydrogen Network","LH₂ pipeline utilization","≥70%","Hydrogen distribution","#roadmap",L("Stage 3 gate","Stage 3の進行条件")],
+ ["HPC Node","AI compute availability","≥99.9%","Infrastructure AI computing","#node",L("Node: HPC device; Stage 1 gate","Node：HPC機器、Stage 1の条件")],
+ ["Infrastructure Coordination","Infrastructure coverage","Expand","Vehicle–infrastructure cooperation","#roadmap",L("Stage 5–6","Stage 5–6")],
+ ["Autonomous Mobility","ODD coverage","Expand","City-wide autonomous operation","#roadmap",L("Stage 6–7","Stage 6–7")]
+];
+var KPI=[
+ ["A","Demand","Demand generation rate","generated demand ÷ total potential demand","≥0.30","ratio",L("Thesis (Seneschal)","全体像（Seneschal）")],
+ ["A","Demand","Conversion rate","booking ÷ request","≥0.23","ratio",L("Thesis (Seneschal)","全体像（Seneschal）")],
+ ["B","Demand","Matching rate","matched ÷ request","≥0.90","ratio",L("Stage 1 use","Stage 1 用途")],
+ ["D","Demand","Trip request rate","executed trips ÷ matched","≥0.95","ratio",L("Stage 5 use","Stage 5 用途")],
+ ["D","Operation","Dispatch success rate","completed dispatch ÷ dispatch request","≥0.95","ratio",L("Stage 5 use","Stage 5 用途")],
+ ["D","Operation","Dispatch response time","total dispatch response time ÷ dispatches","≤60","sec",L("Stage 5 use","Stage 5 用途")],
+ ["D","Operation","Utilization","operating time ÷ total time","≥0.75","ratio",L("Stage 7 verify","Stage 7 検証")],
+ ["D","Operation","Fleet idle ratio","idle vehicles ÷ total vehicles","≤0.25","ratio",L("Stage 7 verify","Stage 7 検証")],
+ ["F","Vehicle","Latency","response time","≤1","sec",L("Stage 6 verify","Stage 6 検証")],
+ ["F","Vehicle","Control delay","actuation delay","≤20","ms",L("Stage 6–7 (vehicle side)","Stage 6–7（車両側）")],
+ ["F","Vehicle","Planning latency","planning delay","≤100","ms",L("Stage 6–7 (vehicle side)","Stage 6–7（車両側）")],
+ ["G","Vehicle","Control stability","spacing variance","≤5","%",L("Stage 7 verify","Stage 7 検証")],
+ ["E","Infrastructure","Throughput","vehicles ÷ time","≥40","veh/h",L("Stage 7 verify","Stage 7 検証")],
+ ["C","Infrastructure","Node utilization","used nodes ÷ total nodes","≥0.80","ratio",L("Stage 5 verify","Stage 5 検証")],
+ ["F","Infrastructure","Node latency","node delay","≤50","ms",L("Stage 5 verify","Stage 5 検証")],
+ ["H","Infrastructure","Energy cost per trip","energy cost ÷ trips","≤¥500","JPY/trip",L("Stage 7 verify; evaluation sheet","Stage 7 検証、評価欄")]
+];
+var TEXT=[
+ [L("Autono-MaaS Business Logic (profit structure, utilization, load factor)","Autono-MaaS Business Logic（利益構造・稼働率・乗車率）"),"#thesis",L("Overview section","全体像")],
+ [L("Stationary-first development; DevOps on service vehicles","定置用途で先に開発、サービス車両でDevOps"),"#thesis",L("Overview section","全体像")],
+ [L("PPA Service for Autonomous Mobility Foundation","PPA Service for Autonomous Mobility Foundation"),"#roadmap",L("Stages 1–3; evaluation sheet","Stage 1–3、評価欄")],
+ [L("Water-pipe micro-hydro, magnetic refrigeration, hydrogen production","水道管マイクロ水力・磁気冷凍・水素製造"),"#roadmap",L("Stage 2 with flow diagram","Stage 2（流れ図つき）")],
+ [L("Superconducting cables, LH₂ pipelines","超電導ケーブル・LH₂パイプライン"),"#roadmap",L("Stage 3","Stage 3")],
+ [L("Liquid-hydrogen-cooled HPC","液体水素冷却HPC"),"#node",L("Node configuration, Stage 1","Node構成、Stage 1")],
+ [L("AVP-to-MaaS Execution A → H","AVP-to-MaaS Execution A→H"),"#roadmap",L("Stage panels (Overview logic line)","各Stage（Overview論理の行）")],
+ [L("ODD expansion conditions (scenario coverage, V&V, safety case, approval)","ODD拡大の条件（シナリオ網羅・V&V・セーフティケース・承認）"),"#roadmap",L("Overview section; Stage 6 gate","全体像、Stage 6の条件")],
+ [L("Seneschal / Federation links and disclaimer","Seneschal／Federationのリンクと注記"),"#thesis",L("Overview section","全体像")]
+];
+function drawTables(){
+  var h=(LANG==="ja");
+  document.getElementById("tbl-infra").innerHTML='<thead><tr><th>Infrastructure layer</th><th>Control variable</th><th>Target</th><th>Business purpose</th><th>'+(h?"本ページの引継ぎ先":"In this page")+'</th></tr></thead><tbody>'+
+    INFRA.map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="num">'+r[2]+'</td><td>'+r[3]+'</td><td><a class="jump" href="'+r[4]+'">'+esc(T(r[5]))+'</a></td></tr>';}).join("")+'</tbody>';
+  document.getElementById("tbl-kpi").innerHTML='<thead><tr><th>Logic</th><th>Layer</th><th>KPI</th><th>Formula</th><th>Value</th><th>Unit</th><th>'+(h?"引継ぎ先":"In this page")+'</th></tr></thead><tbody>'+
+    KPI.map(function(r){return '<tr><td class="num">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td><td class="num">'+r[4]+'</td><td class="num">'+r[5]+'</td><td>'+esc(T(r[6]))+'</td></tr>';}).join("")+'</tbody>';
+  document.getElementById("tbl-text").innerHTML='<thead><tr><th>'+(h?"Overviewの本文":"Overview text")+'</th><th>'+(h?"引継ぎ先":"In this page")+'</th></tr></thead><tbody>'+
+    TEXT.map(function(r){return '<tr><td>'+esc(T(r[0]))+'</td><td><a class="jump" href="'+r[1]+'">'+esc(T(r[2]))+'</a></td></tr>';}).join("")+'</tbody>';
+}
+
+/* ---------- composition proposal ---------- */
+var JUDGE=[
+ [L("Whole picture at a glance","全体像の分かりやすさ"),L("Needs scrolling; whole picture builds across sections","スクロールが必要。全体像は複数の節で組み上がる"),L("1-page PDF shows everything in one view; this page holds the depth","1ページで一望でき、深さは本ページが持つ")],
+ [L("Coverage of existing content","既存内容の網羅"),L("Complete: every table row and text block is mapped above","完全。表の全行と本文の全ブロックを上で対応づけ済み"),L("Complete, same as left","完全（左と同じ）")],
+ [L("Technical specificity","技術の具体性"),L("Devices, temperatures, connections, gates, formulas","機器・温度帯・接続・進行条件・計算式まで"),L("Same, reached from one link in the PDF","同じ（PDFの1リンクから到達）")],
+ [L("First-time readability (recruiter)","初見の読みやすさ（採用担当者）"),L("Strong for an engineering reader, long for a 2-minute screen","技術者には強いが、2分の書類選考には長い"),L("PDF suits a quick screen; page rewards follow-up questions","短時間の選考はPDF、面接での深掘りは本ページ")],
+ [L("Printing and sharing","印刷・共有"),L("Browser print works but runs to many pages; artifact links start private","ブラウザ印刷は可能だが枚数が多い。Artifactのリンクは初期状態で非公開"),L("A4 PDF prints and attaches cleanly; page is shared by URL","A4のPDFは印刷・添付が容易、本ページはURLで共有")]
+];
+function drawJudge(){
+  var h=(LANG==="ja");
+  document.getElementById("tbl-judge").innerHTML='<thead><tr><th>'+(h?"判断材料":"Criterion")+'</th><th>'+(h?"案A：本ページをOverview本体に":"Option A: this page is the Overview")+'</th><th>'+(h?"案B：1ページを入口として併用":"Option B: 1-page entry + this page")+'</th></tr></thead><tbody>'+
+    JUDGE.map(function(r){return '<tr><td>'+esc(T(r[0]))+'</td><td>'+esc(T(r[1]))+'</td><td>'+esc(T(r[2]))+'</td></tr>';}).join("")+'</tbody>';
+  var A={t:L("Option A — this page becomes the Overview","案A：本ページをOverview本体にする"),
+    li:[L("Port this page to the portfolio site as /overview/ (static HTML, public).","本ページをポートフォリオサイトの /overview/ に静的HTMLとして公開する。"),L("Retire the 1-page PDF; the video description links to /overview/.","1ページPDFを廃止し、動画説明のリンクを /overview/ に変更する。"),L("Add a printable summary block at the top (current thesis + four facts).","冒頭に印刷向けの要約ブロック（全体像＋4つの数値）を置く。")],
+    when:L("Better if most readers arrive from the video and already intend to explore.","動画から来て、最初から深く見る閲覧者が多い場合に有利。")};
+  var B={t:L("Option B — keep the 1-page Overview as the entry, this page as its detail","案B：1ページOverviewを入口として残し、本ページを詳細にする"),
+    li:[L("Keep the A4 PDF unchanged in layout; add one line linking “Node detail” to this page's public URL.","A4のPDFはレイアウトを変えず、本ページの公開URLへの「Node detail」1行を加える。"),L("Publish this page on the portfolio site beside the PDF, so links do not depend on artifact sharing.","本ページをポートフォリオサイトのPDFの隣に公開し、リンクをArtifactの共有設定に依存させない。"),L("Interview use: PDF for the screen, this page to answer “how would the node actually work?”","面接での使い方：選考はPDF、「Nodeは実際どう動くのか」への回答は本ページ。")],
+    when:L("Recommended: the page covers everything, but recruiters screen in minutes and attach PDFs.","推奨：内容は本ページで網羅できたが、採用担当者は短時間で選考しPDFを添付して回すため。")};
+  document.getElementById("opts").innerHTML=[A,B].map(function(o,i){ return '<div class="opt'+(i===1?" rec":"")+'">'+(i===1?'<span class="badge">'+esc(T(L("Recommended","推奨")))+'</span>':"")+'<h3>'+esc(T(o.t))+'</h3><ol>'+o.li.map(function(x){return "<li>"+esc(T(x))+"</li>";}).join("")+'</ol><p class="muted" style="font-size:13.5px">'+esc(T(o.when))+'</p></div>'; }).join("");
+}
+
+/* ---------- sources list & print ---------- */
+function drawSources(){
+  var ids=Object.keys(SRC), u=document.getElementById("srclist");
+  u.innerHTML=ids.map(function(id,i){ var s=SRC[id]; return '<li><span class="id">['+(i+1)+']</span><div>'+srcLink(id)+'<div class="muted" style="font-size:12.5px">'+esc(T(s.where))+'</div></div></li>'; }).join("");
+}
+function drawPrint(){
+  document.getElementById("print-nodes").innerHTML='<section><h2>'+esc(T(L("All node devices","Node機器の全項目")))+'</h2>'+DEV.map(function(d){return '<div class="detail" style="margin-bottom:8px">'+detailHTML(d,true)+'</div>';}).join("")+'</section>';
+  document.getElementById("print-stages").innerHTML='<h2>'+esc(T(L("All stages","全Stage")))+'</h2>'+STAGES.map(function(s){return '<div class="stagepanel" style="margin-bottom:12px">'+stageHTML(s).replace(/<div class="wide"><h3>[\s\S]*?<\/svg><\/div>/,'<div class="wide"><h3>Stage 2</h3>')+'</div>';}).join("");
+}
+
+/* ---------- language ---------- */
+function setLang(l){
+  LANG=l; document.documentElement.lang=l;
+  try{ localStorage.setItem("nm-lang",l);}catch(e){}
+  document.getElementById("lang-en").setAttribute("aria-pressed",String(l==="en"));
+  document.getElementById("lang-ja").setAttribute("aria-pressed",String(l==="ja"));
+  renderAll();
+}
+function renderAll(){
+  drawNode(); drawChips(); selectDev(selDev); drawPath();
+  drawMeshCtl(); renderStage(); drawInputs(); calc();
+  drawTables(); drawJudge(); drawSources(); drawPrint();
+}
+document.getElementById("lang-en").addEventListener("click",function(){setLang("en");});
+document.getElementById("lang-ja").addEventListener("click",function(){setLang("ja");});
+var H=(location.hash||"").slice(1); var m=/^stage([1-7])$/.exec(H); if(m) stageSel=+m[1];
+setLang(LANG);
+window.__compute=compute; window.__C=C;
+})();
+</script>
+
+</body>
+</html>
