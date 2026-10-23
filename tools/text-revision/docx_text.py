@@ -3,7 +3,8 @@
 inside word/document.xml, also when Word has split it across runs. Formatting of the first run is kept.
 
 Usage: docx_text.py PLAN.json IN.docx OUT.docx
-`page` and `extendTo` are ignored (Word reflows); `occurrence` and `count` are counted over the whole document.
+`page` and `extendTo` are ignored (Word reflows); `occurrence` and `count` are counted over the whole document,
+after `within` (optional) keeps only hits whose table row (or paragraph, outside tables) contains that text.
 """
 import json, sys, zipfile, shutil
 from lxml import etree
@@ -12,9 +13,18 @@ W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'
 XML_NS = 'http://www.w3.org/XML/1998/namespace'
 
 
+def own_paragraph(t):
+    node = t.getparent()
+    while node is not None and node.tag != '{%s}p' % W:
+        node = node.getparent()
+    return node
+
+
 def paragraphs(root):
+    # A paragraph that holds a text box contains the text box's own paragraphs; count each text once, in the
+    # innermost paragraph it belongs to.
     for p in root.iter('{%s}p' % W):
-        ts = list(p.iter('{%s}t' % W))
+        ts = [t for t in p.iter('{%s}t' % W) if own_paragraph(t) is p]
         if ts:
             yield ts
 
@@ -31,6 +41,15 @@ def find_all(root, old):
             hits.append((ts, k, k + len(old)))
             start = k + 1
     return hits
+
+
+def context(ts):
+    node = ts[0]
+    while node is not None and node.tag != '{%s}tr' % W:
+        node = node.getparent()
+    if node is None:
+        return ''.join(t.text or '' for t in ts)
+    return ''.join(t.text or '' for t in node.iter('{%s}t' % W))
 
 
 def replace(ts, a, b, new):
@@ -59,6 +78,8 @@ def main(plan_path, src, dst):
     todo = {}
     for s in plan['steps']:
         hits = find_all(root, s['old'])
+        if s.get('within'):
+            hits = [h for h in hits if s['within'] in context(h[0])]
         if s.get('occurrence'):
             if len(hits) < s['occurrence']:
                 sys.exit(f"REFUSED: {s['old']!r} occurrence {s['occurrence']} not in the Word master ({len(hits)} found)")

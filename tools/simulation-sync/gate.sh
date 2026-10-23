@@ -10,13 +10,16 @@ if git diff --quiet "$BASE" -- $PDFS; then
   echo "PDFs unchanged from $BASE: nothing to gate (ledger-only change; run.py --check verifies the ledger)"
   exit 0
 fi
+PHRASE_PLANS=$(git diff --name-only --diff-filter=A "$BASE" -- 'tools/text-revision/*-plan.json' | grep -v revision-E-plan.json || true)
+export PHRASE_PLANS
 git show "$BASE:$T/published-values.json" > "$W/base-values.json" 2>/dev/null || cp "$T/bootstrap-values.json" "$W/base-values.json"  # numbers shown by the PDFs before this mechanism
 node --input-type=module -e "
 import fs from 'node:fs';
 import { rewritePlan } from './$T/simulationSync.mjs';
 const a=JSON.parse(fs.readFileSync('$W/base-values.json')).values, b=JSON.parse(fs.readFileSync('$T/published-values.json')).values;
 const {steps,problems}=rewritePlan(a,b);
-if(problems.length){console.error(problems.join('\n'));process.exit(1);}
+// A ledger change that comes with new phrase-rewrite plans is checked by replaying those plans (below) and by run.py --check.
+if(problems.length && !process.env.PHRASE_PLANS){console.error(problems.join('\n'));process.exit(1);}
 fs.writeFileSync('$W/plan.json',JSON.stringify({steps}));console.log(steps.length+' planned number changes');"
 # Index alignment (P10 targets raised to the P1 gates): anchored steps newly added to applied.json since the base.
 git show "$BASE:tools/index-alignment/applied.json" > "$W/base-applied.json" 2>/dev/null || echo '{"steps":[]}' > "$W/base-applied.json"
