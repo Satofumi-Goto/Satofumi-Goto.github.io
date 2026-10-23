@@ -69,7 +69,10 @@ export function rewritePlan(previous, next) {
       }
       problems.push(`${key}: ${p.value} -> ${n.value} is a year/integer change; rewrite needs review`); continue;
     }
-    plan.push({ key, from: p.value, to: n.value, dp: n.dp, fromText: fmt(Math.abs(p.value), n.dp), toText: fmt(Math.abs(n.value), n.dp), ...(NOT_FOLLOWED_BY[key] ? { notFollowedBy: NOT_FOLLOWED_BY[key] } : {}) });
+    // Short values collide with unrelated numbers (section numbers, map points, unit costs): an amount in 億円 is only
+    // rewritten where 億 follows it, and a one-decimal margin only where % follows it.
+    const unit = /\.oku$/.test(key) ? '億' : n.dp === 1 && /Margin$/.test(key) ? '%' : null;
+    plan.push({ key, from: p.value, to: n.value, dp: n.dp, fromText: fmt(Math.abs(p.value), n.dp), toText: fmt(Math.abs(n.value), n.dp), ...(unit ? { after: unit } : {}), ...(NOT_FOLLOWED_BY[key] ? { notFollowedBy: NOT_FOLLOWED_BY[key] } : {}) });
   }
   // A number shown both as a negative (▲, −, -) and as a positive value is told apart by its sign: such steps rewrite
   // only the occurrences with the matching sign. Same-sign collisions are still refused below.

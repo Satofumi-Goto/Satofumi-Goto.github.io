@@ -66,7 +66,7 @@ def main():
     if '--federation' in args:
         fed = {e['id']: e['value'] for e in json.load(open(args[args.index('--federation') + 1]))}
         gates, _ = parse(src)
-        for pid, kpi in (('p-demand-generation-rate', 'Demand generation rate'), ('p-conversion-rate', 'Conversion rate'), ('p-matching-rate', 'Matching rate'), ('p-trip-request-rate', 'Trip request rate')):
+        for pid, kpi in (('p-demand-generation-rate', 'Demand generation rate'), ('p-conversion-rate', 'Conversion rate'), ('p-matching-rate', 'Matching rate'), ('p-trip-request-rate', 'Trip realization rate')):
             g = gates.get(kpi)
             if g and fed.get(pid, '').lstrip('≥≤') != g[1]:
                 out.append(f'{kpi}: Federation {fed.get(pid)} differs from the Overview gate {g[0]}{g[1]}')
