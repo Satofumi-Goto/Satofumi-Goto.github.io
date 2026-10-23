@@ -1,0 +1,70 @@
+{
+ "revision": "2026-10-23-p13-conductor-optimum",
+ "note": "p.12 (2035 Vehicle Platform, p.13 before the Overview page was removed): release voltage from the H⁻ conductor design optimum (20 µm, 5 mA/cm², 0.213 V) in the Federation 2035 vehicle model at default settings.",
+ "steps": [
+  {
+   "page": 12,
+   "old": "1,113kWh to release H2 from the MH at 0.5V, the PCFC must deliver 2,091kWh: 83.7kg/day of H2. The six mills (rated 64.9kg/day)",
+   "new": "287kWh to release H2 from the MH at 0.21V, the PCFC must deliver 1,265kWh: 50.6kg/day of H2. The six mills (rated 64.9kg/day)"
+  },
+  {
+   "page": 12,
+   "old": "so Node refuelling supplies 83.7kg/day (5 stops of 20kg).",
+   "new": "so Node refuelling supplies 50.6kg/day (3 stops of 20kg)."
+  },
+  {
+   "page": 12,
+   "old": "(350×850×1,200mm, 357L). Peak heat is ≈121kW: PCFC 80, mill 19, MH 13, drive 9kW.",
+   "new": "(350×850×1,200mm, 357L). Peak heat is ≈108kW: PCFC 80, mill 19, drive 9kW; the MH absorbs 12kW.",
+   "extendTo": 572.0
+  },
+  {
+   "page": 12,
+   "old": "800+178+1,113",
+   "new": "800+178+287"
+  },
+  {
+   "page": 12,
+   "old": "2,091kWh",
+   "new": "1,265kWh",
+   "occurrence": 2
+  },
+  {
+   "page": 12,
+   "old": "2,091÷(33.3×0.75)",
+   "new": "1,265÷(33.3×0.75)"
+  },
+  {
+   "page": 12,
+   "old": "83.7kg-H2",
+   "new": "50.6kg-H2",
+   "count": 2
+  },
+  {
+   "page": 12,
+   "old": "5 stops × 20kg MH",
+   "new": "3 stops × 20kg MH"
+  },
+  {
+   "page": 12,
+   "old": "83.7−0.03",
+   "new": "50.6−0.03"
+  },
+  {
+   "page": 12,
+   "old": "PCFC/mill/MH/drive",
+   "new": "PCFC/mill/drive"
+  },
+  {
+   "page": 12,
+   "old": "80+19+13+9",
+   "new": "80+19+9"
+  },
+  {
+   "page": 12,
+   "old": "≈121kW",
+   "new": "≈108kW",
+   "occurrence": 2
+  }
+ ]
+}
