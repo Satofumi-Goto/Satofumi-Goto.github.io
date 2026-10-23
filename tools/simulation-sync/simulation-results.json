@@ -1,17 +1,17 @@
 {
  "engine": "project-finance-1.1.0",
  "sync": "simulation-sync-1.0.0",
- "inputVersion": "2026-10-15D-aaaeaac9",
+ "inputVersion": "2026-10-15D-5035fbf1",
  "financialAssessment": {
   "sourceId": "simulator-project-finance",
   "calculatedBy": "project-finance-1.1.0",
   "sourcePage": 14,
-  "projectIRRPercent": -65.09,
-  "NPV8_BJPY": -208.565,
-  "NPV12_BJPY": -192.264,
-  "FCF2035_BJPY": 2.999,
-  "cumulativeFCF2035_BJPY": -251.837,
-  "totalCapex2025to2035_BJPY": 376.6,
+  "projectIRRPercent": -36.49,
+  "NPV8_BJPY": -196.235,
+  "NPV12_BJPY": -183.125,
+  "FCF2035_BJPY": 10.353,
+  "cumulativeFCF2035_BJPY": -228.358,
+  "totalCapex2025to2035_BJPY": 364.6,
   "nominalPaybackYear": null,
   "discountedPaybackBy2035": false,
   "payback": "not achieved through 2035; no payback reference with flat 2035 FCF and no renewal CAPEX/tax/WC",
@@ -156,13 +156,13 @@
   "pnl": {
    "2030": {
     "revenue": 29.548,
-    "opex": 13.429,
-    "sga": 4.266,
-    "ebitda": 11.853,
-    "depreciation": 20.449,
-    "operatingProfit": -8.596,
-    "ebitdaMargin": 40.114,
-    "operatingMargin": -29.092,
+    "opex": 13.329,
+    "sga": 4.108,
+    "ebitda": 12.111,
+    "depreciation": 20.306,
+    "operatingProfit": -8.195,
+    "ebitdaMargin": 40.988,
+    "operatingMargin": -27.735,
     "lines": {
      "revenue.elecInternal": 7.2,
      "revenue.elecExternal": 9,
@@ -192,14 +192,13 @@
      "opex.platformOps": -1,
      "opex.cloudOps": -0.731,
      "opex.aiOps": -0.22,
-     "opex.dqcOps": -0.321,
+     "opex.dqcOps": -0.221,
      "sga.energy": -1.882,
      "sga.maintenance": -0.25,
      "sga.maas": -0.162,
      "sga.customerOps": -0.18,
      "sga.platform": -1.514,
      "sga.partnerOps": -0.12,
-     "sga.dqc": -0.158,
      "depreciation.node": -0.64,
      "depreciation.gtfc": -1.23,
      "depreciation.mill": -0.06,
@@ -217,18 +216,18 @@
      "depreciation.controlOs": 0,
      "depreciation.infraSync": 0,
      "depreciation.revenueLogic": 0,
-     "depreciation.dqc": -0.286
+     "depreciation.dqc": -0.143
     }
    },
    "2035": {
     "revenue": 133.486,
-    "opex": 73.583,
-    "sga": 21.704,
-    "ebitda": 38.199,
-    "depreciation": 22.626,
-    "operatingProfit": 15.573,
-    "ebitdaMargin": 28.616,
-    "operatingMargin": 11.666,
+    "opex": 72.383,
+    "sga": 18.55,
+    "ebitda": 42.553,
+    "depreciation": 20.911,
+    "operatingProfit": 21.642,
+    "ebitdaMargin": 31.878,
+    "operatingMargin": 16.213,
     "lines": {
      "revenue.elecInternal": 13.5,
      "revenue.elecExternal": 15.75,
@@ -258,14 +257,13 @@
      "opex.platformOps": -6,
      "opex.cloudOps": -6.68,
      "opex.aiOps": -2.4,
-     "opex.dqcOps": -4.804,
+     "opex.dqcOps": -3.604,
      "sga.energy": -4.883,
      "sga.maintenance": -1.8,
      "sga.maas": -4.168,
      "sga.customerOps": -1.5,
      "sga.platform": -5.099,
      "sga.partnerOps": -1.1,
-     "sga.dqc": -3.154,
      "depreciation.node": -5.76,
      "depreciation.gtfc": -1.507,
      "depreciation.mill": -0.48,
@@ -283,7 +281,7 @@
      "depreciation.controlOs": 0,
      "depreciation.infraSync": 0,
      "depreciation.revenueLogic": 0,
-     "depreciation.dqc": -3.429
+     "depreciation.dqc": -1.714
     }
    }
   },
@@ -356,134 +354,134 @@
    {
     "year": 2030,
     "revenue": 29.548,
-    "ebitda": 11.853,
-    "capex": 30,
-    "fcf": -18.147,
+    "ebitda": 12.111,
+    "capex": 29,
+    "fcf": -16.889,
     "discountFactor": 0.681,
-    "dcf": -12.351,
-    "cumulativeFcf": -228.147,
-    "cumulativeDcf": -194.672
+    "dcf": -11.494,
+    "cumulativeFcf": -226.889,
+    "cumulativeDcf": -193.816
    },
    {
     "year": 2031,
     "revenue": 47.066,
-    "ebitda": 15.029,
-    "capex": 24,
-    "fcf": -8.971,
+    "ebitda": 15.595,
+    "capex": 23,
+    "fcf": -7.405,
     "discountFactor": 0.63,
-    "dcf": -5.653,
-    "cumulativeFcf": -237.118,
-    "cumulativeDcf": -200.325
+    "dcf": -4.666,
+    "cumulativeFcf": -234.294,
+    "cumulativeDcf": -198.482
    },
    {
     "year": 2032,
     "revenue": 66.059,
-    "ebitda": 18.994,
-    "capex": 24,
-    "fcf": -5.006,
+    "ebitda": 20.219,
+    "capex": 22,
+    "fcf": -1.781,
     "discountFactor": 0.583,
-    "dcf": -2.921,
-    "cumulativeFcf": -242.124,
-    "cumulativeDcf": -203.246
+    "dcf": -1.039,
+    "cumulativeFcf": -236.075,
+    "cumulativeDcf": -199.521
    },
    {
     "year": 2033,
     "revenue": 87.013,
-    "ebitda": 24.493,
-    "capex": 33.2,
-    "fcf": -8.707,
+    "ebitda": 26.455,
+    "capex": 31.2,
+    "fcf": -4.745,
     "discountFactor": 0.54,
-    "dcf": -4.704,
-    "cumulativeFcf": -250.831,
-    "cumulativeDcf": -207.95
+    "dcf": -2.564,
+    "cumulativeFcf": -240.82,
+    "cumulativeDcf": -202.085
    },
    {
     "year": 2034,
     "revenue": 110.016,
-    "ebitda": 31.195,
-    "capex": 35.2,
-    "fcf": -4.005,
+    "ebitda": 34.309,
+    "capex": 32.2,
+    "fcf": 2.109,
     "discountFactor": 0.5,
-    "dcf": -2.003,
-    "cumulativeFcf": -254.836,
-    "cumulativeDcf": -209.954
+    "dcf": 1.055,
+    "cumulativeFcf": -238.711,
+    "cumulativeDcf": -201.03
    },
    {
     "year": 2035,
     "revenue": 133.486,
-    "ebitda": 38.199,
-    "capex": 35.2,
-    "fcf": 2.999,
+    "ebitda": 42.553,
+    "capex": 32.2,
+    "fcf": 10.353,
     "discountFactor": 0.463,
-    "dcf": 1.389,
-    "cumulativeFcf": -251.837,
-    "cumulativeDcf": -208.565
+    "dcf": 4.795,
+    "cumulativeFcf": -228.358,
+    "cumulativeDcf": -196.235
    }
   ],
   "paybackExtension": [
    {
     "year": 2036,
-    "cumulativeFcf": -248.838
+    "cumulativeFcf": -218.005
    },
    {
     "year": 2037,
-    "cumulativeFcf": -245.839
+    "cumulativeFcf": -207.652
    },
    {
     "year": 2038,
-    "cumulativeFcf": -242.84
+    "cumulativeFcf": -197.299
    },
    {
     "year": 2039,
-    "cumulativeFcf": -239.841
+    "cumulativeFcf": -186.946
    },
    {
     "year": 2040,
-    "cumulativeFcf": -236.842
+    "cumulativeFcf": -176.593
    },
    {
     "year": 2041,
-    "cumulativeFcf": -233.843
+    "cumulativeFcf": -166.24
    },
    {
     "year": 2042,
-    "cumulativeFcf": -230.844
+    "cumulativeFcf": -155.887
    },
    {
     "year": 2043,
-    "cumulativeFcf": -227.845
+    "cumulativeFcf": -145.534
    },
    {
     "year": 2044,
-    "cumulativeFcf": -224.846
+    "cumulativeFcf": -135.181
    },
    {
     "year": 2045,
-    "cumulativeFcf": -221.847
+    "cumulativeFcf": -124.828
    }
   ],
   "sensitivity": {
    "noHpc": {
-    "irrPercent": -93.24,
-    "npv8": -202.652,
-    "npvHurdle": -187.437
+    "irrPercent": -36.39,
+    "npv8": -190.321,
+    "npvHurdle": -178.298
    },
    "hpcConservative": {
-    "irrPercent": null,
-    "npv8": -212.696,
-    "npvHurdle": -195.122
+    "irrPercent": -48.22,
+    "npv8": -200.365,
+    "npvHurdle": -185.983
    },
    "hpcHigh": {
-    "irrPercent": -25.65,
-    "npv8": -183.982,
-    "npvHurdle": -174.202
+    "irrPercent": -19.93,
+    "npv8": -171.651,
+    "npvHurdle": -165.064
    },
    "npvBreakEvenExtraEbitda": {
     "reachable": 1,
-    "extraEbitdaPerYear2030to2035": 61.379,
+    "extraEbitdaPerYear2030to2035": 57.751,
     "irrPercent": 8,
     "npv8": 0,
-    "npvHurdle": -31.888
+    "npvHurdle": -32.23
    },
    "noDqc": {
     "irrPercent": -77.97,
