@@ -82,9 +82,18 @@ export function rewritePlan(previous, next) {
     tokens.get(t).add(p.value < 0 ? '-' : '+');
   }
   for (const step of plan) if (step.dp > 0 && tokens.get(step.fromText)?.size === 2) step.sign = step.from < 0 ? 'neg' : 'pos';
+  // Cash-flow CAPEX cells that show the same digits in several years (▲¥29.200B in 2033-2035) but move to different
+  // values are told apart by the EBITDA cell printed right before them in the same row (EBITDA, CAPEX are adjacent).
+  const capexCollide = new Map();
+  for (const step of plan) if (/^cf\.\d{4}\.capex$/.test(step.key)) capexCollide.set(step.fromText, (capexCollide.get(step.fromText) || new Set()).add(step.to));
+  for (const step of plan) {
+    const y = step.key.match(/^cf\.(\d{4})\.capex$/)?.[1];
+    const e = y && previous[`cf.${y}.ebitda`];
+    if (y && e && capexCollide.get(step.fromText).size > 1) step.anchor = fmt(Math.abs(e.value), 3) + 'B▲¥';
+  }
   // One old token may only map to one new value (compared by digits; sign style comes from the text).
   const byToken = new Map();
-  const keyOf = (step) => (step.sign ? (step.sign === 'neg' ? '-' : '+') : '') + step.fromText + (step.after ? '|' + step.after : '');
+  const keyOf = (step) => (step.sign ? (step.sign === 'neg' ? '-' : '+') : '') + step.fromText + (step.after ? '|' + step.after : '') + (step.anchor ? '@' + step.anchor : '');
   for (const step of plan) {
     const k = keyOf(step);
     const seen = byToken.get(k);
