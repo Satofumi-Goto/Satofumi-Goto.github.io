@@ -387,7 +387,145 @@
     ],
     "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
    },
-   "reviewed_at": "2026-10-22T02:10:00Z"
+   "reviewed_at": "2026-10-22T02:10:00Z",
+   "drafts": [
+    {
+     "status": "unpublished",
+     "stage": "implementation-in-progress",
+     "source": {
+      "repository": "Satofumi-Goto/seneschal",
+      "pullRequest": 415,
+      "observedHeadSha": "43be6df0cf93f3209f7049f559d1347923bc3954",
+      "productionSha": null,
+      "owners": {
+       "ui": "01a16b3d-4d40-7070-9880-fd6eef84403c",
+       "voice": "01a16b74-948c-7135-bc40-5477e04f3026",
+       "appApi": "01a16b24-cc25-73d2-a189-1e5ca7c95023"
+      }
+     },
+     "publicationEvidence": {
+      "implementationSha": null,
+      "federationApiSha": null,
+      "deployedSha": null,
+      "servedUrl": null,
+      "qaReport": null,
+      "verifiedAt": null
+     },
+     "promotionRule": "Not rendered. Fill evidence for the exact released revisions and review both languages before copying releaseCandidate into published items. Source/mock UI checks alone do not satisfy production gates. Keep the two highlights separate and the published card at no more than 10 items.",
+     "id": "seneschal-character-selection",
+     "priority": "headline",
+     "ja": {
+      "lead": "自分に合う相談相手を選ぶSeneschalへ（実装中）。",
+      "text": "キャラクターを見比べて選び、元の相談へ戻れるタブを準備しています。共有候補の再利用と、候補がない場合だけ生成・保存する流れを整備中です。本番接続と完成素材は未確認で、公開済みの機能ではありません。"
+     },
+     "en": {
+      "lead": "A Seneschal you can make your own (in development).",
+      "text": " Compare characters, choose your assistant and return to your conversation. Shared-candidate reuse and generation only when no matching candidate exists are being developed. Production connectivity and finished assets are unverified; this feature is not released."
+     },
+     "releaseCandidate": {
+      "ja": {
+       "lead": "相談相手を選べるSeneschal。",
+       "text": "人物を参考にした候補とオリジナルを見比べ、好みのキャラクターで相談を続けられます。検索は共有済みの候補を再利用し、見つからない場合だけ生成して保存。選択後もキャンセル後も、元のタブへ戻れます。"
+      },
+      "en": {
+       "lead": "Choose the character you consult.",
+       "text": " Compare actor-inspired and original characters, then continue with your chosen AI assistant. Search reuses shared candidates and generates and saves a new one only when no match exists. Confirm or cancel to return to the original tab."
+      }
+     },
+     "scope": [
+      "Current avatar opens the selection page; actors and existing originals remain separate horizontally scrolling collections.",
+      "Three appearances: abstract mark; transparent two-head-tall full-body character without a circular background/frame; circular realistic photo style. Actor-inspired candidates are not the real people or their endorsements.",
+      "Search at the top submits on Enter; reuse a matching shared candidate, generate and save only if absent; only admins can delete.",
+      "Bottom Use this character / Cancel returns to the original tab. Federation owns canonical catalog/persona; device owns selection/session only."
+     ],
+     "evidenceRead": [
+      "docs/qa/seneschal-shared-catalog/README.md at 43be6df0cf93f3209f7049f559d1347923bc3954"
+     ],
+     "knownLimits": [
+      "Current report supersedes older matrix/filter screenshots; earlier independent Seneschal catalog/RLS proposal was withdrawn.",
+      "Federation adapter, actual shared persistence, generation and admin deletion are not production-verified. Actor photo assets and finished two-head-tall avatars remain incomplete."
+     ],
+     "promotionChecks": [
+      "UI owner supplies final exact SHA and current screenshots/video in Japanese and English, mobile and desktop, covering both candidate rows, three appearances, search Enter, selection persistence, Cancel and return to the original tab.",
+      "API owner supplies Federation canonical catalog/persona contract and deployed SHA; real authenticated checks demonstrate shared reuse, absent-only generation/save, cross-user reuse, and admin-only deletion. Mock or withdrawn Seneschal-service tests do not count.",
+      "Verify completed candidate-specific assets and synthetic/actor-inspired labeling; do not claim real actor participation.",
+      "Verify the served app revision matches accepted source and QA revisions. If generation remains unavailable, keep this full-feature releaseCandidate unpublished or narrow it to independently verified behavior."
+     ],
+     "proposedReplacement": {
+      "enLead": "Quick from the first screen.",
+      "jaLead": "初期表示が速い。",
+      "reason": "Promotion proposal only: replace a lower-priority existing item so two distinct headline additions do not exceed ten published items."
+     }
+    },
+    {
+     "status": "unpublished",
+     "stage": "implementation-in-progress",
+     "source": {
+      "repository": "Satofumi-Goto/seneschal",
+      "pullRequest": 415,
+      "observedHeadSha": "43be6df0cf93f3209f7049f559d1347923bc3954",
+      "productionSha": null,
+      "owners": {
+       "ui": "01a16b3d-4d40-7070-9880-fd6eef84403c",
+       "voice": "01a16b74-948c-7135-bc40-5477e04f3026",
+       "appApi": "01a16b24-cc25-73d2-a189-1e5ca7c95023"
+      }
+     },
+     "publicationEvidence": {
+      "implementationSha": null,
+      "federationApiSha": null,
+      "deployedSha": null,
+      "servedUrl": null,
+      "qaReport": null,
+      "verifiedAt": null
+     },
+     "promotionRule": "Not rendered. Fill evidence for the exact released revisions and review both languages before copying releaseCandidate into published items. Source/mock UI checks alone do not satisfy production gates. Keep the two highlights separate and the published card at no more than 10 items.",
+     "id": "seneschal-ai-voice-call",
+     "priority": "headline",
+     "ja": {
+      "lead": "選んだキャラクターに、声で相談する（実装中）。",
+      "text": "電話アイコンから接続・会話・ミュート・終了できる、アプリ内AI音声通話を準備しています。本番音声provider接続と実通話は未確認です。電話回線への発信や、モデルとなった本人との通話ではありません。"
+     },
+     "en": {
+      "lead": "Talk to your chosen character (in development).",
+      "text": " An in-app AI voice conversation is being prepared, with a phone icon, connection, conversation, mute and end controls. Production voice-provider connectivity and real calls are unverified. This is not a telephone-network call or a conversation with the person who inspired a character."
+     },
+     "releaseCandidate": {
+      "ja": {
+       "lead": "選んだキャラクターと、アプリ内でAI音声通話。",
+       "text": "電話アイコンから、文字を打たずにAIへ相談できます。接続状態を確認し、必要に応じてミュートや終了も操作できます。音声はAIによる合成音声で、電話回線への発信や、人物本人との通話ではありません。"
+      },
+      "en": {
+       "lead": "An in-app AI voice conversation with your chosen character.",
+       "text": " Use the phone icon to consult the AI without typing, see the connection state, mute or end the conversation. Speech is AI-generated; this is not a telephone-network call or a conversation with the real person."
+      }
+     },
+     "scope": [
+      "Separate highlight from character selection: phone icon, connecting, conversation, mute and end.",
+      "Federation canonical candidate/persona/voice identity must be resolved for the selected character; device stores selection/session, not an independent canonical persona.",
+      "No PSTN calling, real-person participation, endorsement or actor-voice likeness claim."
+     ],
+     "evidenceRead": [
+      "docs/qa/seneschal-shared-catalog/VOICE-HANDOFF.md at 43be6df0cf93f3209f7049f559d1347923bc3954"
+     ],
+     "knownLimits": [
+      "The observed UI has no installed live voice adapter and returns VOICE_NOT_CONNECTED; its mock lifecycle tests and unconnected-dialog screenshots are not successful call evidence.",
+      "Existing browser single-utterance speech input is not bidirectional AI calling; the submitTurn integration in the handoff is a proposal, not verified implementation."
+     ],
+     "promotionChecks": [
+      "Voice/UI/API owners supply accepted implementation SHAs, Federation API revision and actual deployed/served revisions plus configured provider status. Never substitute PR number or mock test count for exact source identity.",
+      "On the actual deployed app and intended provider, record dated real-device QA: chosen character context, explicit phone start, microphone permission, connecting to active, spoken input -> matching AI answer -> audible output, then another turn. Include Japanese/English coverage claimed by the copy.",
+      "Verify mute prevents microphone transmission; unmute resumes; end stops input, playback, transport and backend session. Verify permission denial, unavailable provider, network failure, navigation/privacy changes and late callbacks cannot show a false connected state or continue speech.",
+      "Confirm voice follows the selected approved persona without asserting actor likeness; spoken proposals retain normal approval and privacy boundaries. Evidence must link QA environment, source/deployed SHA and report/artifact, without private transcripts or credentials.",
+      "Only after real-call QA passes may releaseCandidate be promoted. Otherwise retain implementation-in-progress wording and do not say calls are available or released."
+     ],
+     "proposedReplacement": {
+      "enLead": "Lean and hardened.",
+      "jaLead": "身軽で、堅い。",
+      "reason": "Promotion proposal only: retain voice as its own headline and keep the published card within ten items."
+     }
+    }
+   ]
   },
   "federation": {
    "updated": "2026-10-22",
