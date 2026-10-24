@@ -395,13 +395,17 @@
      "source": {
       "repository": "Satofumi-Goto/seneschal",
       "pullRequest": 415,
-      "observedHeadSha": "43be6df0cf93f3209f7049f559d1347923bc3954",
+      "observedHeadSha": "e2a5c8ecd80649f0c238701f287b97d804b48373",
       "productionSha": null,
       "owners": {
        "ui": "01a16b3d-4d40-7070-9880-fd6eef84403c",
        "voice": "01a16b74-948c-7135-bc40-5477e04f3026",
        "appApi": "01a16b24-cc25-73d2-a189-1e5ca7c95023"
-      }
+      },
+      "previousObservedHeadShas": [
+       "43be6df0cf93f3209f7049f559d1347923bc3954"
+      ],
+      "releaseEvidenceRef": "cards.seneschal.draftProvenance"
      },
      "publicationEvidence": {
       "implementationSha": null,
@@ -463,13 +467,17 @@
      "source": {
       "repository": "Satofumi-Goto/seneschal",
       "pullRequest": 415,
-      "observedHeadSha": "43be6df0cf93f3209f7049f559d1347923bc3954",
+      "observedHeadSha": "e2a5c8ecd80649f0c238701f287b97d804b48373",
       "productionSha": null,
       "owners": {
        "ui": "01a16b3d-4d40-7070-9880-fd6eef84403c",
        "voice": "01a16b74-948c-7135-bc40-5477e04f3026",
        "appApi": "01a16b24-cc25-73d2-a189-1e5ca7c95023"
-      }
+      },
+      "previousObservedHeadShas": [
+       "43be6df0cf93f3209f7049f559d1347923bc3954"
+      ],
+      "releaseEvidenceRef": "cards.seneschal.draftProvenance"
      },
      "publicationEvidence": {
       "implementationSha": null,
@@ -525,7 +533,52 @@
       "reason": "Promotion proposal only: retain voice as its own headline and keep the published card within ten items."
      }
     }
-   ]
+   ],
+   "draftProvenance": {
+    "status": "unpublished-source-checkpoints-only",
+    "supersedesDraftCommit": "d4c0b572447085432949728079f7a62406318c95",
+    "historyPolicy": "Retain previousObservedHeadShas and evidenceRead at 43be6df0 as historical source observations. Earlier knownLimits describe that observed snapshot, not a new verification of the checkpoints below. This follow-up changes references/QA provenance only; it does not promote releaseCandidate.",
+    "releasePolicy": "Root is splitting Seneschal tutorial, startup and UI into independent releases. These checkpoints are not one final public version. Source observations and root-reported independent PASS results do not prove deployment, live API, generation or AI voice calling. publicationEvidence and productionSha remain null until actual release evidence.",
+    "checkpoints": [
+     {
+      "unit": "Seneschal selected-profile question/review emphasis and default startup",
+      "repository": "Satofumi-Goto/seneschal",
+      "sha": "e2a5c8ecd80649f0c238701f287b97d804b48373",
+      "sourceEvidence": "docs/qa/persona-response-shaping/README.md",
+      "qaProvenance": "Root handoff reports independent 5 PASS; not rerun by document owner. Committed report describes bounded review questions, startup/reload checks and synthetic response comparisons, not live provider effects.",
+      "independentReportArtifact": null
+     },
+     {
+      "unit": "TUT1 browser first-use guidance / tutorial completion",
+      "repository": "Satofumi-Goto/seneschal",
+      "sha": "0ded64f2f330abf101ac2665fb3cd0fb4ce14048",
+      "sourceEvidence": "docs/qa/browser-first-use-guidance/README.md",
+      "qaProvenance": "Root handoff reports independent 4 PASS; not rerun by document owner. Browser-scoped first-use receipts and tutorial completion remain a separate release unit, not cross-device identity or live-service evidence.",
+      "independentReportArtifact": null
+     },
+     {
+      "unit": "Federation authenticated shared scoring read",
+      "repository": "Satofumi-Goto/federation-portal",
+      "sha": "e323b1ff63d81237225941f11adc45b5c7185c0f",
+      "sourceEvidence": "docs/integration/scoring-target-shared-entry-20261024.md",
+      "qaProvenance": "Root identifies current source checkpoint; no independent PASS count supplied for this unit. Not evidence of a live API or deployed scoring reader."
+     },
+     {
+      "unit": "Federation authoritative consistency composition",
+      "repository": "Satofumi-Goto/federation-portal",
+      "sha": "e3c7d16279122d8240c462c28a41923fb99585b1",
+      "sourceEvidence": "docs/integration/consistency-authoritative-shared-20261024.md",
+      "qaProvenance": "Root handoff reports independent 3 PASS; not rerun by document owner. Source-level consistency evidence does not close historical input provenance or prove deployment.",
+      "independentReportArtifact": null
+     }
+    ],
+    "remainingReleaseProof": [
+     "Per independently released unit: accepted final source SHA, deployment/served SHA and URL, and QA report tied to those exact revisions; attach the independent report artifacts behind root-reported 5/4/3 PASS. Do not pin a combined public revision in advance.",
+     "Character highlight still requires the existing final UI/assets and authenticated Federation catalog/reuse/generation/admin-deletion evidence. Scoring/consistency read checkpoints do not substitute for catalog API checks.",
+     "Voice highlight still requires actual intended-provider call QA: chosen persona, microphone input, matching AI answer and audible output, mute/unmute, end/cleanup and failure/privacy handling on the deployed revision. No live-call availability claim before this evidence."
+    ],
+    "lineageBoundary": "No change to the historical 5035fbf1 input lineage or document authority decisions. Existing Federation docs/integration/document-lineage-20261024.md at 4e60ea19796bfe27479f889e6b95cab77d965d61 retains the source trail; these QA checkpoints do not resolve that missing input snapshot."
+   }
   },
   "federation": {
    "updated": "2026-10-22",
