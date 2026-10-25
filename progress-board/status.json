@@ -1,28 +1,28 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T20:16:00+09:00",
-  "source": "ChatGPT/GitHub connected status sweep — Fed actual-operation verified",
+  "generated_at": "2026-10-25T20:28:31+09:00",
+  "source": "GitHub connector: branch main, open/merged PRs, Actions runs; current sweep",
   "completed_total": 106,
   "apps": [
     {
       "name": "Federation",
       "status": "red",
       "head": "2df28e4",
-      "summary": "管理者表示43パスはmain採用済み。Repository IndexはActions予算$40/$40・無料2,000分消化によりジョブ開始前で停止。Fed実運用は共通API実配備、Simulator/Seneschal往復、実供給元、3エンジン循環・採点が残る。",
+      "summary": "main HEADを確認。Repository Index 10/25 19:43 JST失敗。PR #461/#462等未統合、複数のPR CI失敗を確認。",
       "url": "https://github.com/Satofumi-Goto/federation-portal"
     },
     {
       "name": "Seneschal",
-      "status": "yellow",
+      "status": "red",
       "head": "9be8bdf",
-      "summary": "共通app-exchange経路はPR #414でソース実装済みだが、認証・正本storeを伴うlive接続は未配備。PR #426までのMyFriends/Calendar統合も継続中。",
+      "summary": "main HEADを確認。PR #426が未統合。#418 Audit、#422 GuardなどPR検証に失敗。main自体のCI成否は未確認。",
       "url": "https://github.com/Satofumi-Goto/seneschal"
     },
     {
       "name": "連動シミュレータ",
-      "status": "yellow",
+      "status": "red",
       "head": "2468c74",
-      "summary": "共有ターゲット優先度のBase44バックエンドはmain採用済み。Federation↔Simulator共通APIはPR #58/#59にあり、現mainへの統合と認証付き実往復・公開確認が残る。",
+      "summary": "main HEADのCIが10/24 22:13 JST失敗。PR #57–60が未統合、#60もCI失敗。本番E2E・認証・公開確認が未完。",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab"
     }
   ],
@@ -30,56 +30,56 @@
     {
       "owner": "dot：全体統合",
       "status": "green",
-      "current": "Fed実運用の正本を再点検。管理者表示43パスはmain採用済み、CI停止はコード不具合ではなくGitHub Actions利用枠停止と確定。",
-      "next": "Actionsを追加消費せず、共通app-exchangeを現mainへ統合→Simulator/Seneschal実往復→Base44公開一致→3エンジン循環・採点を閉じる。",
+      "current": "3リポジトリのmain・PR・Actionsを照合。Federation Repository Index、Simulator main CI、Seneschal一部PRのGuard/Audit失敗を確認。",
+      "next": "失敗CIの原因を個別に記録し、担当別に復旧順序を確定。マージ・公開確認まで段階を分離。",
       "evidence": [
         {
-          "text": "Federation main 2df28e4",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/2df28e40b873ed62779a9966533844921b8c2584"
+          "text": "Federation Index失敗",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610"
         },
         {
-          "text": "Repository Index run 40185948610",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610"
+          "text": "Simulator main CI失敗",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40097245533"
         }
       ]
     },
     {
       "owner": "Chat：分析・独立検査",
       "status": "green",
-      "current": "Fed実運用の停止点を分解済み。Repository Indexはsteps=0で終了し、Actions予算/無料分上限が主因。共通API契約のFederation/Simulator/Seneschal各実装位置も特定。",
-      "next": "古いdraftを丸ごとマージせず、現mainへ非重複の共通API部品だけを移植し、残るlive権限・store・公開ゲートを事実ベースで検証。",
+      "current": "2026-10-25 20時台にGitHubのmain HEAD、未統合PR、最新Actionsを独立照合。mainとPRの検証結果を区別。",
+      "next": "ボードの次回更新でもCI失敗の継続／解消と公開実機の証拠を確認。",
       "evidence": [
         {
-          "text": "Federation app-api source branch",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/tree/codex/api-contract-20261023"
+          "text": "Repository Index",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610"
         },
         {
-          "text": "Simulator PR #59",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/59"
-        },
-        {
-          "text": "Seneschal PR #414",
-          "url": "https://github.com/Satofumi-Goto/seneschal/pull/414"
+          "text": "Simulator CI",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40097245533"
         }
       ]
     },
     {
       "owner": "Codex：従来の基盤担当",
-      "status": "green",
-      "current": "Federationの自律実行・復旧系PRが継続。",
-      "next": "未統合PRの依存を整理し、main整合を進める。",
+      "status": "red",
+      "current": "Federation PR #462未統合。HEAD 822dfdfでCard quality／日英／英語Portfolio／Wet mill台帳の4検査が失敗。GitHubのmergeable=falseも確認。",
+      "next": "まずCI失敗原因とマージ競合を分離して解消し、最新mainへ追随して再検査。",
       "evidence": [
         {
           "text": "PR #462",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/462"
+        },
+        {
+          "text": "4検査失敗の例",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40081400035"
         }
       ]
     },
     {
       "owner": "Codex：採点エンジン専任",
-      "status": "yellow",
-      "current": "品質サイクル系PRは開いたまま。直近更新が古い。",
-      "next": "最新mainで再評価し、実行担当へ繋ぎ直す。",
+      "status": "red",
+      "current": "品質サイクルPR #458・#455未統合。#458 HEAD f79d487でCard quality／日英／英文Portfolioが失敗。",
+      "next": "品質スコア計算の修正後、正本整合・日英回帰の全検査を通してから統合判断。",
       "evidence": [
         {
           "text": "PR #458",
@@ -93,9 +93,9 @@
     },
     {
       "owner": "Codex：整合エンジン稼働専任",
-      "status": "yellow",
-      "current": "ポートフォリオ整合エンジンPRが未統合。",
-      "next": "最新正本との再照合→CI→統合。",
+      "status": "red",
+      "current": "Portfolio整合PR #459（HEAD f7c133a）は未統合。Card quality／英文Portfolio／日英検査が失敗。",
+      "next": "現行mainの正本を固定し、対象と共通CIの失敗を切り分けて回帰検証。",
       "evidence": [
         {
           "text": "PR #459",
@@ -105,41 +105,33 @@
     },
     {
       "owner": "Codex：導線チェック専任",
-      "status": "yellow",
-      "current": "共通app-exchange契約はFederation側 codex/api-contract-20261023、Simulator #59、Seneschal #414に分散して存在。live runtime compositionは未配備。",
-      "next": "standalone Federationでも使える共通APIとして現mainへ統合し、各アプリの実往復と公開版一致まで確認。",
+      "status": "red",
+      "current": "リリース管理PR #460（HEAD a47c746）は未統合。英文Portfolio／日英／採点CIが失敗し、Aのcycle-orchestratorに依存。",
+      "next": "先行オーケストレータの受入条件を確定し、PR→main→Base44公開版の照合を実施。",
       "evidence": [
         {
-          "text": "app-api packet",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/blob/codex/api-contract-20261023/docs/integration/app-api-packet-20261023.md"
-        },
-        {
-          "text": "Simulator PR #59",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/59"
-        },
-        {
-          "text": "Seneschal PR #414",
-          "url": "https://github.com/Satofumi-Goto/seneschal/pull/414"
+          "text": "PR #460",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/460"
         }
       ]
     },
     {
       "owner": "Codex：管理画面",
       "status": "yellow",
-      "current": "管理画面成果の本番反映確認が不足。",
-      "next": "Base44保存・権限・公開画面を実確認。",
+      "current": "管理画面の公開版・閲覧権限と書込権限の分離は未検証。GitHub実装とBase44公開の一致証拠がない。",
+      "next": "一般ユーザー閲覧のRead-only境界、Command Queue／公開・キー設定操作の管理者限定を実画面で確認。",
       "evidence": [
         {
-          "text": "Federation repository",
+          "text": "Federation",
           "url": "https://github.com/Satofumi-Goto/federation-portal"
         }
       ]
     },
     {
       "owner": "Codex：文書整合",
-      "status": "green",
-      "current": "ナレッジ／評価／公開版再評価のPR #461が直近更新。",
-      "next": "CI結果とmain整合を確認して統合へ。",
+      "status": "red",
+      "current": "ナレッジ・HMAC検証PR #461が2026-10-25 19:27 JSTに更新。HEAD cc98a81でCard quality／日英検査失敗、未統合。",
+      "next": "最新更新分の差分を保ったまま失敗したチェックを修正し、独立評価から統合へ。",
       "evidence": [
         {
           "text": "PR #461",
@@ -150,36 +142,36 @@
     {
       "owner": "Base44：管理者画面・日英・スマホUI",
       "status": "yellow",
-      "current": "管理者表示43パスはFederation mainへ採用済み。GitHub source採用とBase44公開版一致は別ゲートで、最新mainの実配備は未確認。",
-      "next": "共通API統合後にBuilder同期→Publish→管理画面/スマホ/実往復を公開版で確認。",
+      "current": "GitHub mainとBase44のプレビュー・Publish・公開版SHAが一致する証拠は取得できていない。",
+      "next": "管理画面は一般ユーザー閲覧可／管理操作不可に分離し、日英・スマホで公開版を照合。",
       "evidence": [
         {
-          "text": "Admin display adoption",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/d475b669c92bc24a6ea355dd3e4bd82eaeda8498"
-        },
-        {
-          "text": "Mission UI exclusion",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/2df28e40b873ed62779a9966533844921b8c2584"
+          "text": "Federation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal"
         }
       ]
     },
     {
       "owner": "Cursor：ナレッジ",
-      "status": "green",
-      "current": "PR #461が更新され、ナレッジ検証を継続。",
-      "next": "対象別評価・公開版再評価まで完了させる。",
+      "status": "red",
+      "current": "PR #461は最新更新があるが、HEADでCard qualityと日英CI失敗。PR #467は開いたまま（CI未確認）。",
+      "next": "入力出典・HMACレシート・JuneState表示の境界を確認し、該当CI失敗を修復。",
       "evidence": [
         {
           "text": "PR #461",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/461"
+        },
+        {
+          "text": "PR #467",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/467"
         }
       ]
     },
     {
       "owner": "Cursor A：車両・拠点MBD",
-      "status": "yellow",
-      "current": "Node MBD PR #420は未統合。",
-      "next": "現担当へ繋ぎ直し、元のQを完了まで継続。",
+      "status": "red",
+      "current": "Node MBD PR #420未統合。HEAD e3e1bcfのCard quality／日英／英文Portfolio CI失敗、mergeable=false。",
+      "next": "IR-35入力欠落とCI不具合を分離し、競合を解消して再検証。",
       "evidence": [
         {
           "text": "PR #420",
@@ -189,9 +181,9 @@
     },
     {
       "owner": "Cursor B：ミル・材料・AMR・電源・貯蔵",
-      "status": "yellow",
-      "current": "Ti量／機械駆動前提の点検PR #453が未統合。",
-      "next": "元のQを完了まで継続し、検証結果を統合へ渡す。",
+      "status": "red",
+      "current": "Ti量・機械駆動前提PR #453未統合。HEAD 0d41c98でCard quality／Wet mill台帳／日英／英文Portfolioの4検査が失敗。",
+      "next": "定置LCOHの前提整合とミル台帳の失敗を切り分け、回帰テストを再実行。",
       "evidence": [
         {
           "text": "PR #453",
@@ -201,9 +193,9 @@
     },
     {
       "owner": "Cursor C：LH₂・HPC・RSU・通信網",
-      "status": "yellow",
-      "current": "LH₂ Node MBD関連PR #423が未統合。",
-      "next": "元のQを完了まで継続し、境界条件と回帰結果を確定。",
+      "status": "red",
+      "current": "LH₂ Node MBD PR #423未統合。HEAD 80cb4efでCard quality／日英／英文Portfolio CI失敗。",
+      "next": "冷凍機台数の境界検査を保ちつつ共通CIを修復し、最新mainと再照合。",
       "evidence": [
         {
           "text": "PR #423",
@@ -214,11 +206,11 @@
     {
       "owner": "Chat：Gemini接続",
       "status": "yellow",
-      "current": "Gemini接続の実運用確認が未完。",
-      "next": "現行キー・API制限・実応答を再確認。",
+      "current": "GitHubのみでは現行Gemini APIキー制限や接続成功を確認できない。成功を推定しない。",
+      "next": "承認済みのキー設定とGemini API実応答を別途確認し、成功時刻と根拠を記録。",
       "evidence": [
         {
-          "text": "Seneschal repository",
+          "text": "Seneschal",
           "url": "https://github.com/Satofumi-Goto/seneschal"
         }
       ]
@@ -226,11 +218,11 @@
     {
       "owner": "Gemini Web：接続診断",
       "status": "yellow",
-      "current": "接続診断は継続対象。自動状態の実証が不足。",
-      "next": "失敗条件と復旧条件を実通信で確定。",
+      "current": "Cloud Console／実通信の診断証拠を今回のGitHub巡回では取得できていない。",
+      "next": "GeminiのHTTP応答・認証エラー／クォータエラーを確認し、実行可否を再判定。",
       "evidence": [
         {
-          "text": "Federation repository",
+          "text": "Federation",
           "url": "https://github.com/Satofumi-Goto/federation-portal"
         }
       ]
@@ -238,26 +230,42 @@
     {
       "owner": "Gemini API：自動収集",
       "status": "yellow",
-      "current": "自動収集の本番継続性を未確認。",
-      "next": "1本化した接続条件で再試行し、成功時刻を記録。",
+      "current": "Gemini API自動収集の直近成功ログは未確認。最新mainとPRの存在はAPI稼働の証拠ではない。",
+      "next": "実API呼出の成功、費用上限、重複実行防止を検証してから実行中へ変更。",
       "evidence": [
         {
-          "text": "Seneschal repository",
+          "text": "Seneschal",
           "url": "https://github.com/Satofumi-Goto/seneschal"
         }
       ]
     },
     {
       "owner": "Claude：Blueprint／Artifactへのアドオン",
-      "status": "yellow",
-      "current": "Blueprint／Artifact系の監査・アドオン作業は残件あり。",
-      "next": "最新mainに対する独立レビューと統合結果を確定。",
+      "status": "red",
+      "current": "監査台帳と品質検証の未統合PR #422。HEAD 1b1dc7bでCard quality／日英／英文Portfolioが失敗。PR #462でもWet mill Claude台帳が失敗。",
+      "next": "独立レビューのhashを維持し、CI失敗修正とBlueprint/Artifactの根拠整合を再確認。",
       "evidence": [
         {
-          "text": "Federation repository",
-          "url": "https://github.com/Satofumi-Goto/federation-portal"
+          "text": "PR #422",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/422"
+        },
+        {
+          "text": "PR #462",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/462"
         }
       ]
     }
+  ],
+  "latest_evidence": {
+    "federation_index": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
+    "seneschal_guard": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40102859950",
+    "simulator_main_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40097245533",
+    "simulator_pr60_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40057038263"
+  },
+  "notes": [
+    "PRがopenであることのみで実行中と判定しない。",
+    "CI失敗はPR単位とmain単位を区別。",
+    "公開版/デプロイの確認はGitHub CI成功とは別に扱う。",
+    "completed_totalは前回の値を維持。新規完了の二重計上を避けるため今回加算なし。"
   ]
 }
