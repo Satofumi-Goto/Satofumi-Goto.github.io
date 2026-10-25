@@ -10,9 +10,9 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif}
 main{max-width:1500px;margin:auto;padding:20px}.head{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
 h1{font-size:1.45rem;margin:0 0 6px}.sub{color:var(--muted);font-size:.9rem}.stamp{font-variant-numeric:tabular-nums;font-size:.84rem;color:var(--muted);text-align:right}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.metric,.app{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:18px 0}.metric,.app,.orchestrator{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px}
 .metric b{font-size:1.35rem}.metric span{display:block;color:var(--muted);font-size:.78rem;margin-top:3px}
-.apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}.app h2{font-size:1rem;margin:0 0 8px}.app p{margin:5px 0;font-size:.84rem}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}.app h2{font-size:1rem;margin:0 0 8px}.app p{margin:5px 0;font-size:.84rem}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.orchestrator{margin-bottom:14px}.orchestrator h2{font-size:1rem;margin:0 0 8px}.orchestrator p{margin:5px 0;font-size:.84rem}.queue{margin:10px 0 0;padding-left:20px}.queue li{margin:5px 0;font-size:.8rem}.ciBlocked{color:var(--red);font-weight:700}
 .badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 8px;font-size:.75rem;font-weight:700;white-space:nowrap}
 .green{background:#e9f7ef;color:var(--green)}.orange{background:#fff1e6;color:var(--orange)}.yellow{background:#fff8d8;color:var(--yellow)}.red{background:#feeceb;color:var(--red)}.done{background:#eef3f8;color:#425466}
 section.board{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -44,7 +44,15 @@ footer{margin-top:12px;color:var(--muted);font-size:.75rem}
     <div class="metric"><b id="mWaiting">–</b><span>前工程待ち（🟡）</span></div>
     <div class="metric"><b id="mBlocked">–</b><span>阻害停止（🔴）</span></div>
     <div class="metric"><b id="mDone">–</b><span>完了工程（累計）</span></div>
+    <div class="metric"><b id="mAuto">–</b><span>自動開発</span></div>
   </div>
+
+  <section class="orchestrator">
+    <h2>自動開発オーケストレータ</h2>
+    <p id="orchestratorState">読込中…</p>
+    <p id="orchestratorAction"></p>
+    <ol class="queue" id="actionQueue"></ol>
+  </section>
 
   <div class="apps" id="apps"></div>
 
@@ -87,6 +95,12 @@ function render(d){
   document.getElementById("mWaiting").textContent=rows.filter(r=>r.status==="yellow").length;
   document.getElementById("mBlocked").textContent=rows.filter(r=>r.status==="red").length;
   document.getElementById("mDone").textContent=d.completed_total??0;
+  const o=d.orchestrator||{};
+  document.getElementById("mAuto").textContent=o.enabled?"稼働中":"停止";
+  const ci=o.ci_state==="infrastructure_blocked"?"CI基盤停止":(o.ci_state||"確認中");
+  document.getElementById("orchestratorState").innerHTML="<strong>"+esc(o.enabled?"自動開発: 稼働中":"自動開発: 停止")+"</strong> / "+(o.ci_state==="infrastructure_blocked"?'<span class="ciBlocked">'+esc(ci)+'</span>':esc(ci))+" / "+esc(o.cadence||"");
+  document.getElementById("orchestratorAction").textContent="現在: "+(o.current_action||"次アクション判定中");
+  document.getElementById("actionQueue").innerHTML=(d.action_queue||[]).slice(0,5).map(q=>"<li><strong>#"+esc(q.priority)+" "+esc(q.owner)+"</strong> — "+esc(q.action)+(q.blocked_by?.length?" <span class=\"ciBlocked\">("+esc(q.blocked_by.join(" / "))+")</span>":"")+"</li>").join("");
   const age=(Date.now()-dt.getTime())/60000;
   document.getElementById("stale").textContent=age>90?"⚠ データが90分以上更新されていません":"";
   document.getElementById("apps").innerHTML=(d.apps||[]).map(a=>{
