@@ -18,6 +18,16 @@ def place(page,rect,text,size,font,colour=INK):
         x-=.25
     raise RuntimeError("Cover text overflow: "+text[:110])
 
+def render_line(page, left, baseline, sentence, fontsize, right, script='japan'):
+    f = fitz.Font(script)
+    while f.text_length(sentence, fontsize=fontsize) > right-left:
+        fontsize -= .15
+        if fontsize < 8.0:
+            raise RuntimeError("Text exceeds available width: " + sentence)
+    page.insert_text(fitz.Point(left, baseline), sentence,
+                     fontname=script, fontsize=fontsize, color=(.06,.12,.18))
+    return round(fontsize, 2)
+
 def cover(doc,title,japanese):
     W,H=doc[0].rect.width,doc[0].rect.height
     landscape=W>H
