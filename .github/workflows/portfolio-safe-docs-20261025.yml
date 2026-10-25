@@ -1,0 +1,39 @@
+name: Temporary portfolio-only PDF safety processor
+on:
+  push:
+    branches:
+      - portfolio/safe-docs-20261025
+    paths:
+      - .github/workflows/portfolio-safe-docs-20261025.yml
+      - portfolio/safe-doc-plan.json
+permissions:
+  contents: write
+jobs:
+  process:
+    if: startsWith(github.event.head_commit.message, 'portfolio-safety:')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF renderer
+        run: python -m pip install --quiet pymupdf
+      - name: Audit or revise only portfolio documents
+        shell: bash
+        run: |
+          if [ -f portfolio/safe-doc-plan.json ]; then
+            python portfolio/_safe_doc_processor.py apply
+          else
+            python portfolio/_safe_doc_processor.py audit
+          fi
+      - name: Save audited or revised portfolio-only files
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A portfolio
+          if git diff --cached --quiet; then
+            echo "No modifications"
+            exit 0
+          fi
+          git commit -m "portfolio document safety: PDF audit or revision"
+          git push
