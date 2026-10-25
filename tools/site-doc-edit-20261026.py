@@ -115,7 +115,7 @@ def edit(site,kind,path,pages,expected):
         if font.text_length(NEW_FEAS,fontsize=11.04)>551:raise ValueError("Feas wording overflows old row")
         textwriter(p,NEW_FEAS,font,21.24,240.3,11.04)
         if OLD_FEAS in p.get_text() or NEW_FEAS not in p.get_text() or neighbor not in p.get_text():raise ValueError("Feas P1 check failed")
-        def no_whitespace(t):return re.sub(r'\\s+','',t)
+        def no_whitespace(t):return re.sub(r'\s+','',t)
         original_rest=no_whitespace(src[target].get_text()).replace(no_whitespace(OLD_FEAS),'')
         edited_rest=no_whitespace(p.get_text()).replace(no_whitespace(NEW_FEAS),'')
         if original_rest!=edited_rest:raise ValueError('Feas other page text differs from original after line substitution')
