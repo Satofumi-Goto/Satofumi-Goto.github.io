@@ -105,8 +105,9 @@ function render(d){
   document.getElementById("mDone").textContent=d.completed_total??0;
   const o=d.orchestrator||{};
   document.getElementById("mAuto").textContent=o.enabled?"稼働中":"停止";
-  const ci=o.ci_state==="infrastructure_blocked"?"CI基盤停止":(o.ci_state||"確認中");
-  document.getElementById("orchestratorState").innerHTML="<strong>"+esc(o.enabled?"自動開発: 稼働中":"自動開発: 停止")+"</strong> / "+(o.ci_state==="infrastructure_blocked"?'<span class="ciBlocked">'+esc(ci)+'</span>':esc(ci))+" / "+esc(o.cadence||"");
+  const ciLabel={infrastructure_blocked:"CI基盤停止",quota_blocked:"CI利用枠停止"}[o.ci_state]||(o.ci_state||"確認中");
+  const ciBlocked=["infrastructure_blocked","quota_blocked"].includes(o.ci_state);
+  document.getElementById("orchestratorState").innerHTML="<strong>"+esc(o.enabled?"自動開発: 稼働中":"自動開発: 停止")+"</strong> / "+(ciBlocked?'<span class="ciBlocked">'+esc(ciLabel)+'</span>':esc(ciLabel))+" / "+esc(o.cadence||"");
   document.getElementById("orchestratorAction").textContent="現在: "+(o.current_action||"次アクション判定中");
   document.getElementById("actionQueue").innerHTML=(d.action_queue||[]).slice(0,5).map(q=>"<li><strong>#"+esc(q.priority)+" "+esc(q.owner)+"</strong> — "+esc(q.action)+(q.blocked_by?.length?" <span class=\"ciBlocked\">("+esc(q.blocked_by.join(" / "))+")</span>":"")+"</li>").join("");
   const f=d.fed_actual_operation;
