@@ -62,7 +62,28 @@
       "never_call_named_job_code_failure_when_steps_empty": true,
       "never_attribute_failure_to_check_name_without_executed_steps": true,
       "require_executed_step_or_annotation_before_code_failure": true,
-      "refresh_main_head_before_each_render": true
+      "refresh_main_head_before_each_render": true,
+      "quota_blocked_label": "CI usage quota blocked"
+    },
+    "quota_recovery": {
+      "state": "quota_blocked",
+      "periodic_rerun": false,
+      "recovery_evidence": [
+        "new GitHub budget/minutes availability evidence",
+        "a newly triggered required workflow obtains runner_id > 0 and at least one executed step"
+      ],
+      "probe_policy": {
+        "automatic_probe_only_after_external_recovery_evidence": true,
+        "max_probe_workflows": 1,
+        "preferred_probe": "smallest required current-main workflow",
+        "success_requires": [
+          "runner_id_nonzero",
+          "runner_name_nonempty",
+          "executed_steps_nonempty"
+        ],
+        "on_success": "set ci_state=available and resume required CI queue",
+        "on_failure_before_steps": "return to quota_blocked without additional reruns"
+      }
     }
   },
   "auto_merge": {
