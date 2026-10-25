@@ -15,7 +15,7 @@ PDFS=[
  ("capabilities","feas","capabilities/documents/Autonomous_Mobility_System_Business_Feasibility.pdf",15,"b4ecf87b617c81590394397541995b4624a1ce02182f257cbb7887688ea3e772"),
 ]
 OLD_CAP="ICEでは困難な扁平・低床化を狙い、FCスケートボードを構想。"
-NEW_CAP="ICEでは困難な扁平・低床化を狙い、FCスケートボードを検討・提案。"
+NEW_CAP="ICEでは困難な扁平・低床化を狙い、FCスケートボードを提案。"
 CAP_NOTE="※掲載図表は社内資料の転載ではありません。"
 OLD_CONCEPT="Proposed concept • Field validation and implementation pending"
 NEW_CONCEPT="Proposed concept • Separately prepared models, not copied from Honda internal documents • Validation pending"
