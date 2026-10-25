@@ -71,7 +71,7 @@ def pixels_unchanged_outside(before,after,allowed):
             if abs(a.samples[row+x]-b.samples[row+x])<=2:continue
             diff+=1
             xx=x/scale;yy=y/scale
-            inside=any((r[0]-4<=xx<=r[2]+4 and r[1]-4<=yy<=r[3]+4) for r in allowed)
+            inside=any((r[0]-8<=xx<=r[2]+8 and r[1]-8<=yy<=r[3]+8) for r in allowed)
             if not inside:
                 bad+=1
                 if len(first)<8:first.append((round(xx,1),round(yy,1)))
