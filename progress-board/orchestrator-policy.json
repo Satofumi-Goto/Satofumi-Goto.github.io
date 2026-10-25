@@ -119,5 +119,25 @@
       "repeated_same_blocker",
       "status_update_failure"
     ]
+  },
+  "status_rendering": {
+    "required_sections": [
+      "apps",
+      "rows",
+      "orchestrator",
+      "action_queue",
+      "fed_actual_operation"
+    ],
+    "fed_actual_operation": {
+      "preserve_across_sweeps": true,
+      "refresh_main_heads_each_sweep": true,
+      "never_mark_complete_from_source_merge_alone": true,
+      "completion_requires": [
+        "main_publish",
+        "deployed_sha_match",
+        "authenticated_e2e_if_applicable"
+      ],
+      "zero_step_ci_is_infrastructure_blocker_not_code_failure": true
+    }
   }
 }
