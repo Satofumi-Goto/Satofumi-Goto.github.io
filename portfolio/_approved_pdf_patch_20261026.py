@@ -10,15 +10,16 @@ DOCS=[
  ("portfolio/documents/Autonomous_Mobility_System_Business_Feasibility_Portfolio.pdf",15,"feasibility"),
 ]
 EXPECTED={
- "cap":"809745d4115aa28b8cce03a74f6dcc8241d0f2b9ff94c9731eaf14a02c0bd622",
- "initial":"fce5901030118f8ba78998400438853793d11adbac200c9b43b414e498726afc",
- "business":"b14eedc130804f2d8d136e832cba7e757b369a3798485b12460d1f9f95a1b1e6",
- "feasibility":"ea4c0beb5f4038beadf7e71ba37153c185c2b6341c523a41fe4fef5c746bb3a7",
+ "cap":"87c5c56803a904ffb7b9e7b27465a5661f9fdf4c8312d70fdca753bc36b8b443",
+ "initial":"946b0fb3fa5d78485f9cab4548445051646494144f8b370d8d076243802b403e",
+ "business":"2438be4ca7d4bade714b5c02167aaf4bc9642017187204426f835ccead76f53f",
+ "feasibility":"b4ecf87b617c81590394397541995b4624a1ce02182f257cbb7887688ea3e772",
 }
 
 CAP_OLD="ICEでは困難な扁平・低床化を狙い、FCスケートボードを構想。"
 CAP_NEW="ICEでは困難な扁平・低床化を狙い、FCスケートボードを検討・提案。"
-CAP_NOTE="※掲載図表は社内資料の転載ではない"
+CAP_NOTE="掲載図表はHondaの社内資料を転載したものではない。"
+CAP_LAST_OLD="Hondaの正式採用・承認・開発着手を示すものではない。"
 INITIAL_OLD="Proposed concept • Field validation and implementation pending"
 INITIAL_NEW="Proposed concept • Separately prepared models, not copied from Honda internal documents • Validation pending"
 FEAS_OLD="This proposal defines a phased development and deployment plan for autonomous mobility business execution."
@@ -61,7 +62,7 @@ def redact_text(page, text, rect):
 def diff_pages(old,new,edited):
     unchanged=0
     for i in range(len(new)):
-        before=old[i+1].get_pixmap(matrix=fitz.Matrix(.68,.68),colorspace=fitz.csGRAY,alpha=False)
+        before=old[i].get_pixmap(matrix=fitz.Matrix(.68,.68),colorspace=fitz.csGRAY,alpha=False)
         after=new[i].get_pixmap(matrix=fitz.Matrix(.68,.68),colorspace=fitz.csGRAY,alpha=False)
         if before.width!=after.width or before.height!=after.height:raise RuntimeError("Page dimensions changed")
         if i not in edited:
@@ -87,30 +88,31 @@ def process(path,orig_count,kind):
     got=hashlib.sha256(path.read_bytes()).hexdigest()
     if got!=EXPECTED[kind]:raise RuntimeError("Input PDF changed, stop: "+str(path)+" sha="+got)
     old=fitz.open(str(path))
-    if len(old)!=orig_count+1:raise RuntimeError("Unexpected page count "+str(path))
-    cover=old[0].get_text()
-    if "PORTFOLIO" not in cover:raise RuntimeError("Page 1 is not the added cover!")
-    out=fitz.open(str(path));out.delete_page(0)
-    if len(out)!=orig_count:raise RuntimeError("Page count lost during cover removal")
-    beforeText=[old[i+1].get_text() for i in range(orig_count)]
+    if len(old)!=orig_count:raise RuntimeError("Unexpected page count "+str(path))
+    out=fitz.open(str(path))
+    beforeText=[old[i].get_text() for i in range(orig_count)]
     edited={}
     if kind=="cap":
         page=out[0];font=find_font(out,page,CAP_NEW+CAP_NOTE,False)
-        otherLine="短時間補給とバッテリー依存低減でBEVの稼働率・積載率制約を"
-        if otherLine not in page.get_text():raise RuntimeError("Cap following line not found")
+        following="短時間補給とバッテリー依存低減でBEVの稼働率・積載率制約を"
+        if following not in page.get_text():raise RuntimeError("Following line not found")
+        matches=page.search_for(CAP_LAST_OLD)
+        if len(matches)!=1:raise RuntimeError("Existing Honda clarification not unique")
+        last=matches[0]
+        if not (560<last.y0<587 and last.x0>300):raise RuntimeError("Unexpected Honda block position "+str(last))
         redact_text(page,CAP_OLD,(306.85,493.90,572.0,505.29))
-        size=9
-        while font.text_length(CAP_NEW,fontsize=size)>265.0 and size>8:
+        redact_text(page,CAP_LAST_OLD,(last.x0-.3,last.y0+4.1,last.x1+1,last.y1+.1))
+        size=9.
+        while font.text_length(CAP_NEW,fontsize=size)>265 and size>8:
             size-=.1
-        bbox=append_text(page,CAP_NEW,(307.13,506.35),font,size)
-        if otherLine not in page.get_text():raise RuntimeError("Cap following line damaged")
-        # Small clarification in empty right area of Honda heading.
-        note_size=7.05
-        if font.text_length(CAP_NOTE,fontsize=note_size)>138:raise RuntimeError("Cap note too wide")
-        note_bbox=append_text(page,CAP_NOTE,(451.9,489.4),font,note_size)
-        if not (CAP_NEW in page.get_text() and CAP_NOTE in page.get_text()):
-            raise RuntimeError("Cap replacement not text-searchable")
-        edited[0]=[(306.0,492.5,580.5,510.0),(446.0,474.5,594,494)]
+        append_text(page,CAP_NEW,(307.13,506.35),font,size)
+        note_size=9.
+        while font.text_length(CAP_NOTE,fontsize=note_size)>264 and note_size>8:
+            note_size-=.1
+        append_text(page,CAP_NOTE,(last.x0,last.y1-1.7),font,note_size)
+        if not all(t in page.get_text() for t in [CAP_NEW,CAP_NOTE,following]):
+            raise RuntimeError("Honda block edit affected neighboring lines")
+        edited[0]=[(305.0,492.5,583.0,510.0),(last.x0-3,last.y0-3,580,last.y1+3)]
     elif kind=="initial":
         page=out[0]
         redact_text(page,INITIAL_OLD,(20.7,813.6,540.0,821.95))
@@ -167,41 +169,15 @@ def process(path,orig_count,kind):
             check[0].get_pixmap(matrix=fitz.Matrix(1.15,1.15),clip=fitz.Rect(0,180,595,282)).save("portfolio/_approved_preview_feas_p1.png")
     tmp.replace(path)
     report={"path":str(path),"pages_before":len(old),"pages_after":orig_count,
-            "removed_extra_cover":True,"modified_original_pages":[i+1 for i in edited],
+            "extra_cover_already_removed":True,"modified_original_pages":[i+1 for i in edited],
             "unchanged_original_pages":visual_unchanged,"sha256_source":got,
             "sha256_final":hashlib.sha256(path.read_bytes()).hexdigest()}
     old.close();out.close()
     print("PASS",json.dumps(report,ensure_ascii=False))
     return report
 
-def inspect_latest():
-    report=[]
-    for path,count,kind in DOCS:
-        d=fitz.open(path)
-        source_digest=hashlib.sha256(Path(path).read_bytes()).hexdigest()
-        print("AUDIT",kind,path,"PAGES",len(d),"sha256",source_digest)
-        indexes=[0,7] if kind=="business" else [0]
-        for i in indexes:
-            if i>=len(d):continue
-            txt=d[i].get_text("text",sort=True)
-            print("PAGE",kind,i+1,"TEXT_BEGIN")
-            for j,line in enumerate(txt.splitlines()):
-                if kind=="cap" and (i!=0 or (j<10 or "スケート" in line or "Honda" in line or "資料" in line or "転載" in line)):print(j+1,repr(line))
-                elif kind=="initial" and (j<6 or "Proposed concept" in line or "Portfolio study" in line or "Honda" in line):print(j+1,repr(line))
-                elif kind=="feasibility" and (j<22 or "propos" in line.lower() or "Honda" in line):print(j+1,repr(line))
-                elif kind=="business" and ("FCスケート" in line or "HTS" in line or "目標" in line or "構想" in line or "検討案" in line):print(j+1,repr(line))
-            print("PAGE",kind,i+1,"TEXT_END")
-        if kind=="cap":
-            d[0].get_pixmap(matrix=fitz.Matrix(1.1,1.1),alpha=False).save("portfolio/_approved_preview_cap_p1.png")
-        if kind=="initial":
-            d[0].get_pixmap(matrix=fitz.Matrix(1.0,1.0),clip=fitz.Rect(0,782,595,842)).save("portfolio/_approved_preview_initial_p1.png")
-        if kind=="business":
-            d[7].get_pixmap(matrix=fitz.Matrix(1.1,1.1),alpha=False).save("portfolio/_approved_preview_business_p8.png")
-        if kind=="feasibility":
-            d[0].get_pixmap(matrix=fitz.Matrix(1.0,1.0),clip=fitz.Rect(0,180,595,285)).save("portfolio/_approved_preview_feas_p1.png")
-        report.append({"file":path,"current_pages":len(d),"expected_base_pages":count,"sha256":source_digest})
-    Path("portfolio/_approved_pdf_verification.json").write_text(json.dumps({"status":"AUDITED_NOT_EDITED","documents":report},ensure_ascii=False,indent=2),encoding="utf-8")
-    print("AUDIT COMPLETE")
-
 if __name__=="__main__":
-    inspect_latest()
+    results=[process(*item) for item in DOCS]
+    Path("portfolio/_approved_pdf_verification.json").write_text(
+        json.dumps({"status":"PASS","documents":results},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    print("ALL FOUR PDFs PASSED")
