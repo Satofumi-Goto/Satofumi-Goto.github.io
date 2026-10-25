@@ -4,9 +4,13 @@
   "enabled": true,
   "cadence": "hourly",
   "repositories": [
-    "Satofumi-Goto/federation-portal",
+    "Satofumi-Goto/life-transaction-console",
+    "Satofumi-Goto/fleet-operations-console",
+    "Satofumi-Goto/service-hub-console",
+    "Satofumi-Goto/urban-operation-console",
+    "Satofumi-Goto/mobility-business-lab",
     "Satofumi-Goto/seneschal",
-    "Satofumi-Goto/mobility-business-lab"
+    "Satofumi-Goto/federation-portal"
   ],
   "status_source": "progress-board/status.json",
   "priority": [
@@ -69,26 +73,31 @@
       "state": "quota_blocked",
       "periodic_rerun": false,
       "recovery_evidence": [
-        "new GitHub budget/minutes availability evidence",
-        "a newly triggered required workflow obtains runner_id > 0 and at least one executed step"
+        "a newly triggered non-dynamic required workflow obtains runner_id > 0 and at least one executed step",
+        "GitHub account usage/billing evidence shows the Actions quota is available again",
+        "billing period rollover at or after 2026-11-01T00:00:00Z permits one Activity release probe"
       ],
       "probe_policy": {
-        "automatic_probe_only_after_external_recovery_evidence": true,
+        "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": true,
         "max_probe_workflows": 1,
-        "preferred_probe": "smallest required current-main workflow",
+        "preferred_probe": "Activity Base44 release marker",
         "success_requires": [
           "runner_id_nonzero",
           "runner_name_nonempty",
           "executed_steps_nonempty"
         ],
-        "on_success": "set ci_state=available and resume required CI queue",
+        "on_success": "continue the seven-app release sequence one app at a time",
         "on_failure_before_steps": "return to quota_blocked without additional reruns",
         "release_probe_order": [
-          "federation",
+          "activity",
+          "fleet",
+          "service",
+          "urban",
           "simulator",
-          "seneschal"
+          "seneschal",
+          "federation"
         ],
-        "federation_is_single_initial_probe": true
+        "activity_is_single_initial_probe": true
       }
     }
   },
@@ -132,26 +141,98 @@
       "authenticated_e2e_if_applicable"
     ],
     "release_pipelines": {
-      "federation": {
-        "repo": "Satofumi-Goto/federation-portal",
+      "activity": {
+        "repo": "Satofumi-Goto/life-transaction-console",
         "trigger_file": ".base44-release-trigger",
-        "workflow": "Federation release reality check",
+        "workflow": "Base44 release — Federation operational proxy",
+        "public_url": "https://life-ledger-link.base44.app",
         "release_order": 1,
-        "probe_after_quota_recovery": true
+        "verifies": [
+          "exact_published_sha",
+          "authenticated_console_health",
+          "durable_release_event_ack"
+        ]
+      },
+      "fleet": {
+        "repo": "Satofumi-Goto/fleet-operations-console",
+        "trigger_file": ".base44-release-trigger",
+        "workflow": "Base44 release — Federation operational proxy",
+        "public_url": "https://fleet-operations-console.base44.app",
+        "release_order": 2,
+        "only_after": "activity_release_verified",
+        "verifies": [
+          "exact_published_sha",
+          "authenticated_console_health",
+          "durable_release_event_ack"
+        ]
+      },
+      "service": {
+        "repo": "Satofumi-Goto/service-hub-console",
+        "trigger_file": ".base44-release-trigger",
+        "workflow": "Base44 release — Federation operational proxy",
+        "public_url": "https://service-hub-console.base44.app",
+        "release_order": 3,
+        "only_after": "fleet_release_verified",
+        "verifies": [
+          "exact_published_sha",
+          "authenticated_console_health",
+          "durable_release_event_ack"
+        ]
+      },
+      "urban": {
+        "repo": "Satofumi-Goto/urban-operation-console",
+        "trigger_file": ".base44-release-trigger",
+        "workflow": "Base44 release — Federation operational proxy",
+        "public_url": "https://urban-operation-console.base44.app",
+        "release_order": 4,
+        "only_after": "service_release_verified",
+        "verifies": [
+          "exact_published_sha",
+          "authenticated_console_health",
+          "durable_release_event_ack"
+        ]
       },
       "simulator": {
         "repo": "Satofumi-Goto/mobility-business-lab",
         "trigger_file": ".base44-release-trigger",
         "workflow": "Base44 release — Fed actual-operation",
-        "release_order": 2,
-        "only_after": "federation_release_verified"
+        "public_url": "https://mobility-lab-flow.base44.app",
+        "release_order": 5,
+        "only_after": "urban_release_verified",
+        "verifies": [
+          "exact_published_sha",
+          "real_compute_two_calls",
+          "kpi_hash_receipt",
+          "priority_read",
+          "simulator_to_federation_info_health"
+        ]
       },
       "seneschal": {
         "repo": "Satofumi-Goto/seneschal",
         "trigger_file": ".base44-sync-trigger",
         "workflow": "Base44 release — Fed actual-operation",
-        "release_order": 3,
-        "only_after": "simulator_release_verified"
+        "public_url": "https://seneschal.base44.app",
+        "release_order": 6,
+        "only_after": "simulator_release_verified",
+        "verifies": [
+          "exact_published_sha",
+          "seneschal_to_federation_health",
+          "durable_source_change_ack",
+          "production_voice_ui"
+        ]
+      },
+      "federation": {
+        "repo": "Satofumi-Goto/federation-portal",
+        "trigger_file": ".base44-release-trigger",
+        "workflow": "Federation release reality check",
+        "public_url": "https://federation.base44.app",
+        "release_order": 7,
+        "only_after": "release_state_for_first_six_committed",
+        "verifies": [
+          "federation_site_publish",
+          "served_sha_or_ancestry",
+          "all_federation_backends_deployed"
+        ]
       }
     },
     "base44_key_gate": {
@@ -160,6 +241,43 @@
       "readiness_source": "release workflow fail-closed credential step",
       "on_missing_or_invalid": "stop_release_retries_and_notify_one_time_setup_required",
       "on_ready": "continue_deploy_and_public_sha_validation"
+    },
+    "release_state": {
+      "file": "docs/runbooks/fed-actual-operation-release-state.json",
+      "schema": "federation.base44-release-set/1",
+      "create_only_after": [
+        "activity_release_verified",
+        "fleet_release_verified",
+        "service_release_verified",
+        "urban_release_verified",
+        "simulator_release_verified",
+        "seneschal_release_verified"
+      ],
+      "expected_keys": [
+        "activity",
+        "fleet",
+        "service",
+        "urban",
+        "simulator",
+        "seneschal"
+      ],
+      "sha_source": "successful_release_workflow_head_sha",
+      "must_be_committed_before_federation_release_marker": true
+    },
+    "final_e2e": {
+      "repo": "Satofumi-Goto/federation-portal",
+      "workflow": "Fed seven-app production E2E",
+      "trigger": "successful Federation release workflow_run",
+      "federation_sha_source": "Federation release workflow_run head_sha",
+      "first_six_sha_source": "docs/runbooks/fed-actual-operation-release-state.json",
+      "completion_requires": [
+        "seven_public_sha_exact_match",
+        "federation_to_simulator_real_compute_two_calls",
+        "simulator_priority_read",
+        "four_console_app_api_roundtrips",
+        "same_sha_full_live_mission_browser_contract"
+      ],
+      "only_final_workflow_success_marks_fed_actual_operation_complete": true
     }
   },
   "viewer_boundary": {
