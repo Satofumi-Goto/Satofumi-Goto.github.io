@@ -2,10 +2,10 @@
 import fitz, json, hashlib, re, sys
 from pathlib import Path
 DOCS=[
- ("portfolio/documents/Business_Development_Capabilities_Portfolio.pdf",[1,5,8,14]),
- ("portfolio/documents/System_Planning_Initial_Concept_Portfolio.pdf",[1,2,30]),
- ("portfolio/documents/Autonomous_Driving_Service_Business_Model_Portfolio.pdf",[1,8,9]),
- ("portfolio/documents/Autonomous_Mobility_System_Business_Feasibility_Portfolio.pdf",[1,2,15]),
+ ("portfolio/documents/Business_Development_Capabilities_Portfolio.pdf",[1,5]),
+ ("portfolio/documents/System_Planning_Initial_Concept_Portfolio.pdf",[1]),
+ ("portfolio/documents/Autonomous_Driving_Service_Business_Model_Portfolio.pdf",[8,9]),
+ ("portfolio/documents/Autonomous_Mobility_System_Business_Feasibility_Portfolio.pdf",[1]),
 ]
 def audit():
   full={}
