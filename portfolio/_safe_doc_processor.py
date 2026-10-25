@@ -28,7 +28,9 @@ def cover(doc,title,japanese):
     p.draw_rect(fitz.Rect(0,0,W,H),fill=BG,color=BG)
     p.draw_rect(fitz.Rect(0,0,W,7*s),fill=ACC,color=ACC)
     jpfont='japan';enfont='helv'
-    p.insert_text((x,40*s if landscape else 54*s),"PORTFOLIO / 個人の自主検討" if japanese else "PORTFOLIO / INDEPENDENT STUDY",fontname=jpfont if japanese else enfont,fontsize=11*s,color=ACC)
+    p.insert_text((x,40*s if landscape else 54*s),
+        "PORTFOLIO / 掲載内容の位置づけ" if japanese else "PORTFOLIO / STATUS OF THE CONTENT",
+        fontname=jpfont if japanese else enfont,fontsize=11*s,color=ACC)
     if landscape:
         titleR=fitz.Rect(x,66*s,r,150*s)
         descR=fitz.Rect(x,160*s,r,203*s)
@@ -45,20 +47,27 @@ def cover(doc,title,japanese):
         foot=785*s
     f=jpfont if japanese else enfont
     place(p,titleR,title,26*s,f)
-    desc=("本書は /portfolio 専用の個人検討版です。共通サイトで掲載する原本は変更していません。" if japanese else "Personal portfolio edition. Shared documents on other pages remain unchanged.")
+    desc=("本書は公開上の位置づけを明示した /portfolio 専用版です。元資料の技術内容及び職務経験の説明は維持しています。"
+          if japanese else
+          "This portfolio-only edition clarifies publication status while retaining technical material and professional experience.")
     place(p,descR,desc,12.4*s,f,MUTED)
     p.draw_line(fitz.Point(x,lineY),fitz.Point(r,lineY),color=(.83,.88,.90),width=1.2*s)
     if japanese:
-        scope="位置づけ｜公開する個人の検討・提案です。所属企業の公式方針、承認済みの事業計画、開発着手・製品化・実装済みの実績を示しません。\n検証状況｜技術構想、運用モデル、数値・ロードマップは、明記のない限り検証前の仮説・試算です。\n活動区分｜職務経験と自主的な構想・試作は、事実関係に応じて区別します。"
-        note="個人提案｜FCスケートボード及びFCAD-MaaSの車両・運用基盤・サービス拠点の一体構想は、筆者個人の検討・提案です。所属企業の正式な開発決定、トラック開発への寄与又はエネルギーサービス開発の成果を主張するものではありません。\n権利・守秘に関する判断は、個々の作成経緯及び契約・規程等に基づきます。"
+        scope=("FCスケートボードは、自動運転モビリティの事業成立条件を検討するための車両構想の一例として示したものであり、Hondaによる正式な採用、製品化方針の決定又は開発着手を示すものではありません。")
+        note=("FCAD-MaaSに関連する車両・運用基盤・サービス拠点の一体的な検討は、自動運転事業を成立させるための構想及び検討内容を説明するものです。Hondaとして当該構想全体を正式に採用・承認し、実行又は開発着手を決定したことを示すものではありません。\n"
+              "本書は、過去の活動の業務該当性又は知的財産権の帰属を確定するものではありません。")
     else:
-        scope="STATUS | This is the author's individual study or proposal, not an official employer strategy, approved program, development decision, commercial deployment or verified result.\nEVIDENCE | Technical options, project stages, targets and calculations require case-specific validation.\nBOUNDARY | Professional experience is distinguished from independent portfolio concepts and prototypes."
-        note="ATTRIBUTION | Any FC skateboard or integrated FCAD-MaaS vehicle, operation-platform and service-hub concept is the author's individual study or proposal, not an approved company plan or truck-development outcome.\nOwnership and confidentiality depend on the relevant materials, agreements and development history."
-    place(p,scopeR,scope,12.8*s if landscape else 11.8*s,f)
-    place(p,noteR,note,12*s if landscape else 11.5*s,f,MUTED)
+        scope=("The FC skateboard is shown as an example vehicle concept for examining autonomous-mobility business viability. It does not indicate Honda's formal adoption, a product decision, or commencement of development.")
+        note=("The integrated examination of FCAD-MaaS vehicles, operating platforms and service hubs describes business-viability concepts. It does not indicate Honda's formal approval, adoption, decision to implement, or commencement of development.\n"
+              "This publication does not determine whether past activities were company work or self-development, or the ownership of intellectual property.")
+    place(p,scopeR,scope,11.6*s if landscape else 11.2*s,f)
+    place(p,noteR,note,11*s if landscape else 10.8*s,f,MUTED)
     p.draw_line(fitz.Point(x,foot-20*s),fitz.Point(r,foot-20*s),color=(.83,.88,.90),width=s)
-    p.insert_text((x,foot),"Satofumi Goto  |  Personal portfolio edition  |  2026-10-25",fontname="helv",fontsize=9*s,color=MUTED)
-    if not p.get_text():raise RuntimeError("Cover rendering was blank")
+    p.insert_text((x,foot),"Satofumi Goto  |  Portfolio publication note  |  2026-10-25",fontname="helv",fontsize=9*s,color=MUTED)
+    full=p.get_text()
+    if not full:raise RuntimeError("Cover rendering was blank")
+    for wrong in ("INDEPENDENT STUDY","個人の自主検討","個人提案","私案"):
+        if wrong in full:raise RuntimeError("Outdated work-classification text on cover: "+wrong)
 
 def edit_honda_heading(page):
     found=page.search_for("Honda")
@@ -90,8 +99,7 @@ def apply():
             if prohibited in plain:raise RuntimeError("Prohibited phrase unexpectedly present: "+src)
         cover(modified,title,japanese)
         changed=None
-        if "Business_Development_Capabilities_" in src:
-            changed=edit_honda_heading(modified[1])
+        # Preserve the original "Honda" work-experience heading; it does not by itself indicate company adoption.
         if len(modified)!=len(original)+1:raise RuntimeError("Page loss")
         identical=0
         for i,p in enumerate(original):
@@ -101,13 +109,14 @@ def apply():
             if left!=right:raise RuntimeError("Unexpected graphical change to "+src+" page "+str(i+1))
             identical+=1
         Path(dst).parent.mkdir(parents=True,exist_ok=True)
-        modified.set_metadata({**modified.metadata,"title":title+" / Personal portfolio edition","subject":"Individual study; not an employer-approved project"})
+        modified.set_metadata({**modified.metadata,"title":title+" / Portfolio publication note","subject":"No assertion of employer adoption; no determination of work classification or intellectual property ownership"})
         modified.save(dst,garbage=4,deflate=True)
         with fitz.open(dst) as check:
             if len(check)!=len(original)+1 or not check[0].get_text():raise RuntimeError("Post-save failure")
             if "Capabilities_" in src:
                 check[0].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_cap_cover.png")
                 check[1].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_cap_body.png")
+                if "Honda" not in check[1].get_text():raise RuntimeError("Honda professional-experience heading was not preserved")
             if "Business_Model_Study" in src:
                 check[8].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_study_p8.png")
             report.append(dict(source=src,source_sha256=digest,output=dst,size=Path(dst).stat().st_size,pages_old=len(original),pages_new=len(check),identical_original_pages=identical,changed_heading=changed))
