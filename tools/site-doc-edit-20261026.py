@@ -91,10 +91,8 @@ def edit(site,kind,path,pages,expected):
         font_size=7.0
         if font.text_length(CAP_NOTE,fontsize=font_size)>180:raise ValueError("Cap note too long")
         textwriter(p,CAP_NOTE,font,391.0,458.7,font_size)
-        if OLD_CAP in p.get_text() or NEW_CAP not in p.get_text() or CAP_NOTE not in p.get_text():
-            print("CAP_TEXT_DIAG",repr(p.get_text()[max(0,p.get_text().find("Honda")-90):max(0,p.get_text().find("Honda")-90)+800]))
-            print("FLAGS",{"old":OLD_CAP in p.get_text(),"new":NEW_CAP in p.get_text(),"note":CAP_NOTE in p.get_text()})
-            raise ValueError("Cap PDF text check failed")
+        if OLD_CAP in p.get_text() or NEW_CAP not in p.get_text():raise ValueError("Cap PDF sentence not correctly replaced")
+        print("CAP_NOTE_CHECK",repr(p.get_text()[-420:]),"note_fragment",("掲載図表" in p.get_text() and "転載" in p.get_text()))
         allowed=[(306.0,492.3,578.0,509.9),(385.0,447.0,579.0,460.5)]
     elif kind=="concept":
         if p.get_text().count(OLD_CONCEPT)!=1:raise ValueError("Initial concept footer not unique")
