@@ -174,8 +174,34 @@ def process(path,orig_count,kind):
     print("PASS",json.dumps(report,ensure_ascii=False))
     return report
 
+def inspect_latest():
+    report=[]
+    for path,count,kind in DOCS:
+        d=fitz.open(path)
+        source_digest=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+        print("AUDIT",kind,path,"PAGES",len(d),"sha256",source_digest)
+        indexes=[0,7] if kind=="business" else [0]
+        for i in indexes:
+            if i>=len(d):continue
+            txt=d[i].get_text("text",sort=True)
+            print("PAGE",kind,i+1,"TEXT_BEGIN")
+            for j,line in enumerate(txt.splitlines()):
+                if kind=="cap" and (i!=0 or (j<10 or "スケート" in line or "Honda" in line or "資料" in line or "転載" in line)):print(j+1,repr(line))
+                elif kind=="initial" and (j<6 or "Proposed concept" in line or "Portfolio study" in line or "Honda" in line):print(j+1,repr(line))
+                elif kind=="feasibility" and (j<22 or "propos" in line.lower() or "Honda" in line):print(j+1,repr(line))
+                elif kind=="business" and ("FCスケート" in line or "HTS" in line or "目標" in line or "構想" in line or "検討案" in line):print(j+1,repr(line))
+            print("PAGE",kind,i+1,"TEXT_END")
+        if kind=="cap":
+            d[0].get_pixmap(matrix=fitz.Matrix(1.1,1.1),alpha=False).save("portfolio/_approved_preview_cap_p1.png")
+        if kind=="initial":
+            d[0].get_pixmap(matrix=fitz.Matrix(1.0,1.0),clip=fitz.Rect(0,782,595,842)).save("portfolio/_approved_preview_initial_p1.png")
+        if kind=="business":
+            d[7].get_pixmap(matrix=fitz.Matrix(1.1,1.1),alpha=False).save("portfolio/_approved_preview_business_p8.png")
+        if kind=="feasibility":
+            d[0].get_pixmap(matrix=fitz.Matrix(1.0,1.0),clip=fitz.Rect(0,180,595,285)).save("portfolio/_approved_preview_feas_p1.png")
+        report.append({"file":path,"current_pages":len(d),"expected_base_pages":count,"sha256":source_digest})
+    Path("portfolio/_approved_pdf_verification.json").write_text(json.dumps({"status":"AUDITED_NOT_EDITED","documents":report},ensure_ascii=False,indent=2),encoding="utf-8")
+    print("AUDIT COMPLETE")
+
 if __name__=="__main__":
-    results=[process(*item) for item in DOCS]
-    Path("portfolio/_approved_pdf_verification.json").write_text(
-        json.dumps({"status":"PASS","documents":results},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-    print("ALL FOUR PDFs PASSED")
+    inspect_latest()
