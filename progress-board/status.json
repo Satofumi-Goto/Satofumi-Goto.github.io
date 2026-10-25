@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T20:36:00+09:00",
+  "generated_at": "2026-10-25T20:41:00+09:00",
   "source": "GitHub connector: current main heads, merged/open PRs, latest Actions runs; 2026-10-25 20:36 JST sweep",
   "completed_total": 106,
   "apps": [
@@ -286,6 +286,163 @@
     "CI失敗はPR単位とmain単位を区別する。",
     "マージ済みでもBase44公開・本番E2E・公開版検証が未完なら完了へ加算しない。",
     "2026-10-25 20:28以降にFederation #472〜#475、Simulator #61、Seneschal ACK経路がmainへ進んだが、対象工程の完了条件が揃っていないためcompleted_totalは106を維持。",
-    "Federation↔Simulator APIはソース配線がmain入りしたが、Simulator current-head CI失敗とBase44公開未確認のため完了扱いしない。"
+    "Federation↔Simulator APIはソース配線がmain入りしたが、Simulator current-head CI失敗とBase44公開未確認のため完了扱いしない。",
+    "Actionsの最新失敗はsteps=[]・runner_id=0・runner_name空で、コード実行前のCI基盤停止として扱う。",
+    "CI基盤停止中も低リスク変更とPR準備は継続するが、実行コードは自動マージしない。",
+    "progress-board/orchestrator-policy.json を自動開発の永続ポリシー正本として追加。"
+  ],
+  "orchestrator": {
+    "enabled": true,
+    "cadence": "hourly",
+    "mode": "autonomous-development",
+    "policy": "progress-board/orchestrator-policy.json",
+    "ci_state": "infrastructure_blocked",
+    "ci_evidence": {
+      "seneschal": {
+        "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189844728",
+        "steps": 0,
+        "runner_id": 0
+      },
+      "simulator": {
+        "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189527640",
+        "steps": 0,
+        "runner_id": 0
+      },
+      "federation": {
+        "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
+        "steps": 0,
+        "runner_id": 0
+      }
+    },
+    "last_cycle": "2026-10-25T20:41:00+09:00",
+    "current_action": "Continue safe development with CI-infrastructure fallback; do not misclassify no-runner failures as code failures.",
+    "auto_merge_executable_code": false,
+    "low_risk_progress_enabled": true
+  },
+  "action_queue": [
+    {
+      "priority": 1,
+      "owner": "Base44：管理者画面・日英・スマホUI",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "Publish and verify the read-only development-team display for signed-in non-admin users; confirm no diagnostic allowance consumption, notification subscription, or canonical write.",
+      "blocked_by": [
+        "Base44 publish/browser path unavailable in current chat"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/pull/472"
+      ]
+    },
+    {
+      "priority": 2,
+      "owner": "Codex：導線チェック専任",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "Verify end-to-end authenticated Federation ↔ Simulator API on deployed Base44 functions and record public/deployed SHA evidence.",
+      "blocked_by": [
+        "Base44 deploy verification unavailable",
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/pull/475",
+        "https://github.com/Satofumi-Goto/mobility-business-lab/pull/61"
+      ]
+    },
+    {
+      "priority": 3,
+      "owner": "Codex：従来の基盤担当",
+      "repo": "Satofumi-Goto/seneschal",
+      "action": "Continue ACK/API integration cleanup and keep iframe relay fallback; prepare executable-code changes as PRs while CI infrastructure is blocked.",
+      "blocked_by": [
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/seneschal/commit/0dc87fe1c7560cf79dda70dc5f8d9808aeca9367"
+      ]
+    },
+    {
+      "priority": 4,
+      "owner": "Codex：導線チェック専任",
+      "repo": "Satofumi-Goto/mobility-business-lab",
+      "action": "Validate Base44 REST function route fix for Federation proxy and prepare any follow-up PR; do not auto-merge executable code until CI returns.",
+      "blocked_by": [
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a6aef69baa8784726f5f73f3503105b7bb7199c1"
+      ]
+    },
+    {
+      "priority": 5,
+      "owner": "Codex：採点エンジン専任",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "Rebase/refresh quality-cycle work against current main without discarding existing evidence; prepare fixes while CI is unavailable.",
+      "blocked_by": [
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/pull/458",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/455"
+      ]
+    },
+    {
+      "priority": 6,
+      "owner": "Codex：整合エンジン稼働専任",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "Refresh Portfolio alignment engine against current main and isolate deterministic source-alignment changes.",
+      "blocked_by": [
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/pull/459"
+      ]
+    },
+    {
+      "priority": 7,
+      "owner": "Cursor A：車両・拠点MBD",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "Rebase Node MBD work onto current main and preserve IR-35/missing-input boundaries.",
+      "blocked_by": [
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/pull/420"
+      ]
+    },
+    {
+      "priority": 8,
+      "owner": "Cursor B：ミル・材料・AMR・電源・貯蔵",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "Refresh Ti/LCOH and wet-mill audit work against current main while preserving evidence hashes.",
+      "blocked_by": [
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/pull/453"
+      ]
+    },
+    {
+      "priority": 9,
+      "owner": "Cursor C：LH₂・HPC・RSU・通信網",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "Refresh LH2 Node MBD boundary regression work against current main.",
+      "blocked_by": [
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/pull/423"
+      ]
+    },
+    {
+      "priority": 10,
+      "owner": "Claude：Blueprint／Artifactへのアドオン",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "Maintain independent review hashes and prepare evidence-consistency updates without claiming CI completion.",
+      "blocked_by": [
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/pull/422",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/462"
+      ]
+    }
   ]
 }
