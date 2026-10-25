@@ -1,28 +1,28 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T20:57:00+09:00",
-  "source": "GitHub connector: Fed actual-operation source-completion sweep + current main heads + zero-step Actions quota classification",
+  "generated_at": "2026-10-25T21:10:00+09:00",
+  "source": "GitHub connector: current main heads + auto-release trigger merges + raw release-run runner assignment evidence",
   "completed_total": 106,
   "apps": [
     {
       "name": "Federation",
       "status": "red",
-      "head": "5297d32",
-      "summary": "Fed実運用4本のソース完成。Operation導線、4 Mission、City Recovery 15工程/5アプリACK、予約、相乗り/貨客混載、崩壊制御→4コンソール再検証、Keep-Alive回帰ゲートまでmain固定。Base44同期トリガー#487送信済み。残りはPublish/公開E2E。",
+      "head": "ab0fdd6",
+      "summary": "Fed実運用source＋Base44 functions/site release workflow＋専用marker自動Deploy triggerまでmain。release runは起動したが runner_id=0 / steps=[] でActions利用枠停止。",
       "url": "https://github.com/Satofumi-Goto/federation-portal"
     },
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "852eda1",
-      "summary": "standalone Federation APIとiframe Relay分離をmain固定。Base44同期トリガーもmain更新済み。公開版ACK/E2Eは未確認。",
+      "head": "28f4dec",
+      "summary": "Base44 release workflowは既存sync markerのmain pushで自動起動し、published SHA確認＋公開voice UI証拠まで実装済み。release runはrunner割当前で停止。",
       "url": "https://github.com/Satofumi-Goto/seneschal"
     },
     {
       "name": "連動シミュレータ",
       "status": "red",
-      "head": "041b8b1",
-      "summary": "Federation情報要求・Operational API・実計算self-test/KPI証跡までmain固定。残りはBase44公開版での認証付き実往復確認。",
+      "head": "b391c7f",
+      "summary": "Base44 entity/functions/site release workflow＋専用marker自動Deploy triggerまでmain。release runは起動したが runner_id=0 / steps=[] でActions利用枠停止。",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab"
     }
   ],
@@ -30,24 +30,20 @@
     {
       "owner": "dot：全体統合",
       "status": "green",
-      "current": "Fed実運用のソース完成条件を固定。4 Mission、City Recovery 15工程/5画面ACK、サービス予約、相乗り/貨客混載、崩壊制御6段階→4コンソール再検証、iframe Keep-Alive、Simulator/Seneschal認証APIをmainで確認済み。",
-      "next": "Base44で最新mainを同期・Publishし、公開SHA、Simulator self-test、Seneschal durable ACK、City Recovery 15/15・各5/5 receiptを本番確認する。",
+      "current": "3アプリのBase44 release workflowを自動起動可能な状態まで接続。Federation/Simulatorは専用release marker、Seneschalは既存sync marker。3本の実release runが起動したが、全てrunner_id=0 / steps=[]でActions利用枠停止を再確認。",
+      "next": "rerunせずrunner復旧を観測。復旧後はFederation 1本だけをprobeし、Base44 key readiness→Deploy→公開SHA/E2Eを確認してから残り2アプリへ進む。",
       "evidence": [
         {
-          "text": "Fed actual-operation contract #483",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/483"
+          "text": "Federation release run",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40191468185"
         },
         {
-          "text": "Four-flow acceptance #485/#486",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/485"
+          "text": "Seneschal release run",
+          "url": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40191445607"
         },
         {
-          "text": "Iframe keep-alive #489",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/489"
-        },
-        {
-          "text": "Base44 sync trigger #487",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/487"
+          "text": "Simulator release run",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40191473064"
         }
       ]
     },
@@ -166,16 +162,20 @@
     {
       "owner": "Base44：管理者画面・日英・スマホUI",
       "status": "red",
-      "current": "GitHub側はFed実運用完成head 5297d32。既存Base44 preview sync triggerを#487で更新済み。現在のチャット環境からBase44ブラウザ操作/DNS確認ができないためPublish結果は未確認。",
-      "next": "Builderで同期状態を確認しPublish。公開版でOperation→Fed実運用導線、4 Mission、日英、スマホ、API診断、5アプリreceiptを確認。",
+      "current": "3アプリともCLI release workflowと自動triggerがsource上完成。Seneschalは公開SHA＋production voice UI screenshotまでworkflow化。実runは3本ともrunner割当前で停止し、Base44認証stepには未到達。",
+      "next": "Actions runner復旧後、Federationを1本だけrelease probe。BASE44_API_KEYがfail-closed checkを通ればDeploy/Publish/公開SHAを確認し、Simulator→Seneschalの順で公開する。",
       "evidence": [
         {
-          "text": "Federation source-complete head",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/5297d32bcffa55aa7c60ec5db7922cbcbf6cd9ea"
+          "text": "Federation auto release #493",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/493"
         },
         {
-          "text": "Base44 sync trigger",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/487"
+          "text": "Seneschal production release QA #435",
+          "url": "https://github.com/Satofumi-Goto/seneschal/pull/435"
+        },
+        {
+          "text": "Simulator auto release #67",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/67"
         }
       ]
     },
@@ -309,7 +309,16 @@
     "federation_actual_operation_full_gate": "https://github.com/Satofumi-Goto/federation-portal/pull/485",
     "federation_iframe_keepalive": "https://github.com/Satofumi-Goto/federation-portal/pull/489",
     "federation_base44_sync_trigger": "https://github.com/Satofumi-Goto/federation-portal/pull/487",
-    "federation_source_complete_head": "https://github.com/Satofumi-Goto/federation-portal/commit/5297d32bcffa55aa7c60ec5db7922cbcbf6cd9ea"
+    "federation_source_complete_head": "https://github.com/Satofumi-Goto/federation-portal/commit/5297d32bcffa55aa7c60ec5db7922cbcbf6cd9ea",
+    "federation_current_main": "https://github.com/Satofumi-Goto/federation-portal/commit/ab0fdd6473382e5ecf1658f799ec2534076c0e0a",
+    "seneschal_current_main": "https://github.com/Satofumi-Goto/seneschal/commit/28f4dec4a2cb52143c90569132ff72fdd3aa53c7",
+    "simulator_current_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/b391c7f4d510f381dda0e2e23a8ef30e5b177b76",
+    "federation_auto_release": "https://github.com/Satofumi-Goto/federation-portal/pull/493",
+    "seneschal_production_release_qa": "https://github.com/Satofumi-Goto/seneschal/pull/435",
+    "simulator_auto_release": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/67",
+    "federation_release_run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40191468185",
+    "seneschal_release_run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40191445607",
+    "simulator_release_run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40191473064"
   },
   "notes": [
     "PRがopenであることのみで実行中と判定しない。",
@@ -327,7 +336,9 @@
     "Seneschal #432 removed duplicate Guard runs after main pushes; Simulator #64 added concurrency cancellation, job timeouts and PR-only Chromium E2E to reduce future Actions consumption.",
     "Fed actual-operation source completion: Operation entry/return, 4 mission modes, 15 receipt-gated steps, East Hub/east detour/SIM-02/ETA7 recovery result, authenticated Simulator KPI result, shared priority policy revision, and Seneschal durable ingress are all on main.",
     "Overall completion remains false until Base44 main Publish and authenticated deployed E2E evidence are observed.",
-    "Fed実運用ソース完成: 4 Mission、15工程/5アプリACK、予約、共同便、崩壊制御、Keep-Alive、Simulator/Seneschal認証APIをmain固定。Base44 Publish/公開E2Eのみ未確認。"
+    "Fed実運用ソース完成: 4 Mission、15工程/5アプリACK、予約、共同便、崩壊制御、Keep-Alive、Simulator/Seneschal認証APIをmain固定。Base44 Publish/公開E2Eのみ未確認。",
+    "Auto-release readiness: all three release workflows can now be triggered from a dedicated main marker path. The first attempted release runs for Federation, Seneschal and Simulator all failed before any step with runner_id=0, confirming the current blocker is Actions runner quota rather than Base44 deploy code.",
+    "Base44 workspace-key readiness is intentionally not guessed. The release workflow will check BASE44_API_KEY only after a runner is assigned; if missing or invalid, retries stop until the repository secret is configured outside chat."
   ],
   "orchestrator": {
     "enabled": true,
@@ -336,64 +347,97 @@
     "policy": "progress-board/orchestrator-policy.json",
     "ci_state": "quota_blocked",
     "ci_evidence": {
+      "federation": {
+        "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40191468185",
+        "steps": 0,
+        "runner_id": 0
+      },
       "seneschal": {
-        "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189844728",
+        "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40191445607",
         "steps": 0,
         "runner_id": 0
       },
       "simulator": {
-        "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189527640",
-        "steps": 0,
-        "runner_id": 0
-      },
-      "federation": {
-        "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
+        "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40191473064",
         "steps": 0,
         "runner_id": 0
       }
     },
-    "last_cycle": "2026-10-25T20:57:00+09:00",
-    "current_action": "Fed actual-operation source is complete. Highest-priority remaining gate is Base44 sync/Publish and production E2E evidence (published SHA, Simulator self-test, Seneschal durable ACK, 15/15 recovery with 5/5 receipts).",
+    "last_cycle": "2026-10-25T21:10:00+09:00",
+    "current_action": "Do not rerun while runner quota is blocked. Detect recovery from GitHub runner assignment; then use Federation release as the single probe. If the runner starts, let its fail-closed Base44 key check decide readiness before triggering Simulator and Seneschal releases.",
     "auto_merge_executable_code": false,
-    "low_risk_progress_enabled": true
+    "low_risk_progress_enabled": true,
+    "release_pipelines": {
+      "federation": {
+        "trigger_file": ".base44-release-trigger",
+        "workflow": "Federation release reality check",
+        "main": "ab0fdd6473382e5ecf1658f799ec2534076c0e0a"
+      },
+      "simulator": {
+        "trigger_file": ".base44-release-trigger",
+        "workflow": "Base44 release — Fed actual-operation",
+        "main": "b391c7f4d510f381dda0e2e23a8ef30e5b177b76"
+      },
+      "seneschal": {
+        "trigger_file": ".base44-sync-trigger",
+        "workflow": "Base44 release — Fed actual-operation",
+        "main": "28f4dec4a2cb52143c90569132ff72fdd3aa53c7"
+      }
+    }
   },
   "action_queue": [
     {
       "priority": 1,
-      "owner": "Base44：管理者画面・日英・スマホUI",
+      "owner": "dot：全体統合",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "Sync current main 1b376d1 to Base44, Publish, then verify signed-in non-admin read-only team display and authenticated Federation↔Simulator/Seneschal API diagnostics on the deployed app.",
+      "action": "Observe GitHub runner recovery without rerunning. On first non-dynamic required workflow with runner_id>0 and executed steps, update the Federation release marker once as the single release probe.",
       "blocked_by": [
-        "Base44 publish/browser path unavailable in current chat"
+        "GitHub Actions account usage quota"
       ],
       "evidence": [
-        "https://github.com/Satofumi-Goto/federation-portal/commit/1b376d1672270a0efd0d4a0d6b229e07682ad291"
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40191468185"
       ]
     },
     {
       "priority": 2,
-      "owner": "Codex：導線チェック専任",
-      "repo": "Satofumi-Goto/mobility-business-lab",
-      "action": "After Base44 deployment, invoke authenticated operational self-test and record engineVersion, scenarioHash, before/after hashes, simulationCalls and receipt as E2E evidence.",
+      "owner": "Base44：管理者画面・日英・スマホUI",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "When the Federation release probe gets a runner, allow its fail-closed BASE44_API_KEY check to run. If configured, deploy Fed actual-operation functions + site and verify published git-head SHA/public endpoints. If missing/invalid, stop retries and request only the one-time repository secret setup.",
       "blocked_by": [
-        "Base44 deployed function not yet verified",
-        "GitHub Actions runner unavailable"
+        "GitHub Actions runner unavailable",
+        "BASE44_API_KEY readiness not yet proven"
       ],
       "evidence": [
-        "https://github.com/Satofumi-Goto/mobility-business-lab/commit/2ea5222ca0ef41d8a38a68d10f1d1ab0cad6cafd"
+        "https://github.com/Satofumi-Goto/federation-portal/pull/493",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/490"
       ]
     },
     {
       "priority": 3,
-      "owner": "Codex：従来の基盤担当",
-      "repo": "Satofumi-Goto/seneschal",
-      "action": "Verify deployed authenticated ACK ingress while retaining iframe relay fallback; keep executable follow-up changes in PR until CI runner returns.",
+      "owner": "Codex：導線チェック専任",
+      "repo": "Satofumi-Goto/mobility-business-lab",
+      "action": "After Federation release succeeds, touch .base44-release-trigger once to deploy Simulator entity schemas/functions/site; verify deployed API self-test KPI/receipt and priorityVersion/inputVersion.",
       "blocked_by": [
-        "Base44 deployment evidence unavailable",
+        "Federation release probe not yet executed",
         "GitHub Actions runner unavailable"
       ],
       "evidence": [
-        "https://github.com/Satofumi-Goto/seneschal/commit/0dc87fe1c7560cf79dda70dc5f8d9808aeca9367"
+        "https://github.com/Satofumi-Goto/mobility-business-lab/pull/67",
+        "https://github.com/Satofumi-Goto/mobility-business-lab/pull/65"
+      ]
+    },
+    {
+      "priority": 4,
+      "owner": "Codex：従来の基盤担当",
+      "repo": "Satofumi-Goto/seneschal",
+      "action": "After Federation/Simulator release succeeds, touch the established .base44-sync-trigger once; verify exact published SHA plus production Seneschal voice UI evidence and durable Federation ACK ingress.",
+      "blocked_by": [
+        "Federation/Simulator deployed evidence unavailable",
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/seneschal/pull/435",
+        "https://github.com/Satofumi-Goto/seneschal/pull/434"
       ]
     },
     {
@@ -481,9 +525,9 @@
     "priority_policy_source_complete": true,
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "federation": "201fd56298a3efc402ebd767db9dd2e3fd5678e1",
-      "simulator": "041b8b16712e11b43f3d37cc42bb61da43591ca9",
-      "seneschal": "852eda1d80d91d57ed6112458aed1676881723cc"
+      "federation": "ab0fdd6473382e5ecf1658f799ec2534076c0e0a",
+      "simulator": "b391c7f4d510f381dda0e2e23a8ef30e5b177b76",
+      "seneschal": "28f4dec4a2cb52143c90569132ff72fdd3aa53c7"
     },
     "mission_contract": {
       "modes": [
@@ -519,10 +563,10 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
-      "Base44 main Publish cannot be operated from the current iOS Chat session",
-      "authenticated deployed roundtrip has not been observed",
-      "GitHub Actions runners are account-usage-quota blocked before any workflow step starts"
+      "GitHub Actions release jobs are quota-blocked before runner assignment",
+      "BASE44_API_KEY readiness cannot be tested until a release runner starts",
+      "authenticated deployed roundtrip has not yet been observed"
     ],
-    "completion_gate": "Publish synchronized main for Federation/Simulator/Seneschal, then record deployed SHA plus: Simulator self-test KPI/receipt → Federation, priorityVersion/inputVersion → Federation, and Seneschal source-change durable ACK."
+    "completion_gate": "Runner quota recovery → one Federation release probe → Base44 key passes → deploy/verify Federation → deploy/verify Simulator → deploy/verify Seneschal → record authenticated E2E receipts and published SHA evidence."
   }
 }
