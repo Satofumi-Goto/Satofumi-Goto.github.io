@@ -1,0 +1,32 @@
+name: One-time portfolio PDF target edits
+on:
+  push:
+    branches:
+      - portfolio/final-targeted-edits-20261026
+    paths:
+      - .github/workflows/portfolio-targeted-20261026.yml
+      - portfolio/_approved_pdf_patch_20261026.py
+permissions:
+  contents: write
+jobs:
+  edit_verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF editing library
+        run: python -m pip install --quiet pymupdf
+      - name: Rewrite exact PDF passages and verify all other pages unchanged
+        run: python portfolio/_approved_pdf_patch_20261026.py
+      - name: Commit portfolio-only PDF revisions and review renders
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add portfolio/documents/Business_Development_Capabilities_Portfolio.pdf
+          git add portfolio/documents/System_Planning_Initial_Concept_Portfolio.pdf
+          git add portfolio/documents/Autonomous_Driving_Service_Business_Model_Portfolio.pdf
+          git add portfolio/documents/Autonomous_Mobility_System_Business_Feasibility_Portfolio.pdf
+          git add portfolio/_approved_pdf_verification.json portfolio/_approved_preview_*.png
+          git commit -m "Verified: remove 4 extra covers and revise only approved P1/P8 wording"
+          git push origin HEAD:portfolio/final-targeted-edits-20261026
