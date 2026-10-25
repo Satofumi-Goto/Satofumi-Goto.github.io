@@ -151,43 +151,40 @@ def geometry_probe():
 
 def apply():
     plan=json.loads(Path("portfolio/safe-doc-plan.json").read_text())
-    if plan.get("scope")!="portfolio-only":raise RuntimeError("Wrong modification scope")
+    if plan.get("scope")!="portfolio-only":raise RuntimeError("Wrong scope")
     report=[]
     for src,dst,title,japanese in FILES:
         data=Path(src).read_bytes()
         digest=hashlib.sha256(data).hexdigest()
-        if plan["expected_sha256"].get(src)!=digest:raise RuntimeError("Input SHA changed: "+src)
+        if plan["expected_sha256"].get(src)!=digest:raise RuntimeError("Source changed: "+src)
         original=fitz.open(src);modified=fitz.open(src)
         plain=re.sub(r"\s+","",''.join(p.get_text("text") for p in original))
         for prohibited in ("トラック開発の着手につなげた","エネルギーサービス開発を後押しした"):
-            if prohibited in plain:raise RuntimeError("Prohibited phrase unexpectedly present: "+src)
-        cover(modified,title,japanese)
-        changed=None
-        # Preserve the original "Honda" work-experience heading; it does not by itself indicate company adoption.
-        if len(modified)!=len(original)+1:raise RuntimeError("Page loss")
-        identical=0
+            if prohibited in plain:raise RuntimeError("Disallowed claim: "+src)
+        revised=in_page_revisions(modified,src)
+        if len(modified)!=len(original):raise RuntimeError("Page count changed "+src)
+        same=0
         for i,p in enumerate(original):
-            if changed is not None and i==0:continue
-            left=hashlib.sha256(p.get_pixmap(matrix=fitz.Matrix(.65,.65),alpha=False).samples).hexdigest()
-            right=hashlib.sha256(modified[i+1].get_pixmap(matrix=fitz.Matrix(.65,.65),alpha=False).samples).hexdigest()
-            if left!=right:raise RuntimeError("Unexpected graphical change to "+src+" page "+str(i+1))
-            identical+=1
+            oldhash=hashlib.sha256(p.get_pixmap(matrix=fitz.Matrix(.65,.65),alpha=False).samples).digest()
+            newhash=hashlib.sha256(modified[i].get_pixmap(matrix=fitz.Matrix(.65,.65),alpha=False).samples).digest()
+            if i+1 not in revised:
+                if oldhash!=newhash:raise RuntimeError("Unexpected change "+src+" page "+str(i+1))
+                same+=1
+            elif oldhash==newhash:
+                raise RuntimeError("Intended copy edit missing "+src+" page "+str(i+1))
         Path(dst).parent.mkdir(parents=True,exist_ok=True)
-        modified.set_metadata({**modified.metadata,"title":title+" / Portfolio publication note","subject":"No assertion of employer adoption; no determination of work classification or intellectual property ownership"})
         modified.save(dst,garbage=4,deflate=True)
         with fitz.open(dst) as check:
-            if len(check)!=len(original)+1 or not check[0].get_text():raise RuntimeError("Post-save failure")
+            if len(check)!=len(original):raise RuntimeError("Post-save page-count failure")
             if "Capabilities_" in src:
-                check[0].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_cap_cover.png")
-                check[1].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_cap_body.png")
-                if "Honda" not in check[1].get_text():raise RuntimeError("Honda professional-experience heading was not preserved")
+                if "Honda" not in check[0].get_text():raise RuntimeError("Honda experience lost")
+                check[0].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_cap_body.png")
             if "Business_Model_Study" in src:
-                check[8].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_study_p8.png")
-            report.append(dict(source=src,source_sha256=digest,output=dst,size=Path(dst).stat().st_size,pages_old=len(original),pages_new=len(check),identical_original_pages=identical,changed_heading=changed))
+                check[7].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_study_p8.png")
+            report.append(dict(source=src,output=dst,source_sha256=digest,pages_old=len(original),pages_new=len(check),identical_original_pages=same,edited_pages=revised,size=Path(dst).stat().st_size))
         original.close();modified.close()
-    geometry_probe()
-    Path("portfolio/_temporary_document_verification.json").write_text(json.dumps({"result":"PASS","documents":report},ensure_ascii=False,indent=2),encoding="utf-8")
-    print("Verified",len(report),"portfolio-only PDFs")
+    Path("portfolio/_temporary_document_verification.json").write_text(json.dumps({"result":"PASS","no_added_covers":True,"documents":report},ensure_ascii=False,indent=2),encoding="utf-8")
+    print("Verified unchanged pagination for",len(report),"portfolio-only PDFs")
 
 if __name__=="__main__":
     if sys.argv[1:]==["apply"]:apply()
