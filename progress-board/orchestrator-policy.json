@@ -80,7 +80,7 @@
       "probe_policy": {
         "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": true,
         "max_probe_workflows": 1,
-        "preferred_probe": "Activity Base44 release marker",
+        "preferred_probe": "Activity manual Base44 release workflow_dispatch",
         "success_requires": [
           "runner_id_nonzero",
           "runner_name_nonempty",
@@ -151,7 +151,8 @@
           "exact_published_sha",
           "authenticated_console_health",
           "durable_release_event_ack"
-        ]
+        ],
+        "preferred_trigger": "workflow_dispatch"
       },
       "fleet": {
         "repo": "Satofumi-Goto/fleet-operations-console",
@@ -164,7 +165,8 @@
           "exact_published_sha",
           "authenticated_console_health",
           "durable_release_event_ack"
-        ]
+        ],
+        "preferred_trigger": "workflow_dispatch"
       },
       "service": {
         "repo": "Satofumi-Goto/service-hub-console",
@@ -177,7 +179,8 @@
           "exact_published_sha",
           "authenticated_console_health",
           "durable_release_event_ack"
-        ]
+        ],
+        "preferred_trigger": "workflow_dispatch"
       },
       "urban": {
         "repo": "Satofumi-Goto/urban-operation-console",
@@ -190,7 +193,8 @@
           "exact_published_sha",
           "authenticated_console_health",
           "durable_release_event_ack"
-        ]
+        ],
+        "preferred_trigger": "workflow_dispatch"
       },
       "simulator": {
         "repo": "Satofumi-Goto/mobility-business-lab",
@@ -205,11 +209,12 @@
           "kpi_hash_receipt",
           "priority_read",
           "simulator_to_federation_info_health"
-        ]
+        ],
+        "preferred_trigger": "workflow_dispatch"
       },
       "seneschal": {
         "repo": "Satofumi-Goto/seneschal",
-        "trigger_file": ".base44-sync-trigger",
+        "trigger_file": null,
         "workflow": "Base44 release — Fed actual-operation",
         "public_url": "https://seneschal.base44.app",
         "release_order": 6,
@@ -219,7 +224,8 @@
           "seneschal_to_federation_health",
           "durable_source_change_ack",
           "production_voice_ui"
-        ]
+        ],
+        "preferred_trigger": "workflow_dispatch"
       },
       "federation": {
         "repo": "Satofumi-Goto/federation-portal",
@@ -227,12 +233,13 @@
         "workflow": "Federation release reality check",
         "public_url": "https://federation.base44.app",
         "release_order": 7,
-        "only_after": "release_state_for_first_six_committed",
+        "only_after": "first_six_public_shas_match_frozen_preflight",
         "verifies": [
           "federation_site_publish",
           "served_sha_or_ancestry",
           "all_federation_backends_deployed"
-        ]
+        ],
+        "preferred_trigger": "workflow_dispatch"
       }
     },
     "base44_key_gate": {
@@ -242,43 +249,12 @@
       "on_missing_or_invalid": "stop_release_retries_and_notify_one_time_setup_required",
       "on_ready": "continue_deploy_and_public_sha_validation"
     },
-    "release_state": {
-      "file": "docs/runbooks/fed-actual-operation-release-state.json",
-      "schema": "federation.base44-release-set/1",
-      "create_only_after": [
-        "activity_release_verified",
-        "fleet_release_verified",
-        "service_release_verified",
-        "urban_release_verified",
-        "simulator_release_verified",
-        "seneschal_release_verified"
-      ],
-      "expected_keys": [
-        "activity",
-        "fleet",
-        "service",
-        "urban",
-        "simulator",
-        "seneschal"
-      ],
-      "sha_source": "successful_release_workflow_head_sha",
-      "must_be_committed_before_federation_release_marker": true,
-      "prepared": true,
-      "frozen_first_six": {
-        "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
-        "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
-        "service": "f2692add810011da46f686d24bc98ba7f8713e1c",
-        "urban": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
-        "simulator": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
-        "seneschal": "e080d3841837f4a0ac8e877d8db01192c130e709"
-      }
-    },
     "final_e2e": {
       "repo": "Satofumi-Goto/federation-portal",
       "workflow": "Fed seven-app production E2E",
       "trigger": "successful Federation release workflow_run",
       "federation_sha_source": "Federation release workflow_run head_sha",
-      "first_six_sha_source": "docs/runbooks/fed-actual-operation-release-state.json",
+      "first_six_sha_source": "docs/runbooks/fed-actual-operation-preflight-source-heads.json",
       "completion_requires": [
         "seven_public_sha_exact_match",
         "federation_to_simulator_real_compute_two_calls",
@@ -288,7 +264,7 @@
       ],
       "only_final_workflow_success_marks_fed_actual_operation_complete": true
     },
-    "federation_frozen_head": "39797b8bcc15650ccfd7433d259df97162353a69",
+    "federation_frozen_head": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
     "publication_sequence": [
       {
         "order": 1,
@@ -331,7 +307,30 @@
         "action": "Fed seven-app production E2E runs automatically after successful Federation release"
       }
     ],
-    "no_marker_commit_required_for_publication": true
+    "no_marker_commit_required_for_publication": true,
+    "preflight_source_set": {
+      "file": "docs/runbooks/fed-actual-operation-preflight-source-heads.json",
+      "schema": "federation.preflight-source-heads/2",
+      "expected_keys": [
+        "activity",
+        "fleet",
+        "service",
+        "urban",
+        "simulator",
+        "seneschal"
+      ],
+      "frozen_first_six": {
+        "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
+        "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
+        "service": "f2692add810011da46f686d24bc98ba7f8713e1c",
+        "urban": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
+        "simulator": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
+        "seneschal": "841199084403b6edfa9b5927400ef9fd78acd9c7"
+      },
+      "productionReleaseVerified": false,
+      "federation_publish_gate": "first six public git-head.json values must exactly match the frozen set",
+      "no_post_publication_commit_required": true
+    }
   },
   "viewer_boundary": {
     "general_user_status_display": "read_only",
@@ -371,16 +370,16 @@
   "mode": "release-freeze",
   "release_freeze": {
     "enabled": true,
-    "reason": "Fed actual-operation source and release automation are complete; publication only remains.",
-    "frozen_at": "2026-10-25",
+    "reason": "Fed actual-operation source, three-engine integration, release automation and publication gates are complete; publication and deployed E2E only remain.",
+    "frozen_at": "2026-10-26",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
       "service": "f2692add810011da46f686d24bc98ba7f8713e1c",
       "urban": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
       "simulator": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
-      "seneschal": "e080d3841837f4a0ac8e877d8db01192c130e709",
-      "federation": "39797b8bcc15650ccfd7433d259df97162353a69"
+      "seneschal": "841199084403b6edfa9b5927400ef9fd78acd9c7",
+      "federation": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d"
     },
     "source_changes_allowed": false,
     "exceptions": [
