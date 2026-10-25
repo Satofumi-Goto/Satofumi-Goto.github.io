@@ -262,7 +262,16 @@
         "seneschal"
       ],
       "sha_source": "successful_release_workflow_head_sha",
-      "must_be_committed_before_federation_release_marker": true
+      "must_be_committed_before_federation_release_marker": true,
+      "prepared": true,
+      "frozen_first_six": {
+        "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
+        "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
+        "service": "f2692add810011da46f686d24bc98ba7f8713e1c",
+        "urban": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
+        "simulator": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
+        "seneschal": "e080d3841837f4a0ac8e877d8db01192c130e709"
+      }
     },
     "final_e2e": {
       "repo": "Satofumi-Goto/federation-portal",
@@ -278,7 +287,51 @@
         "same_sha_full_live_mission_browser_contract"
       ],
       "only_final_workflow_success_marks_fed_actual_operation_complete": true
-    }
+    },
+    "federation_frozen_head": "39797b8bcc15650ccfd7433d259df97162353a69",
+    "publication_sequence": [
+      {
+        "order": 1,
+        "app": "activity",
+        "action": "Run Base44 release — Federation operational proxy on main"
+      },
+      {
+        "order": 2,
+        "app": "fleet",
+        "action": "Run Base44 release — Federation operational proxy on main"
+      },
+      {
+        "order": 3,
+        "app": "service",
+        "action": "Run Base44 release — Federation operational proxy on main"
+      },
+      {
+        "order": 4,
+        "app": "urban",
+        "action": "Run Base44 release — Federation operational proxy on main"
+      },
+      {
+        "order": 5,
+        "app": "simulator",
+        "action": "Run Base44 release — Fed actual-operation on main"
+      },
+      {
+        "order": 6,
+        "app": "seneschal",
+        "action": "Run Base44 release — Fed actual-operation on main"
+      },
+      {
+        "order": 7,
+        "app": "federation",
+        "action": "Run Federation release reality check on main with deploy_fed_actual_operation=true"
+      },
+      {
+        "order": 8,
+        "app": "final",
+        "action": "Fed seven-app production E2E runs automatically after successful Federation release"
+      }
+    ],
+    "no_marker_commit_required_for_publication": true
   },
   "viewer_boundary": {
     "general_user_status_display": "read_only",
@@ -314,5 +367,28 @@
       ],
       "zero_step_ci_is_infrastructure_blocker_not_code_failure": true
     }
+  },
+  "mode": "release-freeze",
+  "release_freeze": {
+    "enabled": true,
+    "reason": "Fed actual-operation source and release automation are complete; publication only remains.",
+    "frozen_at": "2026-10-25",
+    "frozen_heads": {
+      "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
+      "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
+      "service": "f2692add810011da46f686d24bc98ba7f8713e1c",
+      "urban": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
+      "simulator": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
+      "seneschal": "e080d3841837f4a0ac8e877d8db01192c130e709",
+      "federation": "39797b8bcc15650ccfd7433d259df97162353a69"
+    },
+    "source_changes_allowed": false,
+    "exceptions": [
+      "a publication attempt produces concrete executable failure evidence that cannot be resolved by rerun or configuration",
+      "security-critical defect discovered in the frozen release candidate"
+    ],
+    "old_open_prs_are_deferred_backlog_not_release_blockers": true,
+    "preferred_release_trigger": "manual workflow_dispatch on main; do not create new marker commits",
+    "publication_only": true
   }
 }
