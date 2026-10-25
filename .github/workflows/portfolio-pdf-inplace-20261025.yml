@@ -6,6 +6,7 @@ on:
     paths:
       - .github/workflows/portfolio-pdf-inplace-20261025.yml
       - portfolio/inplace-plan.json
+      - portfolio/inplace-preview-request.txt
       - portfolio/_inplace_pdf_editor.py
 permissions:
   contents: write
@@ -19,7 +20,21 @@ jobs:
       - name: Audit text or update portfolio-only PDF bodies
         shell: bash
         run: |
-          if [ -f portfolio/inplace-plan.json ]; then
+          if [ -f portfolio/inplace-preview-request.txt ]; then
+            python - <<'PY'
+          import fitz
+          tasks=[
+            ("portfolio/documents/Business_Development_Capabilities_Portfolio.pdf",0,(275,436,592,606),"portfolio/_review_cap_body.png"),
+            ("portfolio/documents/Business_Development_Capabilities_Portfolio.pdf",4,(360,352,590,438),"portfolio/_review_cap_p5.png"),
+            ("portfolio/documents/Autonomous_Driving_Service_Business_Model_Portfolio.pdf",7,(0,0,595,107),"portfolio/_review_study_p8.png"),
+            ("portfolio/documents/System_Planning_Initial_Concept_Portfolio.pdf",0,(0,790,595,842),"portfolio/_review_initial_p1.png"),
+          ]
+          for fname,pageno,rect,out in tasks:
+            d=fitz.open(fname)
+            d[pageno].get_pixmap(matrix=fitz.Matrix(1.5,1.5),clip=fitz.Rect(rect),alpha=False).save(out)
+            print("RENDERED",out)
+          PY
+          elif [ -f portfolio/inplace-plan.json ]; then
             python portfolio/_inplace_pdf_editor.py apply
           else
             python portfolio/_inplace_pdf_editor.py audit
@@ -29,7 +44,9 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A portfolio/_inplace_pdf_audit.json portfolio/documents; if [ -f portfolio/_inplace_pdf_verification.json ]; then git add portfolio/_inplace_pdf_verification.json; fi
+          git add -A portfolio/_review_*.png portfolio/documents || true
+          if [ -f portfolio/_inplace_pdf_audit.json ]; then git add portfolio/_inplace_pdf_audit.json; fi
+          if [ -f portfolio/_inplace_pdf_verification.json ]; then git add portfolio/_inplace_pdf_verification.json; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "portfolio in-place PDF wording verified"
           git push
