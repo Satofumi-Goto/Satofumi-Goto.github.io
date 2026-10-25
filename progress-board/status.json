@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-10-25T20:09:00+09:00",
+  "source": "ChatGPT/GitHub connected status sweep",
+  "completed_total": 106,
+  "apps": [
+    {
+      "name": "Federation",
+      "status": "red",
+      "head": "2df28e4",
+      "summary": "Repository Index / Generate Repository Index が失敗。モデル／リリース回収と複数PRの統合が継続中。",
+      "url": "https://github.com/Satofumi-Goto/federation-portal"
+    },
+    {
+      "name": "Seneschal",
+      "status": "green",
+      "head": "9be8bdf",
+      "summary": "PR #426まで進行。Calendar連携・共通API・MyFriends/character系の統合が継続中。",
+      "url": "https://github.com/Satofumi-Goto/seneschal"
+    },
+    {
+      "name": "連動シミュレータ",
+      "status": "yellow",
+      "head": "2468c74",
+      "summary": "PR #60まで進行。Federation↔Simulatorの本番E2E・認証付き共有・デプロイ確認が残る。",
+      "url": "https://github.com/Satofumi-Goto/mobility-business-lab"
+    }
+  ],
+  "rows": [
+    {
+      "owner": "dot：全体統合",
+      "status": "green",
+      "current": "3アプリの開発、CI失敗回収、API連携、Base44公開、本番確認を巡回。",
+      "next": "担当の待ち・停止を検出したら即フォローし、実行可能な状態へ戻す。",
+      "evidence": [
+        {
+          "text": "固定進捗ボード",
+          "url": "https://chatgpt.com/space/page_c42f7b42742881918285624b1e240c88"
+        }
+      ]
+    },
+    {
+      "owner": "Chat：分析・独立検査",
+      "status": "green",
+      "current": "自動状態表示のデータ源と自動再描画を実装中。",
+      "next": "GitHub実態を毎時再読し、status.jsonへ反映。",
+      "evidence": [
+        {
+          "text": "live board implementation"
+        }
+      ]
+    },
+    {
+      "owner": "Codex：従来の基盤担当",
+      "status": "green",
+      "current": "Federationの自律実行・復旧系PRが継続。",
+      "next": "未統合PRの依存を整理し、main整合を進める。",
+      "evidence": [
+        {
+          "text": "PR #462",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/462"
+        }
+      ]
+    },
+    {
+      "owner": "Codex：採点エンジン専任",
+      "status": "yellow",
+      "current": "品質サイクル系PRは開いたまま。直近更新が古い。",
+      "next": "最新mainで再評価し、実行担当へ繋ぎ直す。",
+      "evidence": [
+        {
+          "text": "PR #458",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/458"
+        },
+        {
+          "text": "PR #455",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/455"
+        }
+      ]
+    },
+    {
+      "owner": "Codex：整合エンジン稼働専任",
+      "status": "yellow",
+      "current": "ポートフォリオ整合エンジンPRが未統合。",
+      "next": "最新正本との再照合→CI→統合。",
+      "evidence": [
+        {
+          "text": "PR #459",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/459"
+        }
+      ]
+    },
+    {
+      "owner": "Codex：導線チェック専任",
+      "status": "yellow",
+      "current": "公開導線・release管理の未完了が残る。",
+      "next": "main→Base44→公開版の実導線を再確認。",
+      "evidence": [
+        {
+          "text": "PR #460",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/460"
+        }
+      ]
+    },
+    {
+      "owner": "Codex：管理画面",
+      "status": "yellow",
+      "current": "管理画面成果の本番反映確認が不足。",
+      "next": "Base44保存・権限・公開画面を実確認。",
+      "evidence": [
+        {
+          "text": "Federation repository",
+          "url": "https://github.com/Satofumi-Goto/federation-portal"
+        }
+      ]
+    },
+    {
+      "owner": "Codex：文書整合",
+      "status": "green",
+      "current": "ナレッジ／評価／公開版再評価のPR #461が直近更新。",
+      "next": "CI結果とmain整合を確認して統合へ。",
+      "evidence": [
+        {
+          "text": "PR #461",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/461"
+        }
+      ]
+    },
+    {
+      "owner": "Base44：管理者画面・日英・スマホUI",
+      "status": "yellow",
+      "current": "GitHub側成果はあるが、最新mainの公開版一致は未確認。",
+      "next": "Builder同期→Publish→スマホ含む公開版QA。",
+      "evidence": [
+        {
+          "text": "Federation repository",
+          "url": "https://github.com/Satofumi-Goto/federation-portal"
+        }
+      ]
+    },
+    {
+      "owner": "Cursor：ナレッジ",
+      "status": "green",
+      "current": "PR #461が更新され、ナレッジ検証を継続。",
+      "next": "対象別評価・公開版再評価まで完了させる。",
+      "evidence": [
+        {
+          "text": "PR #461",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/461"
+        }
+      ]
+    },
+    {
+      "owner": "Cursor A：車両・拠点MBD",
+      "status": "yellow",
+      "current": "Node MBD PR #420は未統合。",
+      "next": "現担当へ繋ぎ直し、元のQを完了まで継続。",
+      "evidence": [
+        {
+          "text": "PR #420",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/420"
+        }
+      ]
+    },
+    {
+      "owner": "Cursor B：ミル・材料・AMR・電源・貯蔵",
+      "status": "yellow",
+      "current": "Ti量／機械駆動前提の点検PR #453が未統合。",
+      "next": "元のQを完了まで継続し、検証結果を統合へ渡す。",
+      "evidence": [
+        {
+          "text": "PR #453",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/453"
+        }
+      ]
+    },
+    {
+      "owner": "Cursor C：LH₂・HPC・RSU・通信網",
+      "status": "yellow",
+      "current": "LH₂ Node MBD関連PR #423が未統合。",
+      "next": "元のQを完了まで継続し、境界条件と回帰結果を確定。",
+      "evidence": [
+        {
+          "text": "PR #423",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/423"
+        }
+      ]
+    },
+    {
+      "owner": "Chat：Gemini接続",
+      "status": "yellow",
+      "current": "Gemini接続の実運用確認が未完。",
+      "next": "現行キー・API制限・実応答を再確認。",
+      "evidence": [
+        {
+          "text": "Seneschal repository",
+          "url": "https://github.com/Satofumi-Goto/seneschal"
+        }
+      ]
+    },
+    {
+      "owner": "Gemini Web：接続診断",
+      "status": "yellow",
+      "current": "接続診断は継続対象。自動状態の実証が不足。",
+      "next": "失敗条件と復旧条件を実通信で確定。",
+      "evidence": [
+        {
+          "text": "Federation repository",
+          "url": "https://github.com/Satofumi-Goto/federation-portal"
+        }
+      ]
+    },
+    {
+      "owner": "Gemini API：自動収集",
+      "status": "yellow",
+      "current": "自動収集の本番継続性を未確認。",
+      "next": "1本化した接続条件で再試行し、成功時刻を記録。",
+      "evidence": [
+        {
+          "text": "Seneschal repository",
+          "url": "https://github.com/Satofumi-Goto/seneschal"
+        }
+      ]
+    },
+    {
+      "owner": "Claude：Blueprint／Artifactへのアドオン",
+      "status": "yellow",
+      "current": "Blueprint／Artifact系の監査・アドオン作業は残件あり。",
+      "next": "最新mainに対する独立レビューと統合結果を確定。",
+      "evidence": [
+        {
+          "text": "Federation repository",
+          "url": "https://github.com/Satofumi-Goto/federation-portal"
+        }
+      ]
+    }
+  ]
+}
