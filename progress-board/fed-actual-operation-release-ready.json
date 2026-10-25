@@ -1,0 +1,79 @@
+{
+  "schema": "federation.release-ready/1",
+  "generated_at": "2026-10-25T21:37:00+09:00",
+  "status": "source-complete-release-ready-publication-pending",
+  "release_branch": "release/fed-actual-operation-ready-20261025",
+  "frozen": {
+    "federation": {
+      "repo": "Satofumi-Goto/federation-portal",
+      "sha": "a076f6e58e0091cf51ab014e5265b196a2a7bc33",
+      "app_id": "6a12b4fc281ca25644595d02",
+      "url": "https://federation.base44.app"
+    },
+    "simulator": {
+      "repo": "Satofumi-Goto/mobility-business-lab",
+      "sha": "832ecbc2b300e0ae401ab4a23bd13cdae3235f70",
+      "app_id": "6acfedb5dd6666c1c77ecaa1",
+      "url": "https://mobility-lab-flow.base44.app"
+    },
+    "seneschal": {
+      "repo": "Satofumi-Goto/seneschal",
+      "sha": "84db07f17610a526c2ff2e7c3562f37d63f3c2f6",
+      "app_id": "69d5e786e4a4c7ae38d7cba8",
+      "url": "https://seneschal.base44.app"
+    },
+    "activity": {
+      "repo": "Satofumi-Goto/life-transaction-console",
+      "sha": "e61ccc6ced132d26efbc0b162d4a3a9b5697f9b8",
+      "app_id": "6a0bebc2df6284483f852302",
+      "url": "https://life-ledger-link.base44.app"
+    },
+    "fleet": {
+      "repo": "Satofumi-Goto/fleet-operations-console",
+      "sha": "765ec91f130d5c759a73e5358a80b33a05f7447a",
+      "app_id": "69f9aec012957d96d3f574db",
+      "url": "https://fleet-operations-console.base44.app"
+    },
+    "service": {
+      "repo": "Satofumi-Goto/service-hub-console",
+      "sha": "27edac39a4ae55c717f1f25081eb298a9e21b363",
+      "app_id": "69fa9e3b8d939b77d4ab73e4",
+      "url": "https://service-hub-console.base44.app"
+    },
+    "urban": {
+      "repo": "Satofumi-Goto/urban-operation-console",
+      "sha": "1c0edca28a9efda3c084e8cb81dfad68736115f1",
+      "app_id": "69db43c7802c6ab516de1ca3",
+      "url": "https://urban-operation-console.base44.app"
+    }
+  },
+  "publish_sequence": [
+    "Federation backend prerequisite (functions only, no site publish)",
+    "Activity",
+    "Fleet",
+    "Service Hub",
+    "Urban",
+    "Simulator",
+    "Seneschal",
+    "Federation",
+    "Fed seven-app production E2E"
+  ],
+  "acceptance": [
+    "exact public SHA for all seven apps",
+    "four console authenticated Federation app-API roundtrips",
+    "Simulator real-compute self-test with simulationCalls=2",
+    "Simulator target-priority read",
+    "Seneschal durable Federation ACK",
+    "Fed actual-operation four-mode mission contract and 15-step five-party City Recovery ACK",
+    "four-console collapse-control apply/verify/rollback",
+    "published same-SHA browser E2E"
+  ],
+  "remaining": [
+    "Base44 deployment/publication and deployed E2E verification only"
+  ],
+  "constraints": [
+    "Do not replace the frozen release branch with a later main SHA during this release.",
+    "GitHub-hosted Actions runner is currently infrastructure-blocked; workflows are fail-closed.",
+    "The local execution environment cannot clone GitHub because outbound DNS is blocked, so no local full build is claimed."
+  ]
+}
