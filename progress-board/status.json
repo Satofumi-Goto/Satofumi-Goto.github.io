@@ -1,28 +1,28 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T20:43:00+09:00",
+  "generated_at": "2026-10-25T20:45:00+09:00",
   "source": "GitHub connector: latest main heads/open PRs/Actions infrastructure state; autonomous orchestrator control-plane sync",
   "completed_total": 106,
   "apps": [
     {
       "name": "Federation",
       "status": "red",
-      "head": "663c839",
-      "summary": "mainはSeneschal operational ingressまで反映。自動開発の実装は前進中。Actionsはrunner未起動状態のためCIコード結果は未確認。Base44公開・E2Eも未確認。",
+      "head": "1b376d1",
+      "summary": "mainに実Simulator計算を要求するAPI診断 #477 まで反映。ソース上の認証API連携は前進済み。CI runner未起動、Base44公開/E2E未確認。",
       "url": "https://github.com/Satofumi-Goto/federation-portal"
     },
     {
       "name": "Seneschal",
       "status": "red",
       "head": "0dc87fe",
-      "summary": "iframe relay fallback維持までmain反映。Guard失敗は最新runもsteps=[]・runner_id=0でCI基盤停止。Calendar/MyFriends系draft PRは未統合。",
+      "summary": "iframe relay fallbackを維持したmain。Guardはsteps=[]・runner_id=0でCI基盤停止。Calendar/MyFriends系は未統合。",
       "url": "https://github.com/Satofumi-Goto/seneschal"
     },
     {
       "name": "連動シミュレータ",
       "status": "red",
-      "head": "a6aef69",
-      "summary": "Base44 function REST route修正をmain反映。PR #62で実Federation operational API計算検証が進行中。CIはrunner未起動のためコード結果未確認。",
+      "head": "2ea5222",
+      "summary": "実Federation operational API計算のself-test #62までmain反映。コードは前進済みだがCI runner未起動、Base44実デプロイ証拠は未取得。",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab"
     }
   ],
@@ -273,7 +273,7 @@
     }
   ],
   "latest_evidence": {
-    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/663c8396746f64daaaf209812825f41360c3abfd",
+    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/1b376d1672270a0efd0d4a0d6b229e07682ad291",
     "federation_index": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
     "federation_viewer_readonly": "https://github.com/Satofumi-Goto/federation-portal/pull/472",
     "federation_simulator_api": "https://github.com/Satofumi-Goto/federation-portal/pull/475",
@@ -281,7 +281,7 @@
     "simulator_main_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189088620",
     "simulator_api_merge": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/61",
     "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/0dc87fe1c7560cf79dda70dc5f8d9808aeca9367",
-    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a6aef69baa8784726f5f73f3503105b7bb7199c1",
+    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/2ea5222ca0ef41d8a38a68d10f1d1ab0cad6cafd",
     "simulator_pr62": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/62",
     "seneschal_guard_infra": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189844728",
     "simulator_ci_infra": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189527640"
@@ -294,7 +294,9 @@
     "Federation↔Simulator APIはソース配線がmain入りしたが、Simulator current-head CI失敗とBase44公開未確認のため完了扱いしない。",
     "Actionsの最新失敗はsteps=[]・runner_id=0・runner_name空で、コード実行前のCI基盤停止として扱う。",
     "CI基盤停止中も低リスク変更とPR準備は継続するが、実行コードは自動マージしない。",
-    "progress-board/orchestrator-policy.json を自動開発の永続ポリシー正本として追加。"
+    "progress-board/orchestrator-policy.json を自動開発の永続ポリシー正本として追加。",
+    "Federation #477 と Simulator #62 がmainへ入り、実計算self-testを使うAPI診断までソース実装済み。",
+    "残る最優先ゲートはBase44同期/Publish/公開版E2E証拠とCI runner復旧。"
   ],
   "orchestrator": {
     "enabled": true,
@@ -319,57 +321,44 @@
         "runner_id": 0
       }
     },
-    "last_cycle": "2026-10-25T20:43:00+09:00",
-    "current_action": "Advance Simulator PR #62 and deployment/E2E evidence while Actions is infrastructure-blocked; keep executable-code auto-merge disabled.",
+    "last_cycle": "2026-10-25T20:45:00+09:00",
+    "current_action": "Deployment/E2E evidence is now the highest-priority gate: publish current Federation/Simulator/Seneschal heads to Base44 where safe, verify authenticated round trips, then mark completed phases.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": true
   },
   "action_queue": [
     {
       "priority": 1,
-      "owner": "Codex：導線チェック専任",
-      "repo": "Satofumi-Goto/mobility-business-lab",
-      "action": "Review and advance PR #62 (real Federation operational API computation verification); preserve deployed-route evidence and do not auto-merge executable code while CI runner is unavailable.",
-      "blocked_by": [
-        "GitHub Actions runner unavailable",
-        "Base44 deployed E2E not yet evidenced"
-      ],
-      "evidence": [
-        "https://github.com/Satofumi-Goto/mobility-business-lab/pull/62",
-        "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a6aef69baa8784726f5f73f3503105b7bb7199c1"
-      ]
-    },
-    {
-      "priority": 2,
       "owner": "Base44：管理者画面・日英・スマホUI",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "Publish and verify read-only development-team display for signed-in non-admin users; prove no diagnostics allowance, notification subscription, or canonical writes.",
+      "action": "Sync current main 1b376d1 to Base44, Publish, then verify signed-in non-admin read-only team display and authenticated Federation↔Simulator/Seneschal API diagnostics on the deployed app.",
       "blocked_by": [
         "Base44 publish/browser path unavailable in current chat"
       ],
       "evidence": [
-        "https://github.com/Satofumi-Goto/federation-portal/pull/472"
+        "https://github.com/Satofumi-Goto/federation-portal/commit/1b376d1672270a0efd0d4a0d6b229e07682ad291"
+      ]
+    },
+    {
+      "priority": 2,
+      "owner": "Codex：導線チェック専任",
+      "repo": "Satofumi-Goto/mobility-business-lab",
+      "action": "After Base44 deployment, invoke authenticated operational self-test and record engineVersion, scenarioHash, before/after hashes, simulationCalls and receipt as E2E evidence.",
+      "blocked_by": [
+        "Base44 deployed function not yet verified",
+        "GitHub Actions runner unavailable"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/mobility-business-lab/commit/2ea5222ca0ef41d8a38a68d10f1d1ab0cad6cafd"
       ]
     },
     {
       "priority": 3,
-      "owner": "Codex：導線チェック専任",
-      "repo": "Satofumi-Goto/federation-portal",
-      "action": "Verify deployed Federation↔Simulator and Federation↔Seneschal authenticated ingress/operational API end-to-end and record deployed SHA evidence.",
-      "blocked_by": [
-        "Base44 deploy verification unavailable",
-        "GitHub Actions runner unavailable"
-      ],
-      "evidence": [
-        "https://github.com/Satofumi-Goto/federation-portal/commit/663c8396746f64daaaf209812825f41360c3abfd"
-      ]
-    },
-    {
-      "priority": 4,
       "owner": "Codex：従来の基盤担当",
       "repo": "Satofumi-Goto/seneschal",
-      "action": "Continue safe ACK/API integration cleanup while preserving iframe relay fallback; executable changes stop at PR until CI returns.",
+      "action": "Verify deployed authenticated ACK ingress while retaining iframe relay fallback; keep executable follow-up changes in PR until CI runner returns.",
       "blocked_by": [
+        "Base44 deployment evidence unavailable",
         "GitHub Actions runner unavailable"
       ],
       "evidence": [
