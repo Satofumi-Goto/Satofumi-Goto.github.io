@@ -1,0 +1,41 @@
+name: Site-specific PDF audit and revision
+on:
+  push:
+    branches:
+      - site-specific-top-capability-20261026
+    paths:
+      - .github/workflows/site-specific-pdfs-20261026.yml
+      - tools/site-doc-edit-20261026.py
+      - tools/site-doc-audit-20261026.py
+      - site-doc-revise-plan.json
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PDF tools
+        run: python -m pip install --quiet pymupdf
+      - name: Validate and revise isolated site documents
+        shell: bash
+        run: |
+          if [ -f site-doc-revise-plan.json ]; then
+            python tools/site-doc-edit-20261026.py
+          else
+            python tools/site-doc-audit-20261026.py
+          fi
+      - name: Record and verify only new site-specific PDFs
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -d site-docs-audit ]; then git add site-docs-audit; fi
+          if [ -d site-docs-verification ]; then git add site-docs-verification; fi
+          if [ -f site-doc-revise-plan.json ]; then
+            git add top-documents/*.pdf capabilities/documents/*.pdf
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Record site-specific PDF audit and verified revisions"
+          git push origin HEAD:site-specific-top-capability-20261026
