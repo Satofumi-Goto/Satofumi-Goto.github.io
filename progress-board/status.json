@@ -1,28 +1,28 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T20:09:00+09:00",
-  "source": "ChatGPT/GitHub connected status sweep",
+  "generated_at": "2026-10-25T20:16:00+09:00",
+  "source": "ChatGPT/GitHub connected status sweep — Fed actual-operation verified",
   "completed_total": 106,
   "apps": [
     {
       "name": "Federation",
       "status": "red",
       "head": "2df28e4",
-      "summary": "Repository Index / Generate Repository Index が失敗。モデル／リリース回収と複数PRの統合が継続中。",
+      "summary": "管理者表示43パスはmain採用済み。Repository IndexはActions予算$40/$40・無料2,000分消化によりジョブ開始前で停止。Fed実運用は共通API実配備、Simulator/Seneschal往復、実供給元、3エンジン循環・採点が残る。",
       "url": "https://github.com/Satofumi-Goto/federation-portal"
     },
     {
       "name": "Seneschal",
-      "status": "green",
+      "status": "yellow",
       "head": "9be8bdf",
-      "summary": "PR #426まで進行。Calendar連携・共通API・MyFriends/character系の統合が継続中。",
+      "summary": "共通app-exchange経路はPR #414でソース実装済みだが、認証・正本storeを伴うlive接続は未配備。PR #426までのMyFriends/Calendar統合も継続中。",
       "url": "https://github.com/Satofumi-Goto/seneschal"
     },
     {
       "name": "連動シミュレータ",
       "status": "yellow",
       "head": "2468c74",
-      "summary": "PR #60まで進行。Federation↔Simulatorの本番E2E・認証付き共有・デプロイ確認が残る。",
+      "summary": "共有ターゲット優先度のBase44バックエンドはmain採用済み。Federation↔Simulator共通APIはPR #58/#59にあり、現mainへの統合と認証付き実往復・公開確認が残る。",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab"
     }
   ],
@@ -30,23 +30,36 @@
     {
       "owner": "dot：全体統合",
       "status": "green",
-      "current": "3アプリの開発、CI失敗回収、API連携、Base44公開、本番確認を巡回。",
-      "next": "担当の待ち・停止を検出したら即フォローし、実行可能な状態へ戻す。",
+      "current": "Fed実運用の正本を再点検。管理者表示43パスはmain採用済み、CI停止はコード不具合ではなくGitHub Actions利用枠停止と確定。",
+      "next": "Actionsを追加消費せず、共通app-exchangeを現mainへ統合→Simulator/Seneschal実往復→Base44公開一致→3エンジン循環・採点を閉じる。",
       "evidence": [
         {
-          "text": "固定進捗ボード",
-          "url": "https://chatgpt.com/space/page_c42f7b42742881918285624b1e240c88"
+          "text": "Federation main 2df28e4",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/2df28e40b873ed62779a9966533844921b8c2584"
+        },
+        {
+          "text": "Repository Index run 40185948610",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610"
         }
       ]
     },
     {
       "owner": "Chat：分析・独立検査",
       "status": "green",
-      "current": "自動状態表示のデータ源と自動再描画を実装中。",
-      "next": "GitHub実態を毎時再読し、status.jsonへ反映。",
+      "current": "Fed実運用の停止点を分解済み。Repository Indexはsteps=0で終了し、Actions予算/無料分上限が主因。共通API契約のFederation/Simulator/Seneschal各実装位置も特定。",
+      "next": "古いdraftを丸ごとマージせず、現mainへ非重複の共通API部品だけを移植し、残るlive権限・store・公開ゲートを事実ベースで検証。",
       "evidence": [
         {
-          "text": "live board implementation"
+          "text": "Federation app-api source branch",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/tree/codex/api-contract-20261023"
+        },
+        {
+          "text": "Simulator PR #59",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/59"
+        },
+        {
+          "text": "Seneschal PR #414",
+          "url": "https://github.com/Satofumi-Goto/seneschal/pull/414"
         }
       ]
     },
@@ -93,12 +106,20 @@
     {
       "owner": "Codex：導線チェック専任",
       "status": "yellow",
-      "current": "公開導線・release管理の未完了が残る。",
-      "next": "main→Base44→公開版の実導線を再確認。",
+      "current": "共通app-exchange契約はFederation側 codex/api-contract-20261023、Simulator #59、Seneschal #414に分散して存在。live runtime compositionは未配備。",
+      "next": "standalone Federationでも使える共通APIとして現mainへ統合し、各アプリの実往復と公開版一致まで確認。",
       "evidence": [
         {
-          "text": "PR #460",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/460"
+          "text": "app-api packet",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/blob/codex/api-contract-20261023/docs/integration/app-api-packet-20261023.md"
+        },
+        {
+          "text": "Simulator PR #59",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/59"
+        },
+        {
+          "text": "Seneschal PR #414",
+          "url": "https://github.com/Satofumi-Goto/seneschal/pull/414"
         }
       ]
     },
@@ -129,12 +150,16 @@
     {
       "owner": "Base44：管理者画面・日英・スマホUI",
       "status": "yellow",
-      "current": "GitHub側成果はあるが、最新mainの公開版一致は未確認。",
-      "next": "Builder同期→Publish→スマホ含む公開版QA。",
+      "current": "管理者表示43パスはFederation mainへ採用済み。GitHub source採用とBase44公開版一致は別ゲートで、最新mainの実配備は未確認。",
+      "next": "共通API統合後にBuilder同期→Publish→管理画面/スマホ/実往復を公開版で確認。",
       "evidence": [
         {
-          "text": "Federation repository",
-          "url": "https://github.com/Satofumi-Goto/federation-portal"
+          "text": "Admin display adoption",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/d475b669c92bc24a6ea355dd3e4bd82eaeda8498"
+        },
+        {
+          "text": "Mission UI exclusion",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/2df28e40b873ed62779a9966533844921b8c2584"
         }
       ]
     },
