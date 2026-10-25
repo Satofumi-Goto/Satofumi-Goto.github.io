@@ -160,7 +160,87 @@ def apply():
         source.close();doc.close()
     Path("portfolio/_inplace_pdf_verification.json").write_text(json.dumps({"status":"PASS","items":results},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 
+
+TYPO_EXPECTED={
+ "portfolio/documents/Business_Development_Capabilities_Portfolio.pdf":"08a69b38ef1368da7c4ef0666482014a50fed1c6ad0a4e257e5b1212d7133441",
+ "portfolio/documents/Autonomous_Driving_Service_Business_Model_Portfolio.pdf":"bcbd08a2ed52f65b582a5427bd6a7995ce7e2aced17f7e128faeb3d80773df7d",
+}
+
+def native_meiryo(doc,page,string,bold=False):
+    found=[]
+    for f in page.get_fonts(full=True):
+        if "Meiryo" not in f[3]:continue
+        if ("Bold" in f[3])!=bold:continue
+        if f[1]!="ttf":continue
+        name,ext,_,buffer=doc.extract_font(f[0])
+        if not buffer:continue
+        font=fitz.Font(fontbuffer=buffer)
+        missing=sorted(set(ch for ch in string if ch!="\n" and not font.has_glyph(ord(ch))))
+        if not missing:
+            found.append((len(buffer),buffer,name))
+    if not found:raise RuntimeError("No embedded Meiryo font covers replacement: "+string[:80])
+    found.sort(key=lambda e:e[0])
+    _,buffer,name=found[0]
+    alias="OrgMeiryoBold" if bold else "OrgMeiryoRegular"
+    page.insert_font(fontname=alias,fontbuffer=buffer)
+    print("FONT_REUSED",name,"size",len(buffer),"alias",alias)
+    return alias
+
+def typography():
+    rep=[]
+    for path,sha in TYPO_EXPECTED.items():
+        original=fitz.open(path)
+        cur=hashlib.sha256(Path(path).read_bytes()).hexdigest()
+        if cur!=sha:raise RuntimeError("Typography source changed; abort: "+path)
+        out=fitz.open(path)
+        changes={}
+        if "Business_Development_Capabilities" in path:
+            p=out[0]
+            if "関係部門の事業・商品検討を前進" not in p.get_text():raise RuntimeError("Rewritten cap copy missing")
+            r=(306.85,493.80,572.0,584.8)
+            font=native_meiryo(out,p,JP_CAP_P1,bold=False)
+            remove_and_draw(p,[r],[dict(mode="textbox",rect=(307.13,493.8,572,584.8),text=JP_CAP_P1,font=font,size=9.0,lineheight=1.07)])
+            if "Hondaの社内資料" not in p.get_text():raise RuntimeError("Embedded font damaged cap text")
+            changes[0]=[r]
+            p=out[4]
+            wording="夜間｜FCスケートボード構想の洗車・整備"
+            if wording not in p.get_text():raise RuntimeError("Cap P5 copy missing")
+            r2=(388.6,390,571,405.5)
+            font=native_meiryo(out,p,wording,bold=True)
+            remove_and_draw(p,[r2],[dict(mode="text",pos=(388.83,402.6),text=wording,font=font,size=9.36)])
+            if wording not in p.get_text():raise RuntimeError("Embedded font damaged caption")
+            changes[4]=[r2]
+        else:
+            p=out[7]
+            if "Hondaの承認済み開発計画" not in p.get_text():raise RuntimeError("Study copy missing")
+            r=(17.1,20.8,540,66.6)
+            bold=native_meiryo(out,p,STUDY_HEADING,bold=True)
+            regular=native_meiryo(out,p,STUDY_SUBTITLE,bold=False)
+            remove_and_draw(p,[r],[
+                dict(mode="textbox",rect=(17.45,20.8,540,49.8),text=STUDY_HEADING,font=bold,size=18.96,lineheight=1.05),
+                dict(mode="textbox",rect=(18.58,47.85,560,66.6),text=STUDY_SUBTITLE,font=regular,size=12,lineheight=1.05)])
+            if STUDY_SUBTITLE not in p.get_text():raise RuntimeError("Embedded font damaged study copy")
+            changes[7]=[r]
+        for i in range(len(out)):
+            if i not in changes:
+                a=original[i].get_pixmap(matrix=fitz.Matrix(.65,.65),colorspace=fitz.csGRAY,alpha=False)
+                b=out[i].get_pixmap(matrix=fitz.Matrix(.65,.65),colorspace=fitz.csGRAY,alpha=False)
+                if hashlib.sha256(a.samples).digest()!=hashlib.sha256(b.samples).digest():
+                    raise RuntimeError("Unrelated PDF page changed")
+            else:
+                pixels_unchanged_outside(original[i],out[i],changes[i])
+        temp=Path(path).with_suffix(".fontfix.pdf")
+        out.save(str(temp),garbage=4,deflate=True)
+        with fitz.open(str(temp)) as check:
+            if len(check)!=len(original):raise RuntimeError("Page count drift")
+        temp.replace(Path(path))
+        rep.append({"file":path,"pages":len(out),"revised_original_page_numbers":[x+1 for x in changes],"sha256":hashlib.sha256(Path(path).read_bytes()).hexdigest()})
+        original.close();out.close()
+    Path("portfolio/_typography_verification.json").write_text(json.dumps({"status":"PASS","items":rep},ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+    print("TYPOGRAPHY PASS",rep)
+
 if __name__=="__main__":
   if sys.argv[1:]==["audit"]:audit()
   elif sys.argv[1:]==["apply"]:apply()
+  elif sys.argv[1:]==["typography"]:typography()
   else:raise SystemExit("usage: audit/apply")
