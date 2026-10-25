@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "name": "development-orchestrator",
+  "enabled": true,
+  "cadence": "hourly",
+  "repositories": [
+    "Satofumi-Goto/federation-portal",
+    "Satofumi-Goto/seneschal",
+    "Satofumi-Goto/mobility-business-lab"
+  ],
+  "status_source": "progress-board/status.json",
+  "priority": [
+    "red",
+    "yellow",
+    "green"
+  ],
+  "state_rules": {
+    "green": "verified active execution with recent evidence",
+    "orange": "verified support/remediation execution",
+    "yellow": "waiting for a known prerequisite or safe approval",
+    "red": "blocked by a concrete failure or unavailable required infrastructure",
+    "done": "required merge/validation/deployment evidence is complete"
+  },
+  "cycle": {
+    "max_primary_change_per_repo": 1,
+    "max_queue_items": 10,
+    "require_progress_action": true,
+    "progress_actions": [
+      "fix",
+      "update_pr",
+      "create_pr",
+      "merge",
+      "static_validation",
+      "deployment_validation"
+    ]
+  },
+  "ci": {
+    "detect_infrastructure_blocked": {
+      "all_required": [
+        "steps_empty",
+        "runner_id_zero",
+        "runner_name_empty",
+        "fast_failure_seconds_lte_5"
+      ]
+    },
+    "on_infrastructure_blocked": {
+      "rerun": false,
+      "code_failure": false,
+      "continue_low_risk_changes": true,
+      "executable_code_merge": false,
+      "executable_code_pr_allowed": true,
+      "static_validation_allowed": true
+    },
+    "on_code_failure": {
+      "inspect_failure_evidence": true,
+      "fix_on_dedicated_branch": true,
+      "retry_after_fix": true,
+      "narrow_after_same_failure_count": 2
+    }
+  },
+  "auto_merge": {
+    "allowed_when": [
+      "non_draft",
+      "mergeable",
+      "required_ci_success",
+      "scope_is_expected",
+      "no_secret_or_token_change",
+      "no_billing_or_budget_change",
+      "no_auth_grant_change",
+      "no_irreversible_external_action"
+    ],
+    "denied_when": [
+      "ci_infrastructure_blocked_for_executable_code",
+      "draft",
+      "conflict",
+      "required_ci_unknown",
+      "secret_or_token_change",
+      "billing_or_budget_change",
+      "auth_grant_change",
+      "data_deletion",
+      "external_transaction_or_booking_or_message"
+    ]
+  },
+  "deployment": {
+    "base44_publish_only_if": [
+      "safe_publish_path_available",
+      "github_main_sha_match_confirmed"
+    ],
+    "completion_requires": [
+      "publish_if_required",
+      "public_version_validation_if_required"
+    ]
+  },
+  "viewer_boundary": {
+    "general_user_status_display": "read_only",
+    "diagnostic_allowance_consumption": false,
+    "notification_subscription": false,
+    "canonical_write": false
+  },
+  "notification": {
+    "quiet_on_normal_progress": true,
+    "notify_on": [
+      "new_major_red",
+      "approval_required_for_sensitive_action",
+      "repeated_same_blocker",
+      "status_update_failure"
+    ]
+  }
+}
