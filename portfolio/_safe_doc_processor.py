@@ -183,6 +183,7 @@ def apply():
                 check[7].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_study_p8.png")
             report.append(dict(source=src,output=dst,source_sha256=digest,pages_old=len(original),pages_new=len(check),identical_original_pages=same,edited_pages=revised,size=Path(dst).stat().st_size))
         original.close();modified.close()
+    geometry_probe()
     Path("portfolio/_temporary_document_verification.json").write_text(json.dumps({"result":"PASS","no_added_covers":True,"documents":report},ensure_ascii=False,indent=2),encoding="utf-8")
     print("Verified unchanged pagination for",len(report),"portfolio-only PDFs")
 
