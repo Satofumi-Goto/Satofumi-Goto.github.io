@@ -82,7 +82,13 @@
           "executed_steps_nonempty"
         ],
         "on_success": "set ci_state=available and resume required CI queue",
-        "on_failure_before_steps": "return to quota_blocked without additional reruns"
+        "on_failure_before_steps": "return to quota_blocked without additional reruns",
+        "release_probe_order": [
+          "federation",
+          "simulator",
+          "seneschal"
+        ],
+        "federation_is_single_initial_probe": true
       }
     }
   },
@@ -124,7 +130,37 @@
       "main_publish",
       "deployed_sha_match",
       "authenticated_e2e_if_applicable"
-    ]
+    ],
+    "release_pipelines": {
+      "federation": {
+        "repo": "Satofumi-Goto/federation-portal",
+        "trigger_file": ".base44-release-trigger",
+        "workflow": "Federation release reality check",
+        "release_order": 1,
+        "probe_after_quota_recovery": true
+      },
+      "simulator": {
+        "repo": "Satofumi-Goto/mobility-business-lab",
+        "trigger_file": ".base44-release-trigger",
+        "workflow": "Base44 release — Fed actual-operation",
+        "release_order": 2,
+        "only_after": "federation_release_verified"
+      },
+      "seneschal": {
+        "repo": "Satofumi-Goto/seneschal",
+        "trigger_file": ".base44-sync-trigger",
+        "workflow": "Base44 release — Fed actual-operation",
+        "release_order": 3,
+        "only_after": "simulator_release_verified"
+      }
+    },
+    "base44_key_gate": {
+      "secret_name": "BASE44_API_KEY",
+      "secret_value_must_never_be_read_or_exposed": true,
+      "readiness_source": "release workflow fail-closed credential step",
+      "on_missing_or_invalid": "stop_release_retries_and_notify_one_time_setup_required",
+      "on_ready": "continue_deploy_and_public_sha_validation"
+    }
   },
   "viewer_boundary": {
     "general_user_status_display": "read_only",
