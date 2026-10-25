@@ -7,6 +7,7 @@ on:
       - .github/workflows/portfolio-pdf-inplace-20261025.yml
       - portfolio/inplace-plan.json
       - portfolio/inplace-preview-request.txt
+      - portfolio/typo-plan.json
       - portfolio/_inplace_pdf_editor.py
 permissions:
   contents: write
@@ -20,7 +21,9 @@ jobs:
       - name: Audit text or update portfolio-only PDF bodies
         shell: bash
         run: |
-          if [ -f portfolio/inplace-preview-request.txt ]; then
+          if [ -f portfolio/typo-plan.json ] && grep -q '"typography"' portfolio/typo-plan.json; then
+            python portfolio/_inplace_pdf_editor.py typography
+          elif [ -f portfolio/inplace-preview-request.txt ]; then
             python - <<'PY'
           import fitz
           tasks=[
@@ -57,6 +60,7 @@ jobs:
           git add -A portfolio/_review_*.png portfolio/documents || true
           if [ -f portfolio/_inplace_pdf_audit.json ]; then git add portfolio/_inplace_pdf_audit.json; fi
           if [ -f portfolio/_inplace_pdf_verification.json ]; then git add portfolio/_inplace_pdf_verification.json; fi
+          if [ -f portfolio/_typography_verification.json ]; then git add portfolio/_typography_verification.json; fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "portfolio in-place PDF wording verified"
           git push
