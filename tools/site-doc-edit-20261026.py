@@ -33,22 +33,17 @@ def textwriter(page,s,font,x,y,size):
     return [round(b.x0,2),round(b.y0,2),round(b.x1,2),round(b.y1,2)]
 
 def get_meiryo(doc,page,text,bold=False):
-    choices=[]
-    for row in page.get_fonts(full=True):
-        name=row[3]
-        if "Meiryo" not in name or ("Bold" in name)!=bold or row[1]!="ttf":
-            continue
-        try:
-            info=doc.extract_font(row[0]); raw=info[3]
-            if not raw:continue
-            font=fitz.Font(fontbuffer=raw)
-            if all(font.has_glyph(ord(c)) for c in text):
-                choices.append((len(raw),font,name))
-        except Exception:continue
-    if not choices:raise ValueError("Source has no Meiryo font covering "+repr(text))
-    choices.sort(key=lambda x:x[0])
-    print("  FONT",choices[0][2],"size",choices[0][0])
-    return choices[0][1]
+    # Site-specific PDF annotations: use a complete, Unicode-mapped Japanese
+    # font.  Embedded subsets in the source PDF cannot safely render new glyphs.
+    import subprocess
+    font_path=subprocess.check_output(["fc-match","-f","%{file}","Noto Sans CJK JP"],text=True).strip()
+    if not font_path:raise ValueError("Noto CJK font path unavailable")
+    font=fitz.Font(fontfile=font_path)
+    if "Noto Sans CJK JP" not in font.name:raise ValueError("Expected Japanese Noto font, found "+font.name)
+    missing="".join(sorted(set(ch for ch in text if not font.has_glyph(ord(ch)))))
+    if missing:raise ValueError("Missing glyphs in Japanese annotation: "+missing)
+    print("  JAPANESE_FONT",font.name,"file from fontconfig",font_path)
+    return font
 
 def preserve_outside(src,dst,page_number,allowed):
     scale=.73

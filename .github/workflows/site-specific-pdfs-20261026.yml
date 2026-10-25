@@ -16,8 +16,12 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Install PDF tools
-        run: python -m pip install --quiet pymupdf
+      - name: Install PDF and Japanese font support
+        run: |
+          python -m pip install --quiet pymupdf
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq fonts-noto-cjk
+          fc-match -f '%{family} %{file}\n' 'Noto Sans CJK JP'
       - name: Validate and revise isolated site documents
         shell: bash
         run: |
