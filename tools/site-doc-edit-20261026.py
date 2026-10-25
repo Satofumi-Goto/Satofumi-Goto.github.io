@@ -107,7 +107,7 @@ def edit(site,kind,path,pages,expected):
         if p.get_text().count(OLD_FEAS)!=1:raise ValueError("Feas P1 line not unique")
         neighbor="Today’s mobility systems fail to scale because demand, fleet, energy, and operations are still managed separately."
         if neighbor not in p.get_text():raise ValueError("Feas adjacent line missing")
-        p.add_redact_annot(fitz.Rect(21.0,227.3,579.8,239.5),cross_out=False,fill=False)
+        p.add_redact_annot(fitz.Rect(21.0,232.3,579.8,239.5),cross_out=False,fill=False)
         p.apply_redactions(images=0,graphics=0,text=0)
         font=fitz.Font("helv")
         if font.text_length(NEW_FEAS,fontsize=11.04)>551:raise ValueError("Feas wording overflows old row")
