@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install PDF and Japanese font support
         run: |
-          python -m pip install --quiet pymupdf
+          python -m pip install --quiet pymupdf fonttools
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq fonts-noto-cjk
           fc-match -f '%{family} %{file}\n' 'Noto Sans CJK JP'

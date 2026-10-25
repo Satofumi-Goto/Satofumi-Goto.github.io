@@ -33,16 +33,31 @@ def textwriter(page,s,font,x,y,size):
     return [round(b.x0,2),round(b.y0,2),round(b.x1,2),round(b.y1,2)]
 
 def get_meiryo(doc,page,text,bold=False):
-    # Site-specific PDF annotations: use a complete, Unicode-mapped Japanese
-    # font.  Embedded subsets in the source PDF cannot safely render new glyphs.
+    # A Unicode-safe, size-reduced Japanese font. Preserve glyph IDs so
+    # rendered text remains readable (ordinary font subsetting loses CID mapping).
+    from fontTools.ttLib import TTCollection
+    from fontTools import subset
     import subprocess
     font_path=subprocess.check_output(["fc-match","-f","%{file}","Noto Sans CJK JP"],text=True).strip()
-    if not font_path:raise ValueError("Noto CJK font path unavailable")
-    font=fitz.Font(fontfile=font_path)
-    if "Noto Sans CJK JP" not in font.name:raise ValueError("Expected Japanese Noto font, found "+font.name)
-    missing="".join(sorted(set(ch for ch in text if not font.has_glyph(ord(ch)))))
-    if missing:raise ValueError("Missing glyphs in Japanese annotation: "+missing)
-    print("  JAPANESE_FONT",font.name,"file from fontconfig",font_path)
+    if not font_path:raise ValueError("Japanese font unavailable")
+    cache=Path("/tmp/site-doc-jp-"+hashlib.sha256(text.encode("utf-8")).hexdigest()[:14]+".otf")
+    if not cache.exists():
+        collection=TTCollection(font_path)
+        selected=next((x for x in collection.fonts if "Noto Sans CJK JP" in (x["name"].getDebugName(1) or "")),None)
+        if selected is None:raise ValueError("Japanese Noto font not found in collection")
+        opts=subset.Options()
+        opts.retain_gids=True
+        opts.recalc_timestamp=False
+        tool=subset.Subsetter(options=opts)
+        tool.populate(text=text)
+        tool.subset(selected)
+        selected.save(str(cache))
+    font=fitz.Font(fontfile=str(cache))
+    if "Noto Sans CJK JP" not in font.name:raise ValueError("Font family changed")
+    absent="".join(sorted(set(c for c in text if not font.has_glyph(ord(c)))))
+    if absent:raise ValueError("Missing Japanese glyphs: "+absent)
+    print("  SUBSET_FONT",font.name,"bytes",cache.stat().st_size)
+    if cache.stat().st_size>1800000:raise ValueError("Font subset larger than permitted")
     return font
 
 def preserve_outside(src,dst,page_number,allowed):
@@ -147,6 +162,7 @@ def edit(site,kind,path,pages,expected):
         if forbidden in condensed:raise ValueError("Removed-claim reappeared")
     tmp=Path(path).with_name(Path(path).stem+".edited.tmp.pdf")
     dst.save(str(tmp),garbage=4,deflate=True)
+    if tmp.stat().st_size>len(raw)+1500000:raise ValueError("PDF exceeds source size by over 1.5MB")
     with fitz.open(str(tmp)) as check:
         if len(check)!=pages:raise ValueError("Changed page count "+path)
         if check[target].get_text()!=dst[target].get_text():raise ValueError("Saved PDF text differed "+path)
