@@ -69,6 +69,34 @@ def cover(doc,title,japanese):
     for wrong in ("INDEPENDENT STUDY","個人の自主検討","個人提案","私案"):
         if wrong in full:raise RuntimeError("Outdated work-classification text on cover: "+wrong)
 
+def geometry_probe():
+    focus={
+        "capabilities/Business_Development_Capabilities_20261013.pdf":[0,4],
+        "capabilities/Autonomous_Driving_Service_Business_Model_Study.pdf":[7],
+        "Autonomous_Mobility_System_Business_Feasibility.pdf":[14],
+        "capabilities/System_Planning_Initial_Concept_20261012.pdf":[0]
+    }
+    report=[]
+    for filename,pages in focus.items():
+        with fitz.open(filename) as d:
+            for page_no in pages:
+                pg=d[page_no]
+                raw=pg.get_text("dict")
+                blocks=[]
+                for bi,b in enumerate(raw["blocks"]):
+                    if "lines" not in b:continue
+                    for line in b["lines"]:
+                        spans=[]
+                        for span in line.get("spans",[]):
+                            text=span.get("text","")
+                            if text.strip():
+                                spans.append({"text":text,"rect":list(map(lambda x:round(x,2),span["bbox"])),
+                                              "font":span.get("font"),"size":span.get("size")})
+                        if spans:blocks.append({"block":bi,"bbox":list(map(lambda x:round(x,2),line["bbox"])),"spans":spans})
+                report.append({"filename":filename,"page":page_no+1,"rect":list(pg.rect),"lines":blocks})
+    Path("portfolio/_temporary_layout_probe.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+    print("Captured layout",len(report))
+
 def apply():
     plan=json.loads(Path("portfolio/safe-doc-plan.json").read_text())
     if plan.get("scope")!="portfolio-only":raise RuntimeError("Wrong modification scope")
@@ -105,6 +133,7 @@ def apply():
                 check[8].get_pixmap(matrix=fitz.Matrix(.8,.8)).save("portfolio/_temporary_study_p8.png")
             report.append(dict(source=src,source_sha256=digest,output=dst,size=Path(dst).stat().st_size,pages_old=len(original),pages_new=len(check),identical_original_pages=identical,changed_heading=changed))
         original.close();modified.close()
+    geometry_probe()
     Path("portfolio/_temporary_document_verification.json").write_text(json.dumps({"result":"PASS","documents":report},ensure_ascii=False,indent=2),encoding="utf-8")
     print("Verified",len(report),"portfolio-only PDFs")
 
