@@ -69,22 +69,6 @@ def cover(doc,title,japanese):
     for wrong in ("INDEPENDENT STUDY","個人の自主検討","個人提案","私案"):
         if wrong in full:raise RuntimeError("Outdated work-classification text on cover: "+wrong)
 
-def edit_honda_heading(page):
-    found=page.search_for("Honda")
-    if len(found)!=1:raise RuntimeError("Expected one Honda heading; got "+str(len(found)))
-    r=found[0]
-    page.add_redact_annot(r,fill=False,cross_out=False)
-    page.apply_redactions(images=0,graphics=0,text=0)
-    label="私案:"
-    font=fitz.Font("japan")
-    fs=11.
-    while font.text_length(label,fontsize=fs)>r.width-.3:
-        fs-=.2
-        if fs<6.5:raise RuntimeError("Replacement would be unreadable")
-    page.insert_text(fitz.Point(r.x0,r.y1-(r.height-fs)*.37),label,fontname="japan",fontsize=fs,color=INK)
-    if "Honda" in page.get_text("text"):raise RuntimeError("Employer name persisted")
-    return [round(r.x0,2),round(r.y0,2),round(fs,2)]
-
 def apply():
     plan=json.loads(Path("portfolio/safe-doc-plan.json").read_text())
     if plan.get("scope")!="portfolio-only":raise RuntimeError("Wrong modification scope")
