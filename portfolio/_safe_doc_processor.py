@@ -123,10 +123,10 @@ def in_page_revisions(doc, source):
 
 def geometry_probe():
     focus={
-        "capabilities/Business_Development_Capabilities_20261013.pdf":[0,4],
-        "capabilities/Autonomous_Driving_Service_Business_Model_Study.pdf":[7],
-        "Autonomous_Mobility_System_Business_Feasibility.pdf":[14],
-        "capabilities/System_Planning_Initial_Concept_20261012.pdf":[0]
+        "capabilities/Business_Development_Capabilities_20261013.pdf":[0],
+        "capabilities/Autonomous_Driving_Service_Business_Model_Study.pdf":[2,5,7],
+        "Autonomous_Mobility_System_Business_Feasibility.pdf":[1,10,11],
+        "capabilities/System_Planning_Initial_Concept_20261012.pdf":[13,14]
     }
     report=[]
     for filename,pages in focus.items():
