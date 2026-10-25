@@ -35,6 +35,11 @@ jobs:
             for q in d[pageno].get_fonts(full=True):
               try:
                 info=d.extract_font(q[0]); print("EXTRACT",q[0],info[0],info[1],len(info[3]))
+                if "Meiryo" in info[0] and info[3]:
+                  f=fitz.Font(fontbuffer=info[3])
+                  sample="HondaではPEFC外販の事業成立条件と製品要件を検討。低床FCスケートボード構想と拠点の検討案。掲載図はHondaの社内資料や承認済み開発計画ではない。"
+                  missing="".join(sorted(set(ch for ch in sample if not f.has_glyph(ord(ch)))))
+                  print("FONT-TEST",info[0],f.name,"missing",repr(missing),"textwidth",f.text_length("Honda FCAD-MaaS",fontsize=9))
               except Exception as ex: print("FONT-ERR",str(ex)[:120])
             d[pageno].get_pixmap(matrix=fitz.Matrix(1.5,1.5),clip=fitz.Rect(rect),alpha=False).save(out)
             print("RENDERED",out)
