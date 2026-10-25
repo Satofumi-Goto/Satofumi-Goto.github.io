@@ -79,6 +79,32 @@ def cover(doc,title,japanese):
     for wrong in ("INDEPENDENT STUDY","個人の自主検討","個人提案","私案"):
         if wrong in full:raise RuntimeError("Outdated work-classification text on cover: "+wrong)
 
+def in_page_revisions(doc, source):
+    revised_pages = []
+    if "Business_Development_Capabilities_" in source:
+        p = doc[0]
+        before = p.get_text()
+        if "進める必要があり、統合化・事業化の課題が残った。" not in before:
+            raise RuntimeError("Capability page changed")
+        p.add_redact_annot(fitz.Rect(306.1,563.0,574.5,583.7), fill=False)
+        p.apply_redactions(images=0, graphics=0, text=0)
+        render_line(p,307.13,569.93,
+            "を狙った。FCAD-MaaSの車両・運用基盤・拠点の検討は、",9.0,574.0)
+        render_line(p,307.13,580.97,
+            "Hondaの正式採用・承認・開発着手を示すものではない。",9.0,574.0)
+        if "FCスケートボードを構想。" not in p.get_text():
+            raise RuntimeError("Core vehicle concept was lost")
+        revised_pages.append(1)
+    if "Business_Model_Study.pdf" in source:
+        p = doc[7]
+        p.add_redact_annot(fitz.Rect(100.5,377,211,391.6), fill=False)
+        p.apply_redactions(images=0, graphics=0, text=0)
+        render_line(p,101.37,389.2,"FCスケートボード（構想例）",12.4,302.0)
+        if "（構想例）" not in p.get_text():
+            raise RuntimeError("Concept label missing")
+        revised_pages.append(8)
+    return revised_pages
+
 def geometry_probe():
     focus={
         "capabilities/Business_Development_Capabilities_20261013.pdf":[0,4],
