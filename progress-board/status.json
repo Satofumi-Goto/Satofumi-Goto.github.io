@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T13:44:38.569Z",
-  "source": "Current seven-repository SHA and required-job sweep; zero-step quota blockage persists. New safety blocker: Federation release-state file was created from unverified main SHAs before six verified releases; corrective PR #505 opened, without merging or touching release markers.",
+  "generated_at": "2026-10-25T14:45:45.020Z",
+  "source": "Read orchestrator-policy.json first; refreshed 7 main refs, recent workflow_dispatch/push inventories and seven required-run job records. All seven jobs still have runner_id=0, runner_name empty, 0 executed steps. No new manual release publication. Freeze held; no seven-repo writes, workflow reruns or marker changes.",
   "completed_total": 106,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
       "head": "3991dd2",
-      "summary": "Frozen SHA matches main; main-only manual release is configured. Quota-blocked (runner=0/steps=0), no Base44 publish/exact SHA/health/durable ACK evidence.",
+      "summary": "Frozen main 3991dd2 verified unchanged; Actions quota-blocked (runner=0, steps=0); no successful exact-SHA public release/required production-acceptance evidence. Activity must be first manual release probe after verified recovery.",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
       "main_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "release_verified": false,
@@ -20,7 +20,7 @@
       "name": "Fleet",
       "status": "red",
       "head": "d555d28",
-      "summary": "Frozen SHA matches main. Await Activity successful exact-SHA publication; quota-blocked, no authenticated health/durable ACK.",
+      "summary": "Frozen main d555d28 verified unchanged; Actions quota-blocked (runner=0, steps=0); no successful exact-SHA public release/required production-acceptance evidence. Await verified Activity publication first.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
       "main_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
       "release_verified": false,
@@ -32,7 +32,7 @@
       "name": "Service Hub",
       "status": "red",
       "head": "f2692ad",
-      "summary": "Frozen SHA matches main. Await Fleet exact-SHA publication; quota-blocked, no authenticated health/durable ACK.",
+      "summary": "Frozen main f2692ad verified unchanged; Actions quota-blocked (runner=0, steps=0); no successful exact-SHA public release/required production-acceptance evidence. Await verified Fleet publication first.",
       "url": "https://github.com/Satofumi-Goto/service-hub-console",
       "main_sha": "f2692add810011da46f686d24bc98ba7f8713e1c",
       "release_verified": false,
@@ -44,7 +44,7 @@
       "name": "Urban",
       "status": "red",
       "head": "983c852",
-      "summary": "Frozen SHA matches main. Await Service Hub exact-SHA publication; quota-blocked, no authenticated health/durable ACK.",
+      "summary": "Frozen main 983c852 verified unchanged; Actions quota-blocked (runner=0, steps=0); no successful exact-SHA public release/required production-acceptance evidence. Await verified Service Hub publication first.",
       "url": "https://github.com/Satofumi-Goto/urban-operation-console",
       "main_sha": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
       "release_verified": false,
@@ -56,7 +56,7 @@
       "name": "Simulator",
       "status": "red",
       "head": "23c226d",
-      "summary": "Frozen SHA matches main. Await all four consoles. Real two-computation/KPI/hash/receipt/priority/info-health production acceptance not run; quota-blocked.",
+      "summary": "Frozen main 23c226d verified unchanged; Actions quota-blocked (runner=0, steps=0); no successful exact-SHA public release/required production-acceptance evidence. Await verified Urban publication first.",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab",
       "main_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
       "release_verified": false,
@@ -67,24 +67,24 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "e080d38",
-      "summary": "Frozen SHA matches main. Manual workflow_dispatch on main is supported under release freeze; old #443 is deferred backlog. Await Simulator success; health/durable source ACK/voice production evidence absent; quota-blocked.",
+      "head": "7499706",
+      "summary": "Frozen main 7499706 DOES NOT MATCH policy; Actions quota-blocked (runner=0, steps=0); no successful exact-SHA public release/required production-acceptance evidence. Await verified Simulator publication first.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "e080d3841837f4a0ac8e877d8db01192c130e709",
+      "main_sha": "749970689ead6c032ca59b5ea2ecce86493660c7",
       "release_verified": false,
       "release_state": "quota_blocked",
       "frozen_sha": "e080d3841837f4a0ac8e877d8db01192c130e709",
-      "freeze_head_matches_main": true
+      "freeze_head_matches_main": false
     },
     {
       "name": "Federation",
       "status": "red",
       "head": "69f07fa",
-      "summary": "FROZEN SHA MISMATCH: main 69f07fa advanced 305 commits beyond frozen 39797b8 via #462 merge. Current manifest releaseOrder also conflicts with policy. No Federation dispatch until frozen head integrity is resolved; quota-blocked.",
+      "summary": "Frozen head 39797b8 DIFFERS from main 69f07fa; wrong-SHA publication forbidden. Required non-dynamic CI remains runner=0/steps=0. No successful Federation release or final seven-app production E2E.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
       "main_sha": "69f07fa37d1c4f9f92a515eeb430779698cb86ac",
       "release_verified": false,
-      "release_state": "frozen_head_mismatch_quota_blocked",
+      "release_state": "blocked_frozen_sha_drift_and_quota",
       "frozen_sha": "39797b8bcc15650ccfd7433d259df97162353a69",
       "freeze_head_matches_main": false
     }
@@ -93,15 +93,15 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "Publication-only freeze verified for all seven: 6 SHA matches, Federation frozen SHA mismatch after #462 merge; runner=0/steps=0 on all seven latest checks. No seven-repo writes or workflow reruns.",
-      "next": "Require authorized reconciliation of Federation main to frozen SHA, then observe Actions recovery; dispatch Activity on main first, proceeding strictly in policy sequence. Do not edit deferred PRs.",
+      "current": "Observed 2026-10-25T14:45:45.020Z: release freeze active, all seven runner-less quota failures persist; 6/7 frozen main heads match, Federation main 69f07fa differs from frozen 39797b8. No dispatch, rerun, or seven-repo changes.",
+      "next": "Keep all deferred PRs untouched. Await quota recovery or 2026-11-01T00:00:00Z rollover and owner reconciliation of Federation frozen main. Then dispatch Activity first on MAIN, one verified publication at a time.",
       "evidence": [
         {
-          "text": "Federation main drift merge",
+          "text": "Federation frozen-main integrity",
           "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         },
         {
-          "text": "Latest Federation runner-less failure",
+          "text": "Fresh runner quota observation",
           "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
         },
         {
@@ -109,7 +109,7 @@
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40194411742"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         }
       ]
@@ -117,19 +117,19 @@
     {
       "owner": "Chat：分析・独立検査",
       "status": "red",
-      "current": "Independent check found Federation main drift and conflicting current manifest order; prior release-state expected SHAs remain unverified, not successful publication evidence. No final production E2E.",
-      "next": "Keep seven-public-SHA and cross-app production gates fail-closed. After ordered releases, require successful automatically triggered final E2E; do not mark source merge or HTTP 200 complete.",
+      "current": "Independent 2026-10-25T14:45:45.020Z evidence: seven required non-dynamic jobs have no runners/steps, Federation frozen SHA drift persists, no successful ordered production releases or final seven-app E2E.",
+      "next": "Continue read-only acceptance audit. Require seven exact published SHAs, authenticated roundtrips/ACKs, two real Simulator computes with KPI/hash/receipt/priority, Seneschal voice proof and successful same-SHA final E2E.",
       "evidence": [
         {
-          "text": "Federation main drift merge",
+          "text": "Federation frozen-main integrity",
           "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "Latest Federation runner-less failure",
+          "text": "Fresh runner quota observation",
           "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
         }
       ]
@@ -137,8 +137,8 @@
     {
       "owner": "Codex：従来の基盤担当",
       "status": "yellow",
-      "current": "Seneschal frozen main e080d38 is unchanged. Manual workflow_dispatch is present and permitted under freeze; #443 is deferred and not a release blocker. Quota-blocked.",
-      "next": "Do not touch #443/#442 or code. After Simulator success and runner recovery, manual-dispatch Seneschal on main and require health/ACK/production voice UI evidence.",
+      "current": "Seneschal main 7499706 equals frozen SHA; inspected audit run runner=0/steps=0. No publication, voice UI production evidence or durable ACK; old PRs remain deferred.",
+      "next": "After Simulator exact-SHA success and runner recovery, dispatch Seneschal Base44 release manually on MAIN; verify Seneschal→Federation health, source-change ACK and production voice UI. No source/PR/marker edits.",
       "evidence": [
         {
           "text": "Frozen Seneschal main",
@@ -149,16 +149,24 @@
           "url": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Codex：採点エンジン専任",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Codex：採点エンジン専任 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Merged quality cycle #500",
@@ -169,87 +177,123 @@
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/458"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Codex：整合エンジン稼働専任",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Codex：整合エンジン稼働専任 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Portfolio consistency #459",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/459"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Codex：導線チェック専任",
       "status": "yellow",
-      "current": "Simulator frozen head 23c226d unchanged; manual release trigger confirmed. Real two-call compute/KPI/hash/receipt and priority/health production evidence still not executed.",
-      "next": "After four consoles release, dispatch Simulator on main only when runner recovery is established; accept only workflow-verified live compute and priority/health checks.",
+      "current": "Simulator main 23c226d equals frozen SHA; CI runner=0/steps=0, no exact-SHA publish or two real-call operational acceptance evidence.",
+      "next": "After verified Urban release and runner recovery, manually dispatch Simulator on MAIN. Require real two-calculation KPI/hash/receipt, priority read, and authenticated Simulator→Federation info health. No source changes.",
       "evidence": [
         {
           "text": "Simulator frozen main",
           "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/23c226d97f7ab42468a3de4ce70f1da72f58c774"
         },
         {
-          "text": "Simulator runner-less failure",
+          "text": "Fresh runner quota observation",
           "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Codex：管理画面",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Codex：管理画面 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Viewer-only merge #472",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/472"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Codex：文書整合",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Codex：文書整合 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Knowledge #461",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/461"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Base44：管理者画面・日英・スマホUI",
       "status": "red",
-      "current": "Seven fixed Base44 release workflows expose main-only manual workflow_dispatch; no workflow_dispatch publication since freeze. All latest required jobs were runner-less. Federation main diverged from frozen SHA and current manifest order conflicts with approved sequence.",
-      "next": "No release rerun/marker/source/PR changes while quota-blocked. First Activity dispatch only after genuine runner recovery; Federation last after approved SHA reconciliation and six verified releases.",
+      "current": "No new production workflow_dispatch releases at 2026-10-25T14:45:45.020Z. Seven latest sampled required jobs still zero-step quota-blocked; four console production releases remain unverified, Federation main frozen SHA diverges.",
+      "next": "Do not dispatch/rerun/alter marker while quota-blocked. On explicit runner recovery or billing rollover, probe Activity only, then Fleet, Service Hub, Urban, Simulator, Seneschal, Federation; require every stage's exact-SHA production checks.",
       "evidence": [
         {
-          "text": "Latest Activity runner-less failure",
+          "text": "Fresh runner quota observation",
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40194411742"
         },
         {
@@ -257,11 +301,11 @@
           "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
         },
         {
-          "text": "Federation main drift merge",
+          "text": "Federation frozen-main integrity",
           "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         }
       ]
@@ -269,8 +313,8 @@
     {
       "owner": "Cursor：ナレッジ",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Cursor：ナレッジ has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Knowledge #461",
@@ -281,112 +325,168 @@
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/467"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Cursor A：車両・拠点MBD",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Cursor A：車両・拠点MBD has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Open MBD #420",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/420"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Cursor B：ミル・材料・AMR・電源・貯蔵",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Cursor B：ミル・材料・AMR・電源・貯蔵 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Open MBD #453",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/453"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Cursor C：LH₂・HPC・RSU・通信網",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Cursor C：LH₂・HPC・RSU・通信網 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Open MBD #423",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/423"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Chat：Gemini接続",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Chat：Gemini接続 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Seneschal",
           "url": "https://github.com/Satofumi-Goto/seneschal"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Gemini Web：接続診断",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Gemini Web：接続診断 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Federation",
           "url": "https://github.com/Satofumi-Goto/federation-portal"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Gemini API：自動収集",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Gemini API：自動収集 has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Seneschal",
           "url": "https://github.com/Satofumi-Goto/seneschal"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     },
     {
       "owner": "Claude：Blueprint／Artifactへのアドオン",
       "status": "done",
-      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze. Owner Claude：Blueprint／Artifactへのアドオン has no authorized repo edits this observation; old PRs are deferred backlog.",
-      "next": "Maintain freeze; resume unrelated development only after production acceptance. Follow priority publication and exact-SHA production evidence.",
+      "current": "Source work for frozen Fed actual-operation remains on hold during publication-only freeze.. Freeze observation 2026-10-25T14:45:45.020Z: no changes to controlled app source; production publication/acceptance outstanding, runner quota blocked.",
+      "next": "Keep completed source scope frozen; do not edit deferred PRs or workflows/docs/tests/markers. Await verified staged publication and final production E2E (or explicit release-freeze policy change).",
       "evidence": [
         {
           "text": "Blueprint review #422",
@@ -397,22 +497,30 @@
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/462"
         },
         {
-          "text": "Release freeze policy",
+          "text": "Release-freeze execution policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+        },
+        {
+          "text": "Fresh runner quota observation",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        },
+        {
+          "text": "Federation frozen-main integrity",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac"
         }
       ]
     }
   ],
   "latest_evidence": {
-    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/201fd56298a3efc402ebd767db9dd2e3fd5678e1",
+    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac",
     "federation_index": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
     "federation_viewer_readonly": "https://github.com/Satofumi-Goto/federation-portal/pull/472",
     "federation_simulator_api": "https://github.com/Satofumi-Goto/federation-portal/pull/475",
-    "seneschal_guard": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189117279",
-    "simulator_main_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189088620",
+    "seneschal_guard": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437",
+    "simulator_main_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513",
     "simulator_api_merge": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/61",
-    "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/852eda1d80d91d57ed6112458aed1676881723cc",
-    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/041b8b16712e11b43f3d37cc42bb61da43591ca9",
+    "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/749970689ead6c032ca59b5ea2ecce86493660c7",
+    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/23c226d97f7ab42468a3de4ce70f1da72f58c774",
     "simulator_pr62": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/62",
     "seneschal_guard_infra": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189844728",
     "simulator_ci_infra": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189527640",
@@ -430,7 +538,7 @@
     "federation_base44_sync_trigger": "https://github.com/Satofumi-Goto/federation-portal/pull/487",
     "federation_source_complete_head": "https://github.com/Satofumi-Goto/federation-portal/commit/5297d32bcffa55aa7c60ec5db7922cbcbf6cd9ea",
     "federation_current_main": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac",
-    "seneschal_current_main": "https://github.com/Satofumi-Goto/seneschal/commit/e080d3841837f4a0ac8e877d8db01192c130e709",
+    "seneschal_current_main": "https://github.com/Satofumi-Goto/seneschal/commit/749970689ead6c032ca59b5ea2ecce86493660c7",
     "simulator_current_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/23c226d97f7ab42468a3de4ce70f1da72f58c774",
     "federation_auto_release": "https://github.com/Satofumi-Goto/federation-portal/pull/493",
     "seneschal_production_release_qa": "https://github.com/Satofumi-Goto/seneschal/pull/435",
@@ -478,17 +586,15 @@
     "urban_runner_observation": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40194448581",
     "simulator_runner_observation": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513",
     "seneschal_runner_observation": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437",
-    "federation_runner_observation": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+    "federation_runner_observation": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612",
+    "policy": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json",
+    "observed_at": "2026-10-25T14:45:45.020Z"
   },
   "notes": [
-    "Fed actual-operation release freeze active: no source/workflow/docs/test/marker changes in seven repositories; old PRs are deferred backlog.",
-    "Actions quota remains blocked: recent seven non-dynamic jobs have runner_id=0, runner_name empty and zero executed steps; no reruns/probes.",
-    "As of this observation, six frozen heads are unchanged but Federation main moved from policy frozen 39797b8 to 69f07fa via PR #462 merge (305 commits ahead); exact frozen SHA cannot be published through dispatch on main until reconciled.",
-    "Current Federation main release-state has releaseOrder simulator→seneschal→activity→fleet→service→urban→federation, conflicting with policy Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation; do not treat as canonical evidence.",
-    "All seven release workflows support main-only manual workflow_dispatch; Seneschal marker repair #443 is deferred and not a freeze release blocker.",
-    "Release-state expected SHAs are source heads, not verified Base44 release success head SHAs. Successful public SHA and durable ACK evidence is still required.",
-    "No release marker changes, workflow dispatches, reruns, or controlled repo commits occurred during this observation.",
-    "Activity is the sole initial probe after external runner recovery or the policy billing rollover; final success is only Fed seven-app production E2E."
+    "Release freeze verified 2026-10-25T14:45:45.020Z: seven controlled repos were read-only; 6/7 main heads match frozen policy, Federation remains mismatched.",
+    "Runner quota remains blocked (seven latest sampled non-dynamic required jobs runner_id=0, runner_name empty, zero steps). No new verified manual publication workflow; dynamic dependency maintenance workflows do not prove quota recovery.",
+    "Federation main freeze drift persists after PR #462 merge; deferred PRs are not blockers and were not touched. Authorized reconciliation still needed before Federation release.",
+    "No reruns, workflow_dispatch, marker commits, releases, secret reads, billing actions, or seven-repository writes in this observation."
   ],
   "orchestrator": {
     "enabled": true,
@@ -505,7 +611,7 @@
         "job": "export",
         "duration_seconds": 2,
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-25T13:44:38.569Z"
+        "observed_at": "2026-10-25T14:45:45.020Z"
       },
       "fleet": {
         "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40194422031",
@@ -515,7 +621,7 @@
         "job": "guard",
         "duration_seconds": 2,
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-25T13:44:38.569Z"
+        "observed_at": "2026-10-25T14:45:45.020Z"
       },
       "service": {
         "run": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40194435774",
@@ -525,7 +631,7 @@
         "job": "build",
         "duration_seconds": 3,
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-25T13:44:38.569Z"
+        "observed_at": "2026-10-25T14:45:45.020Z"
       },
       "urban": {
         "run": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40194448581",
@@ -535,7 +641,7 @@
         "job": "build",
         "duration_seconds": 2,
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-25T13:44:38.569Z"
+        "observed_at": "2026-10-25T14:45:45.020Z"
       },
       "simulator": {
         "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513",
@@ -545,7 +651,7 @@
         "job": "check",
         "duration_seconds": 2,
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-25T13:44:38.569Z"
+        "observed_at": "2026-10-25T14:45:45.020Z"
       },
       "seneschal": {
         "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437",
@@ -555,7 +661,7 @@
         "job": "audit",
         "duration_seconds": 3,
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-25T13:44:38.569Z"
+        "observed_at": "2026-10-25T14:45:45.020Z"
       },
       "federation": {
         "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612",
@@ -565,11 +671,11 @@
         "job": "check",
         "duration_seconds": 1,
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-25T13:44:38.569Z"
+        "observed_at": "2026-10-25T14:45:45.020Z"
       }
     },
-    "last_cycle": "2026-10-25T13:44:38.569Z",
-    "current_action": "RELEASE FREEZE drift: Federation main 69f07fa differs from frozen 39797b8 following #462 merge (305 commits ahead); exact-SHA release on main prohibited. All latest 7 runner checks are quota-blocked (runner_id=0, steps=0). No rerun, dispatch, marker, PR, or seven-repo edits. User action needed to restore frozen main externally or explicitly revise freeze policy.",
+    "last_cycle": "2026-10-25T14:45:45.020Z",
+    "current_action": "Observe without runs; seven latest inspected non-dynamic jobs still runner_id=0/steps=0; no new workflow_dispatch production releases. Six frozen mains match. Federation main 69f07fa != policy 39797b8; wait for authorized reconciliation, preserve all deferred PRs. No repository changes or runner probes.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -589,7 +695,8 @@
         "trigger_binding": "workflow_dispatch_on_main",
         "frozen_head": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
         "frozen_head_matches_main": true,
-        "no_marker_commit_required": true
+        "no_marker_commit_required": true,
+        "last_observed_at": "2026-10-25T14:45:45.020Z"
       },
       "fleet": {
         "repo": "Satofumi-Goto/fleet-operations-console",
@@ -607,7 +714,8 @@
         "trigger_binding": "workflow_dispatch_on_main",
         "frozen_head": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
         "frozen_head_matches_main": true,
-        "no_marker_commit_required": true
+        "no_marker_commit_required": true,
+        "last_observed_at": "2026-10-25T14:45:45.020Z"
       },
       "service": {
         "repo": "Satofumi-Goto/service-hub-console",
@@ -625,7 +733,8 @@
         "trigger_binding": "workflow_dispatch_on_main",
         "frozen_head": "f2692add810011da46f686d24bc98ba7f8713e1c",
         "frozen_head_matches_main": true,
-        "no_marker_commit_required": true
+        "no_marker_commit_required": true,
+        "last_observed_at": "2026-10-25T14:45:45.020Z"
       },
       "urban": {
         "repo": "Satofumi-Goto/urban-operation-console",
@@ -643,7 +752,8 @@
         "trigger_binding": "workflow_dispatch_on_main",
         "frozen_head": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
         "frozen_head_matches_main": true,
-        "no_marker_commit_required": true
+        "no_marker_commit_required": true,
+        "last_observed_at": "2026-10-25T14:45:45.020Z"
       },
       "simulator": {
         "repo": "Satofumi-Goto/mobility-business-lab",
@@ -661,13 +771,14 @@
         "trigger_binding": "workflow_dispatch_on_main",
         "frozen_head": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
         "frozen_head_matches_main": true,
-        "no_marker_commit_required": true
+        "no_marker_commit_required": true,
+        "last_observed_at": "2026-10-25T14:45:45.020Z"
       },
       "seneschal": {
         "repo": "Satofumi-Goto/seneschal",
         "trigger_file": ".base44-sync-trigger",
         "workflow": "Base44 release — Fed actual-operation",
-        "main": "e080d3841837f4a0ac8e877d8db01192c130e709",
+        "main": "749970689ead6c032ca59b5ea2ecce86493660c7",
         "order": 6,
         "status": "awaiting_runner_quota_recovery",
         "verified_release": false,
@@ -678,8 +789,9 @@
         "last_workflow_evidence": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437",
         "trigger_binding": "workflow_dispatch_on_main",
         "frozen_head": "e080d3841837f4a0ac8e877d8db01192c130e709",
-        "frozen_head_matches_main": true,
-        "no_marker_commit_required": true
+        "frozen_head_matches_main": false,
+        "no_marker_commit_required": true,
+        "last_observed_at": "2026-10-25T14:45:45.020Z"
       },
       "federation": {
         "repo": "Satofumi-Goto/federation-portal",
@@ -715,7 +827,8 @@
           "service",
           "urban",
           "federation"
-        ]
+        ],
+        "last_observed_at": "2026-10-25T14:45:45.020Z"
       }
     },
     "final_e2e": {
@@ -723,7 +836,8 @@
       "trigger": "successful Federation release workflow_run",
       "status": "not_run_quota_and_frozen_head_drift",
       "verified_success": false,
-      "main_branch_guard": true
+      "main_branch_guard": true,
+      "observed_at": "2026-10-25T14:45:45.020Z"
     },
     "static_validation": {
       "at": "2026-10-25T13:44:38.569Z",
@@ -768,18 +882,31 @@
       "frozen_state_file_exists": true,
       "current_main_state_file_exists": true,
       "current_main_state_order_conflicts_policy": true,
-      "pr_is_deferred_backlog": true
+      "pr_is_deferred_backlog": true,
+      "observed_at": "2026-10-25T14:45:45.020Z"
     },
     "quota_recovery": {
       "recovered": false,
-      "runner_evidence": "seven recent non-dynamic job checks have runner_id=0 and steps=[]; no workflow_dispatch publication since freeze",
+      "runner_evidence": "Read latest main/PR non-dynamic workflows (all seven sampled required jobs runner_id=0, runner_name empty, steps=[]), and main workflow_dispatch inventories (no new production releases). Ignore successful dynamic Dependabot jobs as recovery evidence.",
       "billing_rollover": "2026-11-01T00:00:00Z",
-      "activity_initial_probe_permitted": false
+      "activity_initial_probe_permitted": false,
+      "observed_at": "2026-10-25T14:45:45.020Z"
     },
     "frozen_head_integrity": {
-      "observed_at": "2026-10-25T13:44:38.569Z",
-      "matches": 6,
+      "observed_at": "2026-10-25T14:45:45.020Z",
+      "matches": 5,
       "mismatches": [
+        {
+          "detected_at": "2026-10-25T13:44:38.569Z",
+          "app": "seneschal",
+          "repo": "Satofumi-Goto/seneschal",
+          "frozen_sha": "e080d3841837f4a0ac8e877d8db01192c130e709",
+          "actual_main_sha": "749970689ead6c032ca59b5ea2ecce86493660c7",
+          "url": "https://github.com/Satofumi-Goto/seneschal/commit/749970689ead6c032ca59b5ea2ecce86493660c7",
+          "compare_url": "https://github.com/Satofumi-Goto/seneschal/compare/e080d3841837f4a0ac8e877d8db01192c130e709...749970689ead6c032ca59b5ea2ecce86493660c7",
+          "impact": "Manual workflow_dispatch on main cannot publish the exact policy-frozen SHA",
+          "requires_user_action": true
+        },
         {
           "detected_at": "2026-10-25T13:44:38.569Z",
           "app": "federation",
@@ -788,10 +915,10 @@
           "actual_main_sha": "69f07fa37d1c4f9f92a515eeb430779698cb86ac",
           "commits_ahead_of_frozen": 305,
           "commit_message": "Merge PR #462: complete Federation three-engine prepublish integration",
+          "main_manifest_order_mismatch": true,
           "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac",
           "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/39797b8bcc15650ccfd7433d259df97162353a69...69f07fa37d1c4f9f92a515eeb430779698cb86ac",
-          "main_manifest_order_mismatch": true,
-          "impact": "main workflow_dispatch cannot publish the exact frozen Federation SHA",
+          "impact": "Manual workflow_dispatch on main cannot publish the exact policy-frozen SHA",
           "requires_user_action": true
         }
       ],
@@ -805,10 +932,10 @@
       "actual_main_sha": "69f07fa37d1c4f9f92a515eeb430779698cb86ac",
       "commits_ahead_of_frozen": 305,
       "commit_message": "Merge PR #462: complete Federation three-engine prepublish integration",
+      "main_manifest_order_mismatch": true,
       "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac",
       "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/39797b8bcc15650ccfd7433d259df97162353a69...69f07fa37d1c4f9f92a515eeb430779698cb86ac",
-      "main_manifest_order_mismatch": true,
-      "impact": "main workflow_dispatch cannot publish the exact frozen Federation SHA",
+      "impact": "Manual workflow_dispatch on main cannot publish the exact policy-frozen SHA",
       "requires_user_action": true
     }
   },
@@ -819,11 +946,12 @@
       "repo": "Satofumi-Goto/life-transaction-console",
       "action": "Release frozen Activity SHA 3991dd2f6b51aef5aee9428fbba650aa15529af2 using manual workflow_dispatch of \"Base44 release — Federation operational proxy\" on main only; require exact public SHA; authenticated Activity→Federation health; durable release-event ACK. No release-marker commits.",
       "blocked_by": [
-        "GitHub Actions quota blocked: runner_id=0, no executed steps"
+        "Actions quota blocked; https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40194411742 has zero executed steps."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/life-transaction-console/commit/3991dd2f6b51aef5aee9428fbba650aa15529af2",
-        "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40194411742"
+        "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40194411742",
+        "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
       ]
     },
     {
@@ -832,12 +960,13 @@
       "repo": "Satofumi-Goto/fleet-operations-console",
       "action": "Release frozen Fleet SHA d555d286aaeae84c4218869ed0bb0ad23c9c043d using manual workflow_dispatch of \"Base44 release — Federation operational proxy\" on main only; require exact public SHA; authenticated Fleet→Federation health; durable release-event ACK. No release-marker commits.",
       "blocked_by": [
-        "GitHub Actions quota blocked: runner_id=0, no executed steps",
-        "Activity verified successful publication required"
+        "Actions quota blocked; https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40194422031 has zero executed steps.",
+        "Activity verified exact-SHA production release required first"
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/fleet-operations-console/commit/d555d286aaeae84c4218869ed0bb0ad23c9c043d",
-        "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40194422031"
+        "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40194422031",
+        "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
       ]
     },
     {
@@ -846,12 +975,13 @@
       "repo": "Satofumi-Goto/service-hub-console",
       "action": "Release frozen Service Hub SHA f2692add810011da46f686d24bc98ba7f8713e1c using manual workflow_dispatch of \"Base44 release — Federation operational proxy\" on main only; require exact public SHA; authenticated Service Hub→Federation health; durable release-event ACK. No release-marker commits.",
       "blocked_by": [
-        "GitHub Actions quota blocked: runner_id=0, no executed steps",
-        "Fleet verified successful publication required"
+        "Actions quota blocked; https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40194435774 has zero executed steps.",
+        "Fleet verified exact-SHA production release required first"
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/service-hub-console/commit/f2692add810011da46f686d24bc98ba7f8713e1c",
-        "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40194435774"
+        "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40194435774",
+        "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
       ]
     },
     {
@@ -860,12 +990,13 @@
       "repo": "Satofumi-Goto/urban-operation-console",
       "action": "Release frozen Urban SHA 983c852acbd9ec1d24ccebf87c36230d5b0b86bd using manual workflow_dispatch of \"Base44 release — Federation operational proxy\" on main only; require exact public SHA; authenticated Urban→Federation health; durable release-event ACK. No release-marker commits.",
       "blocked_by": [
-        "GitHub Actions quota blocked: runner_id=0, no executed steps",
-        "Service Hub verified successful publication required"
+        "Actions quota blocked; https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40194448581 has zero executed steps.",
+        "Service Hub verified exact-SHA production release required first"
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/urban-operation-console/commit/983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
-        "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40194448581"
+        "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40194448581",
+        "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
       ]
     },
     {
@@ -874,12 +1005,13 @@
       "repo": "Satofumi-Goto/mobility-business-lab",
       "action": "Release frozen Simulator SHA 23c226d97f7ab42468a3de4ce70f1da72f58c774 using manual workflow_dispatch of \"Base44 release — Fed actual-operation\" on main only; require exact public SHA; two real calculations + KPI/hash/receipt + priority read + Simulator→Federation info health. No release-marker commits.",
       "blocked_by": [
-        "GitHub Actions quota blocked: runner_id=0, no executed steps",
-        "Urban verified successful publication required"
+        "Actions quota blocked; https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513 has zero executed steps.",
+        "Urban verified exact-SHA production release required first"
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/mobility-business-lab/commit/23c226d97f7ab42468a3de4ce70f1da72f58c774",
-        "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513"
+        "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513",
+        "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
       ]
     },
     {
@@ -888,12 +1020,13 @@
       "repo": "Satofumi-Goto/seneschal",
       "action": "Release frozen Seneschal SHA e080d3841837f4a0ac8e877d8db01192c130e709 using manual workflow_dispatch of \"Base44 release — Fed actual-operation\" on main only; require exact public SHA; Seneschal→Federation health + durable source-change ACK + production voice UI. No release-marker commits.",
       "blocked_by": [
-        "GitHub Actions quota blocked: runner_id=0, no executed steps",
-        "Simulator verified successful publication required"
+        "Actions quota blocked; https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437 has zero executed steps.",
+        "Simulator verified exact-SHA production release required first"
       ],
       "evidence": [
-        "https://github.com/Satofumi-Goto/seneschal/commit/e080d3841837f4a0ac8e877d8db01192c130e709",
-        "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437"
+        "https://github.com/Satofumi-Goto/seneschal/commit/749970689ead6c032ca59b5ea2ecce86493660c7",
+        "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437",
+        "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
       ]
     },
     {
@@ -902,13 +1035,14 @@
       "repo": "Satofumi-Goto/federation-portal",
       "action": "Release frozen Federation SHA 39797b8bcc15650ccfd7433d259df97162353a69 using manual workflow_dispatch of \"Federation release reality check\" on main only; require exact frozen Federation SHA; Federation actual-operation deploy true and unrelated inputs false. No release-marker commits.",
       "blocked_by": [
-        "GitHub Actions quota blocked: runner_id=0, no executed steps",
-        "Seneschal verified successful publication required",
-        "Frozen Federation SHA differs from main; require authorized reconciliation; current main manifest releaseOrder conflicts with policy"
+        "Actions quota blocked; https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612 has zero executed steps.",
+        "Seneschal verified exact-SHA production release required first",
+        "Federation main diverges from policy frozen SHA; authorized reconciliation required; wrong-SHA release prohibited"
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac",
-        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612"
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612",
+        "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
       ]
     },
     {
@@ -917,12 +1051,14 @@
       "repo": "Satofumi-Goto/federation-portal",
       "action": "After exact frozen Federation release success, accept Fed actual-operation only on automatically triggered successful `Fed seven-app production E2E`: seven exact public SHAs, Federation→Simulator two real computes, priority read, four console app-API roundtrips, same-SHA Live Mission browser contract.",
       "blocked_by": [
-        "Seven ordered releases must be verified",
-        "Federation main frozen head drift unresolved",
-        "GitHub Actions quota blocked"
+        "Actions quota blocked; https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612 has zero executed steps.",
+        "Federation main diverges from policy frozen SHA; authorized reconciliation required; wrong-SHA release prohibited",
+        "All seven releases and automatic final E2E success required"
       ],
       "evidence": [
-        "https://github.com/Satofumi-Goto/federation-portal/blob/main/.github/workflows/fed-seven-app-production-e2e.yml"
+        "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac",
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40195585612",
+        "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
       ]
     }
   ],
@@ -941,7 +1077,7 @@
       "service": "f2692add810011da46f686d24bc98ba7f8713e1c",
       "urban": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
       "simulator": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
-      "seneschal": "e080d3841837f4a0ac8e877d8db01192c130e709",
+      "seneschal": "749970689ead6c032ca59b5ea2ecce86493660c7",
       "federation": "69f07fa37d1c4f9f92a515eeb430779698cb86ac"
     },
     "mission_contract": {
@@ -978,11 +1114,10 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
-      "GitHub Actions account quota: latest non-dynamic jobs fail with runner_id=0 and steps=[]; no release probes allowed before confirmed recovery or 2026-11-01T00:00Z rollover.",
-      "Federation main 69f07fa37d1c4f9f92a515eeb430779698cb86ac differs from frozen 39797b8bcc15650ccfd7433d259df97162353a69; cannot dispatch exact frozen SHA on main. #462 merged during freeze; owner reconciliation required.",
-      "Current Federation main manifest releaseOrder conflicts with policy-approved publication sequence.",
-      "No verified ordered public releases, durable ACK chain, or final seven-app production E2E.",
-      "Current release-state expected source SHAs are NOT successful release workflow head SHAs; do not use as verified publication evidence."
+      "GitHub Actions remains quota-blocked (seven non-dynamic checks: runner_id=0, empty runner_name, no executed steps); do not dispatch/rerun until verified runner recovery or billing rollover.",
+      "Frozen Federation SHA 39797b8bcc15650ccfd7433d259df97162353a69 differs from main 69f07fa37d1c4f9f92a515eeb430779698cb86ac; authorized SHA reconciliation required before publishing Federation. Current main manifest releaseOrder is not the policy sequence.",
+      "Seven ordered manual MAIN exact-SHA publications and durable authenticated production acceptance are unverified.",
+      "Do not treat source SHAs from the existing release-state document as successful publication-workflow SHAs. No final seven-app production E2E success."
     ],
     "completion_gate": "Successful Fed seven-app production E2E after seven verified exact frozen public SHAs and cross-app checks.",
     "release_ready_source": true,
@@ -1000,7 +1135,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-10-25T13:44:38.569Z",
+    "latest_review_at": "2026-10-25T14:45:45.020Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": true,
@@ -1011,7 +1146,7 @@
     "release_state_valid": false,
     "release_state_provenance": "UNVERIFIED_SOURCE_SHAS_NOT_SUCCESSFUL_RELEASE_WORKFLOW_HEAD_SHAS",
     "release_state_correction_pr": "https://github.com/Satofumi-Goto/federation-portal/pull/505",
-    "last_review_at": "2026-10-25T13:44:38.569Z",
+    "last_review_at": "2026-10-25T14:45:45.020Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -1023,8 +1158,19 @@
     },
     "production_publish_ready": false,
     "main_head_integrity": {
-      "matches": 6,
+      "matches": 5,
       "violations": [
+        {
+          "detected_at": "2026-10-25T13:44:38.569Z",
+          "app": "seneschal",
+          "repo": "Satofumi-Goto/seneschal",
+          "frozen_sha": "e080d3841837f4a0ac8e877d8db01192c130e709",
+          "actual_main_sha": "749970689ead6c032ca59b5ea2ecce86493660c7",
+          "url": "https://github.com/Satofumi-Goto/seneschal/commit/749970689ead6c032ca59b5ea2ecce86493660c7",
+          "compare_url": "https://github.com/Satofumi-Goto/seneschal/compare/e080d3841837f4a0ac8e877d8db01192c130e709...749970689ead6c032ca59b5ea2ecce86493660c7",
+          "impact": "Manual workflow_dispatch on main cannot publish the exact policy-frozen SHA",
+          "requires_user_action": true
+        },
         {
           "detected_at": "2026-10-25T13:44:38.569Z",
           "app": "federation",
@@ -1033,10 +1179,10 @@
           "actual_main_sha": "69f07fa37d1c4f9f92a515eeb430779698cb86ac",
           "commits_ahead_of_frozen": 305,
           "commit_message": "Merge PR #462: complete Federation three-engine prepublish integration",
+          "main_manifest_order_mismatch": true,
           "url": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac",
           "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/39797b8bcc15650ccfd7433d259df97162353a69...69f07fa37d1c4f9f92a515eeb430779698cb86ac",
-          "main_manifest_order_mismatch": true,
-          "impact": "main workflow_dispatch cannot publish the exact frozen Federation SHA",
+          "impact": "Manual workflow_dispatch on main cannot publish the exact policy-frozen SHA",
           "requires_user_action": true
         }
       ]
