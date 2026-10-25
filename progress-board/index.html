@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>週末開発｜リアルタイム進捗ボード</title>
+<style>
+:root{--bg:#f6f7f8;--panel:#fff;--ink:#17202a;--muted:#65727e;--line:#dce2e6;--green:#14804a;--orange:#b45f06;--yellow:#8a6d00;--red:#b42318;--blue:#2764c5}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif}
+main{max-width:1500px;margin:auto;padding:20px}.head{display:flex;gap:16px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+h1{font-size:1.45rem;margin:0 0 6px}.sub{color:var(--muted);font-size:.9rem}.stamp{font-variant-numeric:tabular-nums;font-size:.84rem;color:var(--muted);text-align:right}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.metric,.app{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px}
+.metric b{font-size:1.35rem}.metric span{display:block;color:var(--muted);font-size:.78rem;margin-top:3px}
+.apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}.app h2{font-size:1rem;margin:0 0 8px}.app p{margin:5px 0;font-size:.84rem}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:3px 8px;font-size:.75rem;font-weight:700;white-space:nowrap}
+.green{background:#e9f7ef;color:var(--green)}.orange{background:#fff1e6;color:var(--orange)}.yellow{background:#fff8d8;color:var(--yellow)}.red{background:#feeceb;color:var(--red)}.done{background:#eef3f8;color:#425466}
+section.board{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.legend{display:flex;gap:8px;flex-wrap:wrap}.warn{font-size:.8rem;color:var(--red);font-weight:700}
+.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+th{position:sticky;top:0;background:#fafbfc;font-size:.77rem;color:var(--muted);z-index:1}td{font-size:.82rem}tr:last-child td{border-bottom:0}
+.owner{font-weight:700;min-width:210px}.evidence{min-width:360px}.next{min-width:330px}
+a{color:#0b63ce;text-decoration:none}a:hover{text-decoration:underline}
+footer{margin-top:12px;color:var(--muted);font-size:.75rem}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.apps{grid-template-columns:1fr}.stamp{text-align:left}}
+</style>
+</head>
+<body>
+<main>
+  <div class="head">
+    <div>
+      <h1>週末開発｜リアルタイム進捗ボード</h1>
+      <div class="sub">Federation / 連動シミュレータ / Seneschal — 担当別の実行状態・確認成果・残作業を自動表示</div>
+    </div>
+    <div class="stamp">
+      <div>データ更新: <strong id="updated">読込中…</strong></div>
+      <div>画面再取得: 30秒ごと <span id="countdown"></span></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="metric"><b id="mRunning">–</b><span>実行中（🟢＋🟠）</span></div>
+    <div class="metric"><b id="mWaiting">–</b><span>前工程待ち（🟡）</span></div>
+    <div class="metric"><b id="mBlocked">–</b><span>阻害停止（🔴）</span></div>
+    <div class="metric"><b id="mDone">–</b><span>完了工程（累計）</span></div>
+  </div>
+
+  <div class="apps" id="apps"></div>
+
+  <section class="board">
+    <div class="toolbar">
+      <div class="legend">
+        <span class="badge green">🟢 自案件を実行中</span>
+        <span class="badge orange">🟠 応援担当が実行中</span>
+        <span class="badge yellow">🟡 前工程待ち</span>
+        <span class="badge red">🔴 阻害停止</span>
+        <span class="badge done">✓ 完了</span>
+      </div>
+      <div class="warn" id="stale"></div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>担当</th><th>状態</th><th>最新状態／確認成果</th><th>残作業・待ち条件</th><th>根拠</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+  <footer>表示ルール: 完了は色ではなく「✓完了」。待ち・停止を見つけたら巡回側で即フォローし、実行可能な担当は🟢へ戻す。データはキャッシュを使わず再取得。</footer>
+</main>
+<script>
+const statusMeta={
+  green:{label:"🟢 実行中",cls:"green"},
+  orange:{label:"🟠 応援実行中",cls:"orange"},
+  yellow:{label:"🟡 前工程待ち",cls:"yellow"},
+  red:{label:"🔴 阻害停止",cls:"red"},
+  done:{label:"✓完了",cls:"done"}
+};
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function link(url,label){return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>':esc(label)}
+function render(d){
+  const dt=new Date(d.generated_at);
+  document.getElementById("updated").textContent=isNaN(dt)?d.generated_at:dt.toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
+  const rows=d.rows||[];
+  const running=rows.filter(r=>r.status==="green"||r.status==="orange").length;
+  document.getElementById("mRunning").textContent=running;
+  document.getElementById("mWaiting").textContent=rows.filter(r=>r.status==="yellow").length;
+  document.getElementById("mBlocked").textContent=rows.filter(r=>r.status==="red").length;
+  document.getElementById("mDone").textContent=d.completed_total??0;
+  const age=(Date.now()-dt.getTime())/60000;
+  document.getElementById("stale").textContent=age>90?"⚠ データが90分以上更新されていません":"";
+  document.getElementById("apps").innerHTML=(d.apps||[]).map(a=>{
+    const s=statusMeta[a.status]||statusMeta.yellow;
+    return '<article class="app"><h2>'+esc(a.name)+'</h2>'+
+      '<p><span class="badge '+s.cls+'">'+s.label+'</span></p>'+
+      '<p>最新: <span class="mono">'+esc(a.head||"–")+'</span></p>'+
+      '<p>'+esc(a.summary||"")+'</p>'+
+      '<p>'+link(a.url,"GitHubを開く")+'</p></article>'
+  }).join("");
+  document.getElementById("rows").innerHTML=rows.map(r=>{
+    const s=statusMeta[r.status]||statusMeta.yellow;
+    const ev=(r.evidence||[]).map(x=>x.url?link(x.url,x.text):esc(x.text)).join("<br>");
+    return '<tr><td class="owner">'+esc(r.owner)+'</td>'+
+      '<td><span class="badge '+s.cls+'">'+s.label+'</span></td>'+
+      '<td class="evidence">'+esc(r.current||"")+'</td>'+
+      '<td class="next">'+esc(r.next||"")+'</td>'+
+      '<td>'+ev+'</td></tr>'
+  }).join("");
+}
+async function load(){
+  try{
+    const r=await fetch("status.json?ts="+Date.now(),{cache:"no-store"});
+    if(!r.ok)throw new Error("HTTP "+r.status);
+    render(await r.json());
+  }catch(e){
+    document.getElementById("stale").textContent="⚠ 状態データの取得に失敗: "+e.message;
+  }
+}
+let left=30;
+setInterval(()=>{left--;if(left<=0){left=30;load()}document.getElementById("countdown").textContent="("+left+"秒)";},1000);
+load();
+</script>
+</body>
+</html>
