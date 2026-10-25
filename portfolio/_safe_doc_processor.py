@@ -103,6 +103,22 @@ def in_page_revisions(doc, source):
         if "（構想例）" not in p.get_text():
             raise RuntimeError("Concept label missing")
         revised_pages.append(8)
+    if source == "Autonomous_Mobility_System_Business_Feasibility.pdf":
+        page = doc[14]
+        if "independently constructed models" not in page.get_text():
+            raise RuntimeError("Feasibility closing note changed")
+        page.add_redact_annot(fitz.Rect(13.7,796.8,583.1,820.8),fill=False)
+        page.apply_redactions(images=0,graphics=0,text=0)
+        sentences = [
+            "This study presents technical and business scenarios; assumptions and results require validation.",
+            "It does not indicate formal approval, adoption or development commencement by Honda or other employers.",
+            "Past work classification and intellectual-property ownership are not determined by this publication."
+        ]
+        for line,y in zip(sentences,(801.4,811.35,821.3)):
+            render_line(page,14.16,y,line,9.48,580.0,"helv")
+        if "independently constructed models" in page.get_text():
+            raise RuntimeError("Unqualified ownership statement was not removed")
+        revised_pages.append(15)
     return revised_pages
 
 def geometry_probe():
