@@ -1,28 +1,28 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-25T20:50:00+09:00",
-  "source": "GitHub connector: current main heads + API self-test source state + zero-step Actions infrastructure classification",
+  "generated_at": "2026-10-25T20:55:00+09:00",
+  "source": "GitHub connector: Fed actual-operation source-completion sweep + current main heads + zero-step Actions quota classification",
   "completed_total": 106,
   "apps": [
     {
       "name": "Federation",
       "status": "red",
-      "head": "1b376d1",
-      "summary": "mainに実Simulator計算を要求するAPI診断 #477 まで反映。ソース上の認証API連携は前進済み。CI runner未起動、Base44公開/E2E未確認。",
+      "head": "201fd56",
+      "summary": "Fed実運用のOperation導線、4ミッション、15工程ACK、Simulator実KPI受信、共有優先度policy版読取、Seneschal認証Ingress、console repo正本化までmain反映。残りはBase44 Publish/公開E2E。",
       "url": "https://github.com/Satofumi-Goto/federation-portal"
     },
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "ea9643e",
-      "summary": "mainにActionsコスト抑制 #432 を反映。GuardはPR時のみ＋手動実行にし、main push後の重複runner消費を停止。現時点のrunner割当はusage quotaで停止中。",
+      "head": "852eda1",
+      "summary": "standalone時はFederation認証API、埋込Mission時はiframe relayを維持。durable ACK検証とBase44 sync markerまでmain。残りは公開版での認証往復証拠。",
       "url": "https://github.com/Satofumi-Goto/seneschal"
     },
     {
       "name": "連動シミュレータ",
       "status": "red",
       "head": "041b8b1",
-      "summary": "mainにCIコスト抑制 #64 を反映。重複runキャンセル、timeout上限、Chromium E2EはPR時のみ。現時点のrunner割当はusage quotaで停止中。",
+      "summary": "認証付き双方向API、実engine 2回self-test、Before/After KPI返却、共有target-priority保存/読取がmain。CIコスト抑制も反映。残りはBase44 Publish/公開E2E。",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab"
     }
   ],
@@ -30,40 +30,44 @@
     {
       "owner": "dot：全体統合",
       "status": "green",
-      "current": "CI停止原因をaccount usage quotaまで特定。Seneschal #432 / Simulator #64 をmainへマージし、予算復旧後の無駄なrunner消費を削減。Fed実計算API・read-only管理表示のsource実装は維持。",
-      "next": "Actions quota復旧を待ちながら低リスク開発を継続。最優先はBase44 Publish/公開E2E、次に旧PRの最新main追随を1件ずつ行う。",
+      "current": "Fed実運用source完成を最新mainで再照合。Operation→4ミッション、15工程/5画面ACK、Simulator実KPI＋priority policy版、Seneschal durable ingressまでmainに統合。Actionsはコード実行前のusage quota停止。",
+      "next": "Base44 3アプリをmainからPublishし、公開版で①Simulator self-test KPI/receipt→Federation、②priorityVersion/inputVersion→Federation、③Seneschal source-change→durable ACKを各1往復確認。",
       "evidence": [
         {
-          "text": "Seneschal #432",
-          "url": "https://github.com/Satofumi-Goto/seneschal/pull/432"
+          "text": "Federation #483",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/483"
         },
         {
-          "text": "Simulator #64",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/64"
+          "text": "Federation #481",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/481"
         },
         {
-          "text": "Federation current main",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/1b376d1672270a0efd0d4a0d6b229e07682ad291"
+          "text": "Federation #478",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/478"
+        },
+        {
+          "text": "Simulator #63",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/63"
         }
       ]
     },
     {
       "owner": "Chat：分析・独立検査",
       "status": "green",
-      "current": "current mainと実装本文を再読。Fed 1b376d1 / Simulator 2ea5222 / Seneschal 0dc87fe。Simulator self-testは既存engineを2回実行してscenario/before/after hash・receiptを返す実計算経路で、sourceのみのhealth checkと分離されている。",
-      "next": "Base44 Publish後、Federation診断がself-testのcompute=completed・simulationCalls=2を受けたこと、Seneschal変更通知がdurable ingressされたことを公開版で確認。",
+      "current": "Fed実運用の完了条件を再固定。実世界は対象外で、アプリ間実接続・認証済み共有データ・実計算結果・priority policy版・durable ACK・公開E2Eが対象。source側は全項目を現mainで確認。",
+      "next": "公開後にdeployed evidenceだけを確認し、GitHub main入りを本番完了と混同しない。",
       "evidence": [
         {
           "text": "Federation main",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/1b376d1672270a0efd0d4a0d6b229e07682ad291"
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/201fd56298a3efc402ebd767db9dd2e3fd5678e1"
         },
         {
           "text": "Simulator main",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/2ea5222ca0ef41d8a38a68d10f1d1ab0cad6cafd"
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/041b8b16712e11b43f3d37cc42bb61da43591ca9"
         },
         {
           "text": "Seneschal main",
-          "url": "https://github.com/Satofumi-Goto/seneschal/commit/0dc87fe1c7560cf79dda70dc5f8d9808aeca9367"
+          "url": "https://github.com/Satofumi-Goto/seneschal/commit/852eda1d80d91d57ed6112458aed1676881723cc"
         }
       ]
     },
@@ -114,16 +118,16 @@
     {
       "owner": "Codex：導線チェック専任",
       "status": "yellow",
-      "current": "cross-app source導線はmainで閉じた。Federation↔Simulatorは双方向＋実計算self-test、Seneschalはstandalone APIを通常画面で使用し、埋込Missionのみiframe relayを維持。",
-      "next": "Base44 main Publish後、Simulator self-test→Federation診断、Simulator→Federation info request、Seneschal→Federation durable ACKを各1往復し、SHA/hash/receiptを記録。",
+      "current": "cross-app source導線は完成。Simulator→Federation info、Federation→Simulator operational self-test/KPI、priority policy read、Seneschal→Federation durable ingressを現mainで保持。",
+      "next": "Base44 Publish後に3往復を実行し、engineVersion/scenarioHash/before-after hash/KPI/receipt、priorityVersion/inputVersion、Seneschal ingress ACKを記録。",
       "evidence": [
         {
-          "text": "Federation #477",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/477"
+          "text": "Federation #481",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/481"
         },
         {
-          "text": "Simulator #62",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/62"
+          "text": "Federation #478",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/478"
         },
         {
           "text": "Seneschal #430",
@@ -162,12 +166,12 @@
     {
       "owner": "Base44：管理者画面・日英・スマホUI",
       "status": "red",
-      "current": "GitHub sourceはFed 1b376d1 / Simulator 041b8b1 / Seneschal ea9643e。一般ユーザーread-only管理表示と認証API sourceはmain入り。Base44 Publish/公開E2Eのみ未確認。",
-      "next": "Base44 mainから3アプリをPublishし、公開版で非管理者read-only表示・実計算API診断・Seneschal durable ACKを確認する。",
+      "current": "source側のFed実運用は最新mainまで完成。Federation 201fd56 / Simulator 041b8b1 / Seneschal 852eda1。Base44同期マーカーはSeneschalにも反映済み。",
+      "next": "3アプリをmainからPublishし、公開版で4ミッション導線・15工程ACK・実KPI＋priorityVersion・Seneschal durable ACKを確認。",
       "evidence": [
         {
           "text": "Federation main",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/1b376d1672270a0efd0d4a0d6b229e07682ad291"
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/201fd56298a3efc402ebd767db9dd2e3fd5678e1"
         },
         {
           "text": "Simulator main",
@@ -175,7 +179,7 @@
         },
         {
           "text": "Seneschal main",
-          "url": "https://github.com/Satofumi-Goto/seneschal/commit/ea9643e3e25a6cc88121b26a8cfaf43a14cabef8"
+          "url": "https://github.com/Satofumi-Goto/seneschal/commit/852eda1d80d91d57ed6112458aed1676881723cc"
         }
       ]
     },
@@ -285,15 +289,15 @@
     }
   ],
   "latest_evidence": {
-    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/1b376d1672270a0efd0d4a0d6b229e07682ad291",
+    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/201fd56298a3efc402ebd767db9dd2e3fd5678e1",
     "federation_index": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
     "federation_viewer_readonly": "https://github.com/Satofumi-Goto/federation-portal/pull/472",
     "federation_simulator_api": "https://github.com/Satofumi-Goto/federation-portal/pull/475",
     "seneschal_guard": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189117279",
     "simulator_main_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189088620",
     "simulator_api_merge": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/61",
-    "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/0dc87fe1c7560cf79dda70dc5f8d9808aeca9367",
-    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/2ea5222ca0ef41d8a38a68d10f1d1ab0cad6cafd",
+    "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/852eda1d80d91d57ed6112458aed1676881723cc",
+    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/041b8b16712e11b43f3d37cc42bb61da43591ca9",
     "simulator_pr62": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/62",
     "seneschal_guard_infra": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189844728",
     "simulator_ci_infra": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189527640",
@@ -301,7 +305,11 @@
     "federation_seneschal_ingress": "https://github.com/Satofumi-Goto/federation-portal/pull/476",
     "seneschal_operational_fix": "https://github.com/Satofumi-Goto/seneschal/pull/430",
     "seneschal_actions_cost_control": "https://github.com/Satofumi-Goto/seneschal/pull/432",
-    "simulator_actions_cost_control": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/64"
+    "simulator_actions_cost_control": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/64",
+    "federation_priority_policy": "https://github.com/Satofumi-Goto/federation-portal/pull/478",
+    "federation_kpi_evidence": "https://github.com/Satofumi-Goto/federation-portal/pull/481",
+    "federation_actual_operation_contract": "https://github.com/Satofumi-Goto/federation-portal/pull/483",
+    "simulator_kpi_selftest": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/63"
   },
   "notes": [
     "PRがopenであることのみで実行中と判定しない。",
@@ -316,7 +324,9 @@
     "Actionsのsteps=[] / runner_id=0はCI基盤停止であり、named checkのコード失敗として表示しない。",
     "Base44 2-way syncはsource同期であり、利用者向け完了条件はmain Publish + deployed SHA + 認証付きE2E。",
     "GitHub-hosted Actions runner is quota-blocked at account level; jobs fail before any step starts. Public board intentionally omits private billing amounts.",
-    "Seneschal #432 removed duplicate Guard runs after main pushes; Simulator #64 added concurrency cancellation, job timeouts and PR-only Chromium E2E to reduce future Actions consumption."
+    "Seneschal #432 removed duplicate Guard runs after main pushes; Simulator #64 added concurrency cancellation, job timeouts and PR-only Chromium E2E to reduce future Actions consumption.",
+    "Fed actual-operation source completion: Operation entry/return, 4 mission modes, 15 receipt-gated steps, East Hub/east detour/SIM-02/ETA7 recovery result, authenticated Simulator KPI result, shared priority policy revision, and Seneschal durable ingress are all on main.",
+    "Overall completion remains false until Base44 main Publish and authenticated deployed E2E evidence are observed."
   ],
   "orchestrator": {
     "enabled": true,
@@ -461,14 +471,40 @@
     }
   ],
   "fed_actual_operation": {
-    "scope": "Federation↔Simulator authenticated info/operational APIs + Seneschal→Federation standalone source-change ingress",
+    "scope": "Federation↔Simulator authenticated info/operational APIs + Simulator shared target-priority policy + Seneschal→Federation standalone source-change ingress + Operation 4-mission/15-step live simulation",
     "overall_complete": false,
     "cross_app_source_complete": true,
+    "mission_contract_source_complete": true,
     "real_compute_self_test_source_complete": true,
+    "kpi_result_source_complete": true,
+    "priority_policy_source_complete": true,
+    "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "federation": "1b376d1672270a0efd0d4a0d6b229e07682ad291",
+      "federation": "201fd56298a3efc402ebd767db9dd2e3fd5678e1",
       "simulator": "041b8b16712e11b43f3d37cc42bb61da43591ca9",
-      "seneschal": "ea9643e3e25a6cc88121b26a8cfaf43a14cabef8"
+      "seneschal": "852eda1d80d91d57ed6112458aed1676881723cc"
+    },
+    "mission_contract": {
+      "modes": [
+        "control",
+        "city",
+        "service",
+        "sharing"
+      ],
+      "steps": 15,
+      "receipt_participants": [
+        "seneschal",
+        "activity",
+        "fleet",
+        "service",
+        "urban"
+      ],
+      "recovery_result": {
+        "node": "東拠点",
+        "route": "東側迂回路",
+        "vehicle": "SIM-02",
+        "etaMinutes": 7
+      }
     },
     "source_guards": [
       "authenticated admin boundary",
@@ -477,14 +513,15 @@
       "bounded request size and timeout",
       "CAS/idempotent durable ingress",
       "Seneschal source-change sends no booking/person payload",
-      "standalone API path does not depend on Live Mission",
-      "Simulator self-test runs two real simulator computations and returns receipt/hash evidence"
+      "standalone API path does not replace embedded Live Mission relay",
+      "Simulator self-test runs two real simulator computations and returns Before/After KPI + receipt/hash evidence",
+      "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
       "Base44 main Publish cannot be operated from the current iOS Chat session",
       "authenticated deployed roundtrip has not been observed",
-      "GitHub Actions runners are quota-blocked before any workflow step starts"
+      "GitHub Actions runners are account-usage-quota blocked before any workflow step starts"
     ],
-    "completion_gate": "Publish synchronized main for all three apps, then record deployed SHA plus authenticated self-test/roundtrip evidence."
+    "completion_gate": "Publish synchronized main for Federation/Simulator/Seneschal, then record deployed SHA plus: Simulator self-test KPI/receipt → Federation, priorityVersion/inputVersion → Federation, and Seneschal source-change durable ACK."
   }
 }
