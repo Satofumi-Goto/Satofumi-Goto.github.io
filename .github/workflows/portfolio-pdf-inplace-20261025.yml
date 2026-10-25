@@ -31,6 +31,11 @@ jobs:
           ]
           for fname,pageno,rect,out in tasks:
             d=fitz.open(fname)
+            print("FONTINFO",fname,"fonts",[(q[0],q[1],q[3],q[4]) for q in d[pageno].get_fonts(full=True)])
+            for q in d[pageno].get_fonts(full=True):
+              try:
+                info=d.extract_font(q[0]); print("EXTRACT",q[0],info[0],info[1],len(info[3]))
+              except Exception as ex: print("FONT-ERR",str(ex)[:120])
             d[pageno].get_pixmap(matrix=fitz.Matrix(1.5,1.5),clip=fitz.Rect(rect),alpha=False).save(out)
             print("RENDERED",out)
           PY
