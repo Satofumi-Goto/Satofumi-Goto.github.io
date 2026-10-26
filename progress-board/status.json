@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-26T07:46:43.992Z",
+  "generated_at": "2026-10-26T08:42:23.183Z",
   "source": "GitHub connector — release-freeze publication-only observation; exact frozen SHA gates",
   "completed_total": 106,
   "apps": [
@@ -8,7 +8,7 @@
       "name": "Activity",
       "status": "red",
       "head": "0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
-      "summary": "Activity main 0c27e90 != frozen 3991dd2; quota-blocked CI (runner 0 / zero steps); exact published SHA and production acceptance unverified.",
+      "summary": "Activity MAIN 0c27e90 != frozen 3991dd2; Actions required CI runner=0, steps=0; no exact-SHA production publication/acceptance.",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
       "main_sha": "0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
       "release_verified": false,
@@ -20,7 +20,7 @@
       "name": "Fleet",
       "status": "red",
       "head": "4e7a2be41138d1e4cf6206f8f13f9510984addca",
-      "summary": "Fleet main 4e7a2be != frozen d555d28; quota-blocked CI (runner 0 / zero steps); exact published SHA and production acceptance unverified.",
+      "summary": "Fleet MAIN 4e7a2be != frozen d555d28; Actions required CI runner=0, steps=0; no exact-SHA production publication/acceptance.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
       "main_sha": "4e7a2be41138d1e4cf6206f8f13f9510984addca",
       "release_verified": false,
@@ -32,7 +32,7 @@
       "name": "Service Hub",
       "status": "red",
       "head": "eefddb3eff2c9775366b0cfc667b606e7799ff2d",
-      "summary": "Service Hub main eefddb3 != frozen f2692ad; quota-blocked CI (runner 0 / zero steps); exact published SHA and production acceptance unverified.",
+      "summary": "Service Hub MAIN eefddb3 != frozen f2692ad; Actions required CI runner=0, steps=0; no exact-SHA production publication/acceptance.",
       "url": "https://github.com/Satofumi-Goto/service-hub-console",
       "main_sha": "eefddb3eff2c9775366b0cfc667b606e7799ff2d",
       "release_verified": false,
@@ -44,7 +44,7 @@
       "name": "Urban",
       "status": "red",
       "head": "3bdad1199e4e07024cc3f6a9f880289a57226028",
-      "summary": "Urban main 3bdad11 != frozen 983c852; quota-blocked CI (runner 0 / zero steps); exact published SHA and production acceptance unverified.",
+      "summary": "Urban MAIN 3bdad11 != frozen 983c852; Actions required CI runner=0, steps=0; no exact-SHA production publication/acceptance.",
       "url": "https://github.com/Satofumi-Goto/urban-operation-console",
       "main_sha": "3bdad1199e4e07024cc3f6a9f880289a57226028",
       "release_verified": false,
@@ -56,7 +56,7 @@
       "name": "Simulator",
       "status": "red",
       "head": "a61e8dcecf5604ce96d2a04adc3cb820c5063809",
-      "summary": "Simulator main a61e8dc != frozen 23c226d; quota-blocked CI (runner 0 / zero steps); exact published SHA and production acceptance unverified.",
+      "summary": "Simulator MAIN a61e8dc != frozen 23c226d; Actions required CI runner=0, steps=0; no exact-SHA production publication/acceptance.",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab",
       "main_sha": "a61e8dcecf5604ce96d2a04adc3cb820c5063809",
       "release_verified": false,
@@ -68,7 +68,7 @@
       "name": "Seneschal",
       "status": "red",
       "head": "ab5bf14ae41baf07383435602fe328b4763a42bf",
-      "summary": "Seneschal main ab5bf14 != frozen 8411990; quota-blocked CI (runner 0 / zero steps); exact published SHA and production acceptance unverified.",
+      "summary": "Seneschal MAIN ab5bf14 != frozen 8411990; Actions required CI runner=0, steps=0; no exact-SHA production publication/acceptance.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
       "main_sha": "ab5bf14ae41baf07383435602fe328b4763a42bf",
       "release_verified": false,
@@ -80,7 +80,7 @@
       "name": "Federation",
       "status": "red",
       "head": "f9baa5a62a87e2915e5575930bf08ff7ba07a793",
-      "summary": "Federation main f9baa5a != frozen a5fa3f2; quota-blocked CI (runner 0 / zero steps); exact published SHA and production acceptance unverified.",
+      "summary": "Federation MAIN f9baa5a != frozen a5fa3f2; Actions required CI runner=0, steps=0; no exact-SHA production publication/acceptance.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
       "main_sha": "f9baa5a62a87e2915e5575930bf08ff7ba07a793",
       "release_verified": false,
@@ -93,19 +93,19 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related activity: current 0c27e90 versus frozen 3991dd2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related activity: 0c27e90 != 3991dd2. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "activity frozen/Main compare",
+          "text": "activity frozen vs MAIN",
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
         },
         {
-          "text": "activity runnerless CI",
+          "text": "activity runnerless required workflow",
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
         }
       ]
@@ -113,139 +113,139 @@
     {
       "owner": "Chat：分析・独立検査",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related activity: current 0c27e90 versus frozen 3991dd2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related fleet: 4e7a2be != d555d28. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "activity frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
+          "text": "fleet frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...4e7a2be41138d1e4cf6206f8f13f9510984addca"
         },
         {
-          "text": "activity runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
+          "text": "fleet runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40247474805"
         }
       ]
     },
     {
       "owner": "Codex：従来の基盤担当",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related seneschal: current ab5bf14 versus frozen 8411990.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related service: eefddb3 != f2692ad. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "seneschal frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...ab5bf14ae41baf07383435602fe328b4763a42bf"
+          "text": "service frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/service-hub-console/compare/f2692add810011da46f686d24bc98ba7f8713e1c...eefddb3eff2c9775366b0cfc667b606e7799ff2d"
         },
         {
-          "text": "seneschal runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299"
+          "text": "service runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40247624333"
         }
       ]
     },
     {
       "owner": "Codex：採点エンジン専任",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related activity: current 0c27e90 versus frozen 3991dd2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related urban: 3bdad11 != 983c852. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "activity frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
+          "text": "urban frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/urban-operation-console/compare/983c852acbd9ec1d24ccebf87c36230d5b0b86bd...3bdad1199e4e07024cc3f6a9f880289a57226028"
         },
         {
-          "text": "activity runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
+          "text": "urban runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40247795941"
         }
       ]
     },
     {
       "owner": "Codex：整合エンジン稼働専任",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related activity: current 0c27e90 versus frozen 3991dd2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related simulator: a61e8dc != 23c226d. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "activity frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
+          "text": "simulator frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...a61e8dcecf5604ce96d2a04adc3cb820c5063809"
         },
         {
-          "text": "activity runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
+          "text": "simulator runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40247937685"
         }
       ]
     },
     {
       "owner": "Codex：導線チェック専任",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related activity: current 0c27e90 versus frozen 3991dd2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related seneschal: ab5bf14 != 8411990. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "activity frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
+          "text": "seneschal frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...ab5bf14ae41baf07383435602fe328b4763a42bf"
         },
         {
-          "text": "activity runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
+          "text": "seneschal runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299"
         }
       ]
     },
     {
       "owner": "Codex：管理画面",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related activity: current 0c27e90 versus frozen 3991dd2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related federation: f9baa5a != a5fa3f2. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "activity frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
+          "text": "federation frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...f9baa5a62a87e2915e5575930bf08ff7ba07a793"
         },
         {
-          "text": "activity runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
+          "text": "federation runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481"
         }
       ]
     },
     {
       "owner": "Codex：文書整合",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related activity: current 0c27e90 versus frozen 3991dd2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related activity: 0c27e90 != 3991dd2. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "activity frozen/Main compare",
+          "text": "activity frozen vs MAIN",
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
         },
         {
-          "text": "activity runnerless CI",
+          "text": "activity runnerless required workflow",
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
         }
       ]
@@ -253,79 +253,79 @@
     {
       "owner": "Base44：管理者画面・日英・スマホUI",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related activity: current 0c27e90 versus frozen 3991dd2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related fleet: 4e7a2be != d555d28. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "activity frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
+          "text": "fleet frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...4e7a2be41138d1e4cf6206f8f13f9510984addca"
         },
         {
-          "text": "activity runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
+          "text": "fleet runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40247474805"
         }
       ]
     },
     {
       "owner": "Cursor：ナレッジ",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related simulator: current a61e8dc versus frozen 23c226d.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related service: eefddb3 != f2692ad. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "simulator frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...a61e8dcecf5604ce96d2a04adc3cb820c5063809"
+          "text": "service frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/service-hub-console/compare/f2692add810011da46f686d24bc98ba7f8713e1c...eefddb3eff2c9775366b0cfc667b606e7799ff2d"
         },
         {
-          "text": "simulator runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40247937685"
+          "text": "service runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40247624333"
         }
       ]
     },
     {
       "owner": "Cursor A：車両・拠点MBD",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related simulator: current a61e8dc versus frozen 23c226d.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related urban: 3bdad11 != 983c852. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "simulator frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...a61e8dcecf5604ce96d2a04adc3cb820c5063809"
+          "text": "urban frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/urban-operation-console/compare/983c852acbd9ec1d24ccebf87c36230d5b0b86bd...3bdad1199e4e07024cc3f6a9f880289a57226028"
         },
         {
-          "text": "simulator runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40247937685"
+          "text": "urban runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40247795941"
         }
       ]
     },
     {
       "owner": "Cursor B：ミル・材料・AMR・電源・貯蔵",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related simulator: current a61e8dc versus frozen 23c226d.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related simulator: a61e8dc != 23c226d. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "simulator frozen/Main compare",
+          "text": "simulator frozen vs MAIN",
           "url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...a61e8dcecf5604ce96d2a04adc3cb820c5063809"
         },
         {
-          "text": "simulator runnerless CI",
+          "text": "simulator runnerless required workflow",
           "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40247937685"
         }
       ]
@@ -333,39 +333,39 @@
     {
       "owner": "Cursor C：LH₂・HPC・RSU・通信網",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related simulator: current a61e8dc versus frozen 23c226d.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related seneschal: ab5bf14 != 8411990. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "simulator frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...a61e8dcecf5604ce96d2a04adc3cb820c5063809"
+          "text": "seneschal frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...ab5bf14ae41baf07383435602fe328b4763a42bf"
         },
         {
-          "text": "simulator runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40247937685"
+          "text": "seneschal runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299"
         }
       ]
     },
     {
       "owner": "Chat：Gemini接続",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related federation: current f9baa5a versus frozen a5fa3f2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related federation: f9baa5a != a5fa3f2. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "federation frozen/Main compare",
+          "text": "federation frozen vs MAIN",
           "url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...f9baa5a62a87e2915e5575930bf08ff7ba07a793"
         },
         {
-          "text": "federation runnerless CI",
+          "text": "federation runnerless required workflow",
           "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481"
         }
       ]
@@ -373,74 +373,74 @@
     {
       "owner": "Gemini Web：接続診断",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related federation: current f9baa5a versus frozen a5fa3f2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related activity: 0c27e90 != 3991dd2. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "federation frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...f9baa5a62a87e2915e5575930bf08ff7ba07a793"
+          "text": "activity frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba"
         },
         {
-          "text": "federation runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481"
+          "text": "activity runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279"
         }
       ]
     },
     {
       "owner": "Gemini API：自動収集",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related federation: current f9baa5a versus frozen a5fa3f2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related fleet: 4e7a2be != d555d28. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "federation frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...f9baa5a62a87e2915e5575930bf08ff7ba07a793"
+          "text": "fleet frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...4e7a2be41138d1e4cf6206f8f13f9510984addca"
         },
         {
-          "text": "federation runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481"
+          "text": "fleet runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40247474805"
         }
       ]
     },
     {
       "owner": "Claude：Blueprint／Artifactへのアドオン",
       "status": "red",
-      "current": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending. Related federation: current f9baa5a versus frozen a5fa3f2.",
-      "next": "Publication-only release freeze: preserve seven frozen source repositories and defer all PRs. Wait for GitHub quota recovery/billing rollover and authorized SHA reconciliation; then manual MAIN workflow_dispatch in strict Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order. Require final E2E success.",
+      "current": "2026-10-26T08:42:23.183Z: Release freeze publication-only; all seven MAIN heads remain frozen-SHA mismatched (0/7), no new drift; all seven required CI jobs still runnerless/zero-step; 0/7 accepted. Related service: eefddb3 != f2692ad. No seven-app edits/reruns/releases.",
+      "next": "Preserve 7-app source freeze and defer PR backlog. Await externally evidenced Actions recovery (or allowed rollover) and maintainer resolution of immutable frozen MAIN SHA mismatch; then manual workflow_dispatch on MAIN in fixed Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation order; final E2E must succeed.",
       "evidence": [
         {
           "text": "Release-freeze policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "federation frozen/Main compare",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...f9baa5a62a87e2915e5575930bf08ff7ba07a793"
+          "text": "service frozen vs MAIN",
+          "url": "https://github.com/Satofumi-Goto/service-hub-console/compare/f2692add810011da46f686d24bc98ba7f8713e1c...eefddb3eff2c9775366b0cfc667b606e7799ff2d"
         },
         {
-          "text": "federation runnerless CI",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481"
+          "text": "service runnerless required workflow",
+          "url": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40247624333"
         }
       ]
     }
   ],
   "latest_evidence": {
-    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/69f07fa37d1c4f9f92a515eeb430779698cb86ac",
+    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/f9baa5a62a87e2915e5575930bf08ff7ba07a793",
     "federation_index": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
     "federation_viewer_readonly": "https://github.com/Satofumi-Goto/federation-portal/pull/472",
     "federation_simulator_api": "https://github.com/Satofumi-Goto/federation-portal/pull/475",
     "seneschal_guard": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437",
     "simulator_main_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513",
     "simulator_api_merge": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/61",
-    "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/749970689ead6c032ca59b5ea2ecce86493660c7",
-    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/23c226d97f7ab42468a3de4ce70f1da72f58c774",
+    "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/ab5bf14ae41baf07383435602fe328b4763a42bf",
+    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a61e8dcecf5604ce96d2a04adc3cb820c5063809",
     "simulator_pr62": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/62",
     "seneschal_guard_infra": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189844728",
     "simulator_ci_infra": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189527640",
@@ -516,7 +516,7 @@
     "seneschal_latest_runner": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40204551906",
     "seneschal_frozen_deviation": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...69f78500a3167162ab48d6b9ca1d5f75f35714f6",
     "federation_frozen_deviation": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...9a2fab10fb962d8259b2c91b99dc4f2b1163b580",
-    "federation_preflight": "https://github.com/Satofumi-Goto/federation-portal/blob/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d/docs/runbooks/fed-actual-operation-preflight-source-heads.json",
+    "federation_preflight": "https://github.com/Satofumi-Goto/federation-portal/blob/main/docs/runbooks/fed-actual-operation-preflight-source-heads.json",
     "activity_latest_ci": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
     "fleet_latest_ci": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40247474805",
     "service_latest_ci": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40247624333",
@@ -572,13 +572,25 @@
     "seneschal_quota_job": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299",
     "seneschal_freeze_head": "https://github.com/Satofumi-Goto/seneschal/commit/ab5bf14ae41baf07383435602fe328b4763a42bf",
     "federation_quota_job": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481",
-    "federation_freeze_head": "https://github.com/Satofumi-Goto/federation-portal/commit/f9baa5a62a87e2915e5575930bf08ff7ba07a793"
+    "federation_freeze_head": "https://github.com/Satofumi-Goto/federation-portal/commit/f9baa5a62a87e2915e5575930bf08ff7ba07a793",
+    "activity_main": "https://github.com/Satofumi-Goto/life-transaction-console/commit/0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
+    "activity_runnerless_ci": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
+    "fleet_main": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/4e7a2be41138d1e4cf6206f8f13f9510984addca",
+    "fleet_runnerless_ci": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40247474805",
+    "service_main": "https://github.com/Satofumi-Goto/service-hub-console/commit/eefddb3eff2c9775366b0cfc667b606e7799ff2d",
+    "service_runnerless_ci": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40247624333",
+    "urban_main": "https://github.com/Satofumi-Goto/urban-operation-console/commit/3bdad1199e4e07024cc3f6a9f880289a57226028",
+    "urban_runnerless_ci": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40247795941",
+    "simulator_runnerless_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40247937685",
+    "seneschal_runnerless_ci": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299",
+    "federation_runnerless_ci": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481",
+    "federation_release_state_missing": "https://github.com/Satofumi-Goto/federation-portal/tree/main/docs/runbooks"
   },
   "notes": [
     "Release-freeze policy remains authoritative; no writes to seven controlled repositories, deferred PRs, or release markers.",
     "Current Federation preflight-source-heads.json is not authoritative when its expected SHA conflicts with frozen policy.",
     "Actual-operation remains incomplete: production releases 0/7 and final E2E unverified.",
-    "Observation 2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending."
+    "Observation 2026-10-26T08:42:23.183Z: 2026-10-26T08:42:23.183Z: Release-freeze observation: all seven MAIN heads unchanged and remain different from immutable frozen policy (0/7 match). Latest 30 MAIN runs per repository show no non-dynamic required-workflow runner recovery; seven checked non-dynamic jobs have runner_id=0, empty runner_name, zero steps, failure within 2 seconds (Simulator browser job skipped). 2026-11-01T00:00:00Z rollover not reached. No release, workflow dispatch, rerun, marker, source, PR, or billing changes. Publication accepted 0/7; final E2E pending; Federation release-state JSON missing on frozen and current HEAD; preflight differs on Activity/Seneschal."
   ],
   "orchestrator": {
     "enabled": true,
@@ -594,8 +606,10 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T07:46:43.992Z",
-        "recheck_note": "2026-10-26T07:46:43.992Z: verified current job evidence: runner_id=0, runner_name empty, steps=0. No code-failure evidence."
+        "observed_at": "2026-10-26T08:42:23.183Z",
+        "recheck_note": "2026-10-26T08:42:23.183Z: actual GitHub job API recheck confirms runner_id=0, runner_name empty, steps=0; no code execution.",
+        "started_at": "2026-10-25T22:58:54Z",
+        "completed_at": "2026-10-25T22:58:56Z"
       },
       "fleet": {
         "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40247474805",
@@ -604,8 +618,10 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T07:46:43.992Z",
-        "recheck_note": "2026-10-26T07:46:43.992Z: verified current job evidence: runner_id=0, runner_name empty, steps=0. No code-failure evidence."
+        "observed_at": "2026-10-26T08:42:23.183Z",
+        "recheck_note": "2026-10-26T08:42:23.183Z: actual GitHub job API recheck confirms runner_id=0, runner_name empty, steps=0; no code execution.",
+        "started_at": "2026-10-26T00:03:14Z",
+        "completed_at": "2026-10-26T00:03:16Z"
       },
       "service": {
         "run": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40247624333",
@@ -614,8 +630,10 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T07:46:43.992Z",
-        "recheck_note": "2026-10-26T07:46:43.992Z: verified current job evidence: runner_id=0, runner_name empty, steps=0. No code-failure evidence."
+        "observed_at": "2026-10-26T08:42:23.183Z",
+        "recheck_note": "2026-10-26T08:42:23.183Z: actual GitHub job API recheck confirms runner_id=0, runner_name empty, steps=0; no code execution.",
+        "started_at": "2026-10-26T00:05:08Z",
+        "completed_at": "2026-10-26T00:05:10Z"
       },
       "urban": {
         "run": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40247795941",
@@ -624,8 +642,10 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T07:46:43.992Z",
-        "recheck_note": "2026-10-26T07:46:43.992Z: verified current job evidence: runner_id=0, runner_name empty, steps=0. No code-failure evidence."
+        "observed_at": "2026-10-26T08:42:23.183Z",
+        "recheck_note": "2026-10-26T08:42:23.183Z: actual GitHub job API recheck confirms runner_id=0, runner_name empty, steps=0; no code execution.",
+        "started_at": "2026-10-26T00:07:15Z",
+        "completed_at": "2026-10-26T00:07:17Z"
       },
       "simulator": {
         "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40247937685",
@@ -634,8 +654,10 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T07:46:43.992Z",
-        "recheck_note": "2026-10-26T07:46:43.992Z: verified current job evidence: runner_id=0, runner_name empty, steps=0. No code-failure evidence."
+        "observed_at": "2026-10-26T08:42:23.183Z",
+        "recheck_note": "2026-10-26T08:42:23.183Z: actual GitHub job API recheck confirms runner_id=0, runner_name empty, steps=0; no code execution.",
+        "started_at": "2026-10-26T00:09:03Z",
+        "completed_at": "2026-10-26T00:09:05Z"
       },
       "seneschal": {
         "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299",
@@ -644,8 +666,10 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T07:46:43.992Z",
-        "recheck_note": "2026-10-26T07:46:43.992Z: verified current job evidence: runner_id=0, runner_name empty, steps=0. No code-failure evidence."
+        "observed_at": "2026-10-26T08:42:23.183Z",
+        "recheck_note": "2026-10-26T08:42:23.183Z: actual GitHub job API recheck confirms runner_id=0, runner_name empty, steps=0; no code execution.",
+        "started_at": "2026-10-26T04:39:15Z",
+        "completed_at": "2026-10-26T04:39:17Z"
       },
       "federation": {
         "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481",
@@ -654,8 +678,10 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T07:46:43.992Z",
-        "recheck_note": "2026-10-26T07:46:43.992Z: verified current job evidence: runner_id=0, runner_name empty, steps=0. No code-failure evidence."
+        "observed_at": "2026-10-26T08:42:23.183Z",
+        "recheck_note": "2026-10-26T08:42:23.183Z: actual GitHub job API recheck confirms runner_id=0, runner_name empty, steps=0; no code execution.",
+        "started_at": "2026-10-26T01:03:35Z",
+        "completed_at": "2026-10-26T01:03:37Z"
       },
       "seneschal_schedule_observation": {
         "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299",
@@ -667,11 +693,11 @@
         "started_at": "2026-10-26T04:39:15Z",
         "completed_at": "2026-10-26T04:39:17Z",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T06:41:51.482Z"
+        "observed_at": "2026-10-26T08:42:23.183Z"
       }
     },
-    "last_cycle": "2026-10-26T07:46:43.992Z",
-    "current_action": "2026-10-26T07:46:43.992Z: Release-freeze observation: all seven MAIN SHAs differ from frozen policy (0/7 match); no new main drift. Seven required non-dynamic jobs remain runner_id=0, runner_name empty, steps=0; newest Seneschal scheduled verify also runnerless. No qualifying recovery evidence, billing rollover not reached. No workflow dispatch/rerun, marker/source/workflow/docs/test/PR changes. Production accepted 0/7; final E2E pending.",
+    "last_cycle": "2026-10-26T08:42:23.183Z",
+    "current_action": "2026-10-26T08:42:23.183Z: Release-freeze observation: all seven MAIN heads unchanged and remain different from immutable frozen policy (0/7 match). Latest 30 MAIN runs per repository show no non-dynamic required-workflow runner recovery; seven checked non-dynamic jobs have runner_id=0, empty runner_name, zero steps, failure within 2 seconds (Simulator browser job skipped). 2026-11-01T00:00:00Z rollover not reached. No release, workflow dispatch, rerun, marker, source, PR, or billing changes. Publication accepted 0/7; final E2E pending; Federation release-state JSON missing on frozen and current HEAD; preflight differs on Activity/Seneschal.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -692,7 +718,7 @@
         "frozen_head": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T07:46:43.992Z"
+        "last_observed_at": "2026-10-26T08:42:23.183Z"
       },
       "fleet": {
         "repo": "Satofumi-Goto/fleet-operations-console",
@@ -711,7 +737,7 @@
         "frozen_head": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T07:46:43.992Z"
+        "last_observed_at": "2026-10-26T08:42:23.183Z"
       },
       "service": {
         "repo": "Satofumi-Goto/service-hub-console",
@@ -730,7 +756,7 @@
         "frozen_head": "f2692add810011da46f686d24bc98ba7f8713e1c",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T07:46:43.992Z"
+        "last_observed_at": "2026-10-26T08:42:23.183Z"
       },
       "urban": {
         "repo": "Satofumi-Goto/urban-operation-console",
@@ -749,7 +775,7 @@
         "frozen_head": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T07:46:43.992Z"
+        "last_observed_at": "2026-10-26T08:42:23.183Z"
       },
       "simulator": {
         "repo": "Satofumi-Goto/mobility-business-lab",
@@ -768,7 +794,7 @@
         "frozen_head": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T07:46:43.992Z"
+        "last_observed_at": "2026-10-26T08:42:23.183Z"
       },
       "seneschal": {
         "repo": "Satofumi-Goto/seneschal",
@@ -787,7 +813,7 @@
         "frozen_head": "841199084403b6edfa9b5927400ef9fd78acd9c7",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T07:46:43.992Z"
+        "last_observed_at": "2026-10-26T08:42:23.183Z"
       },
       "federation": {
         "repo": "Satofumi-Goto/federation-portal",
@@ -824,7 +850,7 @@
           "urban",
           "federation"
         ],
-        "last_observed_at": "2026-10-26T07:46:43.992Z"
+        "last_observed_at": "2026-10-26T08:42:23.183Z"
       }
     },
     "final_e2e": {
@@ -833,7 +859,7 @@
       "status": "publication_pending",
       "verified_success": false,
       "main_branch_guard": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     "static_validation": {
       "at": "2026-10-25T13:44:38.569Z",
@@ -861,7 +887,7 @@
         "federation"
       ],
       "seneschal_manual_dispatch_is_authorized_by_freeze": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     "release_freeze": true,
     "publicationOnlyRemaining": true,
@@ -883,7 +909,7 @@
       "productionReleaseVerified": false,
       "safe_to_publish_first_six": false,
       "safe_to_publish_federation_after_first_six": false,
-      "observed_at": "2026-10-26T07:46:43.992Z",
+      "observed_at": "2026-10-26T08:42:23.183Z",
       "release_state_file_exists_on_frozen_head": false,
       "release_state_file_exists_on_current_main": false,
       "preflight_policy_mismatches": [
@@ -902,11 +928,11 @@
     },
     "quota_recovery": {
       "recovered": false,
-      "runner_evidence": "2026-10-26T07:46:43.992Z: Seven inspected non-dynamic jobs have runner_id=0 and zero executed steps; most recent Seneschal scheduled run #40270170299 also blocked. Latest 25 MAIN runs examined for each repo; dynamic-only successes do not establish recovery.",
+      "runner_evidence": "2026-10-26T08:42:23.183Z: newest 30 MAIN workflow runs per repo reviewed, excluding dynamic-only executions; checked seven non-dynamic jobs are all runner_id=0 and steps=0. No new non-dynamic runner-positive executed-step evidence.",
       "billing_rollover": "2026-11-01T00:00:00Z",
       "activity_initial_probe_permitted": false,
-      "observed_at": "2026-10-26T07:46:43.992Z",
-      "latest_run_listing_limit": "Latest 25 MAIN runs for each repo; exclude dynamic-only success."
+      "observed_at": "2026-10-26T08:42:23.183Z",
+      "latest_run_listing_limit": "Latest 30 MAIN runs per repository; dynamic-only success excluded."
     },
     "frozen_head_integrity": {
       "matches": 0,
@@ -920,7 +946,7 @@
         "federation"
       ],
       "release_sequence_paused": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     "freeze_violation": {
       "type": "policy_frozen_main_head_mismatch",
@@ -936,7 +962,7 @@
       ],
       "newly_affected_since_previous_cycle": [],
       "increased_drift_since_previous_cycle": [],
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     "freeze_violations": [
       {
@@ -1037,10 +1063,10 @@
       "priority": 1,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/life-transaction-console",
-      "action": "After predecessors are accepted and gates recover, manually workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN; no marker commit. Require exact frozen public SHA and app-specific authenticated production health/ACK.",
+      "action": "After eligibility/previous release gates, manual workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN only, no release-marker commits. Require exact published SHA, authenticated console→Federation health, durable release-event ACK.",
       "blocked_by": [
-        "Actions quota-blocked; manual dispatch prohibited until qualifying recovery or 2026-11-01 rollover.",
-        "MAIN 0c27e90 != frozen 3991dd2; maintainer reconciliation required."
+        "Actions quota not recovered; no manual dispatch until policy recovery evidence or 2026-11-01T00:00:00Z rollover.",
+        "MAIN 0c27e90 differs from immutable frozen 3991dd2; authorized reconciliation needed."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/life-transaction-console/commit/0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
@@ -1051,11 +1077,11 @@
       "priority": 2,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
-      "action": "After predecessors are accepted and gates recover, manually workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN; no marker commit. Require exact frozen public SHA and app-specific authenticated production health/ACK.",
+      "action": "After eligibility/previous release gates, manual workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN only, no release-marker commits. Require exact published SHA, authenticated console→Federation health, durable release-event ACK.",
       "blocked_by": [
-        "Actions quota-blocked; manual dispatch prohibited until qualifying recovery or 2026-11-01 rollover.",
-        "MAIN 4e7a2be != frozen d555d28; maintainer reconciliation required.",
-        "Prior release requires verified exact frozen SHA and authenticated production acceptance."
+        "Actions quota not recovered; no manual dispatch until policy recovery evidence or 2026-11-01T00:00:00Z rollover.",
+        "MAIN 4e7a2be differs from immutable frozen d555d28; authorized reconciliation needed.",
+        "Prior app release must pass exact SHA and production acceptance before this release."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/fleet-operations-console/commit/4e7a2be41138d1e4cf6206f8f13f9510984addca",
@@ -1066,11 +1092,11 @@
       "priority": 3,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/service-hub-console",
-      "action": "After predecessors are accepted and gates recover, manually workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN; no marker commit. Require exact frozen public SHA and app-specific authenticated production health/ACK.",
+      "action": "After eligibility/previous release gates, manual workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN only, no release-marker commits. Require exact published SHA, authenticated console→Federation health, durable release-event ACK.",
       "blocked_by": [
-        "Actions quota-blocked; manual dispatch prohibited until qualifying recovery or 2026-11-01 rollover.",
-        "MAIN eefddb3 != frozen f2692ad; maintainer reconciliation required.",
-        "Prior release requires verified exact frozen SHA and authenticated production acceptance."
+        "Actions quota not recovered; no manual dispatch until policy recovery evidence or 2026-11-01T00:00:00Z rollover.",
+        "MAIN eefddb3 differs from immutable frozen f2692ad; authorized reconciliation needed.",
+        "Prior app release must pass exact SHA and production acceptance before this release."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/service-hub-console/commit/eefddb3eff2c9775366b0cfc667b606e7799ff2d",
@@ -1081,11 +1107,11 @@
       "priority": 4,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/urban-operation-console",
-      "action": "After predecessors are accepted and gates recover, manually workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN; no marker commit. Require exact frozen public SHA and app-specific authenticated production health/ACK.",
+      "action": "After eligibility/previous release gates, manual workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN only, no release-marker commits. Require exact published SHA, authenticated console→Federation health, durable release-event ACK.",
       "blocked_by": [
-        "Actions quota-blocked; manual dispatch prohibited until qualifying recovery or 2026-11-01 rollover.",
-        "MAIN 3bdad11 != frozen 983c852; maintainer reconciliation required.",
-        "Prior release requires verified exact frozen SHA and authenticated production acceptance."
+        "Actions quota not recovered; no manual dispatch until policy recovery evidence or 2026-11-01T00:00:00Z rollover.",
+        "MAIN 3bdad11 differs from immutable frozen 983c852; authorized reconciliation needed.",
+        "Prior app release must pass exact SHA and production acceptance before this release."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/urban-operation-console/commit/3bdad1199e4e07024cc3f6a9f880289a57226028",
@@ -1096,11 +1122,11 @@
       "priority": 5,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/mobility-business-lab",
-      "action": "After predecessors are accepted and gates recover, manually workflow_dispatch 'Base44 release — Fed actual-operation' on MAIN; no marker commit. Require exact frozen public SHA and app-specific authenticated production health/ACK.",
+      "action": "After eligibility/previous release gates, manual workflow_dispatch 'Base44 release — Fed actual-operation' on MAIN only, no release-marker commits. Require exact published SHA, two real calculations, KPI/hash/receipt, priority read, Simulator→Federation health.",
       "blocked_by": [
-        "Actions quota-blocked; manual dispatch prohibited until qualifying recovery or 2026-11-01 rollover.",
-        "MAIN a61e8dc != frozen 23c226d; maintainer reconciliation required.",
-        "Prior release requires verified exact frozen SHA and authenticated production acceptance."
+        "Actions quota not recovered; no manual dispatch until policy recovery evidence or 2026-11-01T00:00:00Z rollover.",
+        "MAIN a61e8dc differs from immutable frozen 23c226d; authorized reconciliation needed.",
+        "Prior app release must pass exact SHA and production acceptance before this release."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a61e8dcecf5604ce96d2a04adc3cb820c5063809",
@@ -1111,11 +1137,11 @@
       "priority": 6,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/seneschal",
-      "action": "After predecessors are accepted and gates recover, manually workflow_dispatch 'Base44 release — Fed actual-operation' on MAIN; no marker commit. Require exact frozen public SHA and app-specific authenticated production health/ACK.",
+      "action": "After eligibility/previous release gates, manual workflow_dispatch 'Base44 release — Fed actual-operation' on MAIN only, no release-marker commits. Require exact published SHA, Seneschal→Federation health, durable source-change ACK, production voice UI.",
       "blocked_by": [
-        "Actions quota-blocked; manual dispatch prohibited until qualifying recovery or 2026-11-01 rollover.",
-        "MAIN ab5bf14 != frozen 8411990; maintainer reconciliation required.",
-        "Prior release requires verified exact frozen SHA and authenticated production acceptance."
+        "Actions quota not recovered; no manual dispatch until policy recovery evidence or 2026-11-01T00:00:00Z rollover.",
+        "MAIN ab5bf14 differs from immutable frozen 8411990; authorized reconciliation needed.",
+        "Prior app release must pass exact SHA and production acceptance before this release."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/seneschal/commit/ab5bf14ae41baf07383435602fe328b4763a42bf",
@@ -1126,12 +1152,12 @@
       "priority": 7,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "After six accepted, manually workflow_dispatch 'Federation release reality check' on MAIN with deploy_fed_actual_operation=true and unrelated inputs false; then require automatic Fed seven-app E2E success.",
+      "action": "After eligibility/previous release gates, manual workflow_dispatch 'Federation release reality check' on MAIN only, no release-marker commits. Require exact frozen public SHA and all six previous accepted releases; automatic final E2E success. Set deploy_fed_actual_operation=true and unrelated deploy inputs false.",
       "blocked_by": [
-        "Actions quota-blocked; manual dispatch prohibited until qualifying recovery or 2026-11-01 rollover.",
-        "MAIN f9baa5a != frozen a5fa3f2; maintainer reconciliation required.",
-        "Prior release requires verified exact frozen SHA and authenticated production acceptance.",
-        "Federation frozen release-state JSON missing and preflight source SHAs inconsistent."
+        "Actions quota not recovered; no manual dispatch until policy recovery evidence or 2026-11-01T00:00:00Z rollover.",
+        "MAIN f9baa5a differs from immutable frozen a5fa3f2; authorized reconciliation needed.",
+        "Prior app release must pass exact SHA and production acceptance before this release.",
+        "Federation release-state JSON missing on frozen/current HEAD; preflight SHA disagreement Activity/Seneschal."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/federation-portal/commit/f9baa5a62a87e2915e5575930bf08ff7ba07a793",
@@ -1142,9 +1168,9 @@
       "priority": 8,
       "owner": "Production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "Observe successful automatic Fed seven-app production E2E after Federation release; require all seven exact SHAs, real Federation→Simulator compute, priority read, four console app-API roundtrips, same-SHA full Live Mission browser contract.",
+      "action": "Observe automatically triggered Fed seven-app production E2E after Federation release. Require seven exact SHAs, Federation→Simulator real compute, priority read, four console app-API roundtrips, and same-SHA full Live Mission browser contract.",
       "blocked_by": [
-        "Seven ordered published production releases have not been accepted."
+        "All seven ordered production releases remain unaccepted."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/federation-portal/actions"
@@ -1203,7 +1229,7 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
-      "GitHub Actions quota blocked as of 2026-10-26T07:46:43.992Z: runner_id=0, steps=0 in seven checked required jobs.",
+      "GitHub Actions quota-blocked at 2026-10-26T08:42:23.183Z: seven checked non-dynamic jobs runner_id=0 and zero steps.",
       "activity MAIN 0c27e90 != frozen 3991dd2.",
       "fleet MAIN 4e7a2be != frozen d555d28.",
       "service MAIN eefddb3 != frozen f2692ad.",
@@ -1211,8 +1237,8 @@
       "simulator MAIN a61e8dc != frozen 23c226d.",
       "seneschal MAIN ab5bf14 != frozen 8411990.",
       "federation MAIN f9baa5a != frozen a5fa3f2.",
-      "Federation release-state JSON absent in frozen head; current preflight differs from policy (Activity/Seneschal).",
-      "0/7 published/accepted; final E2E unverified."
+      "Federation release-state JSON absent on frozen and current main; preflight source SHAs disagree with policy (Activity/Seneschal).",
+      "0/7 production releases accepted; final E2E not verified."
     ],
     "completion_gate": "Only successful Fed seven-app production E2E after seven ordered exact-SHA authenticated production releases.",
     "release_ready_source": true,
@@ -1229,7 +1255,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-10-26T07:46:43.992Z",
+    "latest_review_at": "2026-10-26T08:42:23.183Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": true,
@@ -1238,7 +1264,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-10-26T07:46:43.992Z",
+    "last_review_at": "2026-10-26T08:42:23.183Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -1263,7 +1289,7 @@
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
           "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T07:46:43.992Z"
+          "observed_at": "2026-10-26T08:42:23.183Z"
         },
         {
           "app": "fleet",
@@ -1276,7 +1302,7 @@
           "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/4e7a2be41138d1e4cf6206f8f13f9510984addca",
           "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T07:46:43.992Z"
+          "observed_at": "2026-10-26T08:42:23.183Z"
         },
         {
           "app": "service",
@@ -1289,7 +1315,7 @@
           "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/eefddb3eff2c9775366b0cfc667b606e7799ff2d",
           "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T07:46:43.992Z"
+          "observed_at": "2026-10-26T08:42:23.183Z"
         },
         {
           "app": "urban",
@@ -1302,7 +1328,7 @@
           "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/3bdad1199e4e07024cc3f6a9f880289a57226028",
           "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T07:46:43.992Z"
+          "observed_at": "2026-10-26T08:42:23.183Z"
         },
         {
           "app": "simulator",
@@ -1315,7 +1341,7 @@
           "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a61e8dcecf5604ce96d2a04adc3cb820c5063809",
           "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T07:46:43.992Z"
+          "observed_at": "2026-10-26T08:42:23.183Z"
         },
         {
           "app": "seneschal",
@@ -1328,7 +1354,7 @@
           "url": "https://github.com/Satofumi-Goto/seneschal/commit/ab5bf14ae41baf07383435602fe328b4763a42bf",
           "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T07:46:43.992Z"
+          "observed_at": "2026-10-26T08:42:23.183Z"
         },
         {
           "app": "federation",
@@ -1341,7 +1367,7 @@
           "url": "https://github.com/Satofumi-Goto/federation-portal/commit/f9baa5a62a87e2915e5575930bf08ff7ba07a793",
           "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T07:46:43.992Z"
+          "observed_at": "2026-10-26T08:42:23.183Z"
         }
       ]
     },
@@ -1368,7 +1394,7 @@
       "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
       "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     {
       "app": "fleet",
@@ -1381,7 +1407,7 @@
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/4e7a2be41138d1e4cf6206f8f13f9510984addca",
       "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     {
       "app": "service",
@@ -1394,7 +1420,7 @@
       "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/eefddb3eff2c9775366b0cfc667b606e7799ff2d",
       "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     {
       "app": "urban",
@@ -1407,7 +1433,7 @@
       "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/3bdad1199e4e07024cc3f6a9f880289a57226028",
       "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     {
       "app": "simulator",
@@ -1420,7 +1446,7 @@
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a61e8dcecf5604ce96d2a04adc3cb820c5063809",
       "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     {
       "app": "seneschal",
@@ -1433,7 +1459,7 @@
       "url": "https://github.com/Satofumi-Goto/seneschal/commit/ab5bf14ae41baf07383435602fe328b4763a42bf",
       "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     },
     {
       "app": "federation",
@@ -1446,7 +1472,7 @@
       "url": "https://github.com/Satofumi-Goto/federation-portal/commit/f9baa5a62a87e2915e5575930bf08ff7ba07a793",
       "impact": "Frozen MAIN mismatch; publication through MAIN cannot meet frozen SHA. Authorized maintainer reconciliation required. No seven-app repository changes by orchestrator.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T07:46:43.992Z"
+      "observed_at": "2026-10-26T08:42:23.183Z"
     }
   ]
 }
