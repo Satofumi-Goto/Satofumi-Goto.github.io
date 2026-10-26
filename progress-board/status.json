@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-26T22:43:50.048Z",
+  "generated_at": "2026-10-26T23:46:19.348Z",
   "source": "GitHub connector — release-freeze publication-only observation of exact frozen SHA, required Actions runner evidence, recent PR and workflow metadata",
   "completed_total": 106,
   "apps": [
@@ -93,7 +93,7 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "2026-10-26T22:43:50.048Z: RELEASE FREEZE read-only observation: activity MAIN 0c27e90 != frozen 3991dd2 (+1); latest required runner_id=0/zero steps. All seven frozen MAIN checks mismatch; 0/7 authenticated publications. No controlled-repo changes.",
+      "current": "2026-10-26T23:46:19.348Z: RELEASE FREEZE observation: unchanged 0/7 frozen MAIN integrity; seven representative required CI runs had runner_id=0 and zero steps. Seneschal PR Audit/Guard obtained runners (recovery qualification unconfirmed); 0/7 accepted publications. No controlled-repo writes.",
       "next": "Await authorized frozen MAIN reconciliation and qualifying Actions quota recovery or 2026-11-01T00:00:00Z rollover. Only MAIN workflow_dispatch in Activity → Fleet → Service Hub → Urban → Simulator → Seneschal → Federation order; exact-SHA/authenticated ACK; final production E2E. No marker commits or old-PR changes.",
       "evidence": [
         {
@@ -618,12 +618,15 @@
     "simulator_latest_required_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40247937685",
     "seneschal_latest_required_ci": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299",
     "federation_latest_required_ci": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481",
-    "last_release_freeze_observed_at": "2026-10-26T22:43:50.048Z"
+    "last_release_freeze_observed_at": "2026-10-26T22:43:50.048Z",
+    "seneschal_pr_audit_runner": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40412142118",
+    "seneschal_pr_guard_runner": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40412892265",
+    "last_release_observation": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/status.json"
   },
   "notes": [
-    "RELEASE FREEZE: 0/7 MAIN refs agree with immutable policy; Seneschal now 57 commits ahead (+11 since previous observation); other MAIN refs unchanged.",
-    "Required non-dynamic GitHub Actions jobs remain runnerless (runner_id=0, zero steps); no qualifying recovery, manual release or retries. No source/workflow/PR/marker edits in seven controlled repos.",
-    "Federation required release-state JSON absent on frozen and current MAIN; frozen preflight matches policy but current preflight disagrees on Activity and Seneschal. Production accepted 0/7, final E2E unverified."
+    "RELEASE FREEZE: 0/7 MAIN refs match policy; all heads unchanged since previous observation (first five +1 each, Seneschal +72, Federation +31).",
+    "Seven representative CI jobs remain runnerless/zero-step. Seneschal PR Audit/Guard successfully obtained runners on Oct 26, but qualifying release-runner recovery could not be established; branch protection read is forbidden.",
+    "No manual release since freeze; production acceptance 0/7 and E2E pending. Federation required release-state JSON absent on frozen/current HEAD and current preflight conflicts with policy for Activity and Seneschal. No controlled repo, PR, marker, or workflow modifications."
   ],
   "orchestrator": {
     "enabled": true,
@@ -639,8 +642,8 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T22:43:50.048Z",
-        "recheck_note": "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+        "observed_at": "2026-10-26T23:46:19.348Z",
+        "recheck_note": "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
         "started_at": "2026-10-25T22:58:54Z",
         "completed_at": "2026-10-25T22:58:56Z"
       },
@@ -651,8 +654,8 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T22:43:50.048Z",
-        "recheck_note": "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+        "observed_at": "2026-10-26T23:46:19.348Z",
+        "recheck_note": "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
         "started_at": "2026-10-26T00:03:14Z",
         "completed_at": "2026-10-26T00:03:16Z"
       },
@@ -663,8 +666,8 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T22:43:50.048Z",
-        "recheck_note": "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+        "observed_at": "2026-10-26T23:46:19.348Z",
+        "recheck_note": "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
         "started_at": "2026-10-26T00:05:08Z",
         "completed_at": "2026-10-26T00:05:10Z"
       },
@@ -675,8 +678,8 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T22:43:50.048Z",
-        "recheck_note": "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+        "observed_at": "2026-10-26T23:46:19.348Z",
+        "recheck_note": "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
         "started_at": "2026-10-26T00:07:15Z",
         "completed_at": "2026-10-26T00:07:17Z"
       },
@@ -687,8 +690,8 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T22:43:50.048Z",
-        "recheck_note": "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+        "observed_at": "2026-10-26T23:46:19.348Z",
+        "recheck_note": "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
         "started_at": "2026-10-26T00:09:03Z",
         "completed_at": "2026-10-26T00:09:05Z"
       },
@@ -699,8 +702,8 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T22:43:50.048Z",
-        "recheck_note": "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+        "observed_at": "2026-10-26T23:46:19.348Z",
+        "recheck_note": "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
         "started_at": "2026-10-26T04:39:15Z",
         "completed_at": "2026-10-26T04:39:17Z"
       },
@@ -711,8 +714,8 @@
         "runner_id": 0,
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
-        "observed_at": "2026-10-26T22:43:50.048Z",
-        "recheck_note": "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+        "observed_at": "2026-10-26T23:46:19.348Z",
+        "recheck_note": "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
         "started_at": "2026-10-26T01:03:35Z",
         "completed_at": "2026-10-26T01:03:37Z"
       },
@@ -738,10 +741,36 @@
         "conclusion": "success",
         "observed_at": "2026-10-26T14:43:49.086Z",
         "required_for_release": false
+      },
+      "seneschal_pr_runner_signal": {
+        "audit": {
+          "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40412142118",
+          "event": "pull_request",
+          "conclusion": "success",
+          "runner_id": 1000014635,
+          "runner_name": "GitHub Actions 1000014635",
+          "executed_steps": 23,
+          "started_at": "2026-10-26T22:24:13Z",
+          "completed_at": "2026-10-26T22:26:48Z"
+        },
+        "guard": {
+          "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40412892265",
+          "event": "pull_request_target",
+          "conclusion": "success",
+          "runner_id": 1000014636,
+          "runner_name": "GitHub Actions 1000014636",
+          "executed_steps": 5,
+          "started_at": "2026-10-26T22:30:04Z",
+          "completed_at": "2026-10-26T22:30:13Z"
+        },
+        "release_recovery_qualifying": false,
+        "required_status_check_unverified": true,
+        "note": "PR workflow runners worked, but GitHub branch-protection and required-status-check reads returned 403; no confirmed release recovery or cross-repository billing recovery.",
+        "observed_at": "2026-10-26T23:46:19.348Z"
       }
     },
-    "last_cycle": "2026-10-26T22:43:50.048Z",
-    "current_action": "2026-10-26T22:43:50.048Z: RELEASE FREEZE observation only. Frozen-main integrity 0/7; Seneschal +72 (15 more than prior cycle), Federation +31; no qualifying runner recovery. No dispatch, rerun, marker/PR/source writes. Exact-SHA production acceptance 0/7; final E2E pending.",
+    "last_cycle": "2026-10-26T23:46:19.348Z",
+    "current_action": "2026-10-26T23:46:19.348Z: RELEASE FREEZE observation only. No main drift since prior cycle; 0/7 SHA integrity, 0/7 accepted. PR-runner execution observed in Seneschal Audit/Guard, but required release-runner recovery remains unconfirmed; publication remains gated. No writes to controlled repositories or workflow dispatch.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -762,7 +791,7 @@
         "frozen_head": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T22:43:50.048Z"
+        "last_observed_at": "2026-10-26T23:46:19.348Z"
       },
       "fleet": {
         "repo": "Satofumi-Goto/fleet-operations-console",
@@ -781,7 +810,7 @@
         "frozen_head": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T22:43:50.048Z"
+        "last_observed_at": "2026-10-26T23:46:19.348Z"
       },
       "service": {
         "repo": "Satofumi-Goto/service-hub-console",
@@ -800,7 +829,7 @@
         "frozen_head": "f2692add810011da46f686d24bc98ba7f8713e1c",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T22:43:50.048Z"
+        "last_observed_at": "2026-10-26T23:46:19.348Z"
       },
       "urban": {
         "repo": "Satofumi-Goto/urban-operation-console",
@@ -819,7 +848,7 @@
         "frozen_head": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T22:43:50.048Z"
+        "last_observed_at": "2026-10-26T23:46:19.348Z"
       },
       "simulator": {
         "repo": "Satofumi-Goto/mobility-business-lab",
@@ -838,7 +867,7 @@
         "frozen_head": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T22:43:50.048Z"
+        "last_observed_at": "2026-10-26T23:46:19.348Z"
       },
       "seneschal": {
         "repo": "Satofumi-Goto/seneschal",
@@ -857,7 +886,7 @@
         "frozen_head": "841199084403b6edfa9b5927400ef9fd78acd9c7",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-26T22:43:50.048Z"
+        "last_observed_at": "2026-10-26T23:46:19.348Z"
       },
       "federation": {
         "repo": "Satofumi-Goto/federation-portal",
@@ -894,7 +923,7 @@
           "urban",
           "federation"
         ],
-        "last_observed_at": "2026-10-26T22:43:50.048Z"
+        "last_observed_at": "2026-10-26T23:46:19.348Z"
       }
     },
     "final_e2e": {
@@ -903,7 +932,7 @@
       "status": "publication_pending",
       "verified_success": false,
       "main_branch_guard": true,
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     },
     "static_validation": {
       "at": "2026-10-25T13:44:38.569Z",
@@ -931,8 +960,8 @@
         "federation"
       ],
       "seneschal_manual_dispatch_is_authorized_by_freeze": true,
-      "observed_at": "2026-10-26T22:43:50.048Z",
-      "last_observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z",
+      "last_observed_at": "2026-10-26T23:46:19.348Z"
     },
     "release_freeze": true,
     "publicationOnlyRemaining": true,
@@ -954,7 +983,7 @@
       "productionReleaseVerified": false,
       "safe_to_publish_first_six": false,
       "safe_to_publish_federation_after_first_six": false,
-      "observed_at": "2026-10-26T22:43:50.048Z",
+      "observed_at": "2026-10-26T23:46:19.348Z",
       "release_state_file_exists_on_frozen_head": false,
       "release_state_file_exists_on_current_main": false,
       "preflight_policy_mismatches": [
@@ -973,11 +1002,11 @@
     },
     "quota_recovery": {
       "recovered": false,
-      "runner_evidence": "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+      "runner_evidence": "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
       "billing_rollover": "2026-11-01T00:00:00Z",
       "activity_initial_probe_permitted": false,
-      "observed_at": "2026-10-26T22:43:50.048Z",
-      "latest_run_listing_limit": "20 recent MAIN workflow runs plus 5 recent workflow_dispatch runs per repository; compare references and selected required jobs inspected.",
+      "observed_at": "2026-10-26T23:46:19.348Z",
+      "latest_run_listing_limit": "Seven MAIN heads; seven representative CI jobs; seven repositories' workflow_dispatch run lists; recent workflows examined including Seneschal PR Audit/Guard.",
       "non_required_runner_signal": {
         "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40321159570",
         "name": "Repository Index",
@@ -988,6 +1017,32 @@
         "conclusion": "success",
         "observed_at": "2026-10-26T14:43:49.086Z",
         "required_for_release": false
+      },
+      "pr_runner_signal": {
+        "audit": {
+          "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40412142118",
+          "event": "pull_request",
+          "conclusion": "success",
+          "runner_id": 1000014635,
+          "runner_name": "GitHub Actions 1000014635",
+          "executed_steps": 23,
+          "started_at": "2026-10-26T22:24:13Z",
+          "completed_at": "2026-10-26T22:26:48Z"
+        },
+        "guard": {
+          "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40412892265",
+          "event": "pull_request_target",
+          "conclusion": "success",
+          "runner_id": 1000014636,
+          "runner_name": "GitHub Actions 1000014636",
+          "executed_steps": 5,
+          "started_at": "2026-10-26T22:30:04Z",
+          "completed_at": "2026-10-26T22:30:13Z"
+        },
+        "release_recovery_qualifying": false,
+        "required_status_check_unverified": true,
+        "note": "PR workflow runners worked, but GitHub branch-protection and required-status-check reads returned 403; no confirmed release recovery or cross-repository billing recovery.",
+        "observed_at": "2026-10-26T23:46:19.348Z"
       }
     },
     "frozen_head_integrity": {
@@ -1289,7 +1344,7 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
-      "2026-10-26T22:43:50.048Z: All seven MAIN refs and policy frozen SHAs compared; activity +1, fleet +1, service +1, urban +1, simulator +1, seneschal +72, federation +31. Latest non-dynamic required jobs checked: runner_id=0, runner_name empty, zero executed steps, each failed in 2 seconds. No workflow_dispatch release since freeze in seven repositories. Dynamic/Repository Index success is not qualifying recovery; Federation latest Independent quality review was skipped. Billing rollover at 2026-11-01T00:00:00Z permits only one Activity probe, not before. No controlled-source write, workflow rerun, release-marker edit, or publication.",
+      "2026-10-26T23:46:19.348Z: Read authoritative freeze policy; all seven MAIN refs unchanged and 0/7 match immutable frozen SHAs (activity/fleet/service/urban/simulator +1 each; Seneschal +72; Federation +31). Rechecked seven representative required CI runs: runner_id=0, runner_name empty, zero executed steps (Oct 25-26). Seneschal PR Audit #40412142118 (Oct 26 22:24Z, runner 1000014635, 23 steps) and PR Guard #40412892265 (22:30Z, runner 1000014636, 5 steps) did execute successfully; required status-check designation could not be confirmed (GitHub branch-protection read 403), so this is a partial runner-availability signal, not qualifying release-runner recovery. No new workflow_dispatch since freeze; billing rollover Nov 1 00:00Z not reached. Missing Federation release-state JSON and mismatched current preflight still block publication. No seven-app source/PR/marker changes, reruns, dispatches or release attempts.",
       "activity MAIN 0c27e90 != frozen 3991dd2 (+1)",
       "fleet MAIN 4e7a2be != frozen d555d28 (+1)",
       "service MAIN eefddb3 != frozen f2692ad (+1)",
@@ -1315,7 +1370,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-10-26T22:43:50.048Z",
+    "latest_review_at": "2026-10-26T23:46:19.348Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": true,
@@ -1324,7 +1379,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-10-26T22:43:50.048Z",
+    "last_review_at": "2026-10-26T23:46:19.348Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -1349,7 +1404,7 @@
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
           "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T22:43:50.048Z"
+          "observed_at": "2026-10-26T23:46:19.348Z"
         },
         {
           "app": "fleet",
@@ -1362,7 +1417,7 @@
           "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/4e7a2be41138d1e4cf6206f8f13f9510984addca",
           "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T22:43:50.048Z"
+          "observed_at": "2026-10-26T23:46:19.348Z"
         },
         {
           "app": "service",
@@ -1375,7 +1430,7 @@
           "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/eefddb3eff2c9775366b0cfc667b606e7799ff2d",
           "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T22:43:50.048Z"
+          "observed_at": "2026-10-26T23:46:19.348Z"
         },
         {
           "app": "urban",
@@ -1388,7 +1443,7 @@
           "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/3bdad1199e4e07024cc3f6a9f880289a57226028",
           "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T22:43:50.048Z"
+          "observed_at": "2026-10-26T23:46:19.348Z"
         },
         {
           "app": "simulator",
@@ -1401,7 +1456,7 @@
           "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a61e8dcecf5604ce96d2a04adc3cb820c5063809",
           "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T22:43:50.048Z"
+          "observed_at": "2026-10-26T23:46:19.348Z"
         },
         {
           "app": "seneschal",
@@ -1414,7 +1469,7 @@
           "url": "https://github.com/Satofumi-Goto/seneschal/commit/81aed63fef77fd2412e20c3f9b45cddcea244101",
           "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T22:43:50.048Z"
+          "observed_at": "2026-10-26T23:46:19.348Z"
         },
         {
           "app": "federation",
@@ -1427,7 +1482,7 @@
           "url": "https://github.com/Satofumi-Goto/federation-portal/commit/b707e10fb5236304f1fc51f9eaacb4b796180f41",
           "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
           "requires_user_action": true,
-          "observed_at": "2026-10-26T22:43:50.048Z"
+          "observed_at": "2026-10-26T23:46:19.348Z"
         }
       ],
       "mismatches": [
@@ -1439,7 +1494,7 @@
         "seneschal",
         "federation"
       ],
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     },
     "preflight_source_set_file": "docs/runbooks/fed-actual-operation-preflight-source-heads.json",
     "preflight_source_set_valid": false,
@@ -1464,7 +1519,7 @@
       "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
       "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     },
     {
       "app": "fleet",
@@ -1477,7 +1532,7 @@
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/4e7a2be41138d1e4cf6206f8f13f9510984addca",
       "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     },
     {
       "app": "service",
@@ -1490,7 +1545,7 @@
       "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/eefddb3eff2c9775366b0cfc667b606e7799ff2d",
       "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     },
     {
       "app": "urban",
@@ -1503,7 +1558,7 @@
       "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/3bdad1199e4e07024cc3f6a9f880289a57226028",
       "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     },
     {
       "app": "simulator",
@@ -1516,7 +1571,7 @@
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a61e8dcecf5604ce96d2a04adc3cb820c5063809",
       "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     },
     {
       "app": "seneschal",
@@ -1529,7 +1584,7 @@
       "url": "https://github.com/Satofumi-Goto/seneschal/commit/81aed63fef77fd2412e20c3f9b45cddcea244101",
       "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     },
     {
       "app": "federation",
@@ -1542,7 +1597,7 @@
       "url": "https://github.com/Satofumi-Goto/federation-portal/commit/b707e10fb5236304f1fc51f9eaacb4b796180f41",
       "impact": "Manual MAIN release would publish a SHA different from immutable policy; authorized reconciliation required without unapproved source changes.",
       "requires_user_action": true,
-      "observed_at": "2026-10-26T22:43:50.048Z"
+      "observed_at": "2026-10-26T23:46:19.348Z"
     }
   ]
 }
