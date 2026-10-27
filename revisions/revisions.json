@@ -61,94 +61,70 @@
     "Satofumi-Goto/mobility-business-lab"
    ],
    "en": {
-    "head": "One simulator that takes a business from target to investment case in a single run: operations, finance and live inputs together.",
+    "head": "Expanded the simulator to connect operating choices with investment recovery, making the conditions for a viable mobility business easier to examine.",
     "items": [
      {
-      "lead": "One place to work.",
-      "text": " The earlier standalone lab is retired. A single Base44 application opens full-screen from a scroll-friendly preview, so there is one version to try and one set of numbers behind it."
+      "lead": "Work back from a business target.",
+      "text": " Enter a target to explore operating conditions, compare candidates and run stress tests. Interactive results help identify which changes bring the business closer to its goal."
      },
      {
-      "lead": "Start from the target, get the conditions.",
-      "text": " Enter a business target and the simulator searches operating conditions, compares candidates and stress-tests them. The search runs in a background worker, so the screen stays responsive throughout."
+      "lead": "Compare regions on common terms.",
+      "text": " Tokyo, Nagoya and Toyota share comparable inputs. Move staging and overnight sites, then follow bookings through to pickup to examine how site placement affects operations."
      },
      {
-      "lead": "Three regions, one scenario.",
-      "text": " Tokyo, Nagoya and Toyota run on shared inputs. Drag staging and night-time sites on the map and follow any booking from request to pickup."
+      "lead": "Evaluate the business value of the customer touchpoint.",
+      "text": " Models connect control of the user interface with dispatch and revenue. Disruption scenarios bring normal-operation economics and resilience into the same comparison."
      },
      {
-      "lead": "What owning the customer touchpoint is worth.",
-      "text": " A disruption model and a customer-touchpoint model show how holding the user interface changes dispatch and revenue, and how operations hold up when events hit."
+      "lead": "Turn an operating plan into an investment case.",
+      "text": " Operations, profit and cash flow are calculated together, including tax and equipment renewal in the recovery assessment. Cost breakdowns and sensitivity analysis reveal which conditions drive viability."
      },
      {
-      "lead": "From operations to an investment case.",
-      "text": " The run that dispatches the vehicles also produces a 50-line P/L, 2025–2035 cash flow, IRR, NPV and sensitivity. It goes on to the questions an investment committee asks: after-tax results with loss carry-forward, renewal investment, a 2035 residual value and payback including renewal. MaaS operating cost splits into seven components so you can see what drives it, and four per-vehicle cost inputs are ready to be filled in. Tax rate and similar inputs are working values that can be replaced by registering them in Federation."
+      "lead": "Compare a measure’s benefits and trade-offs before adoption.",
+      "text": " Before-and-after comparisons of city operations, services, ride sharing and control link to Federation demonstrations. Improvements and adverse effects inform technical targets for profit improvement."
      },
      {
-      "lead": "Live inputs, every one traceable.",
-      "text": " Indices arrive in real time from Federation, and a parameter registry records where each input came from, starting from the 2030 planning baseline. The simulator's results are what the portfolio, Federation and Seneschal read."
+      "lead": "Test how the plan holds up as conditions change.",
+      "text": " Repeated trials and sensitivity analysis show the range of outcomes and performance under demanding conditions. Higher-profit candidates support comparison, while the user decides which plan to adopt."
      },
      {
-      "lead": "Before and after, with the reasoning.",
-      "text": " Four missions (city, service, sharing, control) run as a Before/After comparison on the Planning page, driven by a live demonstration in Federation. Each result opens with a one-sentence conclusion, then a table marking what improved, worsened or traded off, completion as a fraction and the spread over three random seeds. The simulator asks Federation for what it needs to sharpen the model, shows where each value came from, and sends a “maximise profit” result back as technical targets that Federation answers."
-     },
-     {
-      "lead": "A profit search that proposes, never overrides.",
-      "text": " Better operating conditions are suggested, and the plan changes only when you decide."
-     },
-     {
-      "lead": "Results that do not rest on one lucky run.",
-      "text": " A fleet-hub study dataset is published alongside the simulator. The baseline operation was re-examined so the 2030 and 2035 plans complete every planned trip, and sensitivity sweeps show a min–mean–max band over three random seeds, judged on the worst seed."
-     },
-     {
-      "lead": "Skim in seconds, audit in depth.",
-      "text": " Quick shows four headline figures (IRR, NPV, 2035 free cash flow, payback year); Standard shows every P&L line; Detailed adds how each line is calculated and the cost mix. The model and numbers are the same in all three."
+      "lead": "Move from the conclusion to its evidence in one place.",
+      "text": " Read the key investment indicators first, then inspect profit breakdowns, calculations and input sources. Shared inputs with Federation and consistent calculated results support discussion across the related materials."
      }
     ],
     "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
    },
    "reviewed_at": "2026-10-22T02:10:00Z",
    "ja": {
-    "head": "事業目標から投資判断まで、運行・財務・リアルタイム入力を一度の計算でつなぐシミュレータに統合しました。",
+    "head": "運行方式の比較から投資回収までをつなぎ、モビリティ事業が成立する条件を検討できる環境へ拡張しました。",
     "items": [
      {
-      "lead": "操作の入口を一つに。",
-      "text": "旧独立版ラボは終了。スクロールしやすいプレビューからBase44アプリを全画面で操作でき、試すのも数値の拠り所も一つです。"
+      "lead": "事業目標から、実行条件を探る。",
+      "text": "目標を入力すると、運行条件の探索・候補比較・ストレステストまでを実行。どの条件を変えれば目標に近づくかを、画面を操作しながら検討できます。"
      },
      {
-      "lead": "目標を入れると、運行条件が返る。",
-      "text": "事業目標を入力すると、運行条件の探索・候補の比較・ストレステストまでを実行。探索はワーカーで動くため、画面操作は止まりません。"
+      "lead": "地域が変わっても、同じ基準で比較。",
+      "text": "東京・名古屋・豊田を共通条件で比較し、待機・夜間拠点の配置を変更。予約受付から乗車まで追うことで、拠点配置が運行に与える影響を確認できます。"
      },
      {
-      "lead": "3地域を同じ前提で。",
-      "text": "東京・名古屋・豊田が共通の入力条件で動きます。待機・夜間拠点を地図上で動かし、予約受付から乗車までを追えます。"
+      "lead": "顧客接点の価値を、配車と収益で検討。",
+      "text": "利用者接点を持つことが配車・収益にどう効くかをモデル化。運行障害を加えた比較で、平常時の採算と障害時の対応力を併せて検討できます。"
      },
      {
-      "lead": "顧客接点を持つ価値を数字で。",
-      "text": "イベント起点の運行障害モデルと顧客接点モデルで、利用者接点の保有が配車と収益にどう効くか、障害時に運行がどう持ちこたえるかを検討できます。"
+      "lead": "運行計画を、投資判断につなぐ。",
+      "text": "運行の計算と損益・キャッシュフローを統合し、税金や設備更新まで含めた投資回収を評価。費用の内訳と感度分析から、事業成立を左右する条件を探れます。"
      },
      {
-      "lead": "運行の計算から、投資判断まで。",
-      "text": "車両を配車する同じ計算から、P/L 50項目、2025〜2035年のキャッシュフロー、IRR・NPV・感度分析を算出。さらに投資委員会で必ず問われる「税引後で、設備更新まで含めて回収できるか」を、繰越欠損金の控除上限つき法人税、更新投資、2035年の残存価値、更新投資を含む回収年で確認できます。MaaS運行費は7要素に分解して何が効いているかが見え、車両当たり4費目は入力できる状態です。税率などの入力値は、Federationへの登録で差し替えられます。"
+      "lead": "施策の効果と代償を、導入前に比較。",
+      "text": "都市運行・サービス・相乗り・制御の施策を、Federationの実演と連動して変更前後で比較。改善点と悪化点を確認し、利益改善案を技術目標の検討へつなげられます。"
      },
      {
-      "lead": "すべての入力に出所がある。",
-      "text": "Federationの指数をリアルタイムに受信し、2030年の計画基準値から各パラメータの出典を台帳で管理。シミュレータの計算結果が、ポートフォリオ・Federation・Seneschalの共通の拠り所になります。"
+      "lead": "条件の揺らぎまで含めて判断。",
+      "text": "複数の試行と感度分析で結果の幅を示し、厳しい条件での運行を確認。収益性の高い候補も比較材料として提示し、採用する計画は利用者が決められます。"
      },
      {
-      "lead": "施策のBefore/Afterを、理由つきで。",
-      "text": "city・service・sharing・controlの4ミッションを、Federationの実演と連動してPlanningページで比較。結論を一文で示し、改善・悪化・代償を記号で区別した差分表、完了率（分子/分母）、乱数3通りの幅を表示します。精緻化に必要な項目はFederationへ照会して出所つきで取り込み、「利益を最大化」の結果は技術目標値としてFederationへ送り、回答を設定に反映します。"
-     },
-     {
-      "lead": "利益探索は、提案するだけ。",
-      "text": "収益性の高い条件を提示しますが、計画を決めるのは人です。自動では書き換えません。"
-     },
-     {
-      "lead": "一度の好結果に頼らない。",
-      "text": "フリート・拠点検討用のデータセットを、シミュレータと併せて公開。基準設定の運行を見直し、2030年・2035年の計画どおり全件を完了する状態にしました。感度の掃引は乱数3通りの最小・平均・最大の帯で示し、合否は最も悪い乱数で判定します。"
-     },
-     {
-      "lead": "数秒で要点、深く追えば根拠まで。",
-      "text": "クイックはIRR・NPV・2035年フリーキャッシュフロー・投資回収年の4点、標準はP/L全行、詳細は各項目の計算根拠と費用構成。計算モデルと数値は3つとも共通です。"
+      "lead": "結論から根拠まで、一つの画面で確認。",
+      "text": "主要な投資指標を素早く把握し、必要に応じて損益の内訳・計算根拠・入力の出所まで確認できます。Federationと入力を連携し、関連資料と共通の計算結果で議論を進められます。"
      }
     ],
     "note": "地域や運行経路は仮想条件で、入力値は編集可能です。結果は事業計画の試算であり、運行実績ではありません。"
@@ -207,46 +183,30 @@
    ],
    "upstream": [],
    "en": {
-    "head": "The same argument, presented more cleanly and consistently for public reading.",
+    "head": "Reorganised the relationship between mobility services and their operating foundation, connecting customer value with the conditions for a viable business.",
     "items": [
      {
-      "lead": "Consistent from the homepage to the study.",
-      "text": " Descriptions are synchronised with the homepage and the value proposition."
+      "lead": "Understand the service and what it takes to sustain it.",
+      "text": " Mobility demand and diverse services are explained alongside the vehicle, site and energy concepts, making the relationship between customer value and the operating foundation easier to follow."
      },
      {
-      "lead": "Safe to share publicly.",
-      "text": " Target-company references are removed from the public PDF, with system names retained."
-     },
-     {
-      "lead": "A refreshed FC skateboard illustration.",
-      "text": " Updated and consistent across the Japanese portfolio set."
-     },
-     {
-      "lead": "Its own address, its own version.",
-      "text": " Published on its own path, independent of other versions of the portfolio."
+      "lead": "Understand the concept through aligned diagrams and explanations.",
+      "text": " The FC skateboard illustration and related descriptions are aligned, helping readers see how the vehicle concept connects with services."
      }
     ],
     "note": ""
    },
    "reviewed_at": "2026-10-22T02:10:00Z",
    "ja": {
-    "head": "論旨はそのままに、公開資料として読みやすく、そろえて整えました。",
+    "head": "移動サービスと運行基盤の関係を整理し、顧客価値から事業成立条件まで読み解ける構成にしました。",
     "items": [
      {
-      "lead": "トップページから本編まで、同じ説明で。",
-      "text": "説明文を、トップページや関連する事業構想資料と統一しました。"
+      "lead": "サービスと、その成立条件を一体で捉える。",
+      "text": "移動需要と多様なサービスを、車両・拠点・エネルギーの構想と結び付けて説明。利用者に届ける価値と、それを支える運行基盤の関係を追えるようにしました。"
      },
      {
-      "lead": "公開しても安心な内容に。",
-      "text": "公開PDFから応募先企業への固有の言及を除き、システム名称は保持しました。"
-     },
-     {
-      "lead": "FCスケートボードの図を更新。",
-      "text": "日本語ポートフォリオ資料群のイラストと整合させました。"
-     },
-     {
-      "lead": "独立した公開パスで、単独で参照できる。",
-      "text": "ほかの版のポートフォリオと区別して掲載しています。"
+      "lead": "構想の関係を、図と説明で把握。",
+      "text": "FCスケートボードの図と関連資料の説明をそろえ、車両構想とサービスのつながりを視覚的にも確認できるようにしました。"
      }
     ],
     "note": ""
@@ -260,29 +220,37 @@
    ],
    "upstream": [],
    "en": {
-    "head": "Numbers stay in step with the simulator by design.",
+    "head": "Aligned operations, finance and investment recovery on common assumptions to clarify the conditions that still need to be met for commercialisation.",
     "items": [
      {
-      "lead": "Passenger revenue is now computed one way on every page.",
-      "text": " Trips per Node × Nodes × riders × fare replaces three bases that disagreed, hydrogen customer shares now sum to 100%, and depreciation follows each asset’s in-service year. 2035 stays profitable at ¥21.6B operating profit, and cash flow and returns are restated without flattery: the investment is not recovered even when 2035 cash flow is extended."
+      "lead": "Connect operating scale with financial and investment results.",
+      "text": " Aligned assumptions for passenger revenue, hydrogen demand and depreciation make the link between operations and finance traceable. Shared figures with the simulator support examination of business viability."
      },
      {
-      "lead": "A new revenue line from the same Nodes.",
-      "text": " Quantum-computing modules at the hydrogen-cooled Nodes share the Node’s cooling, building, power and network and the HPC control layer, so only quantum-specific equipment and running costs are booked. Sold as dedicated hours at published reservation prices, they add ¥15.8B of revenue and ¥10.4B of operating profit in 2035 and lift project returns against the case without them."
+      "lead": "Separate operating profit from investment recovery.",
+      "text": " Cash flow and investment indicators make clear that operating profitability does not yet deliver investment recovery in the plan. The investment remains unrecovered even when 2035 cash flow is extended, identifying the need for further business-case development."
+     },
+     {
+      "lead": "Evaluate shared infrastructure as a new revenue opportunity.",
+      "text": " Added a quantum-computing scenario that shares cooling, buildings, power and communications at hydrogen-cooled sites. Incremental equipment and operating costs and revenue from reserved computing time enable comparison with the case without quantum computing."
      }
     ],
     "note": "Figures are planning-scenario values from editable assumptions, not operating results."
    },
    "ja": {
-    "head": "数値が、シミュレータとずれない仕組みを入れました。",
+    "head": "運行・収支・投資回収を共通の前提で検証し、事業化に向けて解くべき条件を明確にしました。",
     "items": [
      {
-      "lead": "旅客売上の計算を、全ページで一本化。",
-      "text": "拠点あたり運行数×拠点数×乗車人数×運賃の式で、食い違っていた3つの算定基準を置き換えました。水素の社内・社外比率は合計100%に、減価償却は資産を使い始めた年ごとに直しています。2035年は営業利益216億円の黒字を保ち、キャッシュフローと投資指標は「2035年の水準を延長しても回収しない」と、ありのままに示しています。"
+      "lead": "運行規模から投資回収まで、つながる評価へ。",
+      "text": "旅客売上・水素需要・減価償却の前提をそろえ、運行と収支の関係を追えるようにしました。シミュレータと共通の数値に基づき、事業成立条件を検討できます。"
      },
      {
-      "lead": "同じNodeから、新しい収益源。",
-      "text": "液体水素で冷やすNodeに量子計算モジュールを置き、冷却・建屋・電力・通信とHPCの制御を共用して、量子のために追加で要る設備と運用費だけを計上しました。公開されている専有予約価格で時間販売し、2035年に売上158億円・営業利益104億円を上積み。量子を外した場合より投資指標も改善します。"
+      "lead": "黒字化と投資回収を分け、次の課題を明確に。",
+      "text": "営業黒字でも投資回収に至らない計画であることを、キャッシュフローと投資指標で明示。2035年のキャッシュフローを延長しても未回収という結果を示し、事業化に向けた追加検討の必要性を明確にしました。"
+     },
+     {
+      "lead": "共用インフラを、新たな収益機会として評価。",
+      "text": "水素冷却拠点の冷却・建屋・電力・通信を量子計算に共用する案を追加。追加設備・運用費と時間販売による収益を計上し、量子計算を含まない場合と投資指標を比較できるようにしました。"
      }
     ],
     "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
@@ -296,93 +264,85 @@
     "Satofumi-Goto/seneschal"
    ],
    "en": {
-    "head": "A scheduling app rebuilt for real life: it reads live public data, turns it into action, and is re-checked against production every morning.",
+    "head": "Connected a personalised assistant, contextual usage guidance and support for schedules and travel, taking everyday plans from conversation to action.",
     "items": [
      {
-      "lead": "An avatar-based assistant, personalised to each customer.",
-      "text": " Seneschal now has an avatar, with appearance, personality, conversation style and operating rules treated as separate elements so customers can choose and configure an assistant that suits them."
+      "lead": "Choose an assistant that suits you.",
+      "text": " Seneschal now has an avatar with personalised appearance, personality, conversation style and operating rules. Customers can select and configure an assistant around their preferences and ways of working."
      },
      {
-      "lead": "Service plans and AI-service account integration.",
-      "text": " Service plans are separated, with available and unavailable features made explicit according to the selected plan and integration with the customer's AI-service subscription."
+      "lead": "Choose around your plan and AI-service account.",
+      "text": " Available features are made explicit for each service plan and integration with the customer’s AI-service subscription, helping customers choose how to use the app with a clear view of the conditions."
      },
      {
       "lead": "Ask in the search bar, get guidance at the controls.",
-      "text": " Customers can ask how to use Seneschal from each page’s search bar. Their chosen assistant answers in a guidance card and points to the relevant controls, so they can follow the explanation as they work. Standard searches, schedule queries and action requests retain priority; explicit usage questions receive guidance."
+      "text": " Ask how to use Seneschal from each page’s search bar. The chosen assistant answers in a guidance card and points to the relevant controls, so customers can follow the explanation as they work. Standard searches, schedule queries and action requests retain priority."
      },
      {
-      "lead": "From information to action.",
-      "text": " Weather lands on the calendar, disasters on a yellow alert card, and parking and charging in the schedule. Bookings go out with congestion-aware travel time. Warnings, forecasts, earthquakes, tsunami, typhoons and AMeDAS observations from the Japan Meteorological Agency, plus heat index, elevation and solar radiation, all from free public data.  Electricity supply–demand now covers all nine grid areas (up from one) and the Ministry of Land, Infrastructure, Transport and Tourism traffic API is added. Where no station is near, the search widens from about 3 km to 8 km, and the yellow card flags power-usage rate and severe heat index."
+      "lead": "Turn everyday information into scheduling and travel decisions.",
+      "text": " Weather, disaster, parking and charging information connects with the calendar and guidance. Electricity supply–demand and heat information add context, while bookings reflect congestion-aware travel time, helping users move from checking information to considering action."
      },
      {
-      "lead": "An AI planner you can trust with your calendar.",
-      "text": " One request becomes schedule options, and nothing is written until you approve. Fixed events never move, a stale proposal cannot be approved, ending the conversation discards unapproved proposals while keeping approved events, and a lost response after saving cannot cause a double write. Behaviour is checked by an independent evaluation ledger of 134 cases (129 pass, 0 fail, 5 inconclusive) and a use-case ledger of 31 request scenarios (13 implemented, 12 waiting on external data), using fixed test data rather than the published app or real calendars."
+      "lead": "Discuss a schedule, then decide what to apply.",
+      "text": " A single request becomes a schedule proposal that is applied after the user approves it. Fixed events are respected, so users can review and compare proposals before deciding."
      },
      {
-      "lead": "From an earthquake alert to meeting up (demonstration).",
-      "text": " The alert card offers “consider going home or meeting” and opens a proposal with a meeting candidate on the map. Roads of unknown condition are dashed, a reported closure blocks selection, and nothing is saved before the normal approval step. It runs on demonstration data kept apart from real events."
+      "lead": "Consider a family meeting point after an alert (demonstration).",
+      "text": " An earthquake alert leads to map-based options for going home or meeting family. Reported road closures inform candidate selection, demonstrating a flow in which users review a proposal before deciding."
      },
      {
-      "lead": "Two-way calendar sync, no login.",
-      "text": " A public sample Google Calendar syncs both ways through change notifications with a retry queue, so nothing is lost. Square results also join the search suggestions, read-only."
+      "lead": "Consider calendar events and service options together.",
+      "text": " Two-way sync with a public sample Google Calendar and Square search suggestions connect schedule review with the search for service options."
      },
      {
-      "lead": "Ask privately, stay organised.",
-      "text": " Consultations with the assistant are kept as private conversations in the leftmost Friends tab, grouped into projects, with example prompts alongside. Earlier Seneschal routes redirect there."
+      "lead": "Organise a consultation and pick it up again.",
+      "text": " Private conversations with the assistant are saved by project. Example prompts help customers decide what to ask and support continued discussion."
      },
      {
-      "lead": "Every booking checked every morning.",
-      "text": " Every write operation, including bookings, is tested on each pull request and again each morning against the live app in a real Chrome."
-     },
-     {
-      "lead": "Quick from the first screen.",
-      "text": " The assistant, Federation console, wallet QR, side menu and the 250 KB English dictionary load only when needed.  280+ unused components, logic and packages were removed under behaviour-parity tests and before/after screen comparison. Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen is now a step-by-step intake."
+      "lead": "Reach the screens you need more readily.",
+      "text": " Screens and features now load when needed, reducing the initial loading burden and helping users get to their schedules and services."
      }
     ],
     "note": "Prototype with demonstration data where noted in the app. External-data features use free public APIs."
    },
    "ja": {
-    "head": "同じアプリを、実生活で使える形に作り替えました。公開データを読み、行動に変え、毎朝本番で確認されます。",
+    "head": "利用者に合う担当セネシャル、使い方の案内、予定と移動の支援をつなぎ、日常の行動を相談から操作まで進められるアプリへ拡張しました。",
     "items": [
      {
-      "lead": "Seneschalのアバター化・パーソナライズ。",
-      "text": "Seneschalをアバター化し、見た目・性格・会話スタイル・運用ルールを個別化。お客様が自分に合った担当セネシャルを選択・設定できる仕組みへ拡張しました。"
+      "lead": "自分に合う担当セネシャルを選べる。",
+      "text": "Seneschalをアバター化し、見た目・性格・会話スタイル・運用ルールを個別化。お客様の好みや使い方に合わせて、担当セネシャルを選択・設定できるようにしました。"
      },
      {
-      "lead": "利用プランの区分とAIサービス契約連携。",
-      "text": "利用プランを分け、お客様のAIサービス契約との連携状況に応じて、利用できる機能・できない機能を明確化しました。"
+      "lead": "利用プランとAI契約に合わせて選べる。",
+      "text": "利用プランとお客様のAIサービス契約との連携状況に応じ、使える機能を明確化。利用条件を確認しながら、自分に合う使い方を選べるようにしました。"
      },
      {
       "lead": "検索バーから質問、操作箇所まで案内。",
-      "text": "各ページの検索バーで使い方を質問すると、担当セネシャルが案内カードで回答し、該当する操作箇所を示します。説明を読みながら、そのまま操作を進められます。通常の検索・予定照会・操作依頼を優先し、使い方を明確に尋ねた場合に案内します。"
+      "text": "各ページの検索バーで使い方を質問すると、担当セネシャルが案内カードで回答し、該当する操作箇所を示します。説明を読みながら操作を進められ、通常の検索・予定照会・操作依頼も優先して使えます。"
      },
      {
-      "lead": "情報を、行動へ。",
-      "text": "天気はカレンダーに、災害は黄色カードに、駐車・充電は予定に。予約は渋滞込みの所要時間で送信されます。気象庁の警報・予報・地震・津波・台風・アメダスに加え、暑さ指数・標高・日射量まで、無料の公開データを取り込みます。 電力需給は全国9エリア（従来は1エリア）に拡大し、国土交通省の交通量APIも追加。近くに観測点が無いときは検索範囲を約3kmから約8kmへ広げ、黄色カードは電力使用率と厳しい暑さ指数も知らせます。"
+      "lead": "暮らしの情報を、予定と移動の判断へ。",
+      "text": "天気・災害・駐車・充電の情報を、カレンダーや案内につなぎました。電力需給や暑さの情報も取り込み、予約には渋滞を考慮した所要時間を反映。情報の確認から行動の検討へ進められます。"
      },
      {
-      "lead": "カレンダーを任せられるAIアシスタント。",
-      "text": "一つの依頼から予定の案を作り、承認するまでカレンダーには書き込みません。固定した予定は動かさず、古い提案は承認できず、会話を終えれば未承認の提案を破棄（承認済みは保持）、保存後に応答が失われても二重には書き込みません。動作は独立評価台帳134件（合格129・不合格0・判定不能5）とユースケース台帳31件（実装13・外部データ待ち12）で確認しています（いずれも固定の試験データで、公開版や実カレンダーの確認ではありません）。"
+      "lead": "予定づくりを相談し、納得して反映。",
+      "text": "一つの依頼から予定案を作り、利用者の承認を経てカレンダーへ反映。固定した予定を尊重し、提案を比較・確認してから決められる仕組みにしました。"
      },
      {
-      "lead": "地震の警報から、家族との合流まで（デモ）。",
-      "text": "警報カードの「帰宅・合流を検討」から、地図上に合流候補つきの提案を表示。状態が不明な道は破線、通行止めの報告があれば選択不可で、選んだだけでは保存せず通常の承認手順を経ます。通常の予定とは分離したデモデータで動作します。"
+      "lead": "災害情報から、家族との合流を検討（デモ）。",
+      "text": "地震の警報から、帰宅や家族との合流候補を地図で確認する流れを追加。通行止めの情報を候補選択に反映し、提案を確認して判断する体験をデモで示しました。"
      },
      {
-      "lead": "ログイン不要で、Googleカレンダーと双方向同期。",
-      "text": "公開サンプルのカレンダーと、変更通知と再送キューで取りこぼしなく同期します。Squareの検索結果も、読み取り専用で検索候補に加わります。"
+      "lead": "予定とサービスの候補を、一緒に検討。",
+      "text": "公開サンプルのGoogleカレンダーとの双方向同期と、Squareの検索候補を接続。予定を確認しながらサービスの選択肢を探せるようにしました。"
      },
      {
-      "lead": "相談は非公開で、整理されて残る。",
-      "text": "アシスタントへの相談は、Friendsの左端のタブに非公開の会話として残り、プロジェクト単位にまとまり、横に会話例が並びます。従来のSeneschalの入口はここへ転送されます。"
+      "lead": "相談を整理し、続きから考えられる。",
+      "text": "担当セネシャルとの非公開の相談を、プロジェクトごとに整理して保存。会話例も用意し、何を相談するかを考えるところから継続的に支援します。"
      },
      {
-      "lead": "予約は毎朝、本番で確認。",
-      "text": "予約を含むすべての書き込み操作を、PRごとに、さらに毎朝の本番（実Chrome）で自動確認します。"
-     },
-     {
-      "lead": "初期表示が速い。",
-      "text": "AIアシスタント、Federation業務コンソール、QR作成、サイドメニュー、英語辞書（250KB）は、必要なときだけ読み込みます。 使われていない部品・ロジック・依存パッケージ280点超を、動作同一性テストと画面比較のもとで削除。バックエンドが鍵を露出しないよう修正し、地図上のHTMLをエスケープ、白画面だった問診はステップ式に刷新しました。"
+      "lead": "必要な画面へ、軽快にアクセス。",
+      "text": "画面や機能を必要なときに読み込む構成へ改め、初期読み込みの負担を軽減。予定やサービスを確認する操作へ進みやすくしました。"
      }
     ],
     "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
@@ -399,93 +359,69 @@
     "Satofumi-Goto/urban-operation-console"
    ],
    "en": {
-    "head": "Federation now proves its own numbers: one source of truth, a profitability gate, and cards that are scored and independently reviewed.",
+    "head": "Expanded the platform to connect business planning, design, operations and quality review, supporting improvement decisions with traceable evidence.",
     "items": [
      {
-      "lead": "One source of truth.",
-      "text": " The simulator's project-finance engine is the reference for calculated results. Indices stay in Federation and flow out in real time, and Seneschal's numeric baseline follows both."
+      "lead": "Discuss the business and operations using shared figures.",
+      "text": " Simulator results and Federation indices align assumptions across the related applications and materials. Calculation discrepancies can be checked and plans examined on a common basis."
      },
      {
-      "lead": "Full project finance, fed back.",
-      "text": " A 50-line P/L, 2025–2035 cash flow, IRR, NPV and sensitivity are calculated and fed back into the portfolio."
+      "lead": "Choose improvements with their financial basis in view.",
+      "text": " Profit, cash flow and investment indicators are brought together with checks linking revenue to operating scale and depreciation to investment. Users can compare profit-improvement candidates and decide which changes to adopt."
      },
      {
-      "lead": "A profit is shown only when it holds up.",
-      "text": " A 2035 profit appears only after full-system verification: revenue must reconcile with operating scale, and depreciation must be explainable from total investment and useful life. With depreciation rebased on the investment amount, 2035 operating profit in the plan scenario is +13.378 B JPY."
+      "lead": "Turn outside information into reviewable update proposals.",
+      "text": " Collected data becomes dated proposals to update indices. Users can review each proposal and decide whether to incorporate the change into the plan."
      },
      {
-      "lead": "A profit search that only proposes.",
-      "text": " The search for the most profitable conditions runs in the simulator and suggests changes without overwriting the plan."
+      "lead": "Improve AI-generated work with traceable evidence.",
+      "text": " Independent review of design and deliverable cards connects diagnosis, correction and re-review. Open findings and evidence remain traceable, and review performance is itself tested to identify missed issues."
      },
      {
-      "lead": "Fresh outside information, approved by a person.",
-      "text": " Outside data is gathered into dated proposals to update indices (latest 19 Oct), and a person approves each one."
+      "lead": "Connect anomaly detection with response and handover.",
+      "text": " Detection, cause analysis, candidate comparison and verification form one operating flow. Execution records and estimates are distinguished, while shared handover items help people coordinate the response."
      },
      {
-      "lead": "Quality you can check, not just claim.",
-      "text": " Blueprint and Artifact cards are scored continuously on a 10-point rubric, and only the independent review of a card's current content counts. Diagnosis, correction, evidence and re-review are traced in one workspace, and reviewers themselves are measured by planting known errors. With 97 cards in the ledger, each carrying its score and open findings, quality is something you can check rather than a claim."
+      "lead": "Assess design changes option by option.",
+      "text": " Requirements and evidence connect with upstream and downstream change impacts, alongside option effects, recommendations and decision dates. A model linking vehicle operation, energy, heat and mass supports decisions across disciplines."
      },
      {
-      "lead": "Documents and numbers kept in step.",
-      "text": " An automatic check against the English portfolio keeps the Blueprint cards consistent with it, and the cards were expanded to match. Two original-application images were transcribed and checked against the canonical numbers."
-     },
-     {
-      "lead": "From detection to verification in one flow.",
-      "text": " Seven Runtime tabs each have their own screen and follow one operating flow: coordination and detection, cause analysis, candidate comparison, verification. Every result says whether it comes from an execution record or an estimate from current inputs. A hand-over list runs through every tab and can be shared through Base44, so each person in charge sees the same inbox."
-     },
-     {
-      "lead": "From specification to decisions.",
-      "text": " The Design section renders the v2 specification as a model: state machines, sequence, use-case and activity diagrams, a requirement-to-evidence trace, consistency checks and upstream-and-downstream change-impact analysis. Gaps and open questions are listed, and a desk check is never shown as field-verified. It also lets you work with the specification: a 2035 vehicle model ties driving, fuel cell, storage, refuelling and heat to bill-of-materials mass, and a decision board shows, for each design decision, what every option changes, a recommended option and a due date."
-     },
-     {
-      "lead": "Notes you can navigate.",
-      "text": " The note vault is an Obsidian-style graph with hover preview, a neighbours-only view, and keyboard and pinch-zoom access. Notes with content were imported, and sourced service-operations notes for autonomous mobility are linked in."
+      "lead": "Follow connected knowledge to deepen an assessment.",
+      "text": " Sourced notes on autonomous-mobility service operations are linked in a graph, giving users access to related knowledge for design and operating decisions."
      }
     ],
     "note": "Planning-scenario values from editable assumptions, not operating results."
    },
    "ja": {
-    "head": "Federationは、自らの数値を証明できるようになりました。正本の一本化、黒字化ゲート、独立レビュー付きのカード品質管理です。",
+    "head": "事業計画・設計・運用・品質確認をつなぎ、根拠をたどりながら改善案を判断できる基盤へ拡張しました。",
     "items": [
      {
-      "lead": "数値の拠り所は一つ。",
-      "text": "シミュレータの事業収支エンジンが計算結果の正本。指数はFederationで管理してリアルタイムに受け渡し、Seneschalの数値基準も両者に追従します。"
+      "lead": "事業と運用を、共通の数値で議論。",
+      "text": "シミュレータの計算結果とFederationの指数を連携し、関連アプリ・資料の前提を統一。計算の食い違いを確認し、同じ基準で計画を検討できるようにしました。"
      },
      {
-      "lead": "事業収支を一式計算し、ポートフォリオへ戻す。",
-      "text": "P/L 50項目、2025〜2035年のキャッシュフロー、IRR、NPV、感度分析を算出し、ポートフォリオに反映します。"
+      "lead": "採算の根拠まで確認して、改善策を選ぶ。",
+      "text": "損益・キャッシュフロー・投資指標をまとめ、売上と運行規模、投資と減価償却の整合を確認。利益改善の候補を比較し、採用する変更は利用者が判断できます。"
      },
      {
-      "lead": "黒字は、成り立つときだけ示す。",
-      "text": "2035年の黒字は、売上と運行規模の整合、減価償却費が投資額と耐用年数から説明できることを検証してはじめて表示。減価償却を投資額に整合させ、計画シナリオの2035年営業利益は+13.378 B JPYです。"
+      "lead": "外部情報を、判断できる更新提案へ。",
+      "text": "収集した外部データを日付付きの指数更新案として提示。変化を計画に取り込む前に、利用者が内容を確認し採否を決められます。"
      },
      {
-      "lead": "利益探索は、提案するだけ。",
-      "text": "最も収益性の高い条件の探索はシミュレータ内で実行し、計画を書き換えずに提案します。"
+      "lead": "AIが作る内容を、根拠付きで改善。",
+      "text": "設計・成果物カードへの独立レビューを、診断・修正・再確認につなぎました。未解決の指摘と証跡をたどり、レビューの見落としも検証して、改善すべき点を確認できます。"
      },
      {
-      "lead": "外部情報を、人が承認する更新提案に。",
-      "text": "外部データを日付付きの指数更新提案にまとめ（最新は10/19）、採否は人が判断します。"
+      "lead": "異常の検知から、対応の引継ぎまで接続。",
+      "text": "検知・原因分析・候補比較・検証を一つの運用の流れに統合。実行記録と推定を区別し、担当者間で引継ぎ事項を共有して対応を進められます。"
      },
      {
-      "lead": "品質は、主張でなく確認できる。",
-      "text": "BlueprintカードとArtifactカードを10点満点で継続的に採点し、点数は最新内容に対する独立レビューの結果だけを採用。診断から修正・証跡・再レビューまでを一つの作業台でたどれ、レビュアーの見落としも既知の誤りを植え込んで測ります。97枚のカードに点数と未解決の指摘が台帳として残っています。"
+      "lead": "設計変更の影響を、選択肢ごとに判断。",
+      "text": "要求と証跡、上流・下流の変更影響を対応づけ、選択肢の影響・推奨案・期限を確認できるようにしました。車両の走行・エネルギー・排熱・質量をつなぐモデルで、分野をまたぐ判断を支援します。"
      },
      {
-      "lead": "資料と数値を、常にそろえる。",
-      "text": "英文ポートフォリオとの整合チェックを自動化し、Blueprintカードを拡充して合わせました。原本画像2点も転記して、正本の数値と照合しています。"
-     },
-     {
-      "lead": "検知から検証まで、一つの流れで。",
-      "text": "7つのRuntimeタブがそれぞれ専用の画面を持ち、調整・検知、原因分析、候補比較、検証を一つの運用の流れでたどれます。各結果は、実行記録によるものか現在の入力からの推定かを明示。引継ぎ一覧は全タブに通し、Base44経由で共有して担当者全員が同じ受信箱を見られます。"
-     },
-     {
-      "lead": "仕様から、意思決定まで。",
-      "text": "Designセクションが仕様書v2をモデルとして表示：状態機械・シーケンス図・ユースケース図・アクティビティ図、要求から証跡へのトレース、整合チェック、上流・下流をたどる変更影響分析。欠けや未決事項は一覧にし、机上確認を実機確認済みとは表示しません。さらに仕様を使って判断できます：走行・燃料電池・貯蔵・補給・排熱を部品表の質量までつなぐ2035年車両の統合モデルと、設計判断ごとに選択肢の影響・推奨案・期限を示す判断ボード。"
-     },
-     {
-      "lead": "ノートを、たどれるグラフに。",
-      "text": "ノートのボールトをObsidian風のグラフで表示（ホバープレビュー、隣接のみ表示、キーボードとピンチ操作）。本文のあるノートを取り込み、出典つきの自動運転サービス運用ノートも接続しています。"
+      "lead": "関連する知見をたどり、検討を深める。",
+      "text": "自動運転サービスの運用知識を、出典付きのノートとして接続。関連する知見をグラフでたどり、設計や運用の検討に必要な情報へアクセスできます。"
      }
     ],
     "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
@@ -499,54 +435,38 @@
    ],
    "upstream": [],
    "en": {
-    "head": "Customer value first, carried through to a testable pilot plan: the complete 14-page edition.",
+    "head": "Clarified the path from customer needs to a business opportunity, partner coordination and a decision on whether to proceed to a pilot.",
     "items": [
      {
-      "lead": "Opens with what customers get.",
-      "text": " The page begins with the value business development delivers for customers."
+      "lead": "Translate customer value into business requirements.",
+      "text": " Experience across account development, business planning and technology planning is organised around customer value, showing how customer needs become operating and system requirements."
      },
      {
-      "lead": "A role defined by outcome, not title.",
-      "text": " Business development is described through creating customer value and carrying it into execution."
+      "lead": "Bring partners together around an executable plan.",
+      "text": " Roles, responsibilities and commercial terms across vehicles, services and sites are set out to support practical coordination on a cross-domain concept."
      },
      {
-      "lead": "One path from comparison to a pilot decision.",
-      "text": " Connected to the simulator, comparison, partnership structure and the pilot decision gate form a single path."
-     },
-     {
-      "lead": "The complete 14 pages.",
-      "text": " The 13 Oct edition is published in full, including the parts previously cut."
-     },
-     {
-      "lead": "A profile that points one way.",
-      "text": " The profile is aligned to one direction: AI-driven transformation of business and services."
+      "lead": "Carry comparison through to a pilot decision.",
+      "text": " Simulation-based comparisons, partner roles and pilot decision criteria form one path, showing what needs to be examined before taking a concept to its next stage."
      }
     ],
     "note": ""
    },
    "reviewed_at": "2026-10-22T02:10:00Z",
    "ja": {
-    "head": "顧客価値を起点に、実証できる計画までつなげた14ページの完全版です。",
+    "head": "顧客課題を事業機会へ変え、パートナー連携と実証判断まで進める事業開発の道筋を明確にしました。",
     "items": [
      {
-      "lead": "冒頭で、顧客に何をもたらすかを示す。",
-      "text": "事業開発が顧客にもたらす価値から説明を始めます。"
+      "lead": "顧客価値から、事業化の要件へ。",
+      "text": "顧客にもたらす価値を起点に、法人営業・事業企画・技術企画の経験を整理。顧客ニーズを運行要件やシステム要件へ展開する進め方を示しました。"
      },
      {
-      "lead": "役職名でなく、成果で語る役割。",
-      "text": "顧客価値の創出と、事業化までの実行を中心に整理しました。"
+      "lead": "関係者を結び、実行できる計画へ。",
+      "text": "車両・サービス・拠点などの役割と責任、取引条件を整理。分野をまたぐ構想を、事業パートナーが連携して進めるための具体的な検討につなげました。"
      },
      {
-      "lead": "比較から実証判断まで、一本の道筋に。",
-      "text": "シミュレータと接続し、比較・事業パートナー間の役割整理・実証判断を一つの流れとして示します。"
-     },
-     {
-      "lead": "14ページ、完全版。",
-      "text": "10月13日版を、途中で省略されていた部分も含めて本ページに全ページ掲載しました。"
-     },
-     {
-      "lead": "プロフィールの方向をそろえる。",
-      "text": "AIを活用した事業・サービス変革という方向性に統一しました。"
+      "lead": "比較検討を、実証するかの判断へ。",
+      "text": "シミュレータによる比較、パートナー間の役割整理、実証判断を一続きに整理。構想を次の段階へ進めるために、何を確認するかを示しました。"
      }
     ],
     "note": ""
@@ -559,54 +479,38 @@
    ],
    "upstream": [],
    "en": {
-    "head": "A concept turned into an operating specification, on the same numerical baseline as the portfolio.",
+    "head": "Developed the mobility concept into operating and verification requirements, supporting discussion of what it takes to deliver the service.",
     "items": [
      {
-      "lead": "One set of numbers throughout.",
-      "text": " The English portfolio is the sole source of numbers, and the Japanese portfolio and the concept follow it."
+      "lead": "Turn the concept into requirements for operation.",
+      "text": " More detailed operating specifications connect customer-touchpoint mechanisms with their validation methods, so the proposed service and the questions to be tested can be followed together."
      },
      {
-      "lead": "Linked to Federation's design baseline.",
-      "text": " The shared 2026-10-15A baseline is incorporated, with the relationship across simulation, portfolio, concept and Federation explained."
+      "lead": "Examine service quality and economics together.",
+      "text": " Capacity, service-quality and economic constraints are set out for shared rides and combined passenger–freight service, supporting comparison of the conditions and trade-offs involved."
      },
      {
-      "lead": "Pages 1–7: from idea to operating detail.",
-      "text": " More operating-specification detail, including how the customer-touchpoint mechanisms work and how each is validated."
-     },
-     {
-      "lead": "When shared rides and passenger–freight service pay off.",
-      "text": " The conditions are set out, with capacity, service-quality and economic constraints."
-     },
-     {
-      "lead": "Operating conditions filled out, approved design intact.",
-      "text": " Service operating conditions are enriched while the approved design is preserved."
+      "lead": "Discuss the business and system on shared assumptions.",
+      "text": " Simulation, the feasibility materials and Federation’s design baseline are connected, aligning operating and numerical assumptions so business planning and system design can be examined together."
      }
     ],
     "note": ""
    },
    "reviewed_at": "2026-10-22T02:10:00Z",
    "ja": {
-    "head": "事業構想を、ポートフォリオと同じ数値基準にもとづく運用仕様へ展開しました。",
+    "head": "モビリティの構想を運用・検証の要件へ具体化し、サービスの実現条件を議論できる資料へ深めました。",
     "items": [
      {
-      "lead": "数値の基準は一つ。",
-      "text": "英語版ポートフォリオを数値の正本とし、日本語版ポートフォリオと初期構想資料がそれに従います。"
+      "lead": "構想を、動かすための要件へ。",
+      "text": "顧客接点の仕組みと検証方法まで運用仕様を具体化。どのようなサービスを提供し、そのために何を確かめるかを一続きで追えるようにしました。"
      },
      {
-      "lead": "Federationの設計基準とつながる。",
-      "text": "2026-10-15Aの共通基準を反映し、シミュレータ・ポートフォリオ・構想資料・Federationの関係を説明しました。"
+      "lead": "サービス品質と採算を、同時に検討。",
+      "text": "相乗り・貨客混載について、車両容量・サービス品質・採算の制約を整理。複数の需要を組み合わせる際に、成立条件とトレードオフを検討できます。"
      },
      {
-      "lead": "1〜7ページ：構想から運用の細部まで。",
-      "text": "顧客接点の仕組みと、それぞれの検証方法を含め、運用仕様を詳しくしました。"
-     },
-     {
-      "lead": "相乗り・貨客混載が成り立つ条件。",
-      "text": "車両容量、サービス品質、採算上の制約とともに整理しました。"
-     },
-     {
-      "lead": "運行条件を充実させ、確定済みの設計は維持。",
-      "text": "確定した設計を保ったまま、サービスの運行条件を補いました。"
+      "lead": "事業とシステムを、共通の前提で議論。",
+      "text": "シミュレータ・事業性資料・Federationの設計基準を接続。運行条件と数値の前提をそろえ、事業計画とシステム設計を対応づけて検討できる構成にしました。"
      }
     ],
     "note": "自動運転システムは、事業構想上TIER IV（ティアフォー／Autoware）を前提とします。導入や提携の実績を示すものではありません。"
@@ -614,4 +518,5 @@
   }
  }
 }
+
 
