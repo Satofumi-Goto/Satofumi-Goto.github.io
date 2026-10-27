@@ -628,7 +628,7 @@
     "required_release_runner_recovery": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40456141029"
   },
   "notes": [
-    "RELEASE FREEZE: 2026-10-27T14:38:42.139Z. Frozen SHA matches 0/7 (activity +1/-0, fleet +1/-0, service +1/-0, urban +1/-0, simulator +1/-0, seneschal +301/-0, federation +32/-0). No new MAIN drift since previous sweep (service). No controlled repository writes, PR edits, marker commits, workflow reruns or publications.",
+    "RELEASE FREEZE: 2026-10-27T14:38:42.139Z. Frozen SHA matches 0/7 (activity +1/-0, fleet +1/-0, service +1/-0, urban +1/-0, simulator +1/-0, seneschal +301/-0, federation +32/-0). All seven MAIN heads unchanged since the previous sweep. No controlled repository writes, PR edits, marker commits, workflow reruns or publications.",
     "Historical required CI zero-step jobs unchanged. Seneschal manual release #40456141029 executed credential preflight on runner but failed before deployment; subsequent Seneschal Audit/Guard and Federation Repository Index ran. Seven older required CI jobs remain zero-step; cross-repo required-job quota recovery is not established. Billing rollover 2026-11-01T00:00:00Z not reached.",
     "Production acceptance 0/7; Federation release-state JSON absent on frozen/current MAIN; current preflight mismatches Activity/Seneschal. Maintainer must stop automatic MAIN updates/reconcile frozen heads and configure BASE44_API_KEY repository Actions Secret (never disclose value)."
   ],
