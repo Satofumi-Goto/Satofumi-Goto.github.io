@@ -381,20 +381,20 @@
           <span class="action">Explore Seneschal ↗</span>
         </a>
 <details class="rev" data-rev="1" data-card="seneschal">
-  <summary>Revision log <span>Rev. 1 · updated 22 Oct 2026</span></summary>
+  <summary>Revision log <span>Rev. 1 · updated 27 Oct 2026</span></summary>
   <div class="rev-body">
     <p class="rev-head">A scheduling app rebuilt for real life: it reads live public data, turns it into action, and is re-checked against production every morning.</p>
     <ul>
-      <li><strong>Real-world signals, built in.</strong> Warnings, forecasts, earthquakes, tsunami, typhoons and AMeDAS observations from the Japan Meteorological Agency, plus heat index, elevation and solar radiation, all from free public data.</li>
+      <li><strong>An avatar-based assistant, personalised to each customer.</strong> Seneschal now has an avatar, with appearance, personality, conversation style and operating rules treated as separate elements so customers can choose and configure an assistant that suits them.</li>
+      <li><strong>Service plans and AI-service account integration.</strong> Service plans are separated, with available and unavailable features made explicit according to the selected plan and integration with the customer&#x27;s AI-service subscription.</li>
       <li><strong>From information to action.</strong> Weather lands on the calendar, disasters on a yellow alert card, and parking and charging in the schedule. Bookings go out with congestion-aware travel time.</li>
       <li><strong>An AI planner you can trust with your calendar.</strong> One request becomes schedule options, and nothing is written until you approve. Fixed events never move, a stale proposal cannot be approved, ending the conversation discards unapproved proposals while keeping approved events, and a lost response after saving cannot cause a double write. Behaviour is checked by an independent evaluation ledger of 134 cases (129 pass, 0 fail, 5 inconclusive) and a use-case ledger of 31 request scenarios (13 implemented, 12 waiting on external data), using fixed test data rather than the published app or real calendars.</li>
       <li><strong>From an earthquake alert to meeting up (demonstration).</strong> The alert card offers “consider going home or meeting” and opens a proposal with a meeting candidate on the map. Roads of unknown condition are dashed, a reported closure blocks selection, and nothing is saved before the normal approval step. It runs on demonstration data kept apart from real events.</li>
-      <li><strong>Wider coverage: power and traffic.</strong> Electricity supply–demand now covers all nine grid areas (up from one) and the Ministry of Land, Infrastructure, Transport and Tourism traffic API is added. Where no station is near, the search widens from about 3 km to 8 km, and the yellow card flags power-usage rate and severe heat index.</li>
       <li><strong>Two-way calendar sync, no login.</strong> A public sample Google Calendar syncs both ways through change notifications with a retry queue, so nothing is lost. Square results also join the search suggestions, read-only.</li>
       <li><strong>Ask privately, stay organised.</strong> Consultations with the assistant are kept as private conversations in the leftmost Friends tab, grouped into projects, with example prompts alongside. Earlier Seneschal routes redirect there.</li>
       <li><strong>Every booking checked every morning.</strong> Every write operation, including bookings, is tested on each pull request and again each morning against the live app in a real Chrome.</li>
-      <li><strong>Quick from the first screen.</strong> The assistant, Federation console, wallet QR, side menu and the 250 KB English dictionary load only when needed.</li>
-      <li><strong>Lean and hardened.</strong> 280+ unused components, logic and packages were removed under behaviour-parity tests and before/after screen comparison. Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen is now a step-by-step intake.</li>
+      <li><strong>Real-world signals, built in.</strong> Warnings, forecasts, earthquakes, tsunami, typhoons and AMeDAS observations from the Japan Meteorological Agency, plus heat index, elevation and solar radiation, all from free public data.  Electricity supply–demand now covers all nine grid areas (up from one) and the Ministry of Land, Infrastructure, Transport and Tourism traffic API is added. Where no station is near, the search widens from about 3 km to 8 km, and the yellow card flags power-usage rate and severe heat index.</li>
+      <li><strong>Quick from the first screen.</strong> The assistant, Federation console, wallet QR, side menu and the 250 KB English dictionary load only when needed.  280+ unused components, logic and packages were removed under behaviour-parity tests and before/after screen comparison. Backend functions no longer expose secrets, map overlay HTML is escaped, and the blank clinic screen is now a step-by-step intake.</li>
     </ul>
     <p class="rev-note">Prototype with demonstration data where noted in the app. External-data features use free public APIs.</p>
   </div>
@@ -467,3 +467,4 @@
   </script>
 </body>
 </html>
+
