@@ -369,8 +369,8 @@
   },
   "mode": "release-freeze",
   "release_freeze": {
-    "enabled": true,
-    "reason": "Fed actual-operation source, three-engine integration, release automation and publication gates are complete; publication and deployed E2E only remain.",
+    "enabled": false,
+    "reason": "Owner explicitly lifted the 2026-10-26 source release freeze on 2026-10-29 JST. Frozen SHA values remain as historical evidence, NOT current release gates. Development and PR validation may continue; real CI success, secrets, permission, current source/version and deployed E2E checks remain mandatory for publication.",
     "frozen_at": "2026-10-26",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
@@ -381,13 +381,15 @@
       "seneschal": "841199084403b6edfa9b5927400ef9fd78acd9c7",
       "federation": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d"
     },
-    "source_changes_allowed": false,
+    "source_changes_allowed": true,
     "exceptions": [
       "a publication attempt produces concrete executable failure evidence that cannot be resolved by rerun or configuration",
       "security-critical defect discovered in the frozen release candidate"
     ],
     "old_open_prs_are_deferred_backlog_not_release_blockers": true,
     "preferred_release_trigger": "manual workflow_dispatch on main; do not create new marker commits",
-    "publication_only": true
+    "publication_only": false,
+    "unfrozen_at": "2026-10-29",
+    "unfrozen_by": "owner_instruction"
   }
 }
