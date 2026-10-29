@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-29T10:44:59.132Z",
-  "source": "Policy read first; release_freeze.enabled=false is authoritative. Observed 7 MAIN heads, prior recovered CI runners, prior fail-closed credential check, old auxiliary publication. No release job or source write; status only 2026-10-29T10:44:59.132Z.",
+  "generated_at": "2026-10-29T11:42:06.529Z",
+  "source": "Policy read first: release_freeze.enabled=false. Observed all seven MAIN refs and Actions read-only; historical runner recovery, new simulator credential gate failure, and latest Federation zero-step auxiliary infrastructure failure. No app, marker, PR or workflow writes.",
   "completed_total": 0,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
       "head": "8055d26a",
-      "summary": "2026-10-29T10:44:59.132Z: activity MAIN 8055d26a; release_freeze.enabled=false; official exact-public-SHA release 0/7, final E2E pending.",
+      "summary": "2026-10-29T11:42:06.529Z: activity MAIN 8055d26a unchanged; authoritative freeze=false. Formal exact-public-SHA acceptance 0/7; final E2E pending.",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
       "main_sha": "8055d26aa12c05cd00ea05a43974e5eb248534f9",
       "release_verified": false,
@@ -20,7 +20,7 @@
       "name": "Fleet",
       "status": "red",
       "head": "18a8e9aa",
-      "summary": "2026-10-29T10:44:59.132Z: fleet MAIN 18a8e9aa; release_freeze.enabled=false; official exact-public-SHA release 0/7, final E2E pending.",
+      "summary": "2026-10-29T11:42:06.529Z: fleet MAIN 18a8e9aa unchanged; authoritative freeze=false. Formal exact-public-SHA acceptance 0/7; final E2E pending.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
       "main_sha": "18a8e9aa88685c21d649c46b435780ac361062be",
       "release_verified": false,
@@ -32,7 +32,7 @@
       "name": "Service Hub",
       "status": "red",
       "head": "4612429b",
-      "summary": "2026-10-29T10:44:59.132Z: service MAIN 4612429b; release_freeze.enabled=false; official exact-public-SHA release 0/7, final E2E pending.",
+      "summary": "2026-10-29T11:42:06.529Z: service MAIN 4612429b unchanged; authoritative freeze=false. Formal exact-public-SHA acceptance 0/7; final E2E pending.",
       "url": "https://github.com/Satofumi-Goto/service-hub-console",
       "main_sha": "4612429b30613d5d49c5a107c209fb53b8ca2e0d",
       "release_verified": false,
@@ -44,7 +44,7 @@
       "name": "Urban",
       "status": "red",
       "head": "b51174b0",
-      "summary": "2026-10-29T10:44:59.132Z: urban MAIN b51174b0; release_freeze.enabled=false; official exact-public-SHA release 0/7, final E2E pending.",
+      "summary": "2026-10-29T11:42:06.529Z: urban MAIN b51174b0 unchanged; authoritative freeze=false. Formal exact-public-SHA acceptance 0/7; final E2E pending.",
       "url": "https://github.com/Satofumi-Goto/urban-operation-console",
       "main_sha": "b51174b05fdea4b665625819370a8a78f13241e6",
       "release_verified": false,
@@ -55,12 +55,12 @@
     {
       "name": "Simulator",
       "status": "red",
-      "head": "0d917fa2",
-      "summary": "2026-10-29T10:44:59.132Z: simulator MAIN 0d917fa2 changed; release_freeze.enabled=false; official exact-public-SHA release 0/7, final E2E pending. No current-head production or CI acceptance evidenced.",
+      "head": "e4437019",
+      "summary": "2026-10-29T11:42:06.529Z: simulator MAIN e4437019 updated; authoritative freeze=false. Formal exact-public-SHA acceptance 0/7; final E2E pending. Current CI passed; scoped release blocked by BASE44_API_KEY readiness.",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab",
-      "main_sha": "0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
+      "main_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
       "release_verified": false,
-      "release_state": "publication_pending_current_source_validation",
+      "release_state": "publication_pending_credential_configuration",
       "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
       "freeze_head_matches_main": false
     },
@@ -68,23 +68,23 @@
       "name": "Seneschal",
       "status": "red",
       "head": "99ee978e",
-      "summary": "2026-10-29T10:44:59.132Z: seneschal MAIN 99ee978e; release_freeze.enabled=false; official exact-public-SHA release 0/7, final E2E pending.",
+      "summary": "2026-10-29T11:42:06.529Z: seneschal MAIN 99ee978e unchanged; authoritative freeze=false. Formal exact-public-SHA acceptance 0/7; final E2E pending.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
       "main_sha": "99ee978e2e28830d5f86f55ae94b675569ad02f4",
       "release_verified": false,
-      "release_state": "publication_pending_prior_credential_gate_failure",
+      "release_state": "publication_pending_current_source_validation",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
       "freeze_head_matches_main": false
     },
     {
       "name": "Federation",
       "status": "red",
-      "head": "3df7c0ec",
-      "summary": "2026-10-29T10:44:59.132Z: federation MAIN 3df7c0ec changed; release_freeze.enabled=false; official exact-public-SHA release 0/7, final E2E pending. No current-head production or CI acceptance evidenced.",
+      "head": "138538cc",
+      "summary": "2026-10-29T11:42:06.529Z: federation MAIN 138538cc updated; authoritative freeze=false. Formal exact-public-SHA acceptance 0/7; final E2E pending. Latest auxiliary publication failed with zero executed steps; not a source-code failure.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "3df7c0ec81d07ce4268231a752d6278cc869f34b",
+      "main_sha": "138538cccf885ad8a52627cd20cf718c43ff4854",
       "release_verified": false,
-      "release_state": "publication_pending_credential_gate_failed",
+      "release_state": "publication_pending_credential_and_missing_state",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
       "freeze_head_matches_main": false
     }
@@ -93,16 +93,20 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "2026-10-29T10:44:59.132Z: Authoritative policy release_freeze.enabled=false; status mode development. MAIN Simulator 0d917fa2 and Federation 3df7c0ec changed; other five stable. Historical required CI runner recovery confirmed, no release dispatch. Credential gate previously failed in 40842907621; stale preflight six-SHA set and Federation release-state JSON missing. Exact-SHA production 0/7, final E2E unverified.",
-      "next": "Only publication sequence Activity→Fleet→Service Hub→Urban→Simulator→Seneschal→Federation; after exact-SHA authenticated releases, automatic Fed seven-app production E2E. No marker commits. Current source, credential, manifest and authenticated production gates must pass.",
+      "current": "2026-10-29T11:42:06.529Z: authoritative policy release_freeze.enabled=false (mode=development). Seven MAIN: Activity 8055d26a, Fleet 18a8e9aa, Service 4612429b, Urban b51174b0, Simulator e4437019 (CI passed, credential gate failed), Seneschal 99ee978e, Federation 138538cc (latest auxiliary zero-step failure). Formal ordered publication 0/7 and final E2E unverified; no source/PR/marker/workflow writes.",
+      "next": "Publication only in Activity→Fleet→Service Hub→Urban→Simulator→Seneschal→Federation order; verify each exact public SHA and authenticated evidence, then automatic final E2E. Configure repository Actions Secret BASE44_API_KEY once where fail-closed gate requires it; do not expose values.",
       "evidence": [
         {
           "text": "Authoritative policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "Latest auxiliary Builder publication (not final release)",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831"
+          "text": "Simulator scoped release credential failure",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251"
+        },
+        {
+          "text": "Federation auxiliary runnerless failure",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165"
         }
       ]
     },
@@ -364,15 +368,15 @@
     }
   ],
   "latest_evidence": {
-    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/3df7c0ec81d07ce4268231a752d6278cc869f34b",
+    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/138538cccf885ad8a52627cd20cf718c43ff4854",
     "federation_index": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
     "federation_viewer_readonly": "https://github.com/Satofumi-Goto/federation-portal/pull/472",
     "federation_simulator_api": "https://github.com/Satofumi-Goto/federation-portal/pull/475",
     "seneschal_guard": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40194378437",
-    "simulator_main_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40194460513",
+    "simulator_main_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861000235",
     "simulator_api_merge": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/61",
     "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/fbcb2ef78f743d579230e1df943c0eba9b0836c1",
-    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
+    "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
     "simulator_pr62": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/62",
     "seneschal_guard_infra": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189844728",
     "simulator_ci_infra": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40189527640",
@@ -389,9 +393,9 @@
     "federation_iframe_keepalive": "https://github.com/Satofumi-Goto/federation-portal/pull/489",
     "federation_base44_sync_trigger": "https://github.com/Satofumi-Goto/federation-portal/pull/487",
     "federation_source_complete_head": "https://github.com/Satofumi-Goto/federation-portal/commit/5297d32bcffa55aa7c60ec5db7922cbcbf6cd9ea",
-    "federation_current_main": "https://github.com/Satofumi-Goto/federation-portal/commit/3df7c0ec81d07ce4268231a752d6278cc869f34b",
+    "federation_current_main": "https://github.com/Satofumi-Goto/federation-portal/commit/138538cccf885ad8a52627cd20cf718c43ff4854",
     "seneschal_current_main": "https://github.com/Satofumi-Goto/seneschal/commit/99ee978e2e28830d5f86f55ae94b675569ad02f4",
-    "simulator_current_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
+    "simulator_current_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
     "federation_auto_release": "https://github.com/Satofumi-Goto/federation-portal/pull/493",
     "seneschal_production_release_qa": "https://github.com/Satofumi-Goto/seneschal/pull/435",
     "simulator_auto_release": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/67",
@@ -440,7 +444,7 @@
     "seneschal_runner_observation": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40220251923",
     "federation_runner_observation": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40220691234",
     "policy": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json",
-    "observed_at": "2026-10-29T10:44:59.132Z",
+    "observed_at": "2026-10-29T11:42:06.529Z",
     "seneschal_new_freeze_violation": "https://github.com/Satofumi-Goto/seneschal/commit/ac23f3a2b4ffc80506fae674cc23016d6e0da395",
     "seneschal_new_freeze_compare": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...ac23f3a2b4ffc80506fae674cc23016d6e0da395",
     "seneschal_actor_photo_pr": "https://github.com/Satofumi-Goto/seneschal/pull/444",
@@ -453,7 +457,7 @@
     "fleet_latest_ci": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40247474805",
     "service_latest_ci": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/40247624333",
     "urban_latest_ci": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40247795941",
-    "simulator_latest_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40824001440",
+    "simulator_latest_ci": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861000235",
     "seneschal_latest_ci": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40251701518",
     "federation_latest_ci": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40252323481",
     "final_refreeze": "https://github.com/Satofumi-Goto/federation-portal/pull/510",
@@ -627,7 +631,9 @@
     "federation_edge_db_qa_latest": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40843042843",
     "federation_latest_auxiliary_publication": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831",
     "last_federation_auxiliary_builder": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831",
-    "last_federation_credential_gate": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40842907621"
+    "last_federation_credential_gate": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40842907621",
+    "simulator_scoped_credential_gate": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251",
+    "federation_latest_auxiliary_infrastructure_failure": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165"
   },
   "notes": [
     "2026-10-28T13:38:06.173Z: RELEASE FREEZE policy-first read-only observation. Frozen MAIN integrity 0/7: Activity/Fleet/Service/Urban/Simulator each +1, Seneschal +327, Federation +100 (24 new commits since prior observation; MAIN 29112018, PR #526 merge unified settings). Historical seven required CI jobs still runnerless with zero executed steps; latest Actions and workflow_dispatch lists reviewed (no in-order release), Federation workflow_run E2E history empty. Nonrequired PR/Gemini/dynamic runners do not prove policy-required release recovery. Billing rollover 2026-11-01T00:00:00Z not reached: no release dispatch, reruns, or marker edits. Historical Seneschal fail-closed credential gate requires repository Actions Secret BASE44_API_KEY; never read value. Federation required release-state JSON 404 on frozen HEAD and MAIN; main preflight Activity/Seneschal SHA mismatches persist. Exact authenticated production SHA acceptance 0/7; final E2E unverified. No changes to the seven controlled repositories or PRs.",
@@ -657,7 +663,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-10-29T10:44:59.132Z: historical quota-blocked zero-step evidence retained; recovered non-dynamic required MAIN push runner CI previously verified (Activity/Fleet/Service/Urban). New Simulator/Federation MAIN SHAs lack current-head CI evidence. Previous Federation guarded CLI credential check failed before deploy (40842907621); subsequent auxiliary Builder publish at older SHA (40851398831) does not clear that guard or qualify as official sequential release.",
+    "ci_state": "2026-10-29T11:42:06.529Z: previous required MAIN push CI runner recovery confirmed; simulator current MAIN e4437019 passed CI https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861000235, but scoped reader dispatch failed in executed 'Require existing Simulator workspace credential' gate https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251 before publish. Federation latest auxiliary builder publication https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165 failed before any job steps / runner assignment; classify as CI infrastructure blocked, not code failure. Credential-driven publication retries held. Formal ordered releases 0/7; final E2E not successful.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -779,20 +785,31 @@
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
         "observed_at": "2026-10-28T22:43:45.908Z",
-        "recheck_note": "2026-10-29T10:44:59.132Z: new simulator MAIN 0d917fa2, prior CI success at older SHA is not current-head CI.",
+        "recheck_note": "2026-10-29T11:42:06.529Z: MAIN e4437019 CI success with steps; separate scoped reader release credential check failed. No repeat attempted.",
         "started_at": "2026-10-26T00:09:03Z",
         "completed_at": "2026-10-26T00:09:05Z",
         "last_run_listing_observed_at": "2026-10-29T03:39:25.718Z",
         "fresh_current_head_ci": {
-          "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40824001440",
-          "head_sha": "9c06219b8117561a31be9221d736065ab268c24a",
+          "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861000235",
+          "head_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
           "conclusion": "success",
           "event": "push",
-          "runner_id": 1000015793,
-          "runner_name": "GitHub Actions 1000015793",
           "executed_steps": "nonempty",
-          "observed_at": "2026-10-29T05:37:00.262Z",
+          "observed_at": "2026-10-29T11:42:06.529Z",
           "release_workflow": false
+        },
+        "last_verified_credential_gate": {
+          "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251",
+          "workflow": "Simulator signed policy reader — scoped release",
+          "event": "workflow_dispatch",
+          "head_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+          "job": "release",
+          "failed_step": "Require existing Simulator workspace credential",
+          "before_deploy": true,
+          "secret_name_only": "BASE44_API_KEY",
+          "value_accessed": false,
+          "observed_at": "2026-10-29T11:42:06.529Z",
+          "formal_ordered_release": false
         }
       },
       "seneschal": {
@@ -816,7 +833,7 @@
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
         "observed_at": "2026-10-28T22:43:45.908Z",
-        "recheck_note": "2026-10-29T10:44:59.132Z: new federation MAIN 3df7c0ec. Historical auxiliary success at ad6f4941, fail-closed credential check failure retained.",
+        "recheck_note": "2026-10-29T11:42:06.529Z: MAIN 138538cc; most recent auxiliary Builder workflow failed with zero steps; earlier secret failure remains unresolved, no retries.",
         "started_at": "2026-10-26T01:03:35Z",
         "completed_at": "2026-10-26T01:03:37Z",
         "last_run_listing_observed_at": "2026-10-29T03:39:25.718Z",
@@ -834,6 +851,18 @@
           "conclusion": "success",
           "runner_id": 1000015879,
           "observed_at": "2026-10-29T09:42:18.851Z",
+          "formal_ordered_release": false
+        },
+        "latest_auxiliary_infrastructure_failure": {
+          "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165",
+          "workflow": "Federation self-health — verified Builder publication",
+          "head_sha": "138538cccf885ad8a52627cd20cf718c43ff4854",
+          "job": "publish",
+          "conclusion": "failure",
+          "executed_steps": 0,
+          "runner_assigned": false,
+          "classification": "CI infrastructure blocked (not executable code evidence; quota status not independently proven)",
+          "observed_at": "2026-10-29T11:42:06.529Z",
           "formal_ordered_release": false
         }
       },
@@ -1055,8 +1084,8 @@
         }
       }
     },
-    "last_cycle": "2026-10-29T10:44:59.132Z",
-    "current_action": "2026-10-29T10:44:59.132Z: Authoritative policy freeze=false; mode=development. MAIN activity:8055d26a fleet:18a8e9aa service:4612429b urban:b51174b0 simulator:0d917fa2 seneschal:99ee978e federation:3df7c0ec. Simulator/Federation moved since prior observation; current-head CI not verified. GitHub Actions quota recovery previously established from four executed required push CI jobs; no new probe. Auxiliary Federation 40851398831 succeeded only at older ad6f4941, not final ordered release. Formal release 0/7, E2E pending. Previous fail-closed credential check failed in 40842907621; no retries. Required Federation release-state 404; stale six-app preflight SHA set. No controlled app writes, PR operations, marker change, workflow dispatch or reruns. Status-only observation.",
+    "last_cycle": "2026-10-29T11:42:06.529Z",
+    "current_action": "2026-10-29T11:42:06.529Z: policy release_freeze.enabled=false; mode=development. Activity/Fleet/Service/Urban/Seneschal stable; Simulator MAIN e4437019, Federation MAIN 138538cc moved. Simulator push CI success, scoped release secret gate failure, latest Federation auxiliary zero-step failure. No formal dispatch by observer, no release markers or source edits. Missing Federation release-state, six SHA preflight mismatches, exact-SHA public acceptance 0/7, final E2E pending.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -1077,7 +1106,7 @@
         "frozen_head": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-29T10:44:59.132Z",
+        "last_observed_at": "2026-10-29T11:42:06.529Z",
         "historical_frozen_head_only": true,
         "latest_workflow_observation": {
           "id": 40810599379,
@@ -1121,7 +1150,7 @@
         "frozen_head": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-29T10:44:59.132Z",
+        "last_observed_at": "2026-10-29T11:42:06.529Z",
         "historical_frozen_head_only": true,
         "latest_workflow_observation": {
           "id": 40810682858,
@@ -1165,7 +1194,7 @@
         "frozen_head": "f2692add810011da46f686d24bc98ba7f8713e1c",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-29T10:44:59.132Z",
+        "last_observed_at": "2026-10-29T11:42:06.529Z",
         "historical_frozen_head_only": true,
         "latest_workflow_observation": {
           "id": 40810747766,
@@ -1209,7 +1238,7 @@
         "frozen_head": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-29T10:44:59.132Z",
+        "last_observed_at": "2026-10-29T11:42:06.529Z",
         "historical_frozen_head_only": true,
         "latest_workflow_observation": {
           "id": 40810821129,
@@ -1240,7 +1269,7 @@
         "repo": "Satofumi-Goto/mobility-business-lab",
         "trigger_file": ".base44-release-trigger",
         "workflow": "Base44 release — Fed actual-operation",
-        "main": "0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
+        "main": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
         "order": 5,
         "status": "publication_pending_predecessor_and_current_source_validation",
         "verified_release": false,
@@ -1253,7 +1282,7 @@
         "frozen_head": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-29T10:44:59.132Z",
+        "last_observed_at": "2026-10-29T11:42:06.529Z",
         "historical_frozen_head_only": true,
         "latest_workflow_observation": {
           "id": 40824001440,
@@ -1265,7 +1294,18 @@
           "observed_at": "2026-10-29T05:37:00.262Z",
           "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40824001440"
         },
-        "current_head_ci_state": "not_verified_after_main_change"
+        "current_head_ci_state": "not_verified_after_main_change",
+        "last_workflow_observation": {
+          "id": 40861194251,
+          "name": "Simulator signed policy reader — scoped release",
+          "event": "workflow_dispatch",
+          "conclusion": "failure",
+          "head_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+          "seven_app_release": false,
+          "failed_step": "Require existing Simulator workspace credential",
+          "observed_at": "2026-10-29T11:42:06.529Z",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251"
+        }
       },
       "seneschal": {
         "repo": "Satofumi-Goto/seneschal",
@@ -1284,7 +1324,7 @@
         "frozen_head": "841199084403b6edfa9b5927400ef9fd78acd9c7",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-29T10:44:59.132Z",
+        "last_observed_at": "2026-10-29T11:42:06.529Z",
         "credential_gate_result": "failed",
         "publication_attempt_result": "no_publish",
         "workflow_dispatch_out_of_order": true,
@@ -1304,7 +1344,7 @@
         "repo": "Satofumi-Goto/federation-portal",
         "trigger_file": ".base44-release-trigger",
         "workflow": "Federation release reality check",
-        "main": "3df7c0ec81d07ce4268231a752d6278cc869f34b",
+        "main": "138538cccf885ad8a52627cd20cf718c43ff4854",
         "order": 7,
         "status": "publication_pending_predecessor_and_current_source_validation",
         "verified_release": false,
@@ -1335,17 +1375,18 @@
           "urban",
           "federation"
         ],
-        "last_observed_at": "2026-10-29T10:44:59.132Z",
+        "last_observed_at": "2026-10-29T11:42:06.529Z",
         "historical_frozen_head_only": true,
         "latest_workflow_observation": {
-          "id": 40851398831,
+          "id": 40866619165,
           "name": "Federation self-health — verified Builder publication",
           "event": "workflow_dispatch",
-          "conclusion": "success",
-          "head_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+          "conclusion": "failure",
+          "head_sha": "138538cccf885ad8a52627cd20cf718c43ff4854",
           "seven_app_release": false,
-          "observed_at": "2026-10-29T09:42:18.851Z",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831"
+          "executed_steps": 0,
+          "observed_at": "2026-10-29T11:42:06.529Z",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165"
         },
         "auxiliary_site_publish_not_formal_release": true,
         "current_head_ci_state": "not_verified_after_main_change"
@@ -1357,7 +1398,7 @@
       "status": "publication_pending",
       "verified_success": false,
       "main_branch_guard": true,
-      "observed_at": "2026-10-29T09:42:18.851Z"
+      "observed_at": "2026-10-29T11:42:06.529Z"
     },
     "static_validation": {
       "at": "2026-10-25T13:44:38.569Z",
@@ -1393,7 +1434,7 @@
       "enabled": false,
       "policy_sha": "765b2efa7c7ac3f11cbdf232164db847a425a0c0",
       "source_of_truth": "progress-board/orchestrator-policy.json",
-      "observed_at": "2026-10-29T09:42:18.851Z"
+      "observed_at": "2026-10-29T11:42:06.529Z"
     },
     "publicationOnlyRemaining": false,
     "frozen_heads": {
@@ -1414,7 +1455,7 @@
       "productionReleaseVerified": false,
       "safe_to_publish_first_six": false,
       "safe_to_publish_federation_after_first_six": false,
-      "observed_at": "2026-10-29T09:42:18.851Z",
+      "observed_at": "2026-10-29T11:42:06.529Z",
       "release_state_file_exists_on_frozen_head": false,
       "release_state_file_exists_on_current_main": false,
       "preflight_policy_mismatches": [
@@ -1444,9 +1485,9 @@
         "fleet": "18a8e9aa88685c21d649c46b435780ac361062be",
         "service": "4612429b30613d5d49c5a107c209fb53b8ca2e0d",
         "urban": "b51174b05fdea4b665625819370a8a78f13241e6",
-        "simulator": "b06a4af16b69e06bc24b78de4e9791a2e279289d",
+        "simulator": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
         "seneschal": "99ee978e2e28830d5f86f55ae94b675569ad02f4",
-        "federation": "ad6f4941e8b4d683c3d5fd61de81460e19914a56"
+        "federation": "138538cccf885ad8a52627cd20cf718c43ff4854"
       }
     },
     "quota_recovery": {
@@ -1454,7 +1495,7 @@
       "runner_evidence": "2026-10-29T02:42:55.364Z: Confirmed non-dynamic required push CI with runner_id>0 and steps on 2026-10-29T01:21-01:22Z; fresh successful MAIN push CI for four consoles at 01:36-01:39Z. Infrastructure availability does NOT establish release secrets, source matching, or production acceptance.",
       "billing_rollover": "2026-11-01T00:00:00Z",
       "activity_initial_probe_permitted": true,
-      "observed_at": "2026-10-29T09:42:18.851Z",
+      "observed_at": "2026-10-29T11:42:06.529Z",
       "latest_run_listing_limit": "2026-10-29T09:42:18.851Z: Actual GitHub REST Actions run listings read for all seven repos; last-eight main-branch runs inspected.",
       "non_required_runner_signal": {
         "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40743252982",
@@ -1581,7 +1622,7 @@
           "seven_app_release_workflow": false
         }
       ],
-      "latest_observation": "2026-10-29T09:42:18.851Z: Direct read of 7 GitHub MAIN refs and latest Actions runs. Previous required non-dynamic MAIN push CI success persists; Federation auxiliary self-health Builder 40848701127 and 40851398831 completed successfully with executed steps, not formal seven-app production release. No new runners consumed by observer.",
+      "latest_observation": "2026-10-29T11:42:06.529Z: historical runner recovery remains established by executed required push CI and Simulator MAIN successful CI. Most recent Federation auxiliary workflow run https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165 showed no executed job steps (infrastructure-blocked classification); not evidence of code failure, and not proof global quota is available now. No release retries/probes launched.",
       "latest_federation_auxiliary_publication": {
         "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831",
         "head_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
@@ -1593,6 +1634,19 @@
         "formal_ordered_release": false,
         "seven_app_acceptance": false,
         "observed_at": "2026-10-29T09:42:18.851Z"
+      },
+      "latest_infrastructure_uncertainty": {
+        "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165",
+        "classification": "zero-step infrastructure block",
+        "quota_reblocked_confirmed": false,
+        "observed_at": "2026-10-29T11:42:06.529Z"
+      },
+      "latest_simulator_credential_failure": {
+        "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251",
+        "secret_name_only": "BASE44_API_KEY",
+        "requires_one_time_repo_secret": true,
+        "rerun_without_configuration_change": false,
+        "observed_at": "2026-10-29T11:42:06.529Z"
       }
     },
     "frozen_head_integrity": {
@@ -1602,109 +1656,111 @@
           "app": "activity",
           "repo": "Satofumi-Goto/life-transaction-console",
           "frozen_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
-          "actual_main_sha": "0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
-          "commits_ahead_of_frozen": 1,
+          "actual_main_sha": "8055d26aa12c05cd00ea05a43974e5eb248534f9",
+          "commits_ahead_of_frozen": 7,
           "commits_behind": 0,
-          "compare_url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
-          "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
-          "impact": "Historical frozen/main divergence preserved for audit; owner lifted freeze on 2026-10-29 JST. Current-release readiness must be proven separately.",
+          "compare_url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...8055d26aa12c05cd00ea05a43974e5eb248534f9",
+          "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/8055d26aa12c05cd00ea05a43974e5eb248534f9",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
-          "observed_at": "2026-10-28T22:43:45.908Z",
           "historical_only": true,
-          "active_release_gate": false
+          "active_release_gate": false,
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "fleet",
           "repo": "Satofumi-Goto/fleet-operations-console",
           "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
-          "actual_main_sha": "4e7a2be41138d1e4cf6206f8f13f9510984addca",
-          "commits_ahead_of_frozen": 1,
+          "actual_main_sha": "18a8e9aa88685c21d649c46b435780ac361062be",
+          "commits_ahead_of_frozen": 7,
           "commits_behind": 0,
-          "compare_url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...4e7a2be41138d1e4cf6206f8f13f9510984addca",
-          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/4e7a2be41138d1e4cf6206f8f13f9510984addca",
-          "impact": "Historical frozen/main divergence preserved for audit; owner lifted freeze on 2026-10-29 JST. Current-release readiness must be proven separately.",
+          "compare_url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...18a8e9aa88685c21d649c46b435780ac361062be",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/18a8e9aa88685c21d649c46b435780ac361062be",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
-          "observed_at": "2026-10-28T22:43:45.908Z",
           "historical_only": true,
-          "active_release_gate": false
+          "active_release_gate": false,
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "service",
           "repo": "Satofumi-Goto/service-hub-console",
           "frozen_sha": "f2692add810011da46f686d24bc98ba7f8713e1c",
-          "actual_main_sha": "eefddb3eff2c9775366b0cfc667b606e7799ff2d",
-          "commits_ahead_of_frozen": 1,
+          "actual_main_sha": "4612429b30613d5d49c5a107c209fb53b8ca2e0d",
+          "commits_ahead_of_frozen": 7,
           "commits_behind": 0,
-          "compare_url": "https://github.com/Satofumi-Goto/service-hub-console/compare/f2692add810011da46f686d24bc98ba7f8713e1c...eefddb3eff2c9775366b0cfc667b606e7799ff2d",
-          "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/eefddb3eff2c9775366b0cfc667b606e7799ff2d",
-          "impact": "Historical frozen/main divergence preserved for audit; owner lifted freeze on 2026-10-29 JST. Current-release readiness must be proven separately.",
+          "compare_url": "https://github.com/Satofumi-Goto/service-hub-console/compare/f2692add810011da46f686d24bc98ba7f8713e1c...4612429b30613d5d49c5a107c209fb53b8ca2e0d",
+          "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/4612429b30613d5d49c5a107c209fb53b8ca2e0d",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
-          "observed_at": "2026-10-28T22:43:45.908Z",
           "historical_only": true,
-          "active_release_gate": false
+          "active_release_gate": false,
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "urban",
           "repo": "Satofumi-Goto/urban-operation-console",
           "frozen_sha": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
-          "actual_main_sha": "3bdad1199e4e07024cc3f6a9f880289a57226028",
-          "commits_ahead_of_frozen": 1,
+          "actual_main_sha": "b51174b05fdea4b665625819370a8a78f13241e6",
+          "commits_ahead_of_frozen": 7,
           "commits_behind": 0,
-          "compare_url": "https://github.com/Satofumi-Goto/urban-operation-console/compare/983c852acbd9ec1d24ccebf87c36230d5b0b86bd...3bdad1199e4e07024cc3f6a9f880289a57226028",
-          "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/3bdad1199e4e07024cc3f6a9f880289a57226028",
-          "impact": "Historical frozen/main divergence preserved for audit; owner lifted freeze on 2026-10-29 JST. Current-release readiness must be proven separately.",
+          "compare_url": "https://github.com/Satofumi-Goto/urban-operation-console/compare/983c852acbd9ec1d24ccebf87c36230d5b0b86bd...b51174b05fdea4b665625819370a8a78f13241e6",
+          "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/b51174b05fdea4b665625819370a8a78f13241e6",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
-          "observed_at": "2026-10-28T22:43:45.908Z",
           "historical_only": true,
-          "active_release_gate": false
+          "active_release_gate": false,
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "simulator",
           "repo": "Satofumi-Goto/mobility-business-lab",
           "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
-          "actual_main_sha": "a61e8dcecf5604ce96d2a04adc3cb820c5063809",
-          "commits_ahead_of_frozen": 1,
-          "commits_behind": 0,
-          "compare_url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...a61e8dcecf5604ce96d2a04adc3cb820c5063809",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/a61e8dcecf5604ce96d2a04adc3cb820c5063809",
-          "impact": "Historical frozen/main divergence preserved for audit; owner lifted freeze on 2026-10-29 JST. Current-release readiness must be proven separately.",
+          "actual_main_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+          "commits_ahead_of_frozen": null,
+          "commits_behind": null,
+          "compare_url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
-          "observed_at": "2026-10-28T22:43:45.908Z",
           "historical_only": true,
-          "active_release_gate": false
+          "active_release_gate": false,
+          "observed_at": "2026-10-29T11:42:06.529Z",
+          "commits_count_not_recomputed": true
         },
         {
           "app": "seneschal",
           "repo": "Satofumi-Goto/seneschal",
           "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
-          "actual_main_sha": "ac23f3a2b4ffc80506fae674cc23016d6e0da395",
-          "commits_ahead_of_frozen": 327,
+          "actual_main_sha": "99ee978e2e28830d5f86f55ae94b675569ad02f4",
+          "commits_ahead_of_frozen": 330,
           "commits_behind": 0,
-          "compare_url": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...ac23f3a2b4ffc80506fae674cc23016d6e0da395",
-          "url": "https://github.com/Satofumi-Goto/seneschal/commit/ac23f3a2b4ffc80506fae674cc23016d6e0da395",
-          "impact": "Historical frozen/main divergence preserved for audit; owner lifted freeze on 2026-10-29 JST. Current-release readiness must be proven separately.",
+          "compare_url": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...99ee978e2e28830d5f86f55ae94b675569ad02f4",
+          "url": "https://github.com/Satofumi-Goto/seneschal/commit/99ee978e2e28830d5f86f55ae94b675569ad02f4",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
-          "observed_at": "2026-10-28T22:43:45.908Z",
           "historical_only": true,
-          "active_release_gate": false
+          "active_release_gate": false,
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "federation",
           "repo": "Satofumi-Goto/federation-portal",
           "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
-          "actual_main_sha": "50f85d39ec3550dcb9b8d3cdec05f693c09d49ac",
-          "commits_ahead_of_frozen": 184,
-          "commits_behind": 0,
-          "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...50f85d39ec3550dcb9b8d3cdec05f693c09d49ac",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/50f85d39ec3550dcb9b8d3cdec05f693c09d49ac",
-          "impact": "Historical frozen/main divergence preserved for audit; owner lifted freeze on 2026-10-29 JST. Current-release readiness must be proven separately.",
+          "actual_main_sha": "138538cccf885ad8a52627cd20cf718c43ff4854",
+          "commits_ahead_of_frozen": null,
+          "commits_behind": null,
+          "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...138538cccf885ad8a52627cd20cf718c43ff4854",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/138538cccf885ad8a52627cd20cf718c43ff4854",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
-          "observed_at": "2026-10-29T00:43:54.651Z",
           "historical_only": true,
-          "active_release_gate": false
+          "active_release_gate": false,
+          "observed_at": "2026-10-29T11:42:06.529Z",
+          "commits_count_not_recomputed": true
         }
       ],
-      "observed_at": "2026-10-29T06:43:43.955Z",
+      "observed_at": "2026-10-29T11:42:06.529Z",
       "active_gate": false,
       "historical_only": true
     },
@@ -1719,11 +1775,11 @@
         "commits_behind": 0,
         "compare_url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...8055d26aa12c05cd00ea05a43974e5eb248534f9",
         "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/8055d26aa12c05cd00ea05a43974e5eb248534f9",
-        "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+        "impact": "Historical freeze SHA divergence not an active release gate.",
         "requires_user_action": false,
         "historical_only": true,
         "active_release_gate": false,
-        "observed_at": "2026-10-29T06:43:43.955Z"
+        "observed_at": "2026-10-29T11:42:06.529Z"
       },
       {
         "app": "fleet",
@@ -1734,11 +1790,11 @@
         "commits_behind": 0,
         "compare_url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...18a8e9aa88685c21d649c46b435780ac361062be",
         "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/18a8e9aa88685c21d649c46b435780ac361062be",
-        "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+        "impact": "Historical freeze SHA divergence not an active release gate.",
         "requires_user_action": false,
         "historical_only": true,
         "active_release_gate": false,
-        "observed_at": "2026-10-29T06:43:43.955Z"
+        "observed_at": "2026-10-29T11:42:06.529Z"
       },
       {
         "app": "service",
@@ -1749,11 +1805,11 @@
         "commits_behind": 0,
         "compare_url": "https://github.com/Satofumi-Goto/service-hub-console/compare/f2692add810011da46f686d24bc98ba7f8713e1c...4612429b30613d5d49c5a107c209fb53b8ca2e0d",
         "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/4612429b30613d5d49c5a107c209fb53b8ca2e0d",
-        "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+        "impact": "Historical freeze SHA divergence not an active release gate.",
         "requires_user_action": false,
         "historical_only": true,
         "active_release_gate": false,
-        "observed_at": "2026-10-29T06:43:43.955Z"
+        "observed_at": "2026-10-29T11:42:06.529Z"
       },
       {
         "app": "urban",
@@ -1764,26 +1820,27 @@
         "commits_behind": 0,
         "compare_url": "https://github.com/Satofumi-Goto/urban-operation-console/compare/983c852acbd9ec1d24ccebf87c36230d5b0b86bd...b51174b05fdea4b665625819370a8a78f13241e6",
         "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/b51174b05fdea4b665625819370a8a78f13241e6",
-        "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+        "impact": "Historical freeze SHA divergence not an active release gate.",
         "requires_user_action": false,
         "historical_only": true,
         "active_release_gate": false,
-        "observed_at": "2026-10-29T06:43:43.955Z"
+        "observed_at": "2026-10-29T11:42:06.529Z"
       },
       {
         "app": "simulator",
         "repo": "Satofumi-Goto/mobility-business-lab",
         "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
-        "actual_main_sha": "b06a4af16b69e06bc24b78de4e9791a2e279289d",
-        "commits_ahead_of_frozen": 3,
-        "commits_behind": 0,
-        "compare_url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...b06a4af16b69e06bc24b78de4e9791a2e279289d",
-        "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/b06a4af16b69e06bc24b78de4e9791a2e279289d",
-        "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+        "actual_main_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+        "commits_ahead_of_frozen": null,
+        "commits_behind": null,
+        "compare_url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+        "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+        "impact": "Historical freeze SHA divergence not an active release gate.",
         "requires_user_action": false,
         "historical_only": true,
         "active_release_gate": false,
-        "observed_at": "2026-10-29T06:43:43.955Z"
+        "observed_at": "2026-10-29T11:42:06.529Z",
+        "commits_count_not_recomputed": true
       },
       {
         "app": "seneschal",
@@ -1794,26 +1851,27 @@
         "commits_behind": 0,
         "compare_url": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...99ee978e2e28830d5f86f55ae94b675569ad02f4",
         "url": "https://github.com/Satofumi-Goto/seneschal/commit/99ee978e2e28830d5f86f55ae94b675569ad02f4",
-        "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+        "impact": "Historical freeze SHA divergence not an active release gate.",
         "requires_user_action": false,
         "historical_only": true,
         "active_release_gate": false,
-        "observed_at": "2026-10-29T06:43:43.955Z"
+        "observed_at": "2026-10-29T11:42:06.529Z"
       },
       {
         "app": "federation",
         "repo": "Satofumi-Goto/federation-portal",
         "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
-        "actual_main_sha": "427f80f3d2649aa7a075e9e043f023b4bb60cbd6",
-        "commits_ahead_of_frozen": 257,
-        "commits_behind": 0,
-        "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...427f80f3d2649aa7a075e9e043f023b4bb60cbd6",
-        "url": "https://github.com/Satofumi-Goto/federation-portal/commit/427f80f3d2649aa7a075e9e043f023b4bb60cbd6",
-        "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+        "actual_main_sha": "138538cccf885ad8a52627cd20cf718c43ff4854",
+        "commits_ahead_of_frozen": null,
+        "commits_behind": null,
+        "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...138538cccf885ad8a52627cd20cf718c43ff4854",
+        "url": "https://github.com/Satofumi-Goto/federation-portal/commit/138538cccf885ad8a52627cd20cf718c43ff4854",
+        "impact": "Historical freeze SHA divergence not an active release gate.",
         "requires_user_action": false,
         "historical_only": true,
         "active_release_gate": false,
-        "observed_at": "2026-10-29T06:43:43.955Z"
+        "observed_at": "2026-10-29T11:42:06.529Z",
+        "commits_count_not_recomputed": true
       }
     ],
     "owner_unfreeze": {
@@ -1932,10 +1990,12 @@
       "repo": "Satofumi-Goto/mobility-business-lab",
       "action": "After current-source release validation and credential readiness, and every preceding exact-SHA production acceptance gate, manually workflow_dispatch 'Base44 release — Fed actual-operation' on MAIN in strict order 5; no marker commits. Verify exact_published_sha, real_compute_two_calls, kpi_hash_receipt, priority_read, simulator_to_federation_info_health.",
       "blocked_by": [
-        "Prior release exact-SHA authenticated acceptance pending."
+        "Preceding exact-SHA public releases not accepted.",
+        "Scoped release credential readiness failed: configure one-time repository Actions Secret BASE44_API_KEY; no retries until configured.",
+        "Evidence: https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251"
       ],
       "evidence": [
-        "https://github.com/Satofumi-Goto/mobility-business-lab/commit/0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
+        "https://github.com/Satofumi-Goto/mobility-business-lab/commit/e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
         "https://github.com/Satofumi-Goto/mobility-business-lab/actions"
       ],
       "freeze_is_release_gate": false
@@ -1961,12 +2021,13 @@
       "repo": "Satofumi-Goto/federation-portal",
       "action": "After current-source release validation and credential readiness, and every preceding exact-SHA production acceptance gate, manually workflow_dispatch 'Federation release reality check' on MAIN in strict order 7; no marker commits. Verify federation_site_publish, served_sha_or_ancestry, all_federation_backends_deployed. deploy_fed_actual_operation=true; unrelated deploy inputs=false. Require release-state JSON.",
       "blocked_by": [
-        "All preceding six production releases unaccepted.",
-        "Federation main missing required release-state JSON and six preflight SHAs mismatch current MAIN.",
-        "Latest manual site-only publication failed credential readiness before deploy (40842907621); no retries."
+        "Six preceding exact-SHA public releases not accepted.",
+        "Release-state JSON missing from MAIN; six current MAIN SHA values mismatch preflight manifest.",
+        "Guarded CLI credential check previously failed; no retry without one-time Actions Secret configuration.",
+        "Latest auxiliary Builder publication https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165 failed before runner steps; not code failure."
       ],
       "evidence": [
-        "https://github.com/Satofumi-Goto/federation-portal/commit/3df7c0ec81d07ce4268231a752d6278cc869f34b",
+        "https://github.com/Satofumi-Goto/federation-portal/commit/138538cccf885ad8a52627cd20cf718c43ff4854",
         "https://github.com/Satofumi-Goto/federation-portal/actions"
       ],
       "freeze_is_release_gate": false
@@ -1999,9 +2060,9 @@
       "fleet": "18a8e9aa88685c21d649c46b435780ac361062be",
       "service": "4612429b30613d5d49c5a107c209fb53b8ca2e0d",
       "urban": "b51174b05fdea4b665625819370a8a78f13241e6",
-      "simulator": "0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
+      "simulator": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
       "seneschal": "99ee978e2e28830d5f86f55ae94b675569ad02f4",
-      "federation": "3df7c0ec81d07ce4268231a752d6278cc869f34b"
+      "federation": "138538cccf885ad8a52627cd20cf718c43ff4854"
     },
     "mission_contract": {
       "modes": [
@@ -2037,10 +2098,12 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
-      "Authoritative policy release_freeze.enabled=false; historical frozen SHA records are not active release gates.",
+      "Authoritative policy release_freeze.enabled=false; historical frozen SHAs are not active release gates.",
       "No seven exact-public-SHA authenticated releases (0/7) and no successful final production E2E.",
-      "Federation CLI credential readiness step failed in executable run 40842907621 before deployment; do not retry guarded path until one-time repository Actions Secret BASE44_API_KEY is configured; never read key value.",
-      "Federation release-state JSON 404 on MAIN, six current main SHA values mismatch preflight manifest, and latest Simulator/Federation current-head CI unverified."
+      "Simulator scoped reader release failed at credential readiness before deploy (https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251); repository Actions Secret BASE44_API_KEY must be configured correctly; no credential value accessed.",
+      "Federation guarded CLI credential step previously failed before deployment (40842907621); no retries until one-time Actions Secret BASE44_API_KEY is configured.",
+      "Federation latest auxiliary publication showed zero executed job steps (https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165); infrastructure failure, not executable code failure.",
+      "Federation release-state JSON 404 on MAIN; six current main SHAs do not match preflight manifest."
     ],
     "completion_gate": "Only successful Fed seven-app production E2E after seven ordered exact-SHA authenticated production releases.",
     "release_ready_source": true,
@@ -2057,7 +2120,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-10-29T10:44:59.132Z",
+    "latest_review_at": "2026-10-29T11:42:06.529Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
@@ -2066,7 +2129,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-10-29T10:44:59.132Z",
+    "last_review_at": "2026-10-29T11:42:06.529Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -2089,11 +2152,11 @@
           "commits_behind": 0,
           "compare_url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...8055d26aa12c05cd00ea05a43974e5eb248534f9",
           "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/8055d26aa12c05cd00ea05a43974e5eb248534f9",
-          "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
           "historical_only": true,
           "active_release_gate": false,
-          "observed_at": "2026-10-29T10:44:59.132Z"
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "fleet",
@@ -2104,11 +2167,11 @@
           "commits_behind": 0,
           "compare_url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...18a8e9aa88685c21d649c46b435780ac361062be",
           "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/18a8e9aa88685c21d649c46b435780ac361062be",
-          "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
           "historical_only": true,
           "active_release_gate": false,
-          "observed_at": "2026-10-29T10:44:59.132Z"
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "service",
@@ -2119,11 +2182,11 @@
           "commits_behind": 0,
           "compare_url": "https://github.com/Satofumi-Goto/service-hub-console/compare/f2692add810011da46f686d24bc98ba7f8713e1c...4612429b30613d5d49c5a107c209fb53b8ca2e0d",
           "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/4612429b30613d5d49c5a107c209fb53b8ca2e0d",
-          "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
           "historical_only": true,
           "active_release_gate": false,
-          "observed_at": "2026-10-29T10:44:59.132Z"
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "urban",
@@ -2134,26 +2197,26 @@
           "commits_behind": 0,
           "compare_url": "https://github.com/Satofumi-Goto/urban-operation-console/compare/983c852acbd9ec1d24ccebf87c36230d5b0b86bd...b51174b05fdea4b665625819370a8a78f13241e6",
           "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/b51174b05fdea4b665625819370a8a78f13241e6",
-          "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
           "historical_only": true,
           "active_release_gate": false,
-          "observed_at": "2026-10-29T10:44:59.132Z"
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "simulator",
           "repo": "Satofumi-Goto/mobility-business-lab",
           "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
-          "actual_main_sha": "0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
+          "actual_main_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
           "commits_ahead_of_frozen": null,
           "commits_behind": null,
-          "compare_url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
-          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/0d917fa2f3ca1f967080b0a000d3bf4cab6bac21",
-          "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+          "compare_url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+          "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
           "historical_only": true,
           "active_release_gate": false,
-          "observed_at": "2026-10-29T10:44:59.132Z",
+          "observed_at": "2026-10-29T11:42:06.529Z",
           "commits_count_not_recomputed": true
         },
         {
@@ -2165,30 +2228,30 @@
           "commits_behind": 0,
           "compare_url": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...99ee978e2e28830d5f86f55ae94b675569ad02f4",
           "url": "https://github.com/Satofumi-Goto/seneschal/commit/99ee978e2e28830d5f86f55ae94b675569ad02f4",
-          "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
           "historical_only": true,
           "active_release_gate": false,
-          "observed_at": "2026-10-29T10:44:59.132Z"
+          "observed_at": "2026-10-29T11:42:06.529Z"
         },
         {
           "app": "federation",
           "repo": "Satofumi-Goto/federation-portal",
           "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
-          "actual_main_sha": "3df7c0ec81d07ce4268231a752d6278cc869f34b",
+          "actual_main_sha": "138538cccf885ad8a52627cd20cf718c43ff4854",
           "commits_ahead_of_frozen": null,
           "commits_behind": null,
-          "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...3df7c0ec81d07ce4268231a752d6278cc869f34b",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/3df7c0ec81d07ce4268231a752d6278cc869f34b",
-          "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+          "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...138538cccf885ad8a52627cd20cf718c43ff4854",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/138538cccf885ad8a52627cd20cf718c43ff4854",
+          "impact": "Historical freeze SHA divergence not an active release gate.",
           "requires_user_action": false,
           "historical_only": true,
           "active_release_gate": false,
-          "observed_at": "2026-10-29T10:44:59.132Z",
+          "observed_at": "2026-10-29T11:42:06.529Z",
           "commits_count_not_recomputed": true
         }
       ],
-      "observed_at": "2026-10-29T10:44:59.132Z"
+      "observed_at": "2026-10-29T11:42:06.529Z"
     },
     "preflight_source_set_file": "docs/runbooks/fed-actual-operation-preflight-source-heads.json",
     "preflight_source_set_valid": false,
@@ -2227,6 +2290,22 @@
       "seven_app_production_acceptance": false,
       "current_main_sha": "3df7c0ec81d07ce4268231a752d6278cc869f34b",
       "observed_at": "2026-10-29T10:44:59.132Z"
+    },
+    "latest_simulator_scoped_release": {
+      "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40861194251",
+      "head_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+      "formal_ordered_release": false,
+      "failed_step": "Require existing Simulator workspace credential",
+      "publication_performed": false,
+      "observed_at": "2026-10-29T11:42:06.529Z"
+    },
+    "latest_federation_auxiliary_infrastructure_failure": {
+      "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40866619165",
+      "head_sha": "138538cccf885ad8a52627cd20cf718c43ff4854",
+      "executed_steps": 0,
+      "publication_performed": false,
+      "formal_ordered_release": false,
+      "observed_at": "2026-10-29T11:42:06.529Z"
     }
   },
   "mode": "development",
@@ -2241,11 +2320,11 @@
       "commits_behind": 0,
       "compare_url": "https://github.com/Satofumi-Goto/life-transaction-console/compare/3991dd2f6b51aef5aee9428fbba650aa15529af2...8055d26aa12c05cd00ea05a43974e5eb248534f9",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console/commit/8055d26aa12c05cd00ea05a43974e5eb248534f9",
-      "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+      "impact": "Historical freeze SHA divergence not an active release gate.",
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T08:36:21.176Z"
+      "observed_at": "2026-10-29T11:42:06.529Z"
     },
     {
       "app": "fleet",
@@ -2256,11 +2335,11 @@
       "commits_behind": 0,
       "compare_url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...18a8e9aa88685c21d649c46b435780ac361062be",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/18a8e9aa88685c21d649c46b435780ac361062be",
-      "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+      "impact": "Historical freeze SHA divergence not an active release gate.",
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T08:36:21.176Z"
+      "observed_at": "2026-10-29T11:42:06.529Z"
     },
     {
       "app": "service",
@@ -2271,11 +2350,11 @@
       "commits_behind": 0,
       "compare_url": "https://github.com/Satofumi-Goto/service-hub-console/compare/f2692add810011da46f686d24bc98ba7f8713e1c...4612429b30613d5d49c5a107c209fb53b8ca2e0d",
       "url": "https://github.com/Satofumi-Goto/service-hub-console/commit/4612429b30613d5d49c5a107c209fb53b8ca2e0d",
-      "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+      "impact": "Historical freeze SHA divergence not an active release gate.",
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T08:36:21.176Z"
+      "observed_at": "2026-10-29T11:42:06.529Z"
     },
     {
       "app": "urban",
@@ -2286,26 +2365,27 @@
       "commits_behind": 0,
       "compare_url": "https://github.com/Satofumi-Goto/urban-operation-console/compare/983c852acbd9ec1d24ccebf87c36230d5b0b86bd...b51174b05fdea4b665625819370a8a78f13241e6",
       "url": "https://github.com/Satofumi-Goto/urban-operation-console/commit/b51174b05fdea4b665625819370a8a78f13241e6",
-      "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+      "impact": "Historical freeze SHA divergence not an active release gate.",
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T08:36:21.176Z"
+      "observed_at": "2026-10-29T11:42:06.529Z"
     },
     {
       "app": "simulator",
       "repo": "Satofumi-Goto/mobility-business-lab",
       "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
-      "actual_main_sha": "b06a4af16b69e06bc24b78de4e9791a2e279289d",
-      "commits_ahead_of_frozen": 3,
-      "commits_behind": 0,
-      "compare_url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...b06a4af16b69e06bc24b78de4e9791a2e279289d",
-      "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/b06a4af16b69e06bc24b78de4e9791a2e279289d",
-      "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+      "actual_main_sha": "e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+      "commits_ahead_of_frozen": null,
+      "commits_behind": null,
+      "compare_url": "https://github.com/Satofumi-Goto/mobility-business-lab/compare/23c226d97f7ab42468a3de4ce70f1da72f58c774...e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+      "url": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/e4437019c2a2eff4b298e7a7f2dd4513d0a76165",
+      "impact": "Historical freeze SHA divergence not an active release gate.",
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T08:36:21.176Z"
+      "observed_at": "2026-10-29T11:42:06.529Z",
+      "commits_count_not_recomputed": true
     },
     {
       "app": "seneschal",
@@ -2316,26 +2396,26 @@
       "commits_behind": 0,
       "compare_url": "https://github.com/Satofumi-Goto/seneschal/compare/841199084403b6edfa9b5927400ef9fd78acd9c7...99ee978e2e28830d5f86f55ae94b675569ad02f4",
       "url": "https://github.com/Satofumi-Goto/seneschal/commit/99ee978e2e28830d5f86f55ae94b675569ad02f4",
-      "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+      "impact": "Historical freeze SHA divergence not an active release gate.",
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T08:36:21.176Z"
+      "observed_at": "2026-10-29T11:42:06.529Z"
     },
     {
       "app": "federation",
       "repo": "Satofumi-Goto/federation-portal",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
-      "actual_main_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+      "actual_main_sha": "138538cccf885ad8a52627cd20cf718c43ff4854",
       "commits_ahead_of_frozen": null,
       "commits_behind": null,
-      "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...ad6f4941e8b4d683c3d5fd61de81460e19914a56",
-      "url": "https://github.com/Satofumi-Goto/federation-portal/commit/ad6f4941e8b4d683c3d5fd61de81460e19914a56",
-      "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
+      "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...138538cccf885ad8a52627cd20cf718c43ff4854",
+      "url": "https://github.com/Satofumi-Goto/federation-portal/commit/138538cccf885ad8a52627cd20cf718c43ff4854",
+      "impact": "Historical freeze SHA divergence not an active release gate.",
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T09:42:18.851Z",
+      "observed_at": "2026-10-29T11:42:06.529Z",
       "commits_count_not_recomputed": true
     }
   ]
