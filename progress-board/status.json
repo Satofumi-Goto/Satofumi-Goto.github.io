@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-29T08:36:21.176Z",
+  "generated_at": "2026-10-29T09:42:18.851Z",
   "source": "Policy-first connected GitHub read; current MAIN refs, historical freeze divergence, existing qualified runner recovery, fail-closed auxiliary credential gate, missing Federation release-state and stale preflight. Status-only change, no app writes or workflow execution.",
   "completed_total": 0,
   "apps": [
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "27470edb",
-      "summary": "2026-10-29T08:36:21.176Z: MAIN 27470edb; authoritative release_freeze.enabled=false. GitHub Actions runner recovery evidenced by executed MAIN push CI; exact-public-SHA authenticated production acceptance not established (0/7); final E2E pending.",
+      "head": "ad6f4941",
+      "summary": "2026-10-29T09:42:18.851Z: Federation MAIN ad6f4941; authoritative policy release_freeze.enabled=false. Auxiliary Builder publication 40851398831 succeeded, but formal seven-app publication 0/7 and final E2E still pending; historical credential readiness failure is not cleared by auxiliary success.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "27470edb6483a6708e31ce028c6b36f0a66f37bf",
+      "main_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
       "release_verified": false,
       "release_state": "publication_pending_credential_gate_failed",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -93,7 +93,7 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "2026-10-29T05:37:00.262Z: policy release_freeze.enabled=false; runner recovery confirmed; Simulator current-head CI passed. Federation auxiliary site CLI credential gate failed; repository Actions Secret BASE44_API_KEY must be configured. Official releases 0/7, E2E pending. MAIN 302dafe5 Federation; no seven-app repository changes or workflow_dispatch.",
+      "current": "2026-10-29T09:42:18.851Z: Policy release_freeze.enabled=false (authoritative); current Federation MAIN ad6f4941, other six unchanged. Runner recovery confirmed, new auxiliary Builder publish succeeded but not the ordered seven-app release. Formal releases 0/7, final E2E pending. Previously failed credential gate not retried; release-state manifest absent; six SHA mismatches.",
       "next": "Observe current MAIN/required CI and authenticated public SHA checks, publish strictly Activity→Fleet→Service Hub→Urban→Simulator→Seneschal→Federation via manual workflow_dispatch, then automatic E2E; never substitute auxiliary workflows for production acceptance.",
       "evidence": [
         {
@@ -101,8 +101,8 @@
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "New Federation auxiliary Builder release",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40811086214"
+          "text": "Latest auxiliary Builder publication (not final release)",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831"
         }
       ]
     },
@@ -364,7 +364,7 @@
     }
   ],
   "latest_evidence": {
-    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/27470edb6483a6708e31ce028c6b36f0a66f37bf",
+    "federation_main": "https://github.com/Satofumi-Goto/federation-portal/commit/ad6f4941e8b4d683c3d5fd61de81460e19914a56",
     "federation_index": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40185948610",
     "federation_viewer_readonly": "https://github.com/Satofumi-Goto/federation-portal/pull/472",
     "federation_simulator_api": "https://github.com/Satofumi-Goto/federation-portal/pull/475",
@@ -624,7 +624,8 @@
     "federation_auxiliary_global_site_failure_latest": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40841846057",
     "federation_settings_publication_failure_latest": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40842262467",
     "federation_predecessor_qa_latest": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40842921930",
-    "federation_edge_db_qa_latest": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40843042843"
+    "federation_edge_db_qa_latest": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40843042843",
+    "federation_latest_auxiliary_publication": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831"
   },
   "notes": [
     "2026-10-28T13:38:06.173Z: RELEASE FREEZE policy-first read-only observation. Frozen MAIN integrity 0/7: Activity/Fleet/Service/Urban/Simulator each +1, Seneschal +327, Federation +100 (24 new commits since prior observation; MAIN 29112018, PR #526 merge unified settings). Historical seven required CI jobs still runnerless with zero executed steps; latest Actions and workflow_dispatch lists reviewed (no in-order release), Federation workflow_run E2E history empty. Nonrequired PR/Gemini/dynamic runners do not prove policy-required release recovery. Billing rollover 2026-11-01T00:00:00Z not reached: no release dispatch, reruns, or marker edits. Historical Seneschal fail-closed credential gate requires repository Actions Secret BASE44_API_KEY; never read value. Federation required release-state JSON 404 on frozen HEAD and MAIN; main preflight Activity/Seneschal SHA mismatches persist. Exact authenticated production SHA acceptance 0/7; final E2E unverified. No changes to the seven controlled repositories or PRs.",
@@ -646,14 +647,15 @@
     "2026-10-29T04:37:13.162Z: Policy-first hourly read: release_freeze.enabled=false, owner unfreeze remains authoritative; current MAINs unchanged in six repos, Federation advanced to da058328. Latest Federation self-health publish run 40815384512 failed at prerequisite verification before publishing, while auxiliary Builder UI 40815475801 and site-only 40817158640 succeeded; none constitutes the mandated ordered Federation release. Required current-main release-state file remains absent; six SHA preflight stale. Runner recovery already confirmed from non-dynamic 4-console push CI. No Actions rerun, marker, PR or controlled repo changes. 0/7 formal public SHA acceptance, final E2E pending. Status updated only; 17 owner rows and 8 publication steps retained.",
     "2026-10-29T05:37:00.262Z: Policy FIRST: release_freeze.enabled=false, authoritative owner unfreeze. Current MAIN SHA updated (Simulator 9c06219b, Seneschal fbcb2ef7, Federation 302dafe5); other four unchanged. Simulator CI run 40824001440 succeeded with runner 1000015793. Federation auxiliary CLI fallback run 40823613301 failed fail-closed credential readiness (missing/invalid-format repository Actions Secret BASE44_API_KEY; never inspect secret). Studio guarded publication 40823102408 and Simulator embedding read-only inspection 40823306909 also failed. Required release-state JSON absent, all six preflight SHA expectations stale. Official 0/7, final E2E pending. No controlled repo writes, PR, marker, dispatch or runner reruns. Status only, 17 owner rows and 8 publication actions kept.",
     "2026-10-29T07:41:22.502Z: Policy-first check, release_freeze.enabled=false; current MAIN six unchanged, Federation advanced to 72de5b09. Confirmed prior required-CI Runner recovery; credential fail-closed gate run 40823613301 remains unresolved; release-state JSON 404; preflight SHA mismatch six of six. No controlled-repo changes, PR operations, dispatch or Actions rerun. Production exact-SHA acceptance 0/7; final E2E pending. Status-only refresh, 17 rows and eight publication steps.",
-    "2026-10-29T08:36:21.176Z: Policy-first observation: authoritative release_freeze.enabled=false; MAIN heads unchanged except Federation 27470edb. Runner recovery remains confirmed from prior non-dynamic executed CI. Manual Federation site-only workflow 40842907621 failed credential readiness (publish skipped); separate auxiliary publish workflows 40841846057, 40842262467 failed in publish steps. Two source-only QA workflows 40842921930 and 40843042843 succeeded, not accepted public deployment. Federation release-state JSON still 404; first six current SHAs differ from preflight. Seven-app production acceptance 0/7; final E2E incomplete. No workflow dispatched or seven-source changes. Board status only."
+    "2026-10-29T08:36:21.176Z: Policy-first observation: authoritative release_freeze.enabled=false; MAIN heads unchanged except Federation 27470edb. Runner recovery remains confirmed from prior non-dynamic executed CI. Manual Federation site-only workflow 40842907621 failed credential readiness (publish skipped); separate auxiliary publish workflows 40841846057, 40842262467 failed in publish steps. Two source-only QA workflows 40842921930 and 40843042843 succeeded, not accepted public deployment. Federation release-state JSON still 404; first six current SHAs differ from preflight. Seven-app production acceptance 0/7; final E2E incomplete. No workflow dispatched or seven-source changes. Board status only.",
+    "2026-10-29T09:42:18.851Z: Policy-first check confirms release_freeze.enabled=false; owner unfreeze remains authoritative. All six upstream MAIN SHAs unchanged; Federation MAIN ad6f4941. Runner recovery persists; Federation auxiliary self-health Builder publication 40851398831 succeeded with executed runner steps but is not an Activity-first seven-app release. Prior guarded credential check 40842907621 still failed; do not retry. Mandatory release-state JSON 404, six preflight SHA mismatches, formal acceptance 0/7, final production E2E pending. No controlled repo writes/PR/markers/workflow dispatch or reruns. Only status.json updated; all 17 owner rows and 8 publication queue items preserved."
   ],
   "orchestrator": {
     "enabled": true,
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-10-29T08:36:21.176Z: Non-dynamic MAIN push Runner recovery confirmed from Activity/Fleet/Service/Urban and Simulator (no workflows triggered by observation). Historic 0-step quota failures retained as infrastructure evidence; currently 0/7 officially accepted production releases and final E2E not verified.",
+    "ci_state": "2026-10-29T09:42:18.851Z: Historical quota-blocked zero-step jobs retained, but recovered non-dynamic MAIN CI runners with executed steps confirmed (four consoles). No observation-triggered workflows. Auxiliary Federation self-health Builder publication 40851398831 succeeded at ad6f4941, not an accepted formal seven-app release. Previously failed fail-closed credential gate 40842907621 not retried; ordered releases 0/7; final E2E unverified.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -812,7 +814,7 @@
         "runner_name": "",
         "classification": "quota_infrastructure_blocked",
         "observed_at": "2026-10-28T22:43:45.908Z",
-        "recheck_note": "2026-10-29T08:36:21.176Z: MAIN 27470edb; manual site-only publication 40842907621 credential readiness failed before deploy; no retry. Last known formal 7-app release not accepted.",
+        "recheck_note": "2026-10-29T09:42:18.851Z: MAIN ad6f4941; auxiliary self-health Builder publication 40851398831 successful (not seventh ordered release). Previous site-only credential gate 40842907621 failed prepublication, no formal retries.",
         "started_at": "2026-10-26T01:03:35Z",
         "completed_at": "2026-10-26T01:03:37Z",
         "last_run_listing_observed_at": "2026-10-29T03:39:25.718Z",
@@ -823,6 +825,14 @@
           "publication_performed": false,
           "formal_ordered_release": false,
           "observed_at": "2026-10-29T08:36:21.176Z"
+        },
+        "latest_auxiliary_publication": {
+          "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831",
+          "head_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+          "conclusion": "success",
+          "runner_id": 1000015879,
+          "observed_at": "2026-10-29T09:42:18.851Z",
+          "formal_ordered_release": false
         }
       },
       "seneschal_schedule_observation": {
@@ -1043,8 +1053,8 @@
         }
       }
     },
-    "last_cycle": "2026-10-29T08:36:21.176Z",
-    "current_action": "2026-10-29T08:36:21.176Z: Read orchestrator-policy.json first; release_freeze.enabled=false is authoritative. Six application MAIN heads unchanged; Federation MAIN 27470edb newly observed. Verified new manual Federation site-only publication run 40842907621 failed at executable fail-closed credential readiness step; publish and served-SHA verification skipped. Separate auxiliary global site release run 40841846057 failed at actual publish step, and settings publication run 40842262467 failed at synchronized Builder publish step. Read-only source QA 40842921930 and 40843042843 succeeded (not production acceptance). No release dispatch, CI reruns, PR edits, source writes or marker commits. Federation release-state JSON missing (404), six current MAIN SHA values mismatch preflight. Formal ordered production acceptance 0/7; final E2E pending.",
+    "last_cycle": "2026-10-29T09:42:18.851Z",
+    "current_action": "2026-10-29T09:42:18.851Z: Policy read first: release_freeze.enabled=false, authoritative; display mode development. Six app MAIN heads unchanged; Federation MAIN ad6f4941e8b4d683c3d5fd61de81460e19914a56. Latest auxiliary Federation self-health Builder publication 40851398831 succeeded with nonzero runner and executed steps, but is NOT the required seventh sequential release. No new required releases, exact public SHAs, authenticated cross-app ACKs or final E2E. Credential readiness failure 40842907621 remains unresolved for that guarded path; no retries. Federation release-state JSON 404; six current-head/preflight SHA mismatches. No code, docs, workflow, tests, markers, PR operations, runner rerun or manual release dispatch. Board-only refresh.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -1291,7 +1301,7 @@
         "repo": "Satofumi-Goto/federation-portal",
         "trigger_file": ".base44-release-trigger",
         "workflow": "Federation release reality check",
-        "main": "27470edb6483a6708e31ce028c6b36f0a66f37bf",
+        "main": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
         "order": 7,
         "status": "publication_pending_predecessor_and_current_source_validation",
         "verified_release": false,
@@ -1322,18 +1332,17 @@
           "urban",
           "federation"
         ],
-        "last_observed_at": "2026-10-29T08:36:21.176Z",
+        "last_observed_at": "2026-10-29T09:42:18.851Z",
         "historical_frozen_head_only": true,
         "latest_workflow_observation": {
-          "id": 40823613301,
-          "name": "Federation site-only CLI publish — single guarded fallback",
-          "event": "push",
-          "head_sha": "96557c5f812e5734246466675ff39f08efd9c89b",
-          "conclusion": "failure",
-          "failed_step": "Check credential readiness without exposing secrets",
+          "id": 40851398831,
+          "name": "Federation self-health — verified Builder publication",
+          "event": "workflow_dispatch",
+          "conclusion": "success",
+          "head_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
           "seven_app_release": false,
-          "observed_at": "2026-10-29T05:37:00.262Z",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40823613301"
+          "observed_at": "2026-10-29T09:42:18.851Z",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831"
         },
         "auxiliary_site_publish_not_formal_release": true
       }
@@ -1344,7 +1353,7 @@
       "status": "publication_pending",
       "verified_success": false,
       "main_branch_guard": true,
-      "observed_at": "2026-10-29T06:43:43.955Z"
+      "observed_at": "2026-10-29T09:42:18.851Z"
     },
     "static_validation": {
       "at": "2026-10-25T13:44:38.569Z",
@@ -1380,7 +1389,7 @@
       "enabled": false,
       "policy_sha": "765b2efa7c7ac3f11cbdf232164db847a425a0c0",
       "source_of_truth": "progress-board/orchestrator-policy.json",
-      "observed_at": "2026-10-29T06:43:43.955Z"
+      "observed_at": "2026-10-29T09:42:18.851Z"
     },
     "publicationOnlyRemaining": false,
     "frozen_heads": {
@@ -1401,7 +1410,7 @@
       "productionReleaseVerified": false,
       "safe_to_publish_first_six": false,
       "safe_to_publish_federation_after_first_six": false,
-      "observed_at": "2026-10-29T06:43:43.955Z",
+      "observed_at": "2026-10-29T09:42:18.851Z",
       "release_state_file_exists_on_frozen_head": false,
       "release_state_file_exists_on_current_main": false,
       "preflight_policy_mismatches": [
@@ -1433,7 +1442,7 @@
         "urban": "b51174b05fdea4b665625819370a8a78f13241e6",
         "simulator": "b06a4af16b69e06bc24b78de4e9791a2e279289d",
         "seneschal": "99ee978e2e28830d5f86f55ae94b675569ad02f4",
-        "federation": "427f80f3d2649aa7a075e9e043f023b4bb60cbd6"
+        "federation": "ad6f4941e8b4d683c3d5fd61de81460e19914a56"
       }
     },
     "quota_recovery": {
@@ -1441,8 +1450,8 @@
       "runner_evidence": "2026-10-29T02:42:55.364Z: Confirmed non-dynamic required push CI with runner_id>0 and steps on 2026-10-29T01:21-01:22Z; fresh successful MAIN push CI for four consoles at 01:36-01:39Z. Infrastructure availability does NOT establish release secrets, source matching, or production acceptance.",
       "billing_rollover": "2026-11-01T00:00:00Z",
       "activity_initial_probe_permitted": true,
-      "observed_at": "2026-10-29T06:43:43.955Z",
-      "latest_run_listing_limit": "2026-10-29T06:43:43.955Z: No GitHub workflow-run listing capability in connected connector; reverified prior run job steps and fresh MAIN heads; do not infer latest publish attempts from missing listings.",
+      "observed_at": "2026-10-29T09:42:18.851Z",
+      "latest_run_listing_limit": "2026-10-29T09:42:18.851Z: Actual GitHub REST Actions run listings read for all seven repos; last-eight main-branch runs inspected.",
       "non_required_runner_signal": {
         "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40743252982",
         "name": "github_actions in /. - Update #1661188055",
@@ -1568,7 +1577,19 @@
           "seven_app_release_workflow": false
         }
       ],
-      "latest_observation": "2026-10-29T06:43:43.955Z: Previous required runner recovery confirmed via non-dynamic required MAIN push jobs; no new workflows launched. Fail-closed credential-check failure persists in Federation auxiliary workflow."
+      "latest_observation": "2026-10-29T09:42:18.851Z: Direct read of 7 GitHub MAIN refs and latest Actions runs. Previous required non-dynamic MAIN push CI success persists; Federation auxiliary self-health Builder 40848701127 and 40851398831 completed successfully with executed steps, not formal seven-app production release. No new runners consumed by observer.",
+      "latest_federation_auxiliary_publication": {
+        "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831",
+        "head_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+        "event": "workflow_dispatch",
+        "workflow": "Federation self-health — verified Builder publication",
+        "conclusion": "success",
+        "runner_id": 1000015879,
+        "steps_executed": true,
+        "formal_ordered_release": false,
+        "seven_app_acceptance": false,
+        "observed_at": "2026-10-29T09:42:18.851Z"
+      }
     },
     "frozen_head_integrity": {
       "matches": 0,
@@ -1800,9 +1821,9 @@
       "observed_at": "2026-10-29T00:43:54.651Z"
     },
     "quota_recovery_observation": {
-      "observed_at": "2026-10-29T08:36:21.176Z",
+      "observed_at": "2026-10-29T09:42:18.851Z",
       "confirmed": true,
-      "source": "previously verified non-dynamic MAIN push runner/steps; new observation did not trigger a workflow",
+      "source": "verified non-dynamic MAIN CI jobs; recent Federation auxiliary runner success is additional but not formal release evidence",
       "last_confirmed_from": "2026-10-29T03:10-03:12Z successful same-head non-dynamic push CI for four console repos",
       "fresh_current_main_ci": [
         {
@@ -1976,7 +1997,7 @@
       "urban": "b51174b05fdea4b665625819370a8a78f13241e6",
       "simulator": "b06a4af16b69e06bc24b78de4e9791a2e279289d",
       "seneschal": "99ee978e2e28830d5f86f55ae94b675569ad02f4",
-      "federation": "27470edb6483a6708e31ce028c6b36f0a66f37bf"
+      "federation": "ad6f4941e8b4d683c3d5fd61de81460e19914a56"
     },
     "mission_contract": {
       "modes": [
@@ -2012,10 +2033,10 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
-      "The authoritative policy currently has release_freeze.enabled=false; historical frozen SHAs are not active release gates.",
-      "No accepted Activity-first ordered production publication; seven exact public SHA and authenticated E2E acceptance still 0/7.",
-      "Federation site-only manual dispatch run 40842907621 failed at executable credential readiness step before any publication; repository Actions Secret BASE44_API_KEY needs one-time configuration if not present or invalid (value must not be supplied in chat). No retries.",
-      "Federation release-state JSON absent on main (404) and all six preflight expected SHAs differ from current MAIN; do not present source/auxiliary QA as production acceptance."
+      "Official policy release_freeze.enabled=false; historical frozen SHA values are not active release gates; status mode follows authoritative policy.",
+      "Activity-first ordered 7-app exact-public-SHA authenticated acceptance still 0/7; final production E2E not successful.",
+      "Earlier Federation guarded site-only publish run 40842907621 failed at executable credential readiness before deployment; do not retry that path until one-time repository Actions Secret BASE44_API_KEY is configured; never read the value.",
+      "Federation required release-state JSON absent on MAIN (404) and six current MAIN SHA values mismatch the preflight manifest; auxiliary Builder publication success does not satisfy formal 7-app acceptance."
     ],
     "completion_gate": "Only successful Fed seven-app production E2E after seven ordered exact-SHA authenticated production releases.",
     "release_ready_source": true,
@@ -2032,7 +2053,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-10-29T08:36:21.176Z",
+    "latest_review_at": "2026-10-29T09:42:18.851Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
@@ -2041,7 +2062,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-10-29T08:36:21.176Z",
+    "last_review_at": "2026-10-29T09:42:18.851Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -2149,19 +2170,20 @@
           "app": "federation",
           "repo": "Satofumi-Goto/federation-portal",
           "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
-          "actual_main_sha": "27470edb6483a6708e31ce028c6b36f0a66f37bf",
-          "commits_ahead_of_frozen": 290,
-          "commits_behind": 0,
-          "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...27470edb6483a6708e31ce028c6b36f0a66f37bf",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/27470edb6483a6708e31ce028c6b36f0a66f37bf",
+          "actual_main_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+          "commits_ahead_of_frozen": null,
+          "commits_behind": null,
+          "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/ad6f4941e8b4d683c3d5fd61de81460e19914a56",
           "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
           "requires_user_action": false,
           "historical_only": true,
           "active_release_gate": false,
-          "observed_at": "2026-10-29T08:36:21.176Z"
+          "observed_at": "2026-10-29T09:42:18.851Z",
+          "commits_count_not_recomputed": true
         }
       ],
-      "observed_at": "2026-10-29T08:36:21.176Z"
+      "observed_at": "2026-10-29T09:42:18.851Z"
     },
     "preflight_source_set_file": "docs/runbooks/fed-actual-operation-preflight-source-heads.json",
     "preflight_source_set_valid": false,
@@ -2192,6 +2214,13 @@
       "failed_step": "Verify Base44 deployment prerequisites without exposing credentials",
       "formal_release": false,
       "at": "2026-10-29T04:37:13.162Z"
+    },
+    "latest_auxiliary_publication": {
+      "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40851398831",
+      "head_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+      "conclusion": "success",
+      "seven_app_production_acceptance": false,
+      "observed_at": "2026-10-29T09:42:18.851Z"
     }
   },
   "mode": "development",
@@ -2210,7 +2239,7 @@
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T07:41:22.502Z"
+      "observed_at": "2026-10-29T08:36:21.176Z"
     },
     {
       "app": "fleet",
@@ -2225,7 +2254,7 @@
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T07:41:22.502Z"
+      "observed_at": "2026-10-29T08:36:21.176Z"
     },
     {
       "app": "service",
@@ -2240,7 +2269,7 @@
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T07:41:22.502Z"
+      "observed_at": "2026-10-29T08:36:21.176Z"
     },
     {
       "app": "urban",
@@ -2255,7 +2284,7 @@
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T07:41:22.502Z"
+      "observed_at": "2026-10-29T08:36:21.176Z"
     },
     {
       "app": "simulator",
@@ -2270,7 +2299,7 @@
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T07:41:22.502Z"
+      "observed_at": "2026-10-29T08:36:21.176Z"
     },
     {
       "app": "seneschal",
@@ -2285,22 +2314,23 @@
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T07:41:22.502Z"
+      "observed_at": "2026-10-29T08:36:21.176Z"
     },
     {
       "app": "federation",
       "repo": "Satofumi-Goto/federation-portal",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
-      "actual_main_sha": "72de5b09305eb9b5f50f381a669c6e4ff56758ef",
-      "commits_ahead_of_frozen": 290,
-      "commits_behind": 0,
-      "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...72de5b09305eb9b5f50f381a669c6e4ff56758ef",
-      "url": "https://github.com/Satofumi-Goto/federation-portal/commit/72de5b09305eb9b5f50f381a669c6e4ff56758ef",
+      "actual_main_sha": "ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+      "commits_ahead_of_frozen": null,
+      "commits_behind": null,
+      "compare_url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...ad6f4941e8b4d683c3d5fd61de81460e19914a56",
+      "url": "https://github.com/Satofumi-Goto/federation-portal/commit/ad6f4941e8b4d683c3d5fd61de81460e19914a56",
       "impact": "Owner unfroze release on 2026-10-29 JST; historical divergence is not current release blocker.",
       "requires_user_action": false,
       "historical_only": true,
       "active_release_gate": false,
-      "observed_at": "2026-10-29T07:41:22.502Z"
+      "observed_at": "2026-10-29T09:42:18.851Z",
+      "commits_count_not_recomputed": true
     }
   ]
 }
