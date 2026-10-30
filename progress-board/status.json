@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-30T04:42:27.844Z",
-  "source": "Policy-first GitHub read-only 2026-10-30T04:42:27.844Z: 7 main refs, 8 recent Actions runs per app, PR #686 merged/#757 closed unmerged/#773 merged, Federation latest SHA ahead of previous by two commits, no exact-current-SHA release. Current policy freeze=false/quota_blocked; previous auxiliary publish still older SHA. No Actions probes/retries, no source/PR writes; status-only progress.",
+  "generated_at": "2026-10-30T05:44:42.982Z",
+  "source": "Policy-first Github static + release history validation 2026-10-30T05:44:42.982Z: all seven MAIN refs unchanged; 8 recent runs per app and recent manual dispatches checked; discovered Fleet release fail-closed credential gate in run #40971212712, not published and out of dependency order. Policy freeze=false/quota=quota_blocked; latest Simulator CSP public header not independently obtainable. No probes/retries/PR merges or app-source writes.",
   "completed_total": 0,
   "apps": [
     {
@@ -20,11 +20,11 @@
       "name": "Fleet",
       "status": "red",
       "head": "23671437ec44bbaf1ee922ab883eeed07e8c4dd0",
-      "summary": "2026-10-30T03:42:43.655Z: Fleet MAIN 23671437; same-MAIN Guard succeeded at run #40979332880 (non-release). Ordered exact-public-SHA authenticated production acceptance remains unverified.",
+      "summary": "2026-10-30T05:44:42.982Z: MAIN 23671437 unchanged. Discovered earlier manual Fleet release run #40971212712 (2026-10-30 08:09 JST) failed at fail-closed 'Require Base44 CLI key without exposing it'. Checkout succeeded; deploy, Publish, SHA verification and durable event were skipped. Activity has no manual release and no accepted public SHA, so Fleet was attempted before prerequisite. Normal same-MAIN Guard #40979332880 passed; formal production acceptance remains unverified.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
       "main_sha": "23671437ec44bbaf1ee922ab883eeed07e8c4dd0",
       "release_verified": false,
-      "release_state": "publication_pending_current_source_validation",
+      "release_state": "blocked_credential_readiness_and_activity_release_predecessor",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
       "freeze_head_matches_main": false
     },
@@ -93,23 +93,23 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "2026-10-30T04:42:27.844Z: Six upstream MAIN SHA unchanged; Federation MAIN f30914bf advanced by 2 commits (independent runtime inspection, #773 merged). Latest non-release source CI Activity/Fleet/Service Hub/Urban/Simulator from prior sweep still applies to unchanged heads; Seneschal current-main required CI unverified. Federation auxiliary publish #40971638414 on old SHA a0f24a3c, no newly confirmed current-main publish. Official ordered seven-app acceptance 0/7 and final E2E pending. Canonical quota_blocked unchanged.",
-      "next": "Validate current Builder source/permissions and app identities without force/reset; respect policy quota and credential gates. Release in seven-app dependency order only after actual readiness; preserve existing PR ownership.",
+      "current": "2026-10-30T05:44:42.982Z: Same 7 MAIN SHAs and policy freeze=false/quota_blocked. Fleet manual release #40971212712 failed closed at Base44 CLI key gate on older SHA; no deployed/published artifact and Activity predecessor release absent. Auxiliary Federation publication remains older than current MAIN. Formal acceptance 0/7, final E2E pending.",
+      "next": "Confirm GitHub Actions Fleet BASE44_API_KEY credential readiness via safe fail-closed workflow gate without reading the value; avoid Fleet retry before Activity authenticated exact-SHA publication. Resolve Builder source/identity and current-source publication gates in dependency order.",
       "evidence": [
         {
           "text": "Canonical policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "Independent runtime source integration PR #773",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/773"
+          "text": "Fleet manual release fail-closed gate",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40971212712"
         },
         {
-          "text": "Federation current MAIN",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/f30914bfb2059c7089c213ac321d9fe8cb4cc0dd"
+          "text": "Fleet current-MAIN Guard",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40979332880"
         },
         {
-          "text": "Prior auxiliary publication (old SHA)",
+          "text": "Federation older auxiliary publication",
           "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414"
         }
       ]
@@ -117,20 +117,20 @@
     {
       "owner": "Chat：分析・独立検査",
       "status": "red",
-      "current": "2026-10-30T04:42:27.844Z: Read all seven main refs and latest eight Actions runs each. Six heads unchanged; Federation advanced to f30914bf after two independent-runtime commits, but no same-MAIN release run or authenticated production E2E. PR #686 merged, #757 closed unmerged, #773 merged. Mandatory release-state JSON still absent; preflight expected six SHAs stale. No CSP/iframe/browser acceptance proof.",
-      "next": "Do not infer deployed health from source, CI or HTTP200. Require current SHA public receipts, authenticated durable ACKs and full Live Mission browser contract; no workflow retries without changed evidence.",
+      "current": "2026-10-30T05:44:42.982Z: Independently read all seven latest MAIN SHAs, Actions runs and workflow_dispatch histories. Fleet manual release #40971212712 failed after checkout at CLI credential readiness; all deploy/publish/roundtrip steps skipped. Activity has zero manual dispatches; no ordered release accepted. Simulator source preflight has six mismatches; CSP browser verification unavailable.",
+      "next": "Keep Base44 secret value hidden. Address one-time credential readiness and Activity predecessor release before any Fleet dispatch. Enforce SHA-identical authenticated public E2E gates; no forced Builder reset.",
       "evidence": [
         {
-          "text": "New Federation main",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/f30914bfb2059c7089c213ac321d9fe8cb4cc0dd"
+          "text": "Fleet blocked dispatch",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40971212712"
         },
         {
-          "text": "Source PR #773",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/773"
+          "text": "Canonical current policy",
+          "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "Latest auxiliary workflow (older SHA)",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414"
+          "text": "Preflight stale source list",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/blob/main/docs/runbooks/fed-actual-operation-preflight-source-heads.json"
         }
       ]
     },
@@ -834,7 +834,15 @@
     "seneschal_latest_observed_run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40979377282",
     "federation_latest_observed_run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414",
     "federation_integrated_execution_auxiliary": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414",
-    "federation_independent_runtime_pr773": "https://github.com/Satofumi-Goto/federation-portal/pull/773"
+    "federation_independent_runtime_pr773": "https://github.com/Satofumi-Goto/federation-portal/pull/773",
+    "fleet_failed_manual_release": {
+      "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40971212712",
+      "head_sha": "2d099c99856be7868269a5aafe8aca6d040fdbb9",
+      "failed_step": "Require Base44 CLI key without exposing it",
+      "publish_performed": false,
+      "activity_predecessor_verified": false,
+      "observed_at": "2026-10-30T05:44:42.982Z"
+    }
   },
   "notes": [
     "2026-10-28T13:38:06.173Z: RELEASE FREEZE policy-first read-only observation. Frozen MAIN integrity 0/7: Activity/Fleet/Service/Urban/Simulator each +1, Seneschal +327, Federation +100 (24 new commits since prior observation; MAIN 29112018, PR #526 merge unified settings). Historical seven required CI jobs still runnerless with zero executed steps; latest Actions and workflow_dispatch lists reviewed (no in-order release), Federation workflow_run E2E history empty. Nonrequired PR/Gemini/dynamic runners do not prove policy-required release recovery. Billing rollover 2026-11-01T00:00:00Z not reached: no release dispatch, reruns, or marker edits. Historical Seneschal fail-closed credential gate requires repository Actions Secret BASE44_API_KEY; never read value. Federation required release-state JSON 404 on frozen HEAD and MAIN; main preflight Activity/Seneschal SHA mismatches persist. Exact authenticated production SHA acceptance 0/7; final E2E unverified. No changes to the seven controlled repositories or PRs.",
@@ -869,7 +877,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-10-30T04:42:27.844Z: policy freeze.enabled=false; quota_recovery.state=quota_blocked. Six upstream heads unchanged, Federation latest f30914bf. Same-head non-release CI evidence remains Activity/Fleet/Service/Urban/Simulator; Seneschal current-main CI not verified; Federation #773 source integrated but no current main release/Builder/site verification. Historical guarded auxiliary #40971638414 succeeded on a0f24a3c only. Ordered release 0/7; final E2E incomplete.",
+    "ci_state": "2026-10-30T05:44:42.982Z: Policy freeze.enabled=false; quota_recovery.state=quota_blocked. 7 current MAIN SHAs unchanged since prior sweep. Activity has no workflow_dispatch; historical Fleet manual release #40971212712 stopped at Base44 CLI key gate before deploy/Publish; predecessor Activity acceptance absent. Seneschal scheduled Verify production #41009460039 skipped. Other recent runs unchanged; current Builder SHA and CSP browser E2E unverified. Formal ordered release 0/7.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -949,6 +957,20 @@
           "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40979332880",
           "formal_release": false,
           "observed_at": "2026-10-30T03:42:43.655Z"
+        },
+        "manual_release_gate": {
+          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40971212712",
+          "run_id": 40971212712,
+          "event": "workflow_dispatch",
+          "head_sha": "2d099c99856be7868269a5aafe8aca6d040fdbb9",
+          "conclusion": "failure",
+          "failed_step": "Require Base44 CLI key without exposing it",
+          "checkout_executed": true,
+          "deploy_skipped": true,
+          "publish_skipped": true,
+          "production_e2e_skipped": true,
+          "classification": "credential_readiness_gate_failed_closed_not_quota_or_code_failure",
+          "observed_at": "2026-10-30T05:44:42.982Z"
         }
       },
       "service": {
@@ -1459,8 +1481,8 @@
         }
       }
     },
-    "last_cycle": "2026-10-30T04:42:27.844Z",
-    "current_action": "2026-10-30T04:42:27.844Z: Policy-first static and deployment-evidence review. Verified all 7 main refs, latest 8 Actions runs per repository, #686/#757/#773 metadata, older guarded auxiliary run, 404 absent release-state JSON and stale preflight. No new workflow trigger/retry/PR action, no app source or marker changes. Status only updated after conflict-safe read.",
+    "last_cycle": "2026-10-30T05:44:42.982Z",
+    "current_action": "2026-10-30T05:44:42.982Z: Policy-first read-only validation of 7 MAIN refs, recent Actions, manual dispatch histories, #686/#757/#773 PR status, stale 6-SHA preflight and Simulator CSP source search. Newly established Fleet CLI credential gate failure #40971212712 (checkout passed; deploy/Publish skipped); preserve quota_blocked and no retry. Only status record changed; no new workflow, PR, marker or app-source actions.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -1570,6 +1592,14 @@
           "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40979332880",
           "formal_release": false,
           "observed_at": "2026-10-30T03:42:43.655Z"
+        },
+        "last_failed_manual_dispatch": {
+          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40971212712",
+          "head_sha": "2d099c99856be7868269a5aafe8aca6d040fdbb9",
+          "failed_step": "Require Base44 CLI key without exposing it",
+          "current_main_differs": true,
+          "not_published": true,
+          "observed_at": "2026-10-30T05:44:42.982Z"
         }
       },
       "service": {
@@ -2407,7 +2437,7 @@
       "priority": 2,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
-      "action": "After current-source release validation and credential readiness, and every preceding exact-SHA production acceptance gate, manually workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN in strict dependency order 2; no marker commits. Verify exact_published_sha, authenticated_console_health, durable_release_event_ack.",
+      "action": "Block Fleet retries: manual dispatch #40971212712 failed at fail-closed Base44 CLI key step (downstream deploy/Publish skipped) on non-current SHA. Confirm Actions credential readiness without reading secret, and complete Activity current-SHA authenticated production release first. Then manually dispatch Fleet only after policy quota and permission gates; no marker commits. After current-source release validation and credential readiness, and every preceding exact-SHA production acceptance gate, manually workflow_dispatch 'Base44 release — Federation operational proxy' on MAIN in strict dependency order 2; no marker commits. Verify exact_published_sha, authenticated_console_health, durable_release_event_ack.",
       "blocked_by": [
         "Preceding 1 app(s) exact public SHA and authenticated acceptance unverified."
       ],
