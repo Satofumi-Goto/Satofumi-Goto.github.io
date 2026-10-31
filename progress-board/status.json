@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-30T14:45:08Z",
+  "generated_at": "2026-10-31T04:35:21Z",
   "source": "2026-10-30T14:45:08Z: Seven latest MAIN refs and Actions/PR lists checked against current policy; all unchanged. New dedicated Federation draft PR #778 implements a single read-only post-checkpoint Builder diagnosis with mock tests (not yet CI verified). Historical sync #40967290134 still failed builder-source-not-confirmed before publish; release-state JSON 404; production domains DNS-unreachable from observer. No new release attempt, merge, production publish, authenticated E2E or probe; formal acceptance 0/7.",
   "completed_total": 0,
   "apps": [
@@ -911,7 +911,8 @@
     "2026-10-30T08:40:12.013Z: Confirmed policy freeze=false/quota_blocked; seven MAIN SHAs unchanged. PR #686 merged, #757 closed unmerged, #651/#775 still draft. #40967290134 failed at safe Builder bundle sync before Publish, remote substage unresolved; recent PR CI success does not prove formal production deployment. Current Federation release-state JSON 404, preflight six expected SHAs stale; public Simulator CSP/browser access failed DNS. Existing 6 upstream Base44 404s unresolved. No new Actions or app repo writes; formal acceptance 0/7 and final authenticated E2E pending. Updated only stale current-Federation-SHA status reference and verification timestamp.",
     "2026-10-30T09:43:25.542Z: Verified current GitHub Actions listings in all 7 repos; no HEAD changes and no new formal release acceptance. Federation offline Builder-bundle failure #40967290134 log confirms 'builder-source-not-confirmed' before any publish, while later auxiliary #40971638414 published only old SHA a0f24a3c. Root remote substage remains unknown. CSP/browser probe still DNS-inaccessible, release-state JSON 404, 0/7 production verified. No Actions/PR/app-source changes; quota policy remains blocked.",
     "2026-10-30T12:41:19Z: Verified all 7 main refs, latest Actions and open PRs. Federation new main 67a91cd1 is scheduled repository-index-only [skip ci] child of da5e06c5, not release CI nor publish. Existing Builder sync remains unverified; #40967290134 fails at bundle sync before publish. PR #686 merged, #757 closed unmerged, #775/#651 draft. Preflight source set stale; release-state JSON 404; Simulator/Federation public endpoints DNS-unavailable here. Policy quota_blocked retained, no actions dispatched or app source changes; 0/7 production acceptance.",
-    "2026-10-30T14:45:08Z: Policy-first static validation completed: seven heads and last-ten Actions runs, open PRs and previous Builder run #40967290134 checked. Dedicated non-overlapping Builder diagnostics draft PR #778 opened at head 0c6165990e21 (2 files, 2 commits) with four mock classifications and preserved legacy failure prefix. No PR CI run observed at time of check; no manual Actions/probe/retry, no secrets or Base44 operations. Source-only progress, release evidence unchanged 0/7; 17 owner rows and 9 queue items preserved."
+    "2026-10-30T14:45:08Z: Policy-first static validation completed: seven heads and last-ten Actions runs, open PRs and previous Builder run #40967290134 checked. Dedicated non-overlapping Builder diagnostics draft PR #778 opened at head 0c6165990e21 (2 files, 2 commits) with four mock classifications and preserved legacy failure prefix. No PR CI run observed at time of check; no manual Actions/probe/retry, no secrets or Base44 operations. Source-only progress, release evidence unchanged 0/7; 17 owner rows and 9 queue items preserved.",
+    "2026-10-31 13:35 JST source audit: Federation release workflow conditionally skips first-six public SHA prepublish gate on default workflow_dispatch (deploy_fed_actual_operation=false), but its Build and publish site step still runs when credential-ready. This is a fail-closed gate gap; no execution or publication was attempted. Repair via a non-overlapping reviewed protected PR, binding to current verified SHAs rather than the historical 2026-10-26 frozen set."
   ],
   "orchestrator": {
     "enabled": true,
@@ -2460,7 +2461,8 @@
       "blocked_by": [
         "Current Federation main exact Builder/public SHA not proven; latest auxiliary success is older SHA.",
         "Previous six upstream app Base44 metadata 404 unverified resolution.",
-        "Required Federation release-state JSON absent; six preflight expected SHA values stale; no authenticated seven-app E2E."
+        "Required Federation release-state JSON absent; six preflight expected SHA values stale; no authenticated seven-app E2E.",
+        "Federation release workflow manual default permits site deploy without first-six prepublish gate when credential-ready; gated check only runs for push or deploy_fed_actual_operation=true. A protected reviewed fail-closed correction is needed before any manual Federation publish."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414",
@@ -2468,7 +2470,8 @@
         "https://github.com/Satofumi-Goto/federation-portal/pull/757",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40917583737",
         "https://github.com/Satofumi-Goto/seneschal/pull/653",
-        "https://github.com/Satofumi-Goto/federation-portal/pull/777"
+        "https://github.com/Satofumi-Goto/federation-portal/pull/777",
+        "https://github.com/Satofumi-Goto/federation-portal/blob/main/.github/workflows/federation-release-acceptance.yml#L196-L246"
       ],
       "freeze_is_release_gate": false
     },
@@ -2651,7 +2654,8 @@
       "Mandatory docs/runbooks/fed-actual-operation-release-state.json still absent on current Federation main; existing six preflight expected SHAs mismatch all six newly observed main heads. Historical frozen values are not active source gate, but actual configured release workflow requires current verified source values.",
       "Simulator CSP frame-ancestors and actual browser embedded preview not reverified: production sites not accessible to external read tool. HTTP200 alone would not suffice.",
       "No ordered seven exact-SHA authenticated production acceptance (0/7) or successful final Fed seven-app production E2E.",
-      "Draft PR #778 adds safe read-only checkpoint-stage diagnostics to explain historical Builder source confirmation failures; CI/review unverified, not merged or deployed, and no new sync/publish executed. https://github.com/Satofumi-Goto/federation-portal/pull/778"
+      "Draft PR #778 adds safe read-only checkpoint-stage diagnostics to explain historical Builder source confirmation failures; CI/review unverified, not merged or deployed, and no new sync/publish executed. https://github.com/Satofumi-Goto/federation-portal/pull/778",
+      "2026-10-31 13:35 JST source audit: Federation release workflow conditionally skips first-six public SHA prepublish gate on default workflow_dispatch (deploy_fed_actual_operation=false), but its Build and publish site step still runs when credential-ready. This is a fail-closed gate gap; no execution or publication was attempted. Repair via a non-overlapping reviewed protected PR, binding to current verified SHAs rather than the historical 2026-10-26 frozen set."
     ],
     "completion_gate": "Only successful Fed seven-app production E2E after seven ordered exact-SHA authenticated production releases.",
     "release_ready_source": true,
