@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T10:39:53.687Z",
-  "source": "2026-10-31T10:39:53.687Z: 2026-10-31 read-only cross-workflow provenance review: Draft Federation #780 resolves upstream current main SHAs after the guarded Federation release but does not compare them to the six exact SHAs approved by that specific release #779. Upstream main/public can advance between runs (TOCTOU); final E2E currently exits 1 unconditionally, so no incorrect acceptance is claimed. Reviewer finding recorded on #780; require release-run-bound upstream SHA attestation before removing terminal fail-closed gate. Formal ordered publication acceptance 0/7; seven main SHAs unchanged; quota_blocked; #778/#779/#780 Draft with zero reviews; no Actions/Publish/merge/sync run.",
+  "generated_at": "2026-10-31T11:45:03.565Z",
+  "source": "2026-10-31T11:45:03.565Z: 2026/10/31 20:45 JST: Draft Federation #779 updated (head 2589b9be) to persist the exact six-upstream current source/public SHA and release-run/verification evidence as an artifact bound to that Federation release run; artifact upload precedes backend/site deploy and fails closed if absent. Static structure verified; no CI, reviews, Builder sync or Publish executed. #780 still must consume/validate this run-bound artifact before production acceptance; final authenticated-browser E2E remains fail-closed. All seven main SHAs unchanged; formal publication 0/7; quota_blocked.",
   "completed_total": 0,
   "apps": [
     {
@@ -939,7 +939,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-10-31T10:39:53.687Z: 2026-10-31 read-only cross-workflow provenance review: Draft Federation #780 resolves upstream current main SHAs after the guarded Federation release but does not compare them to the six exact SHAs approved by that specific release #779. Upstream main/public can advance between runs (TOCTOU); final E2E currently exits 1 unconditionally, so no incorrect acceptance is claimed. Reviewer finding recorded on #780; require release-run-bound upstream SHA attestation before removing terminal fail-closed gate. Formal ordered publication acceptance 0/7; seven main SHAs unchanged; quota_blocked; #778/#779/#780 Draft with zero reviews; no Actions/Publish/merge/sync run.",
+    "ci_state": "2026/10/31 20:45 JST: Draft Federation #779 updated (head 2589b9be) to persist the exact six-upstream current source/public SHA and release-run/verification evidence as an artifact bound to that Federation release run; artifact upload precedes backend/site deploy and fails closed if absent. Static structure verified; no CI, reviews, Builder sync or Publish executed. #780 still must consume/validate this run-bound artifact before production acceptance; final authenticated-browser E2E remains fail-closed. All seven main SHAs unchanged; formal publication 0/7; quota_blocked.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -2505,7 +2505,7 @@
       "priority": 0,
       "owner": "Federation Builder recovery",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "Federation MAIN da5e06c5 now includes merged independent grounded research #777, but must not be considered Builder/current published SHA. Do not duplicate draft #775 or Seneschal #651, whose protected research files overlap now-merged #653. Resolve clean Builder source/identity and live SHA evidence without reset/force, release-state gaps and six Base44 metadata 404s. Keep Activity-first manual publication gated by quota/credentials and authenticated E2E. 2026-10-31 14:41 JST: Draft PR #779 fixes the default manual Federation release gate bypass without active frozen SHAs, requires same-head accepted upstream release steps and exact Federation SHA; static assertions 11/11 only. Keep Draft awaiting CI/review; reconcile old overlapping dependency PRs #243/#244. No deployment executed.",
+      "action": "Federation MAIN da5e06c5 now includes merged independent grounded research #777, but must not be considered Builder/current published SHA. Do not duplicate draft #775 or Seneschal #651, whose protected research files overlap now-merged #653. Resolve clean Builder source/identity and live SHA evidence without reset/force, release-state gaps and six Base44 metadata 404s. Keep Activity-first manual publication gated by quota/credentials and authenticated E2E. 2026-10-31 14:41 JST: Draft PR #779 fixes the default manual Federation release gate bypass without active frozen SHAs, requires same-head accepted upstream release steps and exact Federation SHA; static assertions 11/11 only. Keep Draft awaiting CI/review; reconcile old overlapping dependency PRs #243/#244. No deployment executed. 2026/10/31 20:45 JST: Draft #779 attestation producer added; `fed-upstream-shas-${{ github.run_id }}` records six verified SHA/release-run pairs for exact release ID. Consumer work remains in Draft #780; no merge/CI/Publish.",
       "blocked_by": [
         "Current Federation main exact Builder/public SHA not proven; latest auxiliary success is older SHA.",
         "Previous six upstream app Base44 metadata 404 unverified resolution.",
@@ -2521,7 +2521,8 @@
         "https://github.com/Satofumi-Goto/seneschal/pull/653",
         "https://github.com/Satofumi-Goto/federation-portal/pull/777",
         "https://github.com/Satofumi-Goto/federation-portal/blob/main/.github/workflows/federation-release-acceptance.yml#L196-L246",
-        "https://github.com/Satofumi-Goto/federation-portal/pull/779"
+        "https://github.com/Satofumi-Goto/federation-portal/pull/779",
+        "https://github.com/Satofumi-Goto/federation-portal/commit/2589b9be341367f1b4a0a325518136effc287866"
       ],
       "freeze_is_release_gate": false
     },
@@ -2639,13 +2640,14 @@
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
         "Final E2E workflow still resolves first-six SHAs from 2026-10-26 frozen preflight instead of validated current-source releases; its own summary explicitly marks authenticated browser journeys NOT VERIFIED.",
-        "Draft #780 final-E2E upstream provenance TOCTOU: it reads the six current main SHAs after the successful Federation release but does not bind them to the exact SHA set proven by that release's #779 gate. The terminal fail-closed step prevents acceptance today. Before enabling real production-browser acceptance, persist and validate a release-run-bound six-SHA attestation. Review: https://github.com/Satofumi-Goto/federation-portal/pull/780#issuecomment-6542326248"
+        "Draft #780 final-E2E upstream provenance TOCTOU: it reads the six current main SHAs after the successful Federation release but does not bind them to the exact SHA set proven by that release's #779 gate. The terminal fail-closed step prevents acceptance today. Before enabling real production-browser acceptance, persist and validate a release-run-bound six-SHA attestation. Review: https://github.com/Satofumi-Goto/federation-portal/pull/780#issuecomment-6542326248 Draft #779 now produces a run-bound artifact (unmerged/static only), but Draft #780 does not yet retrieve or validate it; keep final gate failing closed."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/federation-portal/commit/4741a84c3fba9729e463db5d5f633ea701519742",
         "https://github.com/Satofumi-Goto/federation-portal/actions",
         "https://github.com/Satofumi-Goto/federation-portal/blob/main/.github/workflows/fed-seven-app-production-e2e.yml",
-        "https://github.com/Satofumi-Goto/federation-portal/pull/780#issuecomment-6542326248"
+        "https://github.com/Satofumi-Goto/federation-portal/pull/780#issuecomment-6542326248",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/780#issuecomment-6542925008"
       ],
       "freeze_is_release_gate": false
     }
@@ -2728,7 +2730,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-10-31T10:39:53.687Z",
+    "latest_review_at": "2026-10-31T11:45:03.565Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
