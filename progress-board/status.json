@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T05:41:37Z",
+  "generated_at": "2026-10-31T06:36:37.138Z",
   "source": "2026-10-30T14:45:08Z: Seven latest MAIN refs and Actions/PR lists checked against current policy; all unchanged. New dedicated Federation draft PR #778 implements a single read-only post-checkpoint Builder diagnosis with mock tests (not yet CI verified). Historical sync #40967290134 still failed builder-source-not-confirmed before publish; release-state JSON 404; production domains DNS-unreachable from observer. No new release attempt, merge, production publish, authenticated E2E or probe; formal acceptance 0/7.",
   "completed_total": 0,
   "apps": [
@@ -879,6 +879,14 @@
         "source_only_not_current_main": true
       },
       "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414"
+    },
+    "federation_guard_pr779": {
+      "observed_at": "2026-10-31T06:36:37.138Z",
+      "url": "https://github.com/Satofumi-Goto/federation-portal/pull/779",
+      "head_sha": "b8de4585956b75ced912d4af64fc8c158d3c2b43",
+      "state": "draft",
+      "validation": "static_only",
+      "formal_release": false
     }
   },
   "notes": [
@@ -919,7 +927,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-10-31T05:41:37Z: policy freeze=false, quota_recovery=quota_blocked. Seven MAIN SHA refs unchanged. Federation first-six prepublish gate bypass on ordinary workflow_dispatch has dedicated fail-closed correction drafted in PR #779 (two files: current-SHA public/release-step/order proof, exact Federation SHA, CLI auth failure). Current PR HEAD 5f4ae454, Draft; static assertions 11/11, CI checks 0 and reviews unverified. PR #778 still Draft; historical PR #243/#244 touch same workflow and require conflict review. No GitHub Actions dispatched, no production Publish, no merge. Formal acceptance remains 0/7 and final authenticated E2E unverified.",
+    "ci_state": "2026-10-31T06:36:37.138Z: policy freeze=false, quota_recovery=quota_blocked. All seven main refs unchanged; latest Actions runs read, no new formal release success. Draft Federation PR #779 HEAD b8de4585 strengthens the fail-closed gate: upstream six-app evidence must be verified before ANY Federation backend deployment, not only before site publish; dependency order now compares previous completed required-step timestamps against next run creation. Dedicated guard assertions statically checked (8/8 additional checks), but PR CI/reviews and production execution unverified. PRs #778/#775 remain Draft; #243/#244 overlap release workflow. No Actions dispatched, no merge or Publish. Acceptance remains 0/7; current Builder sync, Simulator CSP/browser embed, final authenticated E2E unverified.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1535,8 +1543,8 @@
         }
       }
     },
-    "last_cycle": "2026-10-31T05:41:37Z",
-    "current_action": "2026-10-31T05:41:37Z: update_pr/static_validation: opened draft Federation PR #779 to close ordinary manual Federation Publish upstream-gate bypass. Static source checks passed; no Actions/probes, merge, production publish, or Base44 source manipulation.",
+    "last_cycle": "2026-10-31T06:36:37.138Z",
+    "current_action": "2026-10-31T06:36:37.138Z: update_pr/static_validation: advanced Federation draft PR #779 with completion-timestamp dependency verification and upstream gate moved before optional backend deployments. New HEAD b8de4585; 8 static invariant checks pass, CI and protected review remain pending. No external publish, new Actions or retries.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -1958,7 +1966,7 @@
       ],
       "seneschal_manual_dispatch_is_authorized_by_freeze": false,
       "observed_at": "2026-10-26T23:46:19.348Z",
-      "last_observed_at": "2026-10-31T05:41:37Z",
+      "last_observed_at": "2026-10-31T06:36:37.138Z",
       "historical_freeze_lifted_at": "2026-10-28T18:45:48Z",
       "federation_release_guard_draft_pr": "https://github.com/Satofumi-Goto/federation-portal/pull/779",
       "federation_release_guard_changes": [
@@ -1969,7 +1977,21 @@
         "credential fail-closed"
       ],
       "federation_guard_static_checks_passed": 11,
-      "federation_guard_ci_checks": 0
+      "federation_guard_ci_checks": 0,
+      "federation_guard_followup": {
+        "observed_at": "2026-10-31T06:36:37.138Z",
+        "pr": "https://github.com/Satofumi-Goto/federation-portal/pull/779",
+        "head_sha": "b8de4585956b75ced912d4af64fc8c158d3c2b43",
+        "improvements": [
+          "upstream proof moved before optional Federation backend deployments",
+          "ordering based on prior required-step completion timestamps",
+          "static contract asserts both invariants"
+        ],
+        "local_static_invariants_passed": 8,
+        "CI_checks_verified": 0,
+        "protected_review_approved": false,
+        "published": false
+      }
     },
     "release_freeze": {
       "enabled": false,
@@ -2437,7 +2459,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-10-31T05:41:37Z",
+    "last_observed_at": "2026-10-31T06:36:37.138Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
