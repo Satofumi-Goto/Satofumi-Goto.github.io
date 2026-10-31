@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T04:35:21Z",
+  "generated_at": "2026-10-31T05:41:37Z",
   "source": "2026-10-30T14:45:08Z: Seven latest MAIN refs and Actions/PR lists checked against current policy; all unchanged. New dedicated Federation draft PR #778 implements a single read-only post-checkpoint Builder diagnosis with mock tests (not yet CI verified). Historical sync #40967290134 still failed builder-source-not-confirmed before publish; release-state JSON 404; production domains DNS-unreachable from observer. No new release attempt, merge, production publish, authenticated E2E or probe; formal acceptance 0/7.",
   "completed_total": 0,
   "apps": [
@@ -919,7 +919,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-10-30T14:45:08Z: policy freeze=false, quota_recovery=quota_blocked. MAIN refs unchanged across seven apps. Federation draft PR #778 (https://github.com/Satofumi-Goto/federation-portal/pull/778) proposes post-checkpoint metadata-vs-HEAD/dirty-tree read-only classification; two-file diff and branch ancestry verified, tests added but CI not executed/verified; no Builder action, publish or merge. PR #686 merged; #775/#651 draft. Existing formal release 0/7, no authenticated final E2E.",
+    "ci_state": "2026-10-31T05:41:37Z: policy freeze=false, quota_recovery=quota_blocked. Seven MAIN SHA refs unchanged. Federation first-six prepublish gate bypass on ordinary workflow_dispatch has dedicated fail-closed correction drafted in PR #779 (two files: current-SHA public/release-step/order proof, exact Federation SHA, CLI auth failure). Current PR HEAD 5f4ae454, Draft; static assertions 11/11, CI checks 0 and reviews unverified. PR #778 still Draft; historical PR #243/#244 touch same workflow and require conflict review. No GitHub Actions dispatched, no production Publish, no merge. Formal acceptance remains 0/7 and final authenticated E2E unverified.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1535,8 +1535,8 @@
         }
       }
     },
-    "last_cycle": "2026-10-30T12:41:19Z",
-    "current_action": "2026-10-30T12:41:19Z: static_validation: inspected policy, seven current main refs, recent Actions/PRs, Federation current commit diff and guarded Builder failure steps; refreshed only Federation current-main references in status. No Actions rerun/dispatch, PR merge, or app-source mutation.",
+    "last_cycle": "2026-10-31T05:41:37Z",
+    "current_action": "2026-10-31T05:41:37Z: update_pr/static_validation: opened draft Federation PR #779 to close ordinary manual Federation Publish upstream-gate bypass. Static source checks passed; no Actions/probes, merge, production publish, or Base44 source manipulation.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -1958,8 +1958,18 @@
       ],
       "seneschal_manual_dispatch_is_authorized_by_freeze": false,
       "observed_at": "2026-10-26T23:46:19.348Z",
-      "last_observed_at": "2026-10-29T04:37:13.162Z",
-      "historical_freeze_lifted_at": "2026-10-28T18:45:48Z"
+      "last_observed_at": "2026-10-31T05:41:37Z",
+      "historical_freeze_lifted_at": "2026-10-28T18:45:48Z",
+      "federation_release_guard_draft_pr": "https://github.com/Satofumi-Goto/federation-portal/pull/779",
+      "federation_release_guard_changes": [
+        "default workflow_dispatch requires upstream current-main/public-SHA and authenticated release-run evidence",
+        "ordered six predecessor production publication checks",
+        "explicit controlled rollback exception",
+        "Federation exact deployed SHA",
+        "credential fail-closed"
+      ],
+      "federation_guard_static_checks_passed": 11,
+      "federation_guard_ci_checks": 0
     },
     "release_freeze": {
       "enabled": false,
@@ -2427,7 +2437,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-10-30T09:43:25.542Z",
+    "last_observed_at": "2026-10-31T05:41:37Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -2457,12 +2467,13 @@
       "priority": 0,
       "owner": "Federation Builder recovery",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "Federation MAIN da5e06c5 now includes merged independent grounded research #777, but must not be considered Builder/current published SHA. Do not duplicate draft #775 or Seneschal #651, whose protected research files overlap now-merged #653. Resolve clean Builder source/identity and live SHA evidence without reset/force, release-state gaps and six Base44 metadata 404s. Keep Activity-first manual publication gated by quota/credentials and authenticated E2E.",
+      "action": "Federation MAIN da5e06c5 now includes merged independent grounded research #777, but must not be considered Builder/current published SHA. Do not duplicate draft #775 or Seneschal #651, whose protected research files overlap now-merged #653. Resolve clean Builder source/identity and live SHA evidence without reset/force, release-state gaps and six Base44 metadata 404s. Keep Activity-first manual publication gated by quota/credentials and authenticated E2E. 2026-10-31 14:41 JST: Draft PR #779 fixes the default manual Federation release gate bypass without active frozen SHAs, requires same-head accepted upstream release steps and exact Federation SHA; static assertions 11/11 only. Keep Draft awaiting CI/review; reconcile old overlapping dependency PRs #243/#244. No deployment executed.",
       "blocked_by": [
         "Current Federation main exact Builder/public SHA not proven; latest auxiliary success is older SHA.",
         "Previous six upstream app Base44 metadata 404 unverified resolution.",
         "Required Federation release-state JSON absent; six preflight expected SHA values stale; no authenticated seven-app E2E.",
-        "Federation release workflow manual default permits site deploy without first-six prepublish gate when credential-ready; gated check only runs for push or deploy_fed_actual_operation=true. A protected reviewed fail-closed correction is needed before any manual Federation publish."
+        "Federation release workflow manual default permits site deploy without first-six prepublish gate when credential-ready; gated check only runs for push or deploy_fed_actual_operation=true. A protected reviewed fail-closed correction is needed before any manual Federation publish.",
+        "PR #779 is draft: no required CI checks/reviews; same-file older dependency PRs #243/#244 require conflict review before merge."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414",
@@ -2471,7 +2482,8 @@
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40917583737",
         "https://github.com/Satofumi-Goto/seneschal/pull/653",
         "https://github.com/Satofumi-Goto/federation-portal/pull/777",
-        "https://github.com/Satofumi-Goto/federation-portal/blob/main/.github/workflows/federation-release-acceptance.yml#L196-L246"
+        "https://github.com/Satofumi-Goto/federation-portal/blob/main/.github/workflows/federation-release-acceptance.yml#L196-L246",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/779"
       ],
       "freeze_is_release_gate": false
     },
@@ -2655,7 +2667,8 @@
       "Simulator CSP frame-ancestors and actual browser embedded preview not reverified: production sites not accessible to external read tool. HTTP200 alone would not suffice.",
       "No ordered seven exact-SHA authenticated production acceptance (0/7) or successful final Fed seven-app production E2E.",
       "Draft PR #778 adds safe read-only checkpoint-stage diagnostics to explain historical Builder source confirmation failures; CI/review unverified, not merged or deployed, and no new sync/publish executed. https://github.com/Satofumi-Goto/federation-portal/pull/778",
-      "2026-10-31 13:35 JST source audit: Federation release workflow conditionally skips first-six public SHA prepublish gate on default workflow_dispatch (deploy_fed_actual_operation=false), but its Build and publish site step still runs when credential-ready. This is a fail-closed gate gap; no execution or publication was attempted. Repair via a non-overlapping reviewed protected PR, binding to current verified SHAs rather than the historical 2026-10-26 frozen set."
+      "2026-10-31 13:35 JST source audit: Federation release workflow conditionally skips first-six public SHA prepublish gate on default workflow_dispatch (deploy_fed_actual_operation=false), but its Build and publish site step still runs when credential-ready. This is a fail-closed gate gap; no execution or publication was attempted. Repair via a non-overlapping reviewed protected PR, binding to current verified SHAs rather than the historical 2026-10-26 frozen set.",
+      "Federation default-manual publish guard patch is proposed only as Draft PR #779, not merged or deployed; upstream exact-SHA+authenticated release evidence (0/6) remains unavailable. Historical frozen-preflight final E2E and actual browser acceptance remain separate debt. https://github.com/Satofumi-Goto/federation-portal/pull/779"
     ],
     "completion_gate": "Only successful Fed seven-app production E2E after seven ordered exact-SHA authenticated production releases.",
     "release_ready_source": true,
@@ -2672,7 +2685,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-10-30T14:45:08Z",
+    "latest_review_at": "2026-10-31T05:41:37Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
@@ -2681,7 +2694,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-10-30T14:45:08Z",
+    "last_review_at": "2026-10-31T05:41:37Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
