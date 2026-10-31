@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-31T16:40:50.358Z",
+  "generated_at": "2026-10-31T17:41:20.760Z",
   "source": "2026-11-01 JST policy-first GitHub audit: seven current main refs checked; Federation MAIN 3f002a16 includes #792/#793 merged. #793 documents owner-executed isolated Cloud Run staging deploy and staging Worker API binding in source; live edge-to-API authentication not independently verified. Base44 release acceptance 0/7.",
   "completed_total": 0,
   "apps": [
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "3f002a16a1f0868a88890b0b03749e9341183cca",
-      "summary": "2026-11-01 JST: Federation MAIN 3f002a16 includes merged #792 (private staging image build preparation) and #793 (isolated staging Worker→Cloud Run API binding). PR #793 documents owner Cloud Shell screenshot evidence of a successful SHA-tagged build, staging DB migration, proxy secret configuration and Cloud Run deployment federation-staging-api (100% traffic). This executor has not independently verified live Worker→API routing, admin login or database behavior. These are independent STAGING developments, not Base44 production release. Current MAIN→Builder/public SHA and ordered authenticated seven-app E2E remain unverified (0/7).",
+      "head": "4c4474f7",
+      "summary": "Federation main 4c4474f7 includes staging diagnostic #794 and Worker proxy runtime fix #795. Source integrated only. Manual inventory run #41221332618 executed with runner and steps, but observed canonical Cloud Run /healthz HTTP 404 and staging Worker /api/auth/me HTTP 502 (cloud-api-unavailable) before #795 was incorporated; no live post-fix deployment or authenticated E2E evidence. Builder/public current-main SHA match unverified; formal 7-app release 0/7.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "3f002a16a1f0868a88890b0b03749e9341183cca",
+      "main_sha": "4c4474f7df45d506112529b4e0c38e533b516cd2",
       "release_verified": false,
       "release_state": "blocked_builder_sync_and_missing_release_state_json",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -966,7 +966,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-10-31T16:40:50.358Z: canonical release_freeze.enabled=false and quota_recovery.state=quota_blocked. Seven main refs re-read: only Federation advanced since preceding status, to 3f002a16, incorporating merged #792/#793. Read-only latest Actions shows no current-head ordered seven-app release; external Google Cloud/Worker production staging endpoint could not be independently fetched. #793 owner screenshot evidence records isolated SQL migration, Cloud Run API deployment and encrypted proxy configuration (not verified auth/browser). Draft #778/#779/#780 remain unmerged and required CI/reviews unverified. Current MAIN Builder/public exact SHA remains unproven; formal authenticated public acceptance 0/7, final E2E pending. Billing rollover recovery checkpoint 2026-11-01T00:00:00Z not yet reached at this review; no probe, retry, merge or Publish.",
+    "ci_state": "2026-10-31T17:41:20.760Z: authoritative policy release_freeze.enabled=false, quota_recovery.state=quota_blocked. Verified 7 main heads: Federation 4c4474f7 updated via merged #794/#795, others unchanged. Confirmed run #41221332618 succeeded as read-only Google inventory with executed steps but staging canonical Cloud Run /healthz returned 404 and Cloudflare Worker /api/auth/me returned 502/cloud-api-unavailable. #795 fixes reproduced workerd redirect-mode failure in source; source merged but no post-fix live deployment/real auth proof. Draft #778/#779/#780 unchanged and non-overlapping with #794/#795; required CI/reviews unverified. Builder/current-main SHA and seven ordered production releases remain unverified (0/7), authenticated E2E incomplete. Billing rollover 2026-11-01T00:00:00Z has NOT occurred at this review. No quota probe, retry, merge or publish.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1349,6 +1349,20 @@
           "publish_step": "skipped",
           "formal_ordered_release": false,
           "observed_at": "2026-10-29T22:41:21.021Z"
+        },
+        "latest_readonly_staging_diagnostic": {
+          "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41221332618",
+          "head_sha": "737b9bf4d5288b93c638bfdefb4c84a6dc63e6f8",
+          "conclusion": "success",
+          "job": "inventory",
+          "executed_steps": 10,
+          "healthz_status": 404,
+          "edge_auth_me_status": 502,
+          "edge_error": "cloud-api-unavailable",
+          "formal_release": false,
+          "authenticated_e2e": false,
+          "post_fix_verified": false,
+          "observed_at": "2026-10-31T17:41:20.760Z"
         }
       },
       "seneschal_schedule_observation": {
@@ -2773,7 +2787,7 @@
       "urban": "6809308084526f990554f3d7a899a25156918317",
       "simulator": "9511ac0dbdab12554e7891fb955a0a28b3042b9e",
       "seneschal": "10b443be59c1ad563fd0d0766d31fc3893298b92",
-      "federation": "3f002a16a1f0868a88890b0b03749e9341183cca"
+      "federation": "4c4474f7df45d506112529b4e0c38e533b516cd2"
     },
     "mission_contract": {
       "modes": [
@@ -2810,13 +2824,14 @@
     ],
     "blocked_by": [
       "Canonical policy release_freeze.enabled=false; historical frozen SHA values are not current main gates. Quota policy remains quota_blocked; do not trigger ungrounded probes or retries.",
-      "Current Federation MAIN 3f002a16 includes source-merged #792/#793 independent staging preparation and Worker binding. Owner screenshot evidence (in #793) reports isolated staging Cloud Run deployment/SQL migration, but live authenticated staging/edge behavior is not independently verified. Current Base44 Builder/public exact SHA remains unverified; last auxiliary publication was older SHA. #778/#779/#780 remain Draft. No forced Builder reset/sync, no unapproved publish.",
+      "Current Federation MAIN 4c4474f7 includes source-merged #794/#795 staging diagnostic and Cloudflare proxy runtime repair. Authenticated inventory run #41221332618 observed /healthz 404 and Worker /api/auth/me 502 on the pre-#795 source. Post-fix live edge/API authentication unverified. Base44 Builder/public exact current SHA unverified; #778/#779/#780 Draft and no reviewed public production acceptance.",
       "Previous read-only Base44 inspection #40917583737 showed 404 for six upstream app metadata lookups (Federation 200); no verified resolution of tenant/app authorization.",
       "Mandatory docs/runbooks/fed-actual-operation-release-state.json still absent on current Federation main; existing six preflight expected SHAs mismatch all six newly observed main heads. Historical frozen values are not active source gate, but actual configured release workflow requires current verified source values.",
       "Simulator CSP frame-ancestors and actual browser embedded preview not reverified: production sites not accessible to external read tool. HTTP200 alone would not suffice.",
       "Draft PR #778 adds safe read-only checkpoint-stage diagnostics to explain historical Builder source confirmation failures; CI/review unverified, not merged or deployed, and no new sync/publish executed. https://github.com/Satofumi-Goto/federation-portal/pull/778",
       "2026-10-31 13:35 JST source audit: Federation release workflow conditionally skips first-six public SHA prepublish gate on default workflow_dispatch (deploy_fed_actual_operation=false), but its Build and publish site step still runs when credential-ready. This is a fail-closed gate gap; no execution or publication was attempted. Repair via a non-overlapping reviewed protected PR, binding to current verified SHAs rather than the historical 2026-10-26 frozen set.",
-      "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production."
+      "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production.",
+      "Staging route validation: read-only inventory run #41221332618 confirms API canonical /healthz=404 and Worker unauthenticated /api/auth/me=502/cloud-api-unavailable before merged #795 runtime repair. No post-fix live Worker deployment proof; authenticated login/CRUD and full E2E remain blocked. Do not misread inventory workflow success as staging readiness."
     ],
     "completion_gate": "Only successful Fed seven-app production E2E after seven ordered exact-SHA authenticated production releases.",
     "release_ready_source": true,
@@ -2833,7 +2848,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-10-31T16:40:50.358Z",
+    "latest_review_at": "2026-10-31T17:41:20.760Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
@@ -2842,7 +2857,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-10-31T16:40:50.358Z",
+    "last_review_at": "2026-10-31T17:41:20.760Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -3058,7 +3073,7 @@
       "pr_draft": false,
       "pr_head_sha": "8355cf01579b6f668754db3e2f31c5c74df13d53",
       "last_verified_builder_and_public_sha": "7e5e926ec56c65980da919c562cda5d241cda597",
-      "current_main_sha": "3f002a16a1f0868a88890b0b03749e9341183cca",
+      "current_main_sha": "4c4474f7df45d506112529b4e0c38e533b516cd2",
       "current_head_same_as_last_published": false,
       "direct_remote_git_fetch_auth_fixed": "unverified",
       "formal_release": false,
@@ -3078,9 +3093,23 @@
       "latest_auxiliary_run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414",
       "latest_auxiliary_head_sha": "a0f24a3cdf0a6551a0f067efec4917ee95eabeb4",
       "latest_auxiliary_conclusion": "success",
-      "latest_current_main_sha": "3f002a16a1f0868a88890b0b03749e9341183cca",
+      "latest_current_main_sha": "4c4474f7df45d506112529b4e0c38e533b516cd2",
       "current_main_builder_match_verified": false,
       "formal_release_verified": false
+    },
+    "staging_diagnostic": {
+      "evidence_run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41221332618",
+      "run_source_sha": "737b9bf4d5288b93c638bfdefb4c84a6dc63e6f8",
+      "verified_step": "Inspect fixed public staging routes without credentials",
+      "canonical_api_healthz_http": 404,
+      "worker_auth_me_http": 502,
+      "worker_error": "cloud-api-unavailable",
+      "authenticated_e2e": false,
+      "subsequent_source_fix": "https://github.com/Satofumi-Goto/federation-portal/pull/795",
+      "subsequent_source_fix_merged": true,
+      "subsequent_source_fix_deployed_and_live_verified": false,
+      "observed_at": "2026-10-31T17:06:48Z",
+      "validated_at": "2026-10-31T17:41:20.760Z"
     }
   },
   "mode": "development",
