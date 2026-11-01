@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T10:47:57.627Z",
+  "generated_at": "2026-11-01T11:42:45.442Z",
   "source": "Policy-first 2026-11-01T08:48:54.910Z: freeze=false; quota_recovery=quota_blocked; seven-app acceptance 0/7; #774 independent Matsuko research E2E blocked; static validation only, no deployment or secrets.",
   "completed_total": 0,
   "apps": [
@@ -55,10 +55,10 @@
     {
       "name": "Simulator",
       "status": "red",
-      "head": "c13d073e8b29613777eb34e135b9b8b7b0ab578f",
-      "summary": "2026-11-01T10:45:31.565Z: main c13d073e; source security fixes #106/#107/#108/#109 merged (server-only scoped HMAC, redirect rejection); post-merge publish and authenticated compute/receipt E2E unverified. Formal acceptance remains false.",
+      "head": "6097c82f64649f94a4063a50f7ffae34751d7879",
+      "summary": "2026-11-01T11:42:45.442Z: main 6097c82f: embedding read-only inspection and CI #41302445075/#41302445074 passed. Served frame-ancestors only allows portfolio and federation.base44.app, not independent Federation staging. Base44 unsupported embedding update returned HTTP 400; no retry. Site iframe/production compute two calls, KPI/hash/receipt and ordered release still unverified.",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab",
-      "main_sha": "c13d073e8b29613777eb34e135b9b8b7b0ab578f",
+      "main_sha": "6097c82f64649f94a4063a50f7ffae34751d7879",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "e327760dec4cef7ce21cb7798b83954b25d8b523",
-      "summary": "2026-11-01T10:45:31.565Z: main e327760d; #662 tutorial replay merged; persistent Matsuko research DB authenticated staging/readback/backup remains blocked. Formal acceptance remains false.",
+      "head": "3750f20ab8a7d304b50ab9e1cca0f8fa29064cd0",
+      "summary": "2026-11-01T11:42:45.442Z: main 3750f20a: tutorial card PR #666 merged, build test passed; site publication #41302361964 failed at Publish existing site. Federation central Builder readonly probe #41302576027 failed in source inspection (PR #854 closed, no deployment). Release SHA/voice/authenticated E2E and independent persistent research DB remain unverified.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "e327760dec4cef7ce21cb7798b83954b25d8b523",
+      "main_sha": "3750f20ab8a7d304b50ab9e1cca0f8fa29064cd0",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "166c29deed98e988a8aa1e799d1a22ce60d82cb8",
-      "summary": "2026-11-01T10:47:57.627Z: run #41298746624 publish job succeeded; source/Builder deployed/public git-head SHA 166c29de matched via guarded workflow step and native connection inspection step completed. Auxiliary publication occurred before first six authenticated releases; no Federation Live Mission or 7-app E2E; not formal acceptance. Independent release engine #847 merged but server-side disabled unless enabled.",
+      "head": "43cf21556d428fb8edcec850cea451e5f0a97615",
+      "summary": "2026-11-01T11:42:45.442Z: main 43cf2155: tutorial card PR #853 merged, auxiliary site publication workflow #41302191709 passed; not formal seven-app acceptance. Final E2E #41301698444 failed at seven exact public SHA verification; API/browser stages skipped. Independent Matsuko research #774 remains blocked. Review-only release PRs #778/#779/#780 still draft.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "166c29deed98e988a8aa1e799d1a22ce60d82cb8",
+      "main_sha": "43cf21556d428fb8edcec850cea451e5f0a97615",
       "release_verified": false,
       "release_state": "auxiliary_exact_sha_published_formal_acceptance_blocked",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -1067,7 +1067,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-01T08:43:56.300Z: Canonical quota_recovery.state=quota_blocked despite observed executed Actions steps; do not trigger new probe/retry without policy-qualifying external evidence. 7-app formal acceptance 0/7.",
+    "ci_state": "2026-11-01T11:42:45.442Z: quota_recovery.state=quota_blocked remains canonical, despite executed job steps; no new probe/retry initiated. CI/selected source tests that succeeded do not substitute formal authenticated acceptance 0/7.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1792,8 +1792,8 @@
         }
       }
     },
-    "last_cycle": "2026-11-01T08:43:56.300Z",
-    "current_action": "2026-11-01T08:43:56.300Z: Verified current main SHA for all 7; read guarded release job steps/logs and PR #686/#778/#779/#780. Activity and Simulator public SHA = main (site/UI only); Fleet/Service/Urban public SHA = main but all failed Federation operational 401; Seneschal two credential gates failed; Federation whole Builder source and authenticated Live Mission still unverified. Some new push-triggered workflow_dispatch jobs executed for later apps before predecessor E2E acceptance; flag sequencing breach. No workflow triggered, PR merged, Builder modified, or site published in this sweep.",
+    "last_cycle": "2026-11-01T11:42:45.442Z",
+    "current_action": "2026-11-01T11:42:45.442Z: Read canonical policy and issue #774; verified all 7 main refs, selected existing release/build jobs, #778/#779/#780 and current Simulator CSP. Read-only embedding inspect passed, but allowlist lacks independent Federation origin and Base44 settings API rejected attempted single-field change; owner dashboard action required. Seneschal site publication fails and Federation final E2E rejects exact public SHA. No CI reruns, deploy, paid Gemini call, PR merge or Builder changes this cycle. Formal acceptance 0/7.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -2789,7 +2789,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-01T08:48:54.910Z",
+    "last_observed_at": "2026-11-01T11:42:45.442Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -2846,7 +2846,7 @@
       "priority": 0,
       "owner": "Chat：Gemini接続／マツコ独立研究",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-01T09:36:15.135Z: #774 source review: Federation #829 merged Gemini request generationConfig compatibility fix (temperature/top_p/top_k absent). CI #41290366884 proves Node syntax check only, not paid Gemini grounding; authenticated Gemini → persistent Seneschal recordId/hash/count/restart/readback/backup remains blocked. Seven app main SHAs advanced, no accepted same-SHA release, formal acceptance remains 0/7.",
+      "action": "2026-11-01T11:42:45.442Z: Issue #774 remains open: #777/#824/#825/#829 and Seneschal #653 source integrated, but real authenticated Cloud Run Gemini grounding receipt, approved billing, Seneschal durable recordId/hash/count, restart readback and backup not verified. No research DB writes/cutover.",
       "blocked_by": [
         "Cloudflare/Cloud Run signed authenticated research deployment + approved provider billing unverified",
         "Seneschal persistent DB host/volume and signed HTTPS endpoint unverified",
@@ -2868,7 +2868,7 @@
       "priority": 1,
       "owner": "Federation Builder recovery",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-01T08:43:56.300Z: Current Federation main 9a0a8fa8, but full Builder/main metadata unverified. Review-only sourceHash match for consoleOperationalApi #41289274203; staged UI is auxiliary, not ordered production. One-shot release dispatches ran out of order. Hold further releases until Activity exact SHA and authenticated durable ACK; protect draft release/attestation PRs and address cross-app 401.",
+      "action": "2026-11-01T11:42:45.442Z: Current Federation main 43cf2155; auxiliary publication at an earlier SHA and new tutorial site-only #41302191709 do not prove current whole Builder/served version or seven-app operational E2E. PR #779 draft fail-closed prepublish guard, #780 draft current-SHA E2E, #778 draft Builder diagnostics. E2E #41301698444 failed exact public-SHA verification. Do not execute before ordered Activity-first authenticated acceptance.",
       "blocked_by": [
         "Current Federation main exact Builder/public SHA not proven; latest auxiliary success is older SHA.",
         "Previous six upstream app Base44 metadata 404 unverified resolution.",
@@ -2924,7 +2924,7 @@
       "priority": 2,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/life-transaction-console",
-      "action": "2026-11-01 17:39 JST: main 4f0197a5. Guarded publication #41288307298 confirmed clean Builder fast-forward and source/deployed/served exact SHA 4f0197a5. Job succeeded ONLY for Builder/publication scope; all downstream proxy, release receipt and authenticated E2E steps were skipped. Earlier signed health/event roundtrip #41278137026 succeeded at older b455813f; same-main formal acceptance remains false. Complete the Activity-first authenticated console health and durable release-event ACK at this exact main, then permit Fleet.",
+      "action": "2026-11-01T11:42:45.442Z: Activity main fe3001da. Manual run #41291536480 succeeded at scoped Builder publication step but skipped proxy, health, public SHA and durable Federation ACK steps. Separate UI-smoke #41294331302 succeeded at different head. Same-main formal authenticated release remains unverified and gates downstream apps.",
       "blocked_by": [
         "Formal same-main authenticated console health and durable release-event ACK not completed; all subsequent job steps skipped."
       ],
@@ -2943,7 +2943,7 @@
       "priority": 3,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
-      "action": "2026-11-01 17:39 JST: main 680a6894. Guarded #41288674617 verified Builder clean fast-forward and source/deployed/served exact SHA, then FAILED operational-api-http-401:federation-authentication-required; authenticated release ACK/E2E absent. Published while Activity acceptance still absent: sequence not satisfied. Hold additional release until Activity and all preceding exact-SHA authenticated gates pass.",
+      "action": "2026-11-01T11:42:45.442Z: Fleet main 64b426f6; formal run #41291046583 executed runner and failed Builder publication step; downstream API/receipt tests skipped. UI-smoke success at another SHA does not count. Activity predecessor gate unverified.",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity predecessor authenticated acceptance missing."
@@ -2966,7 +2966,7 @@
       "priority": 4,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/service-hub-console",
-      "action": "2026-11-01 17:39 JST: main b293f9ea. Guarded #41288731535 verified Builder fast-forward and source/deployed/served exact SHA; operational API then FAILED 401 federation-authentication-required. No authenticated E2E or ordered acceptance. Hold additional release until Activity and all preceding exact-SHA authenticated gates pass.",
+      "action": "2026-11-01T11:42:45.442Z: Service Hub main 8d660908; formal run #41291049488 failed Builder publication step, downstream checks skipped. UI-smoke succeeded on different SHA only; Activity and Fleet accepted releases missing.",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity/Fleet predecessors not accepted."
@@ -2986,7 +2986,7 @@
       "priority": 5,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/urban-operation-console",
-      "action": "2026-11-01 17:39 JST: main 743b8bee. Guarded #41288677254 verified Builder fast-forward and source/deployed/served exact SHA; operational API then FAILED 401 federation-authentication-required. No authenticated E2E or ordered acceptance. Hold additional release until Activity and all preceding exact-SHA authenticated gates pass.",
+      "action": "2026-11-01T11:42:45.442Z: Urban main 2bd7b743; formal run #41291052554 failed Builder publication step, downstream checks skipped. UI-smoke succeeded on a different SHA only; predecessor gates unmet.",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity/Fleet/Service predecessors not accepted."
@@ -3004,10 +3004,10 @@
       "priority": 6,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/mobility-business-lab",
-      "action": "2026-11-01 17:39 JST: main e881109f. Auxiliary #41288726058 cleanly synchronized Builder, published same SHA and completed 4 read-only public-browser UI conditions; no real compute two calls, KPI/hash/receipt, iframe CSP verified embed or ordered release E2E. Keep formal compute/receipt and CSP browser embed unaccepted until predecessor gates.",
+      "action": "2026-11-01T11:42:45.442Z: Simulator main 6097c82f; CI #41302445074 and read-only embedding check #41302445075 passed. Served CSP frame-ancestors currently permits only portfolio and federation.base44.app; independent Federation staging origin missing. API update unsupported and previous single-field attempt returned HTTP 400, so owner dashboard allowlist change is the minimal blocked action. After change require actual iframe READY, 2 real computes, KPI/hash/receipt and authenticated E2E.",
       "blocked_by": [
-        "Two real compute calls, KPI/hash/receipt, signed priority read and real CSP iframe embed not verified.",
-        "Prior four consoles not formally accepted."
+        "Independent Federation staging origin not in served Simulator frame-ancestors; dashboard allowlist update required (preserve two existing origins).",
+        "Actual embedded browser READY, same-SHA publishing, real compute twice/KPI/hash/receipt and ordered release E2E unverified."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/mobility-business-lab/commit/9511ac0dbdab12554e7891fb955a0a28b3042b9e",
@@ -3017,7 +3017,10 @@
         "https://github.com/Satofumi-Goto/mobility-business-lab/commit/ecf45fdd8d00f9bdfa506a0ced10403554d17678",
         "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/41279484654",
         "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/41279404751",
-        "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/41288726058"
+        "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/41288726058",
+        "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/41302445075",
+        "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/41302445074",
+        "https://github.com/Satofumi-Goto/mobility-business-lab/blob/main/docs/qa/federation-staging-embedding-20261101.md"
       ],
       "freeze_is_release_gate": false
     },
@@ -3025,7 +3028,7 @@
       "priority": 7,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/seneschal",
-      "action": "2026-11-01 17:39 JST: main 2fabb3ee. Full guarded release #41288509640 failed before deployment because CLI credential gate not configured; auxiliary site-only #41288921420 failed Builder credential unavailable. No verified current public SHA, authenticated Federation roundtrip, or voice E2E. Confirm required repository secret readiness using fail-closed workflow only; do not ask for credential values.",
+      "action": "2026-11-01T11:42:45.442Z: Seneschal main 3750f20a; tutorial PR #666 merged. Guarded tutorial publication #41302361964 failed at Publish existing site. Federation central Builder probe #41302576027 returned builder-read-http-404 and its PR #854 was closed without merge/deploy. Preserve current credentials; no retry until proven path. Signed production voice and independent DB E2E unverified.",
       "blocked_by": [
         "Seneschal BASE44 CLI credential and scoped Builder publication credential fail closed (secret values not inspected).",
         "Prior Simulator formal E2E missing."
@@ -3034,7 +3037,9 @@
         "https://github.com/Satofumi-Goto/seneschal/commit/b4365dcce019fc7792614e4684f0f43e66da6a42",
         "https://github.com/Satofumi-Goto/seneschal/actions",
         "https://github.com/Satofumi-Goto/seneschal/actions/runs/41280303049",
-        "https://github.com/Satofumi-Goto/seneschal/actions/runs/41288921420"
+        "https://github.com/Satofumi-Goto/seneschal/actions/runs/41288921420",
+        "https://github.com/Satofumi-Goto/seneschal/actions/runs/41302361964",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/854"
       ],
       "freeze_is_release_gate": false
     },
@@ -3042,7 +3047,7 @@
       "priority": 8,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-01 17:39 JST: main 9a0a8fa8. Read-only deployed consoleOperationalApi source hash equals current local function in #41289274203; not proof of whole-app Base44 Builder/main equality. Independent preview #41288866470 verified UI on earlier staged SHA only; authenticated end-to-end & seven-app formal acceptance pending. Draft #778/#779/#780 unchanged. Require full Builder source metadata and ordered seven-app E2E.",
+      "action": "2026-11-01T11:42:45.442Z: Federation main 43cf2155; tutorial auxiliary site publication #41302191709 successful but formal ordered release and Builder exact-current-main sync not proven. Review PRs #778/#779/#780 draft; final E2E run #41301698444 failed exact public SHA before API/browser steps.",
       "blocked_by": [
         "Whole Federation Builder/source/main SHA match unverified; individual deployed function hash match is insufficient.",
         "First six authenticated releases not accepted; PR #778/#779/#780 Draft.",
@@ -3053,7 +3058,9 @@
         "https://github.com/Satofumi-Goto/federation-portal/actions",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41278634758",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41278924102",
-        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41289274203"
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41289274203",
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41302191709",
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41301698444"
       ],
       "freeze_is_release_gate": false
     },
@@ -3061,7 +3068,7 @@
       "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-01T08:43:56.300Z: 0/7 accepted. Final workflow must prove all seven exact published SHAs, authenticated four-console roundtrips, Simulator two real computes/KPI/hash/receipt and same-SHA Live Mission browser; no workflow executed in this sweep.",
+      "action": "2026-11-01T11:42:45.442Z: Formal acceptance 0/7. Final E2E run #41301698444 failed at seven app public SHA verification; all authenticated cross-app and Live Mission stages skipped. Require Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation each exact same-SHA with persisted authenticated acceptance, then full E2E.",
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
         "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production."
@@ -3072,7 +3079,8 @@
         "https://github.com/Satofumi-Goto/federation-portal/blob/main/.github/workflows/fed-seven-app-production-e2e.yml",
         "https://github.com/Satofumi-Goto/federation-portal/pull/780#issuecomment-6542326248",
         "https://github.com/Satofumi-Goto/federation-portal/pull/780#issuecomment-6542925008",
-        "https://github.com/Satofumi-Goto/federation-portal/commit/cdbeb1032de406cb3311d7af0a7b03482853874e"
+        "https://github.com/Satofumi-Goto/federation-portal/commit/cdbeb1032de406cb3311d7af0a7b03482853874e",
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41301698444"
       ],
       "freeze_is_release_gate": false
     }
@@ -3091,9 +3099,9 @@
       "fleet": "64b426f6d58a7fb6fe7148a8decc4de6d11c673e",
       "service": "8d6609086cdfb9580b561b752550e55c88635e93",
       "urban": "2bd7b743eb55b97deab312d2ef55a3404ce8457b",
-      "simulator": "c13d073e8b29613777eb34e135b9b8b7b0ab578f",
-      "seneschal": "e327760dec4cef7ce21cb7798b83954b25d8b523",
-      "federation": "166c29deed98e988a8aa1e799d1a22ce60d82cb8"
+      "simulator": "6097c82f64649f94a4063a50f7ffae34751d7879",
+      "seneschal": "3750f20ab8a7d304b50ab9e1cca0f8fa29064cd0",
+      "federation": "43cf21556d428fb8edcec850cea451e5f0a97615"
     },
     "mission_contract": {
       "modes": [
@@ -3159,7 +3167,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-01T10:47:57.627Z",
+    "latest_review_at": "2026-11-01T11:42:45.442Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
