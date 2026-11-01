@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T16:39:48.544Z",
-  "source": "Policy-first 2026-11-01T16:39:48.544Z: release_freeze=false, quota_recovery=quota_blocked. Three assistant-guide source heads advanced; Simulator current-main check CI success with browser job skipped. No new formal release, Builder evidence for current federation main, authenticated E2E, or Matsuko research durable storage proof. Seven-app acceptance 0/7.",
+  "generated_at": "2026-11-01T18:41:55.776Z",
+  "source": "Policy-first 2026-11-01T18:41:55.776Z: release_freeze=false, quota_recovery=quota_blocked. Seneschal PR #672 merged to main 636b7b30 after PR-head Audit #41332117693 success (executed build, regression and Chrome smoke). Other six app main heads unchanged. Formal release acceptance remains 0/7; current-main Base44 Publish, authenticated production E2E and Matsuko independent research durable write/readback unverified. No new workflows, paid calls or deployments initiated.",
   "completed_total": 0,
   "apps": [
     {
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "e3fe7878df0a007980ee1fbbf4521b26926ba796",
-      "summary": "2026-11-02 JST: current main e3fe7878 merged PR #671 for single-feature guide presentation. PR-head Audit #41323728446 succeeded, but current main Base44 Publish/exact SHA, voice, signed Federation linkage and durable independent Matsuko research DB E2E remain unverified. Formal acceptance pending predecessor gates.",
+      "head": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
+      "summary": "2026-11-02 JST: main 636b7b30 merged PR #672 (single-feature guide ends correctly after route transitions). PR-head Audit #41332117693 success with executed build, regression, Chrome smoke and protected files; this is source integration, NOT current-main Base44 Publish or exact public SHA. Voice, Federation signed linkage and Matsuko independent durable DB E2E remain unverified. Formal ordered release acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "e3fe7878df0a007980ee1fbbf4521b26926ba796",
+      "main_sha": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -436,7 +436,7 @@
       "observed_at": "2026-10-29T13:28:58.516Z"
     },
     "simulator_api_merge": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/61",
-    "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/ed7ec53f44a3e000f35460d7fefe434c61ce22eb",
+    "seneschal_main": "https://github.com/Satofumi-Goto/seneschal/commit/636b7b30cc4aa12d73378956afc2f01206b3b3e4",
     "simulator_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/b534572dc1a67079f8f3c2087ec873a7fc582e9e",
     "simulator_pr62": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/62",
     "seneschal_guard_infra": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40189844728",
@@ -1022,7 +1022,9 @@
       "observed_at": "2026-11-01T08:48:54.910Z"
     },
     "seneschal_tutorial_source_check": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41307987637",
-    "federation_tutorial_site_publish": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41307713358"
+    "federation_tutorial_site_publish": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41307713358",
+    "seneschal_tutorial_pr672": "https://github.com/Satofumi-Goto/seneschal/pull/672",
+    "seneschal_tutorial_pr672_audit": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41332117693"
   },
   "notes": [
     "2026-10-28T13:38:06.173Z: RELEASE FREEZE policy-first read-only observation. Frozen MAIN integrity 0/7: Activity/Fleet/Service/Urban/Simulator each +1, Seneschal +327, Federation +100 (24 new commits since prior observation; MAIN 29112018, PR #526 merge unified settings). Historical seven required CI jobs still runnerless with zero executed steps; latest Actions and workflow_dispatch lists reviewed (no in-order release), Federation workflow_run E2E history empty. Nonrequired PR/Gemini/dynamic runners do not prove policy-required release recovery. Billing rollover 2026-11-01T00:00:00Z not reached: no release dispatch, reruns, or marker edits. Historical Seneschal fail-closed credential gate requires repository Actions Secret BASE44_API_KEY; never read value. Federation required release-state JSON 404 on frozen HEAD and MAIN; main preflight Activity/Seneschal SHA mismatches persist. Exact authenticated production SHA acceptance 0/7; final E2E unverified. No changes to the seven controlled repositories or PRs.",
@@ -1404,6 +1406,17 @@
           "draft_architecture_hold": true,
           "merge_allowed": false,
           "observed_at": "2026-10-30T06:41:05.728Z"
+        },
+        "latest_verified_pr_ci": {
+          "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41332117693",
+          "head_sha": "b59580b536fe2412e42532455b937b85c1c06a8d",
+          "conclusion": "success",
+          "event": "pull_request",
+          "executed_steps": true,
+          "audit": true,
+          "protected_files": "success",
+          "formal_release": false,
+          "observed_at": "2026-11-01T18:41:55.776Z"
         }
       },
       "federation": {
@@ -3062,7 +3075,8 @@
         "https://github.com/Satofumi-Goto/seneschal/actions/runs/41302361964",
         "https://github.com/Satofumi-Goto/federation-portal/pull/854"
       ],
-      "freeze_is_release_gate": false
+      "freeze_is_release_gate": false,
+      "summary": "2026-11-01T18:41:55.776Z: Seneschal PR #672 merged on main 636b7b30; PR-head Audit #41332117693 executed successful build, regression and browser smoke. Source integration only; current-main authenticated Base44 publish, exact served SHA, production voice and Federation signed E2E still unverified. Activity-first predecessor gates and quota_blocked policy remain; do not trigger retry."
     },
     {
       "priority": 8,
@@ -3121,7 +3135,7 @@
       "service": "8d6609086cdfb9580b561b752550e55c88635e93",
       "urban": "2bd7b743eb55b97deab312d2ef55a3404ce8457b",
       "simulator": "c1d8fafd461d842125b5c190c0c69dc6357679b4",
-      "seneschal": "e3fe7878df0a007980ee1fbbf4521b26926ba796",
+      "seneschal": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
       "federation": "afd355c1cf79ba4240a3ea7502d60c4babea3754"
     },
     "mission_contract": {
