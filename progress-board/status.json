@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T08:43:56.300Z",
-  "source": "Policy-first 2026-11-01T08:43:56.300Z: release_freeze.enabled=false; official quota_recovery=quota_blocked; independent code/runtime observation; 0/7 authenticated acceptance.",
+  "generated_at": "2026-11-01T08:48:54.910Z",
+  "source": "Policy-first 2026-11-01T08:48:54.910Z: freeze=false; quota_recovery=quota_blocked; seven-app acceptance 0/7; #774 independent Matsuko research E2E blocked; static validation only, no deployment or secrets.",
   "completed_total": 0,
   "apps": [
     {
@@ -353,8 +353,8 @@
     {
       "owner": "Chat：Gemini接続",
       "status": "red",
-      "current": "2026-10-29T04:37:13.162Z: Policy freeze.enabled=false; federation MAIN da058328; no formal current-head seven-app release accepted. Federation auxiliary self-health preflight failed (not official seven-app release), auxiliary Builder/site-only publishes succeeded; production acceptance 0/7, final E2E pending. No seven-app writes or runner retries.",
-      "next": "Observe current MAIN/required CI and authenticated public SHA checks, publish strictly Activity→Fleet→Service Hub→Urban→Simulator→Seneschal→Federation via manual workflow_dispatch, then automatic E2E; never substitute auxiliary workflows for production acceptance.",
+      "current": "2026-11-01T08:48:54.910Z: #774 independent research source merged (#777/#824, Seneschal #653, probe #825); unauthenticated staging 401 only. Paid Gemini grounding and persistent Seneschal DB authenticated E2E remain unverified/blocked; no call or data write performed.",
+      "next": "Verify authorized Cloud Run/Cloudflare staging route, explicit Gemini budget/credential readiness, persistent Seneschal volume + signed HTTPS; then single controlled grounding→ingest→restart-readback→backup test when authorized. Never use ephemeral SQLite, dual-write or secret disclosure.",
       "evidence": [
         {
           "text": "Frozen release policy",
@@ -363,6 +363,10 @@
         {
           "text": "federation frozen/main compare",
           "url": "https://github.com/Satofumi-Goto/federation-portal/compare/a5fa3f2a63461ede0d94c5521e86b04f10e76e7d...24c13cc0f80a0a8fab02e9336223f58f355e18f4"
+        },
+        {
+          "text": "Matsuko research direct-run issue #774",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/issues/774"
         }
       ]
     },
@@ -385,8 +389,8 @@
     {
       "owner": "Gemini API：自動収集",
       "status": "red",
-      "current": "2026-10-29T04:37:13.162Z: Policy freeze.enabled=false; fleet MAIN 18a8e9aa; same-head push CI succeeded. Federation auxiliary self-health preflight failed (not official seven-app release), auxiliary Builder/site-only publishes succeeded; production acceptance 0/7, final E2E pending. No seven-app writes or runner retries.",
-      "next": "Observe current MAIN/required CI and authenticated public SHA checks, publish strictly Activity→Fleet→Service Hub→Urban→Simulator→Seneschal→Federation via manual workflow_dispatch, then automatic E2E; never substitute auxiliary workflows for production acceptance.",
+      "current": "2026-11-01T08:48:54.910Z: Verified Gemini model gemini-3.8-flash configured in Federation source; researchEnabled/researchBudgetApproved default to false. No authenticated provider invocation, grounding source receipt, or storage readback. Issue #774 blocked.",
+      "next": "Only enable paid Gemini research with explicit authorization and bounded budget, deployed credentials and signed persistent Seneschal DB; require source receipt and recordId/hash/count plus restart readback/backup.",
       "evidence": [
         {
           "text": "Frozen release policy",
@@ -395,6 +399,10 @@
         {
           "text": "fleet frozen/main compare",
           "url": "https://github.com/Satofumi-Goto/fleet-operations-console/compare/d555d286aaeae84c4218869ed0bb0ad23c9c043d...4e7a2be41138d1e4cf6206f8f13f9510984addca"
+        },
+        {
+          "text": "Matsuko independent research blockers",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/issues/774"
         }
       ]
     },
@@ -984,7 +992,35 @@
     "urban_latest_release_evidence": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/41288677254",
     "simulator_latest_release_evidence": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/41288726058",
     "seneschal_latest_release_evidence": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41288921420",
-    "federation_latest_release_evidence": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41289274203"
+    "federation_latest_release_evidence": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41289274203",
+    "matsuko_independent_research_774": {
+      "issue": "https://github.com/Satofumi-Goto/federation-portal/issues/774",
+      "state": "blocked_external_deployment_and_authenticated_e2e",
+      "source_integrated": {
+        "federation_gemini_worker": "https://github.com/Satofumi-Goto/federation-portal/pull/777",
+        "cloud_run_config": "https://github.com/Satofumi-Goto/federation-portal/pull/824",
+        "read_only_staging_probe": "https://github.com/Satofumi-Goto/federation-portal/pull/825",
+        "seneschal_independent_staged_store": "https://github.com/Satofumi-Goto/seneschal/pull/653"
+      },
+      "observed_staging_get": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41287342366",
+      "observed_unauthenticated_api_status": 401,
+      "current_main": {
+        "federation": "9a0a8fa8e6f1bda3cb8aeb48fa4ab91050a664e5",
+        "seneschal": "2fabb3eead4dca82bf0fd4798fc22918407cfdb1"
+      },
+      "static_validation": "runtime/cloud/cli.mjs gates enable/budget OFF by default; Seneschal server/research/README.md requires persistent external SQLite path and signed HTTPS ingest/status; no authenticated evidence of deployment, grounding or durable readback.",
+      "blocked_by": [
+        "No verified authorized Cloud Run/Cloudflare deployment/session for Matsuko research execution",
+        "No confirmed Gemini provider credential, approved paid budget and grounding receipt",
+        "No verified persistent Seneschal research volume, HTTPS origin or machine-to-machine signing setup",
+        "No authenticated ingest recordId/hash/count/readback-after-restart/backup"
+      ],
+      "production_gemini_calls": 0,
+      "production_db_writes": 0,
+      "final_e2e_verified": false,
+      "policy_quota": "quota_blocked",
+      "observed_at": "2026-11-01T08:48:54.910Z"
+    }
   },
   "notes": [
     "2026-10-28T13:38:06.173Z: RELEASE FREEZE policy-first read-only observation. Frozen MAIN integrity 0/7: Activity/Fleet/Service/Urban/Simulator each +1, Seneschal +327, Federation +100 (24 new commits since prior observation; MAIN 29112018, PR #526 merge unified settings). Historical seven required CI jobs still runnerless with zero executed steps; latest Actions and workflow_dispatch lists reviewed (no in-order release), Federation workflow_run E2E history empty. Nonrequired PR/Gemini/dynamic runners do not prove policy-required release recovery. Billing rollover 2026-11-01T00:00:00Z not reached: no release dispatch, reruns, or marker edits. Historical Seneschal fail-closed credential gate requires repository Actions Secret BASE44_API_KEY; never read value. Federation required release-state JSON 404 on frozen HEAD and MAIN; main preflight Activity/Seneschal SHA mismatches persist. Exact authenticated production SHA acceptance 0/7; final E2E unverified. No changes to the seven controlled repositories or PRs.",
@@ -2751,7 +2787,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-01T08:43:56.300Z",
+    "last_observed_at": "2026-11-01T08:48:54.910Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -2806,6 +2842,26 @@
   "action_queue": [
     {
       "priority": 0,
+      "owner": "Chat：Gemini接続／マツコ独立研究",
+      "repo": "Satofumi-Goto/federation-portal",
+      "action": "2026-11-01T08:48:54.910Z: Issue #774 direct-run E2E remains blocked: #777/#824 and Seneschal #653 integrated, #825 public GET probe proved only unauthenticated 401, not Gemini grounding or persistent DB. Static check confirms research enable/budget default false and independently persistent Seneschal SQLite requirement. No safe credentialed deployment or billable run available. Require authorized deployment/session, approved budget, persistent storage, signed receipt/readback/backup; do not run quota-blocked CI or use ephemeral Cloud Run SQLite.",
+      "blocked_by": [
+        "Cloudflare/Cloud Run signed authenticated research deployment + approved provider billing unverified",
+        "Seneschal persistent DB host/volume and signed HTTPS endpoint unverified",
+        "No source receipt → recordId/hash/count → restart/readback/backup evidence"
+      ],
+      "evidence": [
+        "https://github.com/Satofumi-Goto/federation-portal/issues/774",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/777",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/824",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/825",
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41287342366",
+        "https://github.com/Satofumi-Goto/seneschal/pull/653"
+      ],
+      "completion_verified": false
+    },
+    {
+      "priority": 1,
       "owner": "Federation Builder recovery",
       "repo": "Satofumi-Goto/federation-portal",
       "action": "2026-11-01T08:43:56.300Z: Current Federation main 9a0a8fa8, but full Builder/main metadata unverified. Review-only sourceHash match for consoleOperationalApi #41289274203; staged UI is auxiliary, not ordered production. One-shot release dispatches ran out of order. Hold further releases until Activity exact SHA and authenticated durable ACK; protect draft release/attestation PRs and address cross-app 401.",
@@ -2860,7 +2916,7 @@
       "task": "2026-11-01T07:41:21.021Z: independent preview UI publication of #818 source confirmed; source has moved on, Base44 Builder exact-current-main and seven-app operational E2E still pending."
     },
     {
-      "priority": 1,
+      "priority": 2,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/life-transaction-console",
       "action": "2026-11-01 17:39 JST: main 4f0197a5. Guarded publication #41288307298 confirmed clean Builder fast-forward and source/deployed/served exact SHA 4f0197a5. Job succeeded ONLY for Builder/publication scope; all downstream proxy, release receipt and authenticated E2E steps were skipped. Earlier signed health/event roundtrip #41278137026 succeeded at older b455813f; same-main formal acceptance remains false. Complete the Activity-first authenticated console health and durable release-event ACK at this exact main, then permit Fleet.",
@@ -2879,7 +2935,7 @@
       "freeze_is_release_gate": false
     },
     {
-      "priority": 2,
+      "priority": 3,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
       "action": "2026-11-01 17:39 JST: main 680a6894. Guarded #41288674617 verified Builder clean fast-forward and source/deployed/served exact SHA, then FAILED operational-api-http-401:federation-authentication-required; authenticated release ACK/E2E absent. Published while Activity acceptance still absent: sequence not satisfied. Hold additional release until Activity and all preceding exact-SHA authenticated gates pass.",
@@ -2902,7 +2958,7 @@
       "freeze_is_release_gate": false
     },
     {
-      "priority": 3,
+      "priority": 4,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/service-hub-console",
       "action": "2026-11-01 17:39 JST: main b293f9ea. Guarded #41288731535 verified Builder fast-forward and source/deployed/served exact SHA; operational API then FAILED 401 federation-authentication-required. No authenticated E2E or ordered acceptance. Hold additional release until Activity and all preceding exact-SHA authenticated gates pass.",
@@ -2922,7 +2978,7 @@
       "freeze_is_release_gate": false
     },
     {
-      "priority": 4,
+      "priority": 5,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/urban-operation-console",
       "action": "2026-11-01 17:39 JST: main 743b8bee. Guarded #41288677254 verified Builder fast-forward and source/deployed/served exact SHA; operational API then FAILED 401 federation-authentication-required. No authenticated E2E or ordered acceptance. Hold additional release until Activity and all preceding exact-SHA authenticated gates pass.",
@@ -2940,7 +2996,7 @@
       "freeze_is_release_gate": false
     },
     {
-      "priority": 5,
+      "priority": 6,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/mobility-business-lab",
       "action": "2026-11-01 17:39 JST: main e881109f. Auxiliary #41288726058 cleanly synchronized Builder, published same SHA and completed 4 read-only public-browser UI conditions; no real compute two calls, KPI/hash/receipt, iframe CSP verified embed or ordered release E2E. Keep formal compute/receipt and CSP browser embed unaccepted until predecessor gates.",
@@ -2961,7 +3017,7 @@
       "freeze_is_release_gate": false
     },
     {
-      "priority": 6,
+      "priority": 7,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/seneschal",
       "action": "2026-11-01 17:39 JST: main 2fabb3ee. Full guarded release #41288509640 failed before deployment because CLI credential gate not configured; auxiliary site-only #41288921420 failed Builder credential unavailable. No verified current public SHA, authenticated Federation roundtrip, or voice E2E. Confirm required repository secret readiness using fail-closed workflow only; do not ask for credential values.",
@@ -2978,7 +3034,7 @@
       "freeze_is_release_gate": false
     },
     {
-      "priority": 7,
+      "priority": 8,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/federation-portal",
       "action": "2026-11-01 17:39 JST: main 9a0a8fa8. Read-only deployed consoleOperationalApi source hash equals current local function in #41289274203; not proof of whole-app Base44 Builder/main equality. Independent preview #41288866470 verified UI on earlier staged SHA only; authenticated end-to-end & seven-app formal acceptance pending. Draft #778/#779/#780 unchanged. Require full Builder source metadata and ordered seven-app E2E.",
@@ -2996,7 +3052,7 @@
       "freeze_is_release_gate": false
     },
     {
-      "priority": 8,
+      "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
       "action": "2026-11-01T08:43:56.300Z: 0/7 accepted. Final workflow must prove all seven exact published SHAs, authenticated four-console roundtrips, Simulator two real computes/KPI/hash/receipt and same-SHA Live Mission browser; no workflow executed in this sweep.",
