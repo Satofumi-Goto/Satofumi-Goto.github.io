@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T18:41:55.776Z",
+  "generated_at": "2026-11-01T22:39:02.504Z",
   "source": "Policy-first 2026-11-01T18:41:55.776Z: release_freeze=false, quota_recovery=quota_blocked. Seneschal PR #672 merged to main 636b7b30 after PR-head Audit #41332117693 success (executed build, regression and Chrome smoke). Other six app main heads unchanged. Formal release acceptance remains 0/7; current-main Base44 Publish, authenticated production E2E and Matsuko independent research durable write/readback unverified. No new workflows, paid calls or deployments initiated.",
   "completed_total": 0,
   "apps": [
@@ -55,10 +55,10 @@
     {
       "name": "Simulator",
       "status": "red",
-      "head": "c1d8fafd461d842125b5c190c0c69dc6357679b4",
-      "summary": "2026-11-02 JST: current main c1d8fafd merged guide measurement contract PR #121; same-SHA CI #41324238057 check passed (16 executed steps), live-mission-browser skipped. Current main Base44 Publish, exact public SHA, real compute twice with KPI/hash/receipt and authenticated cross-app E2E remain unverified; formal release acceptance pending Activity-first gate.",
+      "head": "78d2398b8dd57f178d5ca21506d088b6ddb18c96",
+      "summary": "2026-11-01T22:39:02.504Z: main 78d2398b merged PR #122 (Matsuko starts first, clicking avatar changes character, shorter non-blocking explanation); PR-head CI #41356887239 check/build and Chromium fixture-only live-mission-browser both succeeded with executed steps. Current main same-SHA Base44 Builder/site Publish, served public SHA, actual production compute twice + KPI/hash/receipt and authenticated cross-app E2E remain unverified. PR #123 additional focus fix open; Seneschal #673 and Federation #862 matching guidance PRs open, not production deployed. Formal Activity-first acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab",
-      "main_sha": "c1d8fafd461d842125b5c190c0c69dc6357679b4",
+      "main_sha": "78d2398b8dd57f178d5ca21506d088b6ddb18c96",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
@@ -1809,8 +1809,8 @@
         }
       }
     },
-    "last_cycle": "2026-11-01T16:39:48.544Z",
-    "current_action": "2026-11-01T16:39:48.544Z: Read canonical policy, all 7 branch heads, recent Actions metadata, Federation #774, Draft #778/#779/#780, merged #686. Simulator #121 main c1d8fafd, check CI success and browser skipped; Seneschal #671 main e3fe7878, PR Audit success; Federation #861 main afd355c1, no matching publish evidence. Quota remains policy-blocked; no retry/probe/paid API, publication or DB writing. Formal acceptance 0/7, Matsuko #774 blocked. Updated status source-head evidence only.",
+    "last_cycle": "2026-11-01T22:39:02.504Z",
+    "current_action": "2026-11-01T22:39:02.504Z: Canonical policy freeze=false, quota_recovery=quota_blocked. Read 7 current main heads, issue #774, merged #686, Draft #778/#779/#780, newly merged Simulator #122 and open PRs #123/#673/#862. Simulator PR-head CI #41356887239 check/build and Chromium fixture-only job succeeded; this is not production E2E. Status updated only for Simulator new main/CI evidence. Formal 0/7; independent Matsuko research #774 remains blocked. No Actions retry/probe, Publish, paid API, DB write or PR merge.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -2050,7 +2050,7 @@
         "repo": "Satofumi-Goto/mobility-business-lab",
         "trigger_file": ".base44-release-trigger",
         "workflow": "Base44 release — Fed actual-operation",
-        "main": "210dcdf8a5908a46529f79cfba8d08cb0b370adb",
+        "main": "78d2398b8dd57f178d5ca21506d088b6ddb18c96",
         "order": 5,
         "status": "publication_pending_predecessor_and_current_source_validation",
         "verified_release": false,
@@ -2063,7 +2063,7 @@
         "frozen_head": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
         "frozen_head_matches_main": false,
         "no_marker_commit_required": true,
-        "last_observed_at": "2026-10-30T07:37:43.157Z",
+        "last_observed_at": "2026-11-01T22:39:02.504Z",
         "historical_frozen_head_only": true,
         "latest_workflow_observation": {
           "id": 40824001440,
@@ -2075,7 +2075,7 @@
           "observed_at": "2026-10-29T05:37:00.262Z",
           "url": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40824001440"
         },
-        "current_head_ci_state": "success_nonrelease",
+        "current_head_ci_state": "pr_head_success_only_nonrelease",
         "last_workflow_observation": {
           "id": 40861194251,
           "name": "Simulator signed policy reader — scoped release",
@@ -2096,6 +2096,15 @@
           "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40971308043",
           "formal_release": false,
           "observed_at": "2026-10-30T03:42:43.655Z"
+        },
+        "latest_verified_pr_ci": {
+          "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/41356887239",
+          "head_sha": "15c62405bba4b4b96640b8fa4d481fd921b70d6e",
+          "merged_main_sha": "78d2398b8dd57f178d5ca21506d088b6ddb18c96",
+          "check": "success",
+          "fixture_browser": "success",
+          "formal_release": false,
+          "observed_at": "2026-11-01T22:39:02.504Z"
         }
       },
       "seneschal": {
@@ -3038,7 +3047,7 @@
       "priority": 6,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/mobility-business-lab",
-      "action": "2026-11-01T12:37:00.996Z: Simulator current main f695ac83. Independent Federation iframe CSP blocker resolved: owner dashboard updated parent allowlist preserving portfolio and Base44; actual public-browser probe #41304664910 confirms iframe READY. Owner-provided auth numeric-session result reports six receivers but is not a full operational release. Current main CI #41305511601 success, live-mission browser skipped. Require approved Activity→Fleet→Service→Urban predecessors and formal exact-SHA release, 2 actual simulator computations/KPI/hash/receipt and authenticated operational E2E.",
+      "action": "2026-11-01T22:39:02.504Z: Simulator main 78d2398b (merged #122) starts with Matsuko, avatar click chooses character, guided explanation no longer blocks. PR-head CI #41356887239 build/check and Chromium fixture-only mission browser executed successfully; new PR #123 remains open. No current-main Base44 Publish/current public SHA/authenticated real compute x2 + KPI/hash/receipt E2E; Activity→Fleet→Service→Urban predecessors remain unaccepted. Existing iframe CSP acceptance preserved; no extra probe.",
       "blocked_by": [
         "Ordered Activity/Fleet/Service/Urban production acceptance unverified; no formal same-head Simulator release.",
         "Simulator two real production compute calls, KPI/hash/receipt and full authenticated operation E2E unverified (numeric-session acceptance is narrower)."
@@ -3134,7 +3143,7 @@
       "fleet": "64b426f6d58a7fb6fe7148a8decc4de6d11c673e",
       "service": "8d6609086cdfb9580b561b752550e55c88635e93",
       "urban": "2bd7b743eb55b97deab312d2ef55a3404ce8457b",
-      "simulator": "c1d8fafd461d842125b5c190c0c69dc6357679b4",
+      "simulator": "78d2398b8dd57f178d5ca21506d088b6ddb18c96",
       "seneschal": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
       "federation": "afd355c1cf79ba4240a3ea7502d60c4babea3754"
     },
@@ -3201,7 +3210,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-01T16:39:48.544Z",
+    "latest_review_at": "2026-11-01T22:39:02.504Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
