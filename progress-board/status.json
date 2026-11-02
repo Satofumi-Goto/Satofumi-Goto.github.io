@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-01T22:39:02.504Z",
+  "generated_at": "2026-11-02T06:32:36Z",
   "source": "Policy-first 2026-11-01T18:41:55.776Z: release_freeze=false, quota_recovery=quota_blocked. Seneschal PR #672 merged to main 636b7b30 after PR-head Audit #41332117693 success (executed build, regression and Chrome smoke). Other six app main heads unchanged. Formal release acceptance remains 0/7; current-main Base44 Publish, authenticated production E2E and Matsuko independent research durable write/readback unverified. No new workflows, paid calls or deployments initiated.",
   "completed_total": 0,
   "apps": [
@@ -68,7 +68,7 @@
       "name": "Seneschal",
       "status": "red",
       "head": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
-      "summary": "2026-11-02 JST: main 636b7b30 merged PR #672 (single-feature guide ends correctly after route transitions). PR-head Audit #41332117693 success with executed build, regression, Chrome smoke and protected files; this is source integration, NOT current-main Base44 Publish or exact public SHA. Voice, Federation signed linkage and Matsuko independent durable DB E2E remain unverified. Formal ordered release acceptance 0/7.",
+      "summary": "2026-11-02 JST: main 636b7b30 merged PR #672 (single-feature guide ends correctly after route transitions). PR-head Audit #41332117693 success with executed build, regression, Chrome smoke and protected files; this is source integration, NOT current-main Base44 Publish or exact public SHA. Voice, Federation signed linkage and Matsuko independent durable DB E2E remain unverified. Formal ordered release acceptance 0/7. 2026-11-02 14:55–14:59 JST: scheduled Verify production #41396767778 on the same main SHA executed real browser steps and FAILED the read-only published UI check. Reported failing routes /private-car/maintenance, /providers, /ip-phone; event editor, side menu and settings/language interactions timed out; Google Directions returned OVER_QUERY_LIMIT. Separate booking/write-operation test step passed. Not a full production outage determination and not a release acceptance; do not retry while quota_blocked.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
       "main_sha": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
       "release_verified": false,
@@ -562,7 +562,7 @@
     "release_state_missing_reconfirmed_at": "2026-10-29T22:41:21.021Z",
     "runnerless_jobs_steps_reconfirmed_at": "2026-10-28T16:43:47.558Z",
     "heads_all_seven_unchanged_at": "2026-10-29T19:37:54.437Z",
-    "seneschal_latest_scheduled_verify": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40270170299",
+    "seneschal_latest_scheduled_verify": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41396767778",
     "activity_quota_job": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
     "activity_freeze_head": "https://github.com/Satofumi-Goto/life-transaction-console/commit/0c27e905f3e2b2903fb5eb6b641dddc5b5d1a5ba",
     "fleet_quota_job": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40247474805",
@@ -1024,7 +1024,8 @@
     "seneschal_tutorial_source_check": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41307987637",
     "federation_tutorial_site_publish": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41307713358",
     "seneschal_tutorial_pr672": "https://github.com/Satofumi-Goto/seneschal/pull/672",
-    "seneschal_tutorial_pr672_audit": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41332117693"
+    "seneschal_tutorial_pr672_audit": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41332117693",
+    "seneschal_production_ui_failure": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41396767778"
   },
   "notes": [
     "2026-10-28T13:38:06.173Z: RELEASE FREEZE policy-first read-only observation. Frozen MAIN integrity 0/7: Activity/Fleet/Service/Urban/Simulator each +1, Seneschal +327, Federation +100 (24 new commits since prior observation; MAIN 29112018, PR #526 merge unified settings). Historical seven required CI jobs still runnerless with zero executed steps; latest Actions and workflow_dispatch lists reviewed (no in-order release), Federation workflow_run E2E history empty. Nonrequired PR/Gemini/dynamic runners do not prove policy-required release recovery. Billing rollover 2026-11-01T00:00:00Z not reached: no release dispatch, reruns, or marker edits. Historical Seneschal fail-closed credential gate requires repository Actions Secret BASE44_API_KEY; never read value. Federation required release-state JSON 404 on frozen HEAD and MAIN; main preflight Activity/Seneschal SHA mismatches persist. Exact authenticated production SHA acceptance 0/7; final E2E unverified. No changes to the seven controlled repositories or PRs.",
@@ -1066,7 +1067,8 @@
     "2026-11-01T10:45:31.565Z: Policy-first read-only delta sweep. Current release_freeze.enabled=false / quota_recovery.state=quota_blocked. Main advanced only Simulator c13d073e, Seneschal e327760d, Federation 166c29de vs prior status; first four heads unchanged. Simulator server-only scoped-HMAC security fixes merged but explicit scoped deployment and real 2-compute KPI/hash/receipt E2E unverified. Federation independent guarded merge/publish/rollback source (#847) merged, disabled pending activation; connection probe #846 and independent acceptance diagnostics #845 merged, no live authenticated acceptance. Activity release #41291536480 showed job success but downstream deploy, site SHA and durable E2E steps were skipped; Fleet #41291046583 failed at scoped Builder publish. Simulator and Federation latest workflows running at observation, not counted as acceptance. Matsuko #774 grounded Gemini receipt, Seneschal durable independent DB record/readback/backup still missing. Draft #778/#779/#780 remain unmerged. No dispatch/retry/merge/Publish/secret/paid API. 0/7 formal acceptance; 17 owner rows / 10 queue items preserved.",
     "2026-11-01T10:47:57.627Z: Post-observation completion of Federation #41298746624: exact-source Builder deployment + public git-head SHA 166c29de verified, and read-only native connection inspection step succeeded. This is auxiliary current-SHA publication, not ordered release; potentially out-of-order site publication bypasses first-six authenticated release gate. Simulator current-main CI #41298737296 was cancelled midway; cannot count exact-main CI success. Matsuko #774 persisted research/readback remains blocked. No Actions started, no merges, no secrets accessed, formal acceptance 0/7. 17 owners/10 queue preserved.",
     "2026-11-01T12:37:00.996Z: Policy-first delta sweep: Simulator main f695ac83, Federation main e24d6a51 advanced to QA docs. Run #41304664910 independently verified served iframe CSP and actual Simulator READY; owner-authenticated numeric-session result (21:09 JST) reports six change-only receivers / revocation (owner-supplied, not independently fetched). CSP embedding blocker resolved. Full production operations, two real computes, release SHA gates and Matsuko #774 receipts/readback still unverified; 0/7 accepted, quota_blocked. No new CI or paid/secret actions.",
-    "2026-11-01T13:42:47.643Z: Policy-first diff sweep: Simulator main da16aaba, Seneschal main 022cc7b6, Federation main 40c95a42. Same-head Simulator CI succeeded (Live Mission browser skipped), Seneschal tutorial source check succeeded without Publish, Federation tutorial-only site Publish step succeeded; all formal seven-app release E2E remains 0/7, Matsuko #774 remains blocked. PR #778/#779/#780 draft and #686 merged. No new Actions, Cloud Run, paid API, secrets or DB operations."
+    "2026-11-01T13:42:47.643Z: Policy-first diff sweep: Simulator main da16aaba, Seneschal main 022cc7b6, Federation main 40c95a42. Same-head Simulator CI succeeded (Live Mission browser skipped), Seneschal tutorial source check succeeded without Publish, Federation tutorial-only site Publish step succeeded; all formal seven-app release E2E remains 0/7, Matsuko #774 remains blocked. PR #778/#779/#780 draft and #686 merged. No new Actions, Cloud Run, paid API, secrets or DB operations.",
+    "2026-11-02 14:55–14:59 JST: New Seneschal same-main scheduled Verify production #41396767778 failed with executed browser steps: three routes and several UI interactions timed out; Google Directions OVER_QUERY_LIMIT also observed. Separate isolated bookings/write step passed. Federation monitor #41397175486 passed local rule checks; seven main SHA unchanged; #774 independent Gemini/DB E2E still blocked; formal acceptance 0/7. No workflows/Publish/paid APIs started by orchestrator. Status-only evidence update."
   ],
   "orchestrator": {
     "enabled": true,
@@ -3071,10 +3073,11 @@
       "priority": 7,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/seneschal",
-      "action": "2026-11-01T11:42:45.442Z: Seneschal main 3750f20a; tutorial PR #666 merged. Guarded tutorial publication #41302361964 failed at Publish existing site. Federation central Builder probe #41302576027 returned builder-read-http-404 and its PR #854 was closed without merge/deploy. Preserve current credentials; no retry until proven path. Signed production voice and independent DB E2E unverified.",
+      "action": "2026-11-02T05:59:21Z: Same-main scheduled production UI verification run #41396767778 executed and failed read-only route/interaction checks. /private-car/maintenance, /providers, /ip-phone failed; several UI interactions timed out; Google Directions OVER_QUERY_LIMIT observed. Review existing logs and code statically, separate quota/third-party error from UI regressions; no blind rerun. Base44 publication/voice/authenticated E2E remains unverified.",
       "blocked_by": [
         "Seneschal BASE44 CLI credential and scoped Builder publication credential fail closed (secret values not inspected).",
-        "Prior Simulator formal E2E missing."
+        "Prior Simulator formal E2E missing.",
+        "Production read-only UI check failed with executed browser steps; root cause of route and click timeouts unconfirmed; Google Directions quota exceeded."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/seneschal/commit/b4365dcce019fc7792614e4684f0f43e66da6a42",
@@ -3082,7 +3085,8 @@
         "https://github.com/Satofumi-Goto/seneschal/actions/runs/41280303049",
         "https://github.com/Satofumi-Goto/seneschal/actions/runs/41288921420",
         "https://github.com/Satofumi-Goto/seneschal/actions/runs/41302361964",
-        "https://github.com/Satofumi-Goto/federation-portal/pull/854"
+        "https://github.com/Satofumi-Goto/federation-portal/pull/854",
+        "https://github.com/Satofumi-Goto/seneschal/actions/runs/41396767778"
       ],
       "freeze_is_release_gate": false,
       "summary": "2026-11-01T18:41:55.776Z: Seneschal PR #672 merged on main 636b7b30; PR-head Audit #41332117693 executed successful build, regression and browser smoke. Source integration only; current-main authenticated Base44 publish, exact served SHA, production voice and Federation signed E2E still unverified. Activity-first predecessor gates and quota_blocked policy remain; do not trigger retry."
