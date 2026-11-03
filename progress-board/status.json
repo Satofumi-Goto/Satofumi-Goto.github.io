@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T19:40:08Z",
+  "generated_at": "2026-11-03T20:45:50.026Z",
   "source": "Policy-first 2026-11-01T18:41:55.776Z: release_freeze=false, quota_recovery=quota_blocked. Seneschal PR #672 merged to main 636b7b30 after PR-head Audit #41332117693 success (executed build, regression and Chrome smoke). Other six app main heads unchanged. Formal release acceptance remains 0/7; current-main Base44 Publish, authenticated production E2E and Matsuko independent research durable write/readback unverified. No new workflows, paid calls or deployments initiated.",
   "completed_total": 0,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
-      "head": "fe3001dae4cadce391f394ec1b0dc96c5669bd4c",
-      "summary": "2026-11-01T09:36:15.135Z: main fe3001da updated (from 4f0197a5); preceding Builder/site and E2E evidence pertains to earlier SHA, not current main. Previous 4f0197a5 Builder/site publication verified, but authenticated same-SHA health and durable release ACK were skipped; latest source has no corresponding formal acceptance. Formal release acceptance remains unverified; maintain Activity-first order and CI quota hold.",
+      "head": "ae98a0601c6777057aa3b1cb5f517f91723db28c",
+      "summary": "2026-11-03T20:45:50.026Z: PR #56：安全な32KiB単位のBuilder一時転送・公開経路をmain統合。新main同一SHA CI、Builder同期、Publish、認証済みコンソールE2Eは未確認。 7アプリ正式公開受入れは未達（0/7）。",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
-      "main_sha": "fe3001dae4cadce391f394ec1b0dc96c5669bd4c",
+      "main_sha": "ae98a0601c6777057aa3b1cb5f517f91723db28c",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "64b426f6d58a7fb6fe7148a8decc4de6d11c673e",
-      "summary": "2026-11-01T09:36:15.135Z: main 64b426f6 updated (from 680a6894); preceding Builder/site and E2E evidence pertains to earlier SHA, not current main. Previous 680a6894 Builder/site published but Federation operational API returned HTTP 401; new main is unverified, and Activity predecessor acceptance remains absent. Formal release acceptance remains unverified; maintain Activity-first order and CI quota hold.",
+      "head": "ee7c2074589c4ed6688cf9e1e15ce102646893fd",
+      "summary": "2026-11-03T20:45:50.026Z: PR #51を統合：電気・水素連成エネマネ計画と共通チュートリアル。車両ゲート連携ソースも更新。現行SHAの認証済み本番API往復・正式公開は未確認。 7アプリ正式公開受入れは未達（0/7）。",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "64b426f6d58a7fb6fe7148a8decc4de6d11c673e",
+      "main_sha": "ee7c2074589c4ed6688cf9e1e15ce102646893fd",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -31,10 +31,10 @@
     {
       "name": "Service Hub",
       "status": "red",
-      "head": "8d6609086cdfb9580b561b752550e55c88635e93",
-      "summary": "2026-11-01T09:36:15.135Z: main 8d660908 updated (from b293f9ea); preceding Builder/site and E2E evidence pertains to earlier SHA, not current main. Previous b293f9ea Builder/site published but Federation operational API returned HTTP 401; new main has no authenticated E2E or accepted predecessor gate. Formal release acceptance remains unverified; maintain Activity-first order and CI quota hold.",
+      "head": "8282a3825adb857758a562c446ce1f340d5e4e84",
+      "summary": "2026-11-03T20:45:50.026Z: PR #43を統合：連成エネマネ計画と共通コンソール案内。現行SHA CI、同期・正式Publish、認証済み本番API往復は未確認。 7アプリ正式公開受入れは未達（0/7）。",
       "url": "https://github.com/Satofumi-Goto/service-hub-console",
-      "main_sha": "8d6609086cdfb9580b561b752550e55c88635e93",
+      "main_sha": "8282a3825adb857758a562c446ce1f340d5e4e84",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "f2692add810011da46f686d24bc98ba7f8713e1c",
@@ -43,10 +43,10 @@
     {
       "name": "Urban",
       "status": "red",
-      "head": "2bd7b743eb55b97deab312d2ef55a3404ce8457b",
-      "summary": "2026-11-01T09:36:15.135Z: main 2bd7b743 updated (from 743b8bee); preceding Builder/site and E2E evidence pertains to earlier SHA, not current main. Previous 743b8bee Builder/site published but Federation operational API returned HTTP 401; new main has no authenticated E2E or accepted predecessor gate. Formal release acceptance remains unverified; maintain Activity-first order and CI quota hold.",
+      "head": "54e26c1c4bb64dac640537d18ff2604436a04867",
+      "summary": "2026-11-03T20:45:50.026Z: PR #41を統合：コンソールの責務・機能配置と共通チュートリアル。現行SHA CI、同期・正式Publish、認証済み本番API往復は未確認。 7アプリ正式公開受入れは未達（0/7）。",
       "url": "https://github.com/Satofumi-Goto/urban-operation-console",
-      "main_sha": "2bd7b743eb55b97deab312d2ef55a3404ce8457b",
+      "main_sha": "54e26c1c4bb64dac640537d18ff2604436a04867",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
@@ -55,10 +55,10 @@
     {
       "name": "Simulator",
       "status": "red",
-      "head": "ad2b22585b6dee8366dec807a1a782c331342b1e",
-      "summary": "2026-11-04 JST: main ad2b2258 merged PR #125: 事業収支ラボの公開版HTMLモードおよび日英切替をソースへ統合。main同一SHA CI #41704197404 check成功（live-mission-browser skipped）。Builder/サイトの同一SHA Publish・実計算2回・KPI/hash/receipt・認証済みE2E未証明。正式公開受入れ0/7。",
+      "head": "d4328689b14a16745a24c7ce2bfd13743a7039bf",
+      "summary": "2026-11-03T20:45:50.026Z: PR #126を統合：事業収支に前提感応度を表示するFinanceDrivers追加。実計算2回、KPI/hash/receipt、CSP実ブラウザ検証、現行SHA正式公開は未確認。 7アプリ正式公開受入れは未達（0/7）。",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab",
-      "main_sha": "ad2b22585b6dee8366dec807a1a782c331342b1e",
+      "main_sha": "d4328689b14a16745a24c7ce2bfd13743a7039bf",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
@@ -79,12 +79,12 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "6492c7e84a8c3a4d467f9408201d4eccb616c84d",
-      "summary": "2026-11-04 JST: main 6492c7e8 は生成repository-index更新のみ（アプリ実装・正式公開進展なし）。Builder最新main同期・Publish・認証済みE2E未証明。PR #686はmerged、#774は認証済みGemini grounding receiptとSeneschal永続DB recordId/hash/count/readback/backupが未証明でblocked。正式公開受入れ0/7。",
+      "head": "5ae5e826cff1434711861c4288930f61d3606285",
+      "summary": "2026-11-03T20:45:50.026Z: PR #867を統合：遠隔監視コンソールに車両管理・整備・エネマネ・CAPEX/OPEXのソースを追加。Builder同期・正式Publish・認証済みLive Mission/7アプリE2E未証明。研究#774はblocked。 7アプリ正式公開受入れは未達（0/7）。",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "6492c7e84a8c3a4d467f9408201d4eccb616c84d",
+      "main_sha": "5ae5e826cff1434711861c4288930f61d3606285",
       "release_verified": false,
-      "release_state": "auxiliary_exact_sha_published_formal_acceptance_blocked",
+      "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
       "freeze_head_matches_main": false
     }
@@ -1068,7 +1068,8 @@
     "2026-11-01T10:47:57.627Z: Post-observation completion of Federation #41298746624: exact-source Builder deployment + public git-head SHA 166c29de verified, and read-only native connection inspection step succeeded. This is auxiliary current-SHA publication, not ordered release; potentially out-of-order site publication bypasses first-six authenticated release gate. Simulator current-main CI #41298737296 was cancelled midway; cannot count exact-main CI success. Matsuko #774 persisted research/readback remains blocked. No Actions started, no merges, no secrets accessed, formal acceptance 0/7. 17 owners/10 queue preserved.",
     "2026-11-01T12:37:00.996Z: Policy-first delta sweep: Simulator main f695ac83, Federation main e24d6a51 advanced to QA docs. Run #41304664910 independently verified served iframe CSP and actual Simulator READY; owner-authenticated numeric-session result (21:09 JST) reports six change-only receivers / revocation (owner-supplied, not independently fetched). CSP embedding blocker resolved. Full production operations, two real computes, release SHA gates and Matsuko #774 receipts/readback still unverified; 0/7 accepted, quota_blocked. No new CI or paid/secret actions.",
     "2026-11-01T13:42:47.643Z: Policy-first diff sweep: Simulator main da16aaba, Seneschal main 022cc7b6, Federation main 40c95a42. Same-head Simulator CI succeeded (Live Mission browser skipped), Seneschal tutorial source check succeeded without Publish, Federation tutorial-only site Publish step succeeded; all formal seven-app release E2E remains 0/7, Matsuko #774 remains blocked. PR #778/#779/#780 draft and #686 merged. No new Actions, Cloud Run, paid API, secrets or DB operations.",
-    "2026-11-02 14:55–14:59 JST: New Seneschal same-main scheduled Verify production #41396767778 failed with executed browser steps: three routes and several UI interactions timed out; Google Directions OVER_QUERY_LIMIT also observed. Separate isolated bookings/write step passed. Federation monitor #41397175486 passed local rule checks; seven main SHA unchanged; #774 independent Gemini/DB E2E still blocked; formal acceptance 0/7. No workflows/Publish/paid APIs started by orchestrator. Status-only evidence update."
+    "2026-11-02 14:55–14:59 JST: New Seneschal same-main scheduled Verify production #41396767778 failed with executed browser steps: three routes and several UI interactions timed out; Google Directions OVER_QUERY_LIMIT also observed. Separate isolated bookings/write step passed. Federation monitor #41397175486 passed local rule checks; seven main SHA unchanged; #774 independent Gemini/DB E2E still blocked; formal acceptance 0/7. No workflows/Publish/paid APIs started by orchestrator. Status-only evidence update.",
+    "2026-11-03T20:45:50.026Z: Policy-first static review. Six main heads advanced since prior status by merged PRs Activity #56, Fleet #51, Service #43, Urban #41, Simulator #126, Federation #867. Seneschal unchanged. Formal release 0/7; latest CI, Builder sync, protected Publish and authenticated E2E unknown, not accepted. #774 research E2E remains blocked. 17 rows and 10 queue preserved; no actions, paid APIs, release or PR merge triggered."
   ],
   "orchestrator": {
     "enabled": true,
@@ -1811,8 +1812,8 @@
         }
       }
     },
-    "last_cycle": "2026-11-01T22:39:02.504Z",
-    "current_action": "2026-11-01T22:39:02.504Z: Canonical policy freeze=false, quota_recovery=quota_blocked. Read 7 current main heads, issue #774, merged #686, Draft #778/#779/#780, newly merged Simulator #122 and open PRs #123/#673/#862. Simulator PR-head CI #41356887239 check/build and Chromium fixture-only job succeeded; this is not production E2E. Status updated only for Simulator new main/CI evidence. Formal 0/7; independent Matsuko research #774 remains blocked. No Actions retry/probe, Publish, paid API, DB write or PR merge.",
+    "last_cycle": "2026-11-03T20:45:50.026Z",
+    "current_action": "2026-11-03T20:45:50.026Z: 現行ポリシー release_freeze=false / quota_recovery=quota_blocked。前回台帳からActivity/Fleet/Service Hub/Urban/Simulator/Federationの6 mainが進行。mainのPR統合を静的照合（Activity #56、Fleet #51、Service Hub #43、Urban #41、Simulator #126、Federation #867）。Seneschal SHA不変。GitHub commit statusとPR紐付けrunから現行SHAの実行CI証跡は得られず、必要CI成功を推定しない。Builder同期、順序付き正式Publish、認証済み本番E2E未証明のため0/7。マツコ独立研究#774に認証済みGemini receipt・独立Seneschal永続DB readback/backupの進捗なし。既存Draft #778/#779/#780未マージ。新規Actions/有料API/DB/公開/マージなし。",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -2817,7 +2818,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-01T16:39:48.544Z",
+    "last_observed_at": "2026-11-03T20:45:50.026Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -3143,13 +3144,13 @@
     "priority_policy_source_complete": true,
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "activity": "fe3001dae4cadce391f394ec1b0dc96c5669bd4c",
-      "fleet": "64b426f6d58a7fb6fe7148a8decc4de6d11c673e",
-      "service": "8d6609086cdfb9580b561b752550e55c88635e93",
-      "urban": "2bd7b743eb55b97deab312d2ef55a3404ce8457b",
-      "simulator": "ad2b22585b6dee8366dec807a1a782c331342b1e",
+      "activity": "ae98a0601c6777057aa3b1cb5f517f91723db28c",
+      "fleet": "ee7c2074589c4ed6688cf9e1e15ce102646893fd",
+      "service": "8282a3825adb857758a562c446ce1f340d5e4e84",
+      "urban": "54e26c1c4bb64dac640537d18ff2604436a04867",
+      "simulator": "d4328689b14a16745a24c7ce2bfd13743a7039bf",
       "seneschal": "7998f0a0319f157f4c1dc6d00bf8e4cb914d13de",
-      "federation": "6492c7e84a8c3a4d467f9408201d4eccb616c84d"
+      "federation": "5ae5e826cff1434711861c4288930f61d3606285"
     },
     "mission_contract": {
       "modes": [
@@ -3214,7 +3215,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-01T22:39:02.504Z",
+    "latest_review_at": "2026-11-03T20:45:50.026Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
