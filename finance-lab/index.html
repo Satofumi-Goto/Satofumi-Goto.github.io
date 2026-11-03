@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="自動運転モビリティ事業の事業収支（P/L・FCF・IRR・NPV）を、Federationの指数とシミュレータと同じ計算エンジンで試算するページ。">
+<title>事業収支ラボ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&family=Zen+Kaku+Gothic+Antique:wght@700;900&display=swap">
+<style>
+/* Layout: an operator's console. KPI strip on top, levers (tornado + cash flow) on the left, the scenario desk on the right. */
+:root {
+  --bg: #f3f5f7; --panel: #ffffff; --line: #d9dfe6; --ink: #13202f; --muted: #5a6778;
+  --accent: #1d5f86; --accent-soft: #e3eef5; --pos: #1f7a4d; --neg: #b42318; --warn: #a15c00; --bar-base: #c3ccd6;
+  --f-display: "Zen Kaku Gothic Antique", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --f-body: "IBM Plex Sans JP", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  --f-num: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 6px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f1620; --panel: #16202c; --line: #2a3747; --ink: #e6edf4; --muted: #9aa8b8;
+  --accent: #6db3dd; --accent-soft: #1b3346; --pos: #5cc28f; --neg: #f07a6c; --warn: #e0a54a; --bar-base: #3a4a5c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0f1620; --panel: #16202c; --line: #2a3747; --ink: #e6edf4; --muted: #9aa8b8;
+  --accent: #6db3dd; --accent-soft: #1b3346; --pos: #5cc28f; --neg: #f07a6c; --warn: #e0a54a; --bar-base: #3a4a5c; color-scheme: dark }
+* { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 40px }
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; gap: 18px }
+h1 { font-family: var(--f-display); font-weight: 900; font-size: 1.75rem; letter-spacing: .02em; margin: 0; text-wrap: balance }
+h2 { font-family: var(--f-display); font-weight: 700; font-size: 1.05rem; margin: 0; text-wrap: balance }
+.eyebrow { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted) }
+.num { font-family: var(--f-num); font-variant-numeric: tabular-nums }
+.muted { color: var(--muted) }
+.small { font-size: .82rem }
+header.top { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 8px 24px }
+header.top .meta { font-size: .78rem; color: var(--muted) }
+.kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden }
+.kpi { background: var(--panel); padding: 12px 14px; display: grid; gap: 2px; min-width: 0 }
+.kpi .label { font-size: .78rem; color: var(--muted) }
+.kpi .value { font-family: var(--f-num); font-variant-numeric: tabular-nums; font-size: 1.45rem; font-weight: 600; line-height: 1.2 }
+.kpi .value small { font-family: var(--f-body); font-size: .75rem; font-weight: 400; color: var(--muted); margin-left: 3px }
+.kpi .delta { font-family: var(--f-num); font-size: .78rem; min-height: 1.2em }
+.neg { color: var(--neg) } .pos { color: var(--pos) }
+.grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 18px; align-items: start }
+.col { display: grid; gap: 18px; min-width: 0 }
+section.panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 12px; min-width: 0 }
+.panel-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden }
+.seg button { border: 0; background: transparent; color: var(--muted); font: inherit; font-size: .8rem; padding: 4px 12px; cursor: pointer }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--panel) }
+button, input, textarea { font: inherit; color: inherit }
+button:focus-visible, input:focus-visible, textarea:focus-visible, .tbar:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px }
+.btn { border: 1px solid var(--accent); background: var(--accent); color: var(--panel); border-radius: var(--r); padding: 6px 14px; cursor: pointer; font-size: .85rem }
+.btn.ghost { background: transparent; color: var(--accent) }
+.btn:disabled { opacity: .5; cursor: default }
+/* Tornado */
+.tornado { display: grid; gap: 4px }
+.trow { display: grid; grid-template-columns: minmax(0, 11rem) minmax(0, 1fr); gap: 10px; align-items: center }
+.trow .name { font-size: .78rem; line-height: 1.3; overflow-wrap: anywhere }
+.trow .name .id { display: block; color: var(--muted); font-family: var(--f-num); font-size: .68rem }
+.track { position: relative; height: 22px }
+.track .axis { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--muted); opacity: .5 }
+.tbar { position: absolute; top: 3px; height: 16px; border: 0; padding: 0; cursor: pointer; border-radius: 2px }
+.tbar.lo { background: var(--neg); opacity: .78 } .tbar.hi { background: var(--pos); opacity: .78 }
+.tbar:hover { opacity: 1 }
+.tbar span { position: absolute; top: -1px; font-family: var(--f-num); font-size: .68rem; white-space: nowrap; color: var(--ink) }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .75rem; color: var(--muted) }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 4px; vertical-align: -1px }
+/* Cash flow chart */
+.chart { overflow-x: auto }
+.chart svg { display: block; width: 100%; min-width: 460px; height: auto }
+/* Scenario desk */
+.ov-list { display: grid; gap: 6px }
+.ov { display: grid; grid-template-columns: minmax(0, 1fr) 7.5rem auto; gap: 8px; align-items: center; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r) }
+.ov .lbl { font-size: .8rem; line-height: 1.3; min-width: 0; overflow-wrap: anywhere }
+.ov .lbl .sub { display: block; color: var(--muted); font-size: .7rem; font-family: var(--f-num) }
+.tag { display: inline-block; font-size: .66rem; padding: 0 6px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); margin-left: 6px; vertical-align: 1px }
+.ov input { width: 100%; padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); font-family: var(--f-num); text-align: right }
+.x { border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 2px 6px }
+.add { display: flex; gap: 8px }
+.add input { flex: 1; min-width: 0; padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg) }
+.empty { border: 1px dashed var(--line); border-radius: var(--r); padding: 12px; font-size: .82rem; color: var(--muted) }
+/* Ask Claude */
+.chips { display: flex; flex-wrap: wrap; gap: 6px }
+.chip { border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 3px 10px; font-size: .78rem; cursor: pointer; color: var(--ink) }
+.ask textarea { width: 100%; min-height: 64px; resize: vertical; padding: 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg) }
+.thread { display: grid; gap: 10px; max-height: 420px; overflow-y: auto }
+.msg { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .86rem; padding: 10px 12px; border-radius: var(--r) }
+.msg.user { background: var(--accent-soft) }
+.msg.ai { border: 1px solid var(--line) }
+.msg .act { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap }
+.status { font-size: .78rem; color: var(--muted) }
+/* Saved scenarios */
+.saved { display: grid; gap: 6px }
+.srow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 8px 10px; border: 1px solid var(--line); border-radius: var(--r) }
+.srow .nm { font-weight: 500; overflow-wrap: anywhere }
+.srow .kv { font-family: var(--f-num); font-size: .74rem; color: var(--muted) }
+.save { display: flex; gap: 8px }
+.save input { flex: 1; min-width: 0; padding: 6px 8px; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg) }
+footer { font-size: .75rem; color: var(--muted); max-width: 70ch }
+@media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr) } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)) } .kpi:last-child { grid-column: span 2 } }
+@media (max-width: 480px) { .trow { grid-template-columns: minmax(0, 1fr) } .ov { grid-template-columns: minmax(0, 1fr) 6rem auto } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important } }
+.top-right { display: grid; gap: 6px; justify-items: end }
+@media (max-width: 640px) { .top-right { justify-items: start } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Mobility Business Lab · Project finance</div>
+      <h1 data-i18n="title">事業収支ラボ</h1>
+    </div>
+    <div class="top-right">
+      <div class="seg" role="group" aria-label="Language / 言語">
+        <button type="button" id="lang-ja" aria-pressed="true" lang="ja">日本語</button>
+        <button type="button" id="lang-en" aria-pressed="false" lang="en">English</button>
+      </div>
+      <div class="meta" id="meta"></div>
+    </div>
+  </header>
+
+  <div class="kpis" id="kpis" aria-live="polite"></div>
+
+  <div class="grid">
+    <div class="col">
+      <section class="panel" aria-labelledby="h-tornado">
+        <div class="panel-head">
+          <h2 id="h-tornado" data-i18n="tornadoTitle">効く前提の順位</h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <div class="seg" role="group" data-i18n-aria="metricGroup" aria-label="指標">
+              <button type="button" id="m-op35" aria-pressed="true" data-i18n="op35">2035年 営業利益</button>
+              <button type="button" id="m-npv" aria-pressed="false" data-i18n="npvShort">NPV（8%）</button>
+            </div>
+            <div class="seg" role="group" data-i18n-aria="swingGroup" aria-label="振れ幅">
+              <button type="button" id="s-10" aria-pressed="false">±10%</button>
+              <button type="button" id="s-20" aria-pressed="true">±20%</button>
+            </div>
+          </div>
+        </div>
+        <p class="small muted" style="margin:0" data-i18n="tornadoLead">Federationの指数を1つずつ動かし、指標がどれだけ変わるかを大きい順に並べています。バーを押すと、その値を仮入力として右のシナリオに入れます。</p>
+        <div class="legend"><span><i class="sw" style="background:var(--neg)"></i><span data-i18n="legendLow">前提を下げたとき</span></span><span><i class="sw" style="background:var(--pos)"></i><span data-i18n="legendHigh">前提を上げたとき</span></span><span id="t-note"></span></div>
+        <div class="tornado" id="tornado"><div class="empty" data-i18n="computing">計算しています…</div></div>
+      </section>
+
+      <section class="panel" aria-labelledby="h-cf">
+        <div class="panel-head">
+          <h2 id="h-cf" data-i18n="cfTitle">フリーキャッシュフロー 2025–2035</h2>
+          <div class="legend"><span><i class="sw" style="background:var(--accent)"></i><span data-i18n="cfScenario">シナリオ（年次）</span></span><span><i class="sw" style="background:var(--bar-base)"></i><span data-i18n="cfPlan">計画値（年次）</span></span><span><i class="sw" style="background:var(--warn)"></i><span data-i18n="cfCum">シナリオ累計</span></span></div>
+        </div>
+        <div class="chart" id="chart"></div>
+        <p class="small muted" style="margin:0" id="cf-note"></p>
+      </section>
+    </div>
+
+    <div class="col">
+      <section class="panel" aria-labelledby="h-scn">
+        <div class="panel-head"><h2 id="h-scn" data-i18n="scenarioTitle">シナリオ</h2><button type="button" class="btn ghost" id="reset" data-i18n="reset">計画値に戻す</button></div>
+        <div class="ov-list" id="ovs"></div>
+        <div class="add">
+          <input id="add-input" list="add-list" data-i18n-ph="addPh" placeholder="指数を名前かIDで探す（例: fare, hpc price）" data-i18n-aria="addAria" aria-label="追加する指数">
+          <datalist id="add-list"></datalist>
+          <button type="button" class="btn" id="add-btn" data-i18n="add">追加</button>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+const FinanceEngine = (() => {
+// Itemization (明細化) definitions. A P/L line can be split into component indices without changing the
+// aggregation level of the P/L: the line is the sum (kind 'lump', B JPY per year) or the driver times the sum
+// (kind 'unit', per vehicle-year) of its parts. `remainder` is the part that holds what is not itemized yet, so
+// moving an amount from the remainder to a part keeps the total. Labels live in src/data/indexUpdateProposals.json.
+// To itemize another line: add a definition here, add the part records to the registry, and set the total as derived.
+const BREAKDOWNS = [
+  { id: 'maas-ops', group: 'opex', line: 'maasOps', kind: 'unit', driver: 'vehicles', totalPrefix: 'fa-maas-ops-unit-', partPrefix: 'fa-maas-ops-',
+    parts: ['remote-labour', 'maintenance-cleaning', 'insurance', 'comms-cloud', 'energy', 'vehicle-depreciation', 'other'], remainder: 'other', unit: 'M JPY/unit' },
+  { id: 'remote-ops', group: 'opex', line: 'remoteOps', kind: 'lump', totalPrefix: 'fa-pf-remote-ops-', partPrefix: 'fa-pf-remote-ops-',
+    parts: ['labour', 'comms-cloud', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'dispatch-ops', group: 'opex', line: 'dispatchOps', kind: 'lump', totalPrefix: 'fa-pf-dispatch-ops-', partPrefix: 'fa-pf-dispatch-ops-',
+    parts: ['labour', 'comms-cloud', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'maintenance', group: 'sga', line: 'maintenance', kind: 'lump', totalPrefix: 'fa-pf-maintenance-', partPrefix: 'fa-pf-maintenance-',
+    parts: ['labour', 'parts-materials', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'platform-ops', group: 'opex', line: 'platformOps', kind: 'lump', totalPrefix: 'fa-pf-platform-ops-', partPrefix: 'fa-pf-platform-ops-',
+    parts: ['labour', 'comms-cloud', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'cloud-ops-base', group: 'opex', line: 'cloudOpsBase', kind: 'lump', totalPrefix: 'fa-pf-cloud-ops-base-', partPrefix: 'fa-pf-cloud-ops-base-',
+    parts: ['compute-storage', 'network', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'ai-ops', group: 'opex', line: 'aiOps', kind: 'lump', totalPrefix: 'fa-pf-ai-ops-', partPrefix: 'fa-pf-ai-ops-',
+    parts: ['labour', 'compute', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'customer-ops', group: 'sga', line: 'customerOps', kind: 'lump', totalPrefix: 'fa-pf-customer-ops-', partPrefix: 'fa-pf-customer-ops-',
+    parts: ['labour', 'comms-cloud', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'partner-ops', group: 'sga', line: 'partnerOps', kind: 'lump', totalPrefix: 'fa-pf-partner-ops-', partPrefix: 'fa-pf-partner-ops-',
+    parts: ['labour', 'commissions', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'material-cycle', group: 'opex', line: 'materialCycle', kind: 'lump', totalPrefix: 'fa-pf-material-cycle-', partPrefix: 'fa-pf-material-cycle-',
+    parts: ['labour', 'materials', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'node-optimization', group: 'opex', line: 'nodeOptimization', kind: 'lump', totalPrefix: 'fa-pf-node-optimization-', partPrefix: 'fa-pf-node-optimization-',
+    parts: ['labour', 'comms-cloud', 'other'], remainder: 'other', unit: 'B JPY/year' },
+  { id: 'energy-sync', group: 'opex', line: 'energySync', kind: 'lump', totalPrefix: 'fa-pf-energy-sync-', partPrefix: 'fa-pf-energy-sync-',
+    parts: ['labour', 'comms-cloud', 'other'], remainder: 'other', unit: 'B JPY/year' },
+];
+const partId = (def, part, year) => `${def.partPrefix}${part}-${year}`;
+const totalId = (def, year) => `${def.totalPrefix}${year}`;
+const allPartIds = (def) => ['2030', '2035'].flatMap((y) => def.parts.map((k) => partId(def, k, y)));
+const derivedTotalIds = () => BREAKDOWNS.flatMap((d) => ['2030', '2035'].map((y) => totalId(d, y)));
+// Levers and sensitivity runs that move a total must move its parts instead (the total is their sum).
+function expandIds(ids) {
+  return [...new Set(ids.flatMap((id) => {
+    const d = BREAKDOWNS.find((b) => ['2030', '2035'].some((y) => totalId(b, y) === id));
+    if (!d) return [id];
+    const y = id.slice(-4);
+    return [id, ...d.parts.map((k) => partId(d, k, y))];
+  }))];
+}
+
+// Project-level P&L, cash flow, IRR and NPV engine.
+// Canonical calculation for the English portfolio pages 11 and 14.
+// Every input is a Federation numeric baseline record (hand-updated in Federation only).
+// Monetary outputs are B JPY. Pure function: no I/O, no randomness.
+
+const PROJECT_FINANCE_ENGINE_VERSION = 'project-finance-1.1.0';
+const YEARS = [2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034, 2035];
+const B = 1e9;
+// Publication convention: every displayed money value is rounded to 0.001 B JPY before it is used downstream.
+const r3 = (x) => Math.round(x * 1000) / 1000;
+const roundAll = (o) => Object.fromEntries(Object.entries(o).map(([k, x]) => [k, r3(x)]));
+
+// Itemized lines: when every part index of a definition is present, the line is built from the parts;
+// otherwise the legacy total index is used (older baselines). The P/L keeps one line per definition.
+function breakdownParts(v, def, y) {
+  try { return Object.fromEntries(def.parts.map((k) => [k, v(partId(def, k, y))])); } catch { return null; }
+}
+
+function indexMap(baseline) {
+  const m = new Map();
+  for (const r of baseline.records || []) {
+    const match = String(r.value ?? '').match(/^(?:[≥≤<>]=?|=)?\s*(-?\d+(?:\.\d+)?)$/);
+    if (match) m.set(r.id, Number(match[1]));
+  }
+  return m;
+}
+
+function reader(m, overrides = {}) {
+  return (id) => {
+    if (Object.prototype.hasOwnProperty.call(overrides, id)) return overrides[id];
+    if (!m.has(id)) throw new Error('Missing Federation index: ' + id);
+    return m.get(id);
+  };
+}
+// Node count at the end of a year. Assumption: no node exists before 2030; 2030 and 2035 are the registered counts,
+// 2031-2034 the build plan.
+function nodeCount(v, year) {
+  if (year < 2030) return 0;
+  return year === 2030 ? v('fa-node-count-2030') : year === 2035 ? v('fa-node-count-2035') : v('fa-pf-node-count-' + year);
+}
+// Units acquired in a year: the count above the highest count of the earlier years. A decrease buys nothing, and a
+// later rise back to an earlier level re-uses the units already held (disposals are not modelled).
+function nodesAdded(v, year) {
+  let high = 0;
+  for (let t = 2030; t < year; t++) high = Math.max(high, nodeCount(v, t));
+  return Math.max(0, nodeCount(v, year) - high);
+}
+
+function hpcYear(v, year, nodes, opt = {}) {
+  const gpus = nodes * (opt.gpuPerNode ?? v('fa-pf-hpc-gpu-per-node'));
+  const u = opt.utilization ?? v('fa-pf-hpc-utilization-' + year);
+  const price = opt.price ?? v('fa-pf-hpc-price-' + year);
+  const hours = v('fa-pf-hours-per-year');
+  const revenue = (gpus * hours * u * price) / B;
+  const power = (gpus * v('fa-pf-hpc-kw-per-gpu') * v('fa-pf-hpc-pue') * hours * u * v('fa-pf-hpc-electricity-price')) / B;
+  const service = revenue * v('fa-pf-hpc-service-cost-rate');
+  return { gpus, utilization: u, price, revenue: r3(revenue), power: r3(power), service: r3(service), ebitda: r3(revenue - power - service) };
+}
+
+// Distributed quantum computing (DQC) infrastructure: QPU modules hosted at the LH₂-cooled Nodes and sold as dedicated
+// QPU-hours. Active when the fa-pf-dqc-* indices are present (the Federation registry carries the base case; the low/high
+// cases are passed as overrides). Without them, or with zero modules in every year, the engine emits no DQC lines.
+const DQC_YEARS = [2030, 2031, 2032, 2033, 2034, 2035];
+function dqcActive(v) {
+  try { return DQC_YEARS.some((y) => v('fa-pf-dqc-modules-' + y) > 0); } catch { return false; }
+}
+function dqcYear(v, year) {
+  const y = String(year);
+  const modules = v('fa-pf-dqc-modules-' + y);
+  const u = v('fa-pf-dqc-utilization-' + y), price = v('fa-pf-dqc-price-' + y);
+  const hours = v('fa-pf-hours-per-year');
+  const revenue = (modules * hours * u * price) / B;
+  // Cryogenics and control electronics run all year, not only during paid hours.
+  const power = (modules * v('fa-pf-dqc-kw-per-module') * hours * v('fa-pf-hpc-electricity-price')) / B;
+  const capexPerModule = (v('fa-pf-dqc-capex-per-module') * 1e6) / B;
+  const maintenance = modules * capexPerModule * v('fa-pf-dqc-maintenance-rate');
+  const service = revenue * v('fa-pf-dqc-service-cost-rate');
+  const depreciation = (modules * capexPerModule) / v('fa-pf-dep-life-dqc');
+  const prev = year > DQC_YEARS[0] ? v('fa-pf-dqc-modules-' + (year - 1)) : 0;
+  const capex = Math.max(0, modules - prev) * capexPerModule;
+  // The service cost covers operations, sales and customer support (as for HPC); no separate SG&A line.
+  // EBITDA and operating profit are built from the published (rounded) lines, so the cash flow and the P/L agree to the yen.
+  const line = { revenue: r3(revenue), power: r3(power), maintenance: r3(maintenance), service: r3(service), depreciation: r3(depreciation) };
+  const ebitda = r3(line.revenue - r3(line.power + line.maintenance + line.service));
+  return {
+    modules, utilization: u, price, ...line, ebitda, capex: r3(capex), operatingProfit: r3(ebitda - line.depreciation),
+  };
+}
+
+// P&L for a fully specified year (2030 or 2035), line by line as on page 11.
+function pnlYear(v, year) {
+  const y = String(year);
+  const cars = v('fa-passenger-car-stock'), sales = v('fa-sales-coefficient');
+  const kwh = v('fa-electricity-per-vehicle-' + y), h2kg = v('fa-h2-vehicle-consumption');
+  const fcev = v('fa-pf-fcev-ratio-' + y);
+  const elecInt = cars * v('fa-bev-ratio-internal-' + y) * sales * kwh;
+  const elecExt = cars * v('fa-pf-bev-ratio-external-' + y) * sales * kwh;
+  const h2Int = cars * v('fa-pf-h2-internal-share-' + y) * fcev * h2kg;
+  const h2Ext = cars * v('fa-pf-h2-external-share-' + y) * fcev * h2kg;
+  const tiUnits = v('fa-truck-stock') * v('fa-pf-titanium-exchange-ratio');
+  const vehicles = v('fa-maas-vehicles-' + y), nodes = v('fa-node-count-' + y);
+  const hours = v('fa-pf-maas-service-hours');
+  // Coefficients that used to be implicit (1 per vehicle-hour) are indices now; older baselines fall back to 1.
+  const optional = (id, fallback) => { try { return v(id); } catch { return fallback; } };
+  const paxPerHour = optional('fa-pf-night-pax-per-vehicle-hour', 1), slotsPerHour = optional('fa-pf-night-slots-per-vehicle-hour', 1);
+  const hpc = hpcYear(v, y, nodes);
+  const dqc = dqcActive(v) ? dqcYear(v, Number(y)) : null;
+  const BD = Object.fromEntries(BREAKDOWNS.map((d) => [d.id, breakdownParts(v, d, y)]));
+  const sumOf = (o) => Object.values(o).reduce((a, b) => a + b, 0);
+  const lump = (k) => { const d = BREAKDOWNS.find((x) => x.kind === 'lump' && x.totalPrefix === `fa-pf-${k}-`); return d && BD[d.id] ? sumOf(BD[d.id]) : v(`fa-pf-${k}-${y}`); };
+  const revenue = {
+    elecInternal: (elecInt * v('fa-electricity-sales-price')) / B,
+    elecExternal: (elecExt * v('fa-electricity-sales-price')) / B,
+    h2Internal: (h2Int * v('fa-h2-sales-price')) / B,
+    h2External: (h2Ext * v('fa-h2-sales-price')) / B,
+    titanium: (tiUnits * v('fa-titanium-sales-price')) / B,
+    hpc: hpc.revenue,
+    // Revision E (when its indices exist): unit-consistent trip revenue = nodes × trips/node × passengers/trip × fare × 365
+    // (English P10/P15). Older baselines keep the vehicle-hour line of revision D.
+    nightPassenger: optional('fa-pf-trips-per-node-' + y, null) !== null
+      ? (nodes * v('fa-pf-trips-per-node-' + y) * v('fa-pf-pax-per-trip-' + y) * 365
+        // Day fare (P5 Price / P9 Trip Fee) and night fare (P9 Night Trip ¥2,700) weighted by the night share (P11 Night Operation).
+        * ((1 - optional('fa-pf-night-trip-share-' + y, 0)) * v('fa-pf-fare-per-pax-' + y) + optional('fa-pf-night-trip-share-' + y, 0) * optional('fa-pf-night-fare-per-pax', 0))) / B
+      : (vehicles * hours * v('fa-night-passenger-fee') * paxPerHour * 365 * v('fa-pf-night-passenger-share')) / B,
+    nightCargo: (vehicles * hours * v('fa-night-cargo-fee') * slotsPerHour * 365 * optional('fa-pf-night-cargo-share-' + y, v('fa-pf-night-cargo-share'))) / B,
+    mobileStorage: (v('fa-mobile-storage-count-' + y) * v('fa-mobile-storage-monthly-fee') * 12) / B,
+    autoLoading: (v('fa-pf-auto-loading-jobs-' + y) * v('fa-auto-loading-fee')) / B,
+    platformFee: lump('platform-fee'), reservationFee: lump('reservation-fee'), nodeService: lump('node-service'),
+  };
+  if (dqc) revenue.dqc = dqc.revenue;
+  const maasOpsUnit = BD['maas-ops'] ? sumOf(BD['maas-ops']) : v('fa-maas-ops-unit-' + y);
+  const driverOf = { vehicles };
+  const h2Cost = v('fa-h2-cost-' + y), elecCost = v('fa-electricity-cost');
+  const opex = {
+    h2InternalCogs: (h2Int * h2Cost) / B, h2ExternalCogs: (h2Ext * h2Cost) / B,
+    elecInternal: (elecInt * elecCost) / B, elecExternal: (elecExt * elecCost) / B,
+    titanium: (tiUnits * v('fa-titanium-unit-cost')) / B,
+    materialCycle: lump('material-cycle'), nodeOptimization: lump('node-optimization'), energySync: lump('energy-sync'),
+    maasOps: (vehicles * maasOpsUnit * 1e6) / B,
+    dispatchOps: lump('dispatch-ops'), remoteOps: lump('remote-ops'), platformOps: lump('platform-ops'),
+    cloudOps: lump('cloud-ops-base') + hpc.power + hpc.service, aiOps: lump('ai-ops'),
+  };
+  if (dqc) opex.dqcOps = dqc.power + dqc.maintenance + dqc.service;
+  const energyProduct = revenue.elecInternal + revenue.elecExternal + revenue.h2Internal + revenue.h2External + revenue.titanium;
+  const maasRevenue = revenue.nightPassenger + revenue.nightCargo + revenue.mobileStorage;
+  const swRevenue = revenue.autoLoading + revenue.platformFee + revenue.reservationFee + revenue.nodeService;
+  const sga = {
+    energy: energyProduct * v('fa-pf-energy-sga-rate'), maintenance: lump('maintenance'),
+    maas: maasRevenue * v('fa-pf-maas-sga-rate'), customerOps: lump('customer-ops'),
+    platform: swRevenue * v('fa-pf-platform-sga-rate'), partnerOps: lump('partner-ops'),
+  };
+  // In-service vintages only: the part of the base whose life has ended by year y is no longer depreciated
+  // (revision E; older baselines have no expiry index and depreciate the whole base).
+  const dl = (k) => (v(`fa-pf-dep-base-${k}-${y}`) - optional(`fa-pf-dep-expired-${k}-${y}`, 0)) / v('fa-pf-dep-life-' + k);
+  // Nodes and accelerators are depreciated by acquisition year (vintage). Assumptions: no node before 2030; a unit is
+  // depreciated for the full year it is acquired; a vintage drops out once its life has passed. Only acquisitions are
+  // depreciated (see nodesAdded). Other assets keep their registered bases.
+  const vintage = (perUnit, life) => {
+    let d = 0;
+    for (let t = 2030; t <= Number(y); t++) { const added = nodesAdded(v, t); if (Number(y) - t < life) d += (added * perUnit) / life; }
+    return d;
+  };
+  // Accelerator capex per node from the registered count per node (a gpus / nodes form would be 0/0 in a year without nodes).
+  const gpuCapexPerNodeB = (v('fa-pf-hpc-gpu-per-node') * v('fa-pf-hpc-capex-per-gpu') * 1e6) / B;
+  const depreciation = {
+    node: vintage(v('fa-node-capex-per-node'), v('fa-dep-node-life')), gtfc: dl('gtfc'), mill: dl('mill'), battery: dl('battery'),
+    magnetic: dl('magnetic'), hts: dl('hts'), water: dl('water'),
+    hpc: vintage(gpuCapexPerNodeB, v('fa-pf-dep-life-hpc')),
+    energyDevice: lump('dep-energy-device'), vehicleDev: dl('vehicle-dev'), prototype: dl('prototype'), swapBody: lump('dep-swap-body'),
+    platformDev: dl('platform-dev'), aiPlatform: lump('dep-ai-platform'), controlOs: lump('dep-control-os'),
+    infraSync: lump('dep-infra-sync'), revenueLogic: lump('dep-revenue-logic'),
+  };
+  if (dqc) depreciation.dqc = dqc.depreciation;
+  // Each line is rounded to 0.001 B JPY as published; totals are sums of the rounded lines.
+  for (const o of [revenue, opex, sga, depreciation]) Object.assign(o, roundAll(o));
+  const sum = (o) => r3(Object.values(o).reduce((a, b) => a + b, 0));
+  const totalRevenue = sum(revenue), totalOpex = sum(opex), totalSga = sum(sga), totalDep = sum(depreciation);
+  const ebitda = r3(totalRevenue - totalOpex - totalSga);
+  const operatingProfit = r3(ebitda - totalDep);
+  return {
+    year: Number(year), revenue, opex, sga, depreciation, hpc, ...(dqc ? { dqc } : {}),
+    detail: Object.fromEntries(BREAKDOWNS.map((d) => [d.line, BD[d.id] ? roundAll(Object.fromEntries(Object.entries(BD[d.id]).map(([k, x]) => [k, d.kind === 'unit' ? (driverOf[d.driver] * x * 1e6) / B : x]))) : null])),
+    totals: { revenue: totalRevenue, opex: totalOpex, sga: totalSga, ebitda, depreciation: totalDep, operatingProfit,
+      ebitdaMargin: ebitda / totalRevenue, operatingMargin: operatingProfit / totalRevenue },
+  };
+}
+
+// IRR is a single well-defined number only when the cash flow changes sign once.
+function signChanges(flows) {
+  let n = 0, prev = 0;
+  for (const f of flows) { const s = Math.sign(f); if (s !== 0) { if (prev !== 0 && s !== prev) n += 1; prev = s; } }
+  return n;
+}
+function npv(rate, flows) { return flows.reduce((a, f, t) => a + f / (1 + rate) ** t, 0); }
+function irr(flows) {
+  let lo = -0.99, hi = 1;
+  if (npv(lo, flows) * npv(hi, flows) > 0) return null;
+  for (let i = 0; i < 300; i++) { const mid = (lo + hi) / 2; if (npv(mid, flows) > 0) lo = mid; else hi = mid; }
+  return (lo + hi) / 2;
+}
+
+// Annual cash flow 2025-2035 (page 14) with optional HPC case and extra EBITDA.
+// One cash-flow year; the discounting fields are filled in after the rows are built (below).
+/** @typedef {{year: number, revenue: number, ebitda: number, capex: number, fcf: number, hpcRevenue: number, discountFactor?: number, dcf?: number, cumulativeFcf?: number, cumulativeDcf?: number}} CashFlowRow */
+function cashFlow(v, p30, p35, opt = {}) {
+  const hpcFor = (year, nodes) => (opt.noHpc ? null : hpcYear(v, year, nodes, opt.hpc || {}));
+  // The DQC line, when present, is taken out of the 2030/2035 base and added back year by year like HPC.
+  // Taken out at the published (rounded) line values, so the base matches the P/L without the DQC lines exactly.
+  const dqLines = (p) => (p.dqc ? { revenue: p.revenue.dqc, ebitda: p.revenue.dqc - p.opex.dqcOps } : { revenue: 0, ebitda: 0 });
+  const dq30 = dqLines(p30), dq35 = dqLines(p35);
+  const withDqc = Boolean(p30.dqc || p35.dqc) && !opt.noDqc;
+  const base30 = { rev: p30.totals.revenue - p30.hpc.revenue - dq30.revenue, ebitda: p30.totals.ebitda - p30.hpc.ebitda - dq30.ebitda };
+  const base35 = { rev: p35.totals.revenue - p35.hpc.revenue - dq35.revenue, ebitda: p35.totals.ebitda - p35.hpc.ebitda - dq35.ebitda };
+  const rows = YEARS.map((year) => {
+    let revenue, ebitda, hpc = null;
+    if (year < 2030) {
+      revenue = v('fa-pf-revenue-' + year); ebitda = revenue - v('fa-pf-cash-cost-' + year);
+    } else {
+      const t = (year - 2030) / 5;
+      hpc = hpcFor(year, nodeCount(v, year));
+      revenue = base30.rev + (base35.rev - base30.rev) * t + (hpc ? hpc.revenue : 0);
+      ebitda = base30.ebitda + (base35.ebitda - base30.ebitda) * t + (hpc ? hpc.ebitda : 0);
+      if (opt.extraEbitda) ebitda += opt.extraEbitda;
+    }
+    const dqc = withDqc && year >= DQC_YEARS[0] ? dqcYear(v, year) : null;
+    if (dqc) { revenue += dqc.revenue; ebitda += dqc.ebitda; }
+    revenue = r3(revenue); ebitda = r3(ebitda);
+    const capex = r3(v('fa-pf-capex-' + year) + (opt.extraCapex ? opt.extraCapex(year) : 0) + (dqc ? dqc.capex : 0));
+    const row = /** @type {CashFlowRow} */ ({ year, revenue, ebitda, capex, fcf: r3(ebitda - capex), hpcRevenue: hpc ? hpc.revenue : 0 });
+    if (withDqc) { row.dqcRevenue = dqc ? dqc.revenue : 0; row.dqcEbitda = dqc ? dqc.ebitda : 0; row.dqcCapex = dqc ? dqc.capex : 0; }
+    return row;
+  });
+  const r = v('fa-pf-discount-rate'), base = v('fa-pf-base-year');
+  let cum = 0, cumD = 0;
+  for (const row of rows) {
+    row.discountFactor = 1 / (1 + r) ** (row.year - base);
+    row.dcf = row.fcf * row.discountFactor;
+    cum = r3(cum + row.fcf); cumD += row.dcf; row.cumulativeFcf = cum; row.cumulativeDcf = cumD;
+  }
+  const flows = rows.map((x) => x.fcf);
+  const hurdle = v('fa-pf-hurdle-rate');
+  // NPV is dated from the registered base year (the discount factors above), not from the first array slot,
+  // so editing fa-pf-base-year in Federation moves the valuation date instead of silently mismatching npv() and the dcf column.
+  const npvDated = (rate) => rows.reduce((a, x) => a + x.fcf / (1 + rate) ** (x.year - base), 0);
+  const changes = signChanges(flows);
+  return { rows, flows, irr: irr(flows), npv8: npvDated(r), npvHurdle: npvDated(hurdle), irrSignChanges: changes, irrReliable: changes <= 1 };
+}
+
+function payback(rows, horizon = 2045) {
+  const firstNominal = rows.find((x) => x.cumulativeFcf >= 0);
+  const extension = [];
+  let cum = rows.at(-1).cumulativeFcf, year = rows.at(-1).year, paybackYear = firstNominal ? firstNominal.year : null;
+  const flat = rows.at(-1).fcf;
+  while (paybackYear === null && year < horizon && flat > 0) {
+    year += 1; cum += flat; extension.push({ year, cumulativeFcf: cum });
+    if (cum >= 0) paybackYear = year;
+  }
+  return { nominalPaybackYear: paybackYear, achievedBy2035: Boolean(firstNominal), extension,
+    discountedPaybackBy2035: rows.some((x) => x.cumulativeDcf >= 0) };
+}
+
+function runProjectFinance(baseline, overrides = {}) {
+  const v = reader(indexMap(baseline), overrides);
+  const p30 = pnlYear(v, 2030), p35 = pnlYear(v, 2035);
+  const cf = cashFlow(v, p30, p35);
+  const pb = payback(cf.rows);
+  const totalCapex = cf.rows.reduce((a, x) => a + x.capex, 0);
+  // Sensitivity cases with another number of accelerators per node change the accelerator capex in the years nodes are
+  // added (fa-pf-hpc-capex-per-gpu, M JPY). The base CAPEX already holds the base count, so only the difference is added;
+  // the no-HPC case removes exactly the base accelerators (gpuPerNode 0) and keeps the node capex.
+  const gpuCapexDelta = (gpuPerNode) => (year) =>
+    (nodesAdded(v, year) * (gpuPerNode - v('fa-pf-hpc-gpu-per-node')) * v('fa-pf-hpc-capex-per-gpu')) / 1000;
+  const sensitivity = {
+    noHpc: summarize(cashFlow(v, p30, p35, { noHpc: true, extraCapex: gpuCapexDelta(0) })),
+    hpcConservative: summarize(cashFlow(v, p30, p35, { hpc: { gpuPerNode: 100, utilization: 0.40, price: 400 }, extraCapex: gpuCapexDelta(100) })),
+    hpcHigh: summarize(cashFlow(v, p30, p35, { hpc: { gpuPerNode: 200, utilization: 0.70, price: 900 }, extraCapex: gpuCapexDelta(200) })),
+    npvBreakEvenExtraEbitda: breakEven(v, p30, p35),
+  };
+  if (p30.dqc || p35.dqc) sensitivity.noDqc = summarize(cashFlow(v, p30, p35, { noDqc: true }));
+  return {
+    engine: PROJECT_FINANCE_ENGINE_VERSION,
+    inputVersion: baseline.version,
+    pnl: { 2030: p30, 2035: p35 },
+    cashFlow: cf.rows,
+    results: {
+      totalCapex: r3(totalCapex), projectIRRPercent: cf.irr === null ? null : cf.irr * 100, irrSignChanges: cf.irrSignChanges, irrReliable: cf.irrReliable,
+      NPV8_BJPY: cf.npv8, NPV12_BJPY: cf.npvHurdle,
+      FCF2035_BJPY: cf.rows.at(-1).fcf, cumulativeFCF2035_BJPY: cf.rows.at(-1).cumulativeFcf,
+      cumulativeDCF2035_BJPY: cf.rows.at(-1).cumulativeDcf, ...pb,
+    },
+    sensitivity,
+  };
+}
+
+function summarize(cf) { return { irrPercent: cf.irr === null ? null : cf.irr * 100, npv8: cf.npv8, npvHurdle: cf.npvHurdle }; }
+// Extra yearly EBITDA (2030-2035) that brings NPV at the registered rate to zero. The search bracket grows until NPV
+// turns non-negative; if it never does within the limit, `reachable` is false and the value is only the last bound tried.
+const BREAK_EVEN_LIMIT_BJPY = 1e5;
+function breakEven(v, p30, p35) {
+  const npvAt = (m) => cashFlow(v, p30, p35, { extraEbitda: m }).npv8;
+  let lo = 0, hi = 500;
+  while (npvAt(hi) < 0 && hi < BREAK_EVEN_LIMIT_BJPY) { lo = hi; hi *= 2; }
+  const reachable = npvAt(hi) >= 0;
+  if (reachable) for (let i = 0; i < 200; i++) { const m = (lo + hi) / 2; if (npvAt(m) < 0) lo = m; else hi = m; }
+  const x = reachable ? (lo + hi) / 2 : hi, cf = cashFlow(v, p30, p35, { extraEbitda: x });
+  return { reachable, extraEbitdaPerYear2030to2035: x, irrPercent: cf.irr === null ? null : cf.irr * 100, npv8: cf.npv8, npvHurdle: cf.npvHurdle };
+}
+
+return { indexMap, pnlYear, cashFlow, runProjectFinance, PROJECT_FINANCE_ENGINE_VERSION };
+})();
+const BASELINE = {"version":"2026-10-15D-4f265a31","revision":"2026-10-15D","records":[{"id":"app-load-optimization-2030-target","label":"Load optimization target 2030","value":"0.70","unit":"ratio","year":"2030"},{"id":"app-load-optimization-2035-target","label":"Load optimization target 2035","value":"0.80","unit":"ratio","year":"2035"},{"id":"fa-auto-loading-fee","label":"Auto Loading Fee","value":"22300","unit":"JPY/job","year":"2030/2035"},{"id":"fa-bev-ratio-internal-2030","label":"BEV Internal Ratio 2030","value":"0.20","unit":"ratio","year":"2030"},{"id":"fa-bev-ratio-internal-2035","label":"BEV Internal Ratio 2035","value":"0.30","unit":"ratio","year":"2035"},{"id":"fa-city-count-2030","label":"City Count 2030","value":"1","unit":"city","year":"2030"},{"id":"fa-city-count-2035","label":"City Count 2035","value":"5","unit":"cities","year":"2035"},{"id":"fa-dep-energy-device-life","label":"Energy Device Depreciation Life","value":"10","unit":"years","year":"2026-2035"},{"id":"fa-dep-node-life","label":"Node Depreciation Life","value":"15","unit":"years","year":"2027-2035"},{"id":"fa-dep-platform-life","label":"Platform Depreciation Life","value":"5","unit":"years","year":"2025-2035"},{"id":"fa-dep-vehicle-life","label":"Vehicle Depreciation Life","value":"5","unit":"years","year":"2025-2035"},{"id":"fa-electricity-cost","label":"Electricity Unit Cost","value":"6.7","unit":"JPY/kWh","year":"2030/2035"},{"id":"fa-electricity-per-vehicle-2030","label":"Electricity per Vehicle 2030","value":"1200","unit":"kWh/vehicle/year","year":"2030"},{"id":"fa-electricity-per-vehicle-2035","label":"Electricity per Vehicle 2035","value":"1500","unit":"kWh/vehicle/year","year":"2035"},{"id":"fa-electricity-sales-price","label":"Electricity Sales Price","value":"15","unit":"JPY/kWh","year":"2030/2035"},{"id":"fa-h2-cost-2030","label":"Hydrogen Unit Cost 2030","value":"150","unit":"JPY/kg","year":"2030"},{"id":"fa-h2-cost-2035","label":"Hydrogen Unit Cost 2035","value":"150","unit":"JPY/kg","year":"2035"},{"id":"fa-h2-sales-price","label":"Hydrogen Sales Price","value":"333","unit":"JPY/kg","year":"2030/2035"},{"id":"fa-h2-vehicle-consumption","label":"Hydrogen per Vehicle","value":"67","unit":"kg/vehicle/year","year":"2030/2035"},{"id":"fa-invest-energy-device-timing","label":"HTS / Battery / Mill Timing","value":"2026-2030","unit":"","year":"2026-2030"},{"id":"fa-invest-node-timing","label":"Initial Nodes Timing","value":"2027-2030","unit":"","year":"2027-2030"},{"id":"fa-invest-platform-timing","label":"Platform / AI / Urban OS Timing","value":"2025-2030","unit":"","year":"2025-2030"},{"id":"fa-invest-vehicle-prototype-timing","label":"MaaS Vehicle Prototype Timing","value":"2025-2028","unit":"","year":"2025-2028"},{"id":"fa-maas-ops-comms-cloud-2030","label":"MaaS Ops Communications, cloud and software fees 2030","value":"0","unit":"M JPY/unit","year":"2030"},{"id":"fa-maas-ops-comms-cloud-2035","label":"MaaS Ops Communications, cloud and software fees 2035","value":"0","unit":"M JPY/unit","year":"2035"},{"id":"fa-maas-ops-energy-2030","label":"MaaS Ops Energy for vehicle operation 2030","value":"0","unit":"M JPY/unit","year":"2030"},{"id":"fa-maas-ops-energy-2035","label":"MaaS Ops Energy for vehicle operation 2035","value":"0","unit":"M JPY/unit","year":"2035"},{"id":"fa-maas-ops-insurance-2030","label":"MaaS Ops Insurance 2030","value":"0.08","unit":"M JPY/unit","year":"2030"},{"id":"fa-maas-ops-insurance-2035","label":"MaaS Ops Insurance 2035","value":"0.08","unit":"M JPY/unit","year":"2035"},{"id":"fa-maas-ops-maintenance-cleaning-2030","label":"MaaS Ops Maintenance, servicing and cleaning 2030","value":"0","unit":"M JPY/unit","year":"2030"},{"id":"fa-maas-ops-maintenance-cleaning-2035","label":"MaaS Ops Maintenance, servicing and cleaning 2035","value":"0","unit":"M JPY/unit","year":"2035"},{"id":"fa-maas-ops-other-2030","label":"MaaS Ops Undecomposed remainder of the unit cost 2030","value":"79.3","unit":"M JPY/unit","year":"2030"},{"id":"fa-maas-ops-other-2035","label":"MaaS Ops Undecomposed remainder of the unit cost 2035","value":"43.9","unit":"M JPY/unit","year":"2035"},{"id":"fa-maas-ops-remote-labour-2030","label":"MaaS Ops Remote supervision and dispatch labour 2030","value":"1.62","unit":"M JPY/unit","year":"2030"},{"id":"fa-maas-ops-remote-labour-2035","label":"MaaS Ops Remote supervision and dispatch labour 2035","value":"1.62","unit":"M JPY/unit","year":"2035"},{"id":"fa-maas-ops-unit-2030","label":"MaaS Ops Unit Cost 2030","value":"81.0","unit":"M JPY/unit","year":"2030"},{"id":"fa-maas-ops-unit-2035","label":"MaaS Ops Unit Cost 2035","value":"45.6","unit":"M JPY/unit","year":"2035"},{"id":"fa-maas-ops-vehicle-depreciation-2030","label":"MaaS Ops Vehicle depreciation 2030","value":"0","unit":"M JPY/unit","year":"2030"},{"id":"fa-maas-ops-vehicle-depreciation-2035","label":"MaaS Ops Vehicle depreciation 2035","value":"0","unit":"M JPY/unit","year":"2035"},{"id":"fa-maas-vehicles-2030","label":"MaaS Vehicles 2030","value":"25","unit":"units","year":"2030"},{"id":"fa-maas-vehicles-2035","label":"MaaS Vehicles 2035","value":"500","unit":"units","year":"2035"},{"id":"fa-mobile-service-hourly-fee","label":"Mobile Service Fee","value":"15000","unit":"JPY/h","year":"2030/2035"},{"id":"fa-mobile-storage-count-2030","label":"Mobile storage containers","value":"400","unit":"containers","year":"2030"},{"id":"fa-mobile-storage-count-2035","label":"Mobile storage containers","value":"5000","unit":"containers","year":"2035"},{"id":"fa-mobile-storage-monthly-fee","label":"Mobile storage scenario fee","value":"40000","unit":"JPY/container/month","year":"2030/2035"},{"id":"fa-night-cargo-fee","label":"Night Cargo Fee","value":"5000","unit":"JPY/slot","year":"2030/2035"},{"id":"fa-night-passenger-fee","label":"Night Passenger Fee","value":"15000","unit":"JPY/pax","year":"2030/2035"},{"id":"fa-night-trip-fee","label":"Night Trip Fee","value":"2700","unit":"JPY/trip","year":"2030"},{"id":"fa-node-capex-per-node","label":"Node CAPEX per Node","value":"2.4","unit":"B JPY/node","year":"2030/2035"},{"id":"fa-node-count-2030","label":"Nodes 2030","value":"4","unit":"nodes","year":"2030"},{"id":"fa-node-count-2035","label":"Nodes 2035","value":"36","unit":"nodes","year":"2035"},{"id":"fa-passenger-car-stock","label":"Passenger Cars","value":"4000000","unit":"units/year","year":"2030/2035"},{"id":"fa-passenger-fare-2030","label":"Passenger fare 2030","value":"2375","unit":"JPY/passenger","year":"2030"},{"id":"fa-passenger-fare-2035","label":"Passenger fare 2035","value":"2420","unit":"JPY/passenger","year":"2035"},{"id":"fa-pf-ai-ops-2030","label":"AI Ops 2030","value":"0.22","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-ai-ops-2035","label":"AI Ops 2035","value":"2.4","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-ai-ops-compute-2030","label":"AI Ops compute 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-ai-ops-compute-2035","label":"AI Ops compute 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-ai-ops-labour-2030","label":"AI Ops labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-ai-ops-labour-2035","label":"AI Ops labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-ai-ops-other-2030","label":"AI Ops other 2030","value":"0.22","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-ai-ops-other-2035","label":"AI Ops other 2035","value":"2.4","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-auto-loading-jobs-2030","label":"Auto loading jobs 2030","value":"269000","unit":"jobs/year","year":"2030"},{"id":"fa-pf-auto-loading-jobs-2035","label":"Auto loading jobs 2035","value":"538000","unit":"jobs/year","year":"2035"},{"id":"fa-pf-base-year","label":"Discount base year","value":"2025","unit":"year","year":"2025-2035"},{"id":"fa-pf-bev-ratio-external-2030","label":"BEV external ratio 2030","value":"0.25","unit":"ratio","year":"2030"},{"id":"fa-pf-bev-ratio-external-2035","label":"BEV external ratio 2035","value":"0.35","unit":"ratio","year":"2035"},{"id":"fa-pf-capex-2025","label":"CAPEX 2025","value":"35","unit":"B JPY/year","year":"2025"},{"id":"fa-pf-capex-2026","label":"CAPEX 2026","value":"40","unit":"B JPY/year","year":"2026"},{"id":"fa-pf-capex-2027","label":"CAPEX 2027","value":"45","unit":"B JPY/year","year":"2027"},{"id":"fa-pf-capex-2028","label":"CAPEX 2028","value":"40","unit":"B JPY/year","year":"2028"},{"id":"fa-pf-capex-2029","label":"CAPEX 2029","value":"35","unit":"B JPY/year","year":"2029"},{"id":"fa-pf-capex-2030","label":"CAPEX 2030","value":"28","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-capex-2031","label":"CAPEX 2031","value":"22","unit":"B JPY/year","year":"2031"},{"id":"fa-pf-capex-2032","label":"CAPEX 2032","value":"20","unit":"B JPY/year","year":"2032"},{"id":"fa-pf-capex-2033","label":"CAPEX 2033","value":"29.2","unit":"B JPY/year","year":"2033"},{"id":"fa-pf-capex-2034","label":"CAPEX 2034","value":"29.2","unit":"B JPY/year","year":"2034"},{"id":"fa-pf-capex-2035","label":"CAPEX 2035","value":"29.2","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-cash-cost-2025","label":"Cash OPEX+SG&A 2025","value":"5","unit":"B JPY/year","year":"2025"},{"id":"fa-pf-cash-cost-2026","label":"Cash OPEX+SG&A 2026","value":"6","unit":"B JPY/year","year":"2026"},{"id":"fa-pf-cash-cost-2027","label":"Cash OPEX+SG&A 2027","value":"7","unit":"B JPY/year","year":"2027"},{"id":"fa-pf-cash-cost-2028","label":"Cash OPEX+SG&A 2028","value":"10","unit":"B JPY/year","year":"2028"},{"id":"fa-pf-cash-cost-2029","label":"Cash OPEX+SG&A 2029","value":"15","unit":"B JPY/year","year":"2029"},{"id":"fa-pf-cloud-ops-base-2030","label":"Cloud Ops base 2030","value":"0.5","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-cloud-ops-base-2035","label":"Cloud Ops base 2035","value":"3.799","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-cloud-ops-base-compute-storage-2030","label":"Cloud Ops base compute-storage 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-cloud-ops-base-compute-storage-2035","label":"Cloud Ops base compute-storage 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-cloud-ops-base-network-2030","label":"Cloud Ops base network 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-cloud-ops-base-network-2035","label":"Cloud Ops base network 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-cloud-ops-base-other-2030","label":"Cloud Ops base other 2030","value":"0.5","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-cloud-ops-base-other-2035","label":"Cloud Ops base other 2035","value":"3.799","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-customer-ops-2030","label":"Customer Ops 2030","value":"0.18","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-customer-ops-2035","label":"Customer Ops 2035","value":"1.5","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-customer-ops-comms-cloud-2030","label":"Customer Ops comms-cloud 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-customer-ops-comms-cloud-2035","label":"Customer Ops comms-cloud 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-customer-ops-labour-2030","label":"Customer Ops labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-customer-ops-labour-2035","label":"Customer Ops labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-customer-ops-other-2030","label":"Customer Ops other 2030","value":"0.18","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-customer-ops-other-2035","label":"Customer Ops other 2035","value":"1.5","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dep-ai-platform-2030","label":"AI Platform depreciation 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dep-ai-platform-2035","label":"AI Platform depreciation 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dep-base-battery-2030","label":"Battery depreciation base 2030","value":"5","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-battery-2035","label":"Battery depreciation base 2035","value":"6.4","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-base-gtfc-2030","label":"GTFC depreciation base 2030","value":"18.45","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-gtfc-2035","label":"GTFC depreciation base 2035","value":"22.6","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-base-hts-2030","label":"HTS depreciation base 2030","value":"4","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-hts-2035","label":"HTS depreciation base 2035","value":"5.1","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-base-magnetic-2030","label":"Magnetic depreciation base 2030","value":"3","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-magnetic-2035","label":"Magnetic depreciation base 2035","value":"3.8","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-base-mill-2030","label":"Mill depreciation base 2030","value":"0.6","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-mill-2035","label":"Mill depreciation base 2035","value":"4.8","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-base-platform-dev-2030","label":"Platform Dev depreciation base 2030","value":"40","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-platform-dev-2035","label":"Platform Dev depreciation base 2035","value":"59.4","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-base-prototype-2030","label":"Prototype depreciation base 2030","value":"10","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-prototype-2035","label":"Prototype depreciation base 2035","value":"10","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-base-vehicle-dev-2030","label":"Vehicle Dev depreciation base 2030","value":"50","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-vehicle-dev-2035","label":"Vehicle Dev depreciation base 2035","value":"63.9","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-base-water-2030","label":"Water depreciation base 2030","value":"2","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-base-water-2035","label":"Water depreciation base 2035","value":"2.6","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-control-os-2030","label":"Control OS depreciation 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dep-control-os-2035","label":"Control OS depreciation 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dep-energy-device-2030","label":"Energy Device depreciation 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dep-energy-device-2035","label":"Energy Device depreciation 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dep-expired-platform-dev-2030","label":"Platform Dev base past its life 2030","value":"6.666667","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-expired-platform-dev-2035","label":"Platform Dev base past its life 2035","value":"40","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-expired-prototype-2030","label":"Prototype base past its life 2030","value":"2.5","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-expired-prototype-2035","label":"Prototype base past its life 2035","value":"10","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-expired-vehicle-dev-2030","label":"Vehicle Dev base past its life 2030","value":"8.333333","unit":"B JPY","year":"2030"},{"id":"fa-pf-dep-expired-vehicle-dev-2035","label":"Vehicle Dev base past its life 2035","value":"50","unit":"B JPY","year":"2035"},{"id":"fa-pf-dep-infra-sync-2030","label":"Infra Sync depreciation 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dep-infra-sync-2035","label":"Infra Sync depreciation 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dep-life-battery","label":"Battery depreciation life","value":"10","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-dqc","label":"DQC Depreciation life","value":"7","unit":"years","year":"2030-2035"},{"id":"fa-pf-dep-life-gtfc","label":"GTFC depreciation life","value":"15","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-hpc","label":"HPC depreciation life","value":"15","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-hts","label":"HTS depreciation life","value":"10","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-magnetic","label":"Magnetic depreciation life","value":"10","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-mill","label":"Mill depreciation life","value":"10","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-platform-dev","label":"Platform Dev depreciation life","value":"5","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-prototype","label":"Prototype depreciation life","value":"5","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-vehicle-dev","label":"Vehicle Dev depreciation life","value":"5","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-life-water","label":"Water depreciation life","value":"10","unit":"years","year":"2030/2035"},{"id":"fa-pf-dep-revenue-logic-2030","label":"Revenue Logic depreciation 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dep-revenue-logic-2035","label":"Revenue Logic depreciation 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dep-swap-body-2030","label":"Swap-body Dev depreciation 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dep-swap-body-2035","label":"Swap-body Dev depreciation 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-discount-rate","label":"Discount rate","value":"0.08","unit":"ratio","year":"2025-2035"},{"id":"fa-pf-dispatch-ops-2030","label":"Dispatch Ops 2030","value":"0.55","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dispatch-ops-2035","label":"Dispatch Ops 2035","value":"4.2","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dispatch-ops-comms-cloud-2030","label":"Dispatch Ops Communications and cloud 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dispatch-ops-comms-cloud-2035","label":"Dispatch Ops Communications and cloud 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dispatch-ops-labour-2030","label":"Dispatch Ops Labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dispatch-ops-labour-2035","label":"Dispatch Ops Labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dispatch-ops-other-2030","label":"Dispatch Ops Undecomposed remainder 2030","value":"0.55","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-dispatch-ops-other-2035","label":"Dispatch Ops Undecomposed remainder 2035","value":"4.2","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-dqc-capex-chip","label":"DQC CAPEX part: Quantum chip (packaged)","value":"300","unit":"M JPY/module","year":"2030-2035"},{"id":"fa-pf-dqc-capex-cryo-4k","label":"DQC CAPEX part: 4 K stage and dilution cooling (downstream of LH₂ pre-cooling)","value":"250","unit":"M JPY/module","year":"2030-2035"},{"id":"fa-pf-dqc-capex-cryo-cmos","label":"DQC CAPEX part: Cryo-CMOS control","value":"200","unit":"M JPY/module","year":"2030-2035"},{"id":"fa-pf-dqc-capex-integration","label":"DQC CAPEX part: Calibration and integration","value":"100","unit":"M JPY/module","year":"2030-2035"},{"id":"fa-pf-dqc-capex-optical-link","label":"DQC CAPEX part: Inter-Node optical link (transducers, terminals)","value":"100","unit":"M JPY/module","year":"2030-2035"},{"id":"fa-pf-dqc-capex-per-module","label":"DQC CAPEX per module","value":"1000","unit":"M JPY/module","year":"2030-2035"},{"id":"fa-pf-dqc-capex-wiring","label":"DQC CAPEX part: Cryogenic wiring","value":"50","unit":"M JPY/module","year":"2030-2035"},{"id":"fa-pf-dqc-kw-per-module","label":"DQC Continuous power per module (cryogenics, control)","value":"25","unit":"kW/module","year":"2030-2035"},{"id":"fa-pf-dqc-maintenance-rate","label":"DQC Maintenance (annual share of CAPEX)","value":"0.1","unit":"ratio of CAPEX/year","year":"2030-2035"},{"id":"fa-pf-dqc-modules-2030","label":"DQC QPU modules 2030","value":"1","unit":"modules","year":"2030"},{"id":"fa-pf-dqc-modules-2031","label":"DQC QPU modules 2031","value":"2","unit":"modules","year":"2031"},{"id":"fa-pf-dqc-modules-2032","label":"DQC QPU modules 2032","value":"4","unit":"modules","year":"2032"},{"id":"fa-pf-dqc-modules-2033","label":"DQC QPU modules 2033","value":"6","unit":"modules","year":"2033"},{"id":"fa-pf-dqc-modules-2034","label":"DQC QPU modules 2034","value":"9","unit":"modules","year":"2034"},{"id":"fa-pf-dqc-modules-2035","label":"DQC QPU modules 2035","value":"12","unit":"modules","year":"2035"},{"id":"fa-pf-dqc-price-2030","label":"DQC dedicated price 2030","value":"450000","unit":"JPY/module-h","year":"2030"},{"id":"fa-pf-dqc-price-2031","label":"DQC dedicated price 2031","value":"435000","unit":"JPY/module-h","year":"2031"},{"id":"fa-pf-dqc-price-2032","label":"DQC dedicated price 2032","value":"420000","unit":"JPY/module-h","year":"2032"},{"id":"fa-pf-dqc-price-2033","label":"DQC dedicated price 2033","value":"405000","unit":"JPY/module-h","year":"2033"},{"id":"fa-pf-dqc-price-2034","label":"DQC dedicated price 2034","value":"390000","unit":"JPY/module-h","year":"2034"},{"id":"fa-pf-dqc-price-2035","label":"DQC dedicated price 2035","value":"375000","unit":"JPY/module-h","year":"2035"},{"id":"fa-pf-dqc-service-cost-rate","label":"DQC Operations, sales and customer-support service cost (share of revenue)","value":"0.15","unit":"ratio of revenue","year":"2030-2035"},{"id":"fa-pf-dqc-utilization-2030","label":"DQC paid utilization 2030","value":"0.2","unit":"ratio","year":"2030"},{"id":"fa-pf-dqc-utilization-2031","label":"DQC paid utilization 2031","value":"0.24","unit":"ratio","year":"2031"},{"id":"fa-pf-dqc-utilization-2032","label":"DQC paid utilization 2032","value":"0.28","unit":"ratio","year":"2032"},{"id":"fa-pf-dqc-utilization-2033","label":"DQC paid utilization 2033","value":"0.32","unit":"ratio","year":"2033"},{"id":"fa-pf-dqc-utilization-2034","label":"DQC paid utilization 2034","value":"0.36","unit":"ratio","year":"2034"},{"id":"fa-pf-dqc-utilization-2035","label":"DQC paid utilization 2035","value":"0.4","unit":"ratio","year":"2035"},{"id":"fa-pf-energy-sga-rate","label":"Energy SG&A rate","value":"0.1","unit":"ratio","year":"2030/2035"},{"id":"fa-pf-energy-sync-2030","label":"Energy Sync 2030","value":"0.08","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-energy-sync-2035","label":"Energy Sync 2035","value":"0.6","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-energy-sync-comms-cloud-2030","label":"Energy Sync comms-cloud 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-energy-sync-comms-cloud-2035","label":"Energy Sync comms-cloud 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-energy-sync-labour-2030","label":"Energy Sync labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-energy-sync-labour-2035","label":"Energy Sync labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-energy-sync-other-2030","label":"Energy Sync other 2030","value":"0.08","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-energy-sync-other-2035","label":"Energy Sync other 2035","value":"0.6","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-fare-per-pax-2030","label":"Fare per passenger 2030","value":"2200","unit":"JPY/pax","year":"2030"},{"id":"fa-pf-fare-per-pax-2035","label":"Fare per passenger 2035","value":"2000","unit":"JPY/pax","year":"2035"},{"id":"fa-pf-fcev-ratio-2030","label":"Hydrogen vehicle ratio 2030","value":"0.01","unit":"ratio","year":"2030"},{"id":"fa-pf-fcev-ratio-2035","label":"Hydrogen vehicle ratio 2035","value":"0.2","unit":"ratio","year":"2035"},{"id":"fa-pf-h2-external-share-2030","label":"H2 external cohort share 2030","value":"0.20","unit":"ratio","year":"2030"},{"id":"fa-pf-h2-external-share-2035","label":"H2 external cohort share 2035","value":"0.30","unit":"ratio","year":"2035"},{"id":"fa-pf-h2-internal-share-2030","label":"H2 internal cohort share 2030","value":"0.8","unit":"ratio","year":"2030"},{"id":"fa-pf-h2-internal-share-2035","label":"H2 internal cohort share 2035","value":"0.7","unit":"ratio","year":"2035"},{"id":"fa-pf-hours-per-year","label":"Hours per year","value":"8760","unit":"h/year","year":"2030-2035"},{"id":"fa-pf-hpc-capex-per-gpu","label":"HPC CAPEX per accelerator","value":"8.333333","unit":"M JPY/GPU","year":"2030-2035"},{"id":"fa-pf-hpc-electricity-price","label":"HPC electricity price","value":"15","unit":"JPY/kWh","year":"2030-2035"},{"id":"fa-pf-hpc-gpu-per-node","label":"HPC accelerators per node","value":"150","unit":"GPU/node","year":"2030-2035"},{"id":"fa-pf-hpc-kw-per-gpu","label":"HPC power per accelerator","value":"1.2","unit":"kW/GPU","year":"2030-2035"},{"id":"fa-pf-hpc-price-2030","label":"HPC price 2030","value":"700","unit":"JPY/GPU-h","year":"2030"},{"id":"fa-pf-hpc-price-2031","label":"HPC price 2031","value":"675","unit":"JPY/GPU-h","year":"2031"},{"id":"fa-pf-hpc-price-2032","label":"HPC price 2032","value":"650","unit":"JPY/GPU-h","year":"2032"},{"id":"fa-pf-hpc-price-2033","label":"HPC price 2033","value":"630","unit":"JPY/GPU-h","year":"2033"},{"id":"fa-pf-hpc-price-2034","label":"HPC price 2034","value":"615","unit":"JPY/GPU-h","year":"2034"},{"id":"fa-pf-hpc-price-2035","label":"HPC price 2035","value":"600","unit":"JPY/GPU-h","year":"2035"},{"id":"fa-pf-hpc-pue","label":"HPC PUE","value":"1.15","unit":"ratio-x","year":"2030-2035"},{"id":"fa-pf-hpc-service-cost-rate","label":"HPC service cost rate","value":"0.15","unit":"ratio","year":"2030-2035"},{"id":"fa-pf-hpc-utilization-2030","label":"HPC paid utilization 2030","value":"0.35","unit":"ratio","year":"2030"},{"id":"fa-pf-hpc-utilization-2031","label":"HPC paid utilization 2031","value":"0.4","unit":"ratio","year":"2031"},{"id":"fa-pf-hpc-utilization-2032","label":"HPC paid utilization 2032","value":"0.45","unit":"ratio","year":"2032"},{"id":"fa-pf-hpc-utilization-2033","label":"HPC paid utilization 2033","value":"0.48","unit":"ratio","year":"2033"},{"id":"fa-pf-hpc-utilization-2034","label":"HPC paid utilization 2034","value":"0.52","unit":"ratio","year":"2034"},{"id":"fa-pf-hpc-utilization-2035","label":"HPC paid utilization 2035","value":"0.55","unit":"ratio","year":"2035"},{"id":"fa-pf-hurdle-rate","label":"IRR hurdle 2035","value":"0.12","unit":"ratio","year":"2035"},{"id":"fa-pf-maas-service-hours","label":"MaaS service hours per day","value":"24","unit":"h/day","year":"2030/2035"},{"id":"fa-pf-maas-sga-rate","label":"MaaS SG&A rate","value":"0.15","unit":"ratio","year":"2030/2035"},{"id":"fa-pf-maintenance-2030","label":"Maintenance 2030","value":"0.25","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-maintenance-2035","label":"Maintenance 2035","value":"1.8","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-maintenance-labour-2030","label":"Maintenance Labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-maintenance-labour-2035","label":"Maintenance Labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-maintenance-other-2030","label":"Maintenance Undecomposed remainder 2030","value":"0.25","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-maintenance-other-2035","label":"Maintenance Undecomposed remainder 2035","value":"1.8","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-maintenance-parts-materials-2030","label":"Maintenance Parts and materials 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-maintenance-parts-materials-2035","label":"Maintenance Parts and materials 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-material-cycle-2030","label":"Material Cycle 2030","value":"0.3","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-material-cycle-2035","label":"Material Cycle 2035","value":"1.8","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-material-cycle-labour-2030","label":"Material Cycle labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-material-cycle-labour-2035","label":"Material Cycle labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-material-cycle-materials-2030","label":"Material Cycle materials 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-material-cycle-materials-2035","label":"Material Cycle materials 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-material-cycle-other-2030","label":"Material Cycle other 2030","value":"0.3","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-material-cycle-other-2035","label":"Material Cycle other 2035","value":"1.8","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-night-cargo-share","label":"Night cargo share","value":"0.4","unit":"ratio","year":"2030/2035"},{"id":"fa-pf-night-cargo-share-2030","label":"Cargo share of 24h 2030","value":"0.166","unit":"ratio","year":"2030"},{"id":"fa-pf-night-cargo-share-2035","label":"Cargo share of 24h 2035","value":"0.346","unit":"ratio","year":"2035"},{"id":"fa-pf-night-fare-per-pax","label":"Night fare per passenger","value":"2700","unit":"JPY/pax","year":"2030/2035"},{"id":"fa-pf-night-passenger-share","label":"Night passenger share","value":"0.6","unit":"ratio","year":"2030/2035"},{"id":"fa-pf-night-pax-per-vehicle-hour","label":"Night passengers per vehicle-hour","value":"1","unit":"pax/vehicle-hour","year":"2030/2035"},{"id":"fa-pf-night-slots-per-vehicle-hour","label":"Night cargo slots per vehicle-hour","value":"1","unit":"slot/vehicle-hour","year":"2030/2035"},{"id":"fa-pf-night-trip-share-2030","label":"Night share of passenger trips 2030","value":"0.35","unit":"ratio","year":"2030"},{"id":"fa-pf-night-trip-share-2035","label":"Night share of passenger trips 2035","value":"0.6","unit":"ratio","year":"2035"},{"id":"fa-pf-node-count-2031","label":"Nodes 2031","value":"8","unit":"nodes","year":"2031"},{"id":"fa-pf-node-count-2032","label":"Nodes 2032","value":"12","unit":"nodes","year":"2032"},{"id":"fa-pf-node-count-2033","label":"Nodes 2033","value":"20","unit":"nodes","year":"2033"},{"id":"fa-pf-node-count-2034","label":"Nodes 2034","value":"28","unit":"nodes","year":"2034"},{"id":"fa-pf-node-optimization-2030","label":"Node Optimization 2030","value":"0.12","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-node-optimization-2035","label":"Node Optimization 2035","value":"0.95","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-node-optimization-comms-cloud-2030","label":"Node Optimization comms-cloud 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-node-optimization-comms-cloud-2035","label":"Node Optimization comms-cloud 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-node-optimization-labour-2030","label":"Node Optimization labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-node-optimization-labour-2035","label":"Node Optimization labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-node-optimization-other-2030","label":"Node Optimization other 2030","value":"0.12","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-node-optimization-other-2035","label":"Node Optimization other 2035","value":"0.95","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-node-service-2030","label":"Node Service 2030","value":"0.42","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-node-service-2035","label":"Node Service 2035","value":"4.8","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-partner-ops-2030","label":"Partner Ops 2030","value":"0.12","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-partner-ops-2035","label":"Partner Ops 2035","value":"1.1","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-partner-ops-commissions-2030","label":"Partner Ops commissions 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-partner-ops-commissions-2035","label":"Partner Ops commissions 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-partner-ops-labour-2030","label":"Partner Ops labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-partner-ops-labour-2035","label":"Partner Ops labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-partner-ops-other-2030","label":"Partner Ops other 2030","value":"0.12","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-partner-ops-other-2035","label":"Partner Ops other 2035","value":"1.1","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-pax-per-trip-2030","label":"Passengers per trip 2030","value":"2.8","unit":"pax/trip","year":"2030"},{"id":"fa-pf-pax-per-trip-2035","label":"Passengers per trip 2035","value":"4","unit":"pax/trip","year":"2035"},{"id":"fa-pf-platform-fee-2030","label":"Platform Fee 2030","value":"0.8","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-platform-fee-2035","label":"Platform Fee 2035","value":"6.5","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-platform-ops-2030","label":"Platform Ops 2030","value":"1.0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-platform-ops-2035","label":"Platform Ops 2035","value":"6.0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-platform-ops-comms-cloud-2030","label":"Platform Ops comms-cloud 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-platform-ops-comms-cloud-2035","label":"Platform Ops comms-cloud 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-platform-ops-labour-2030","label":"Platform Ops labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-platform-ops-labour-2035","label":"Platform Ops labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-platform-ops-other-2030","label":"Platform Ops other 2030","value":"1.0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-platform-ops-other-2035","label":"Platform Ops other 2035","value":"6.0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-platform-sga-rate","label":"Platform SG&A rate","value":"0.2","unit":"ratio","year":"2030/2035"},{"id":"fa-pf-remote-ops-2030","label":"Remote Ops 2030","value":"0.3","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-remote-ops-2035","label":"Remote Ops 2035","value":"2.1","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-remote-ops-comms-cloud-2030","label":"Remote Ops Communications and cloud 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-remote-ops-comms-cloud-2035","label":"Remote Ops Communications and cloud 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-remote-ops-labour-2030","label":"Remote Ops Labour 2030","value":"0","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-remote-ops-labour-2035","label":"Remote Ops Labour 2035","value":"0","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-remote-ops-other-2030","label":"Remote Ops Undecomposed remainder 2030","value":"0.3","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-remote-ops-other-2035","label":"Remote Ops Undecomposed remainder 2035","value":"2.1","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-reservation-fee-2030","label":"Reservation Fee 2030","value":"0.35","unit":"B JPY/year","year":"2030"},{"id":"fa-pf-reservation-fee-2035","label":"Reservation Fee 2035","value":"2.2","unit":"B JPY/year","year":"2035"},{"id":"fa-pf-revenue-2025","label":"Revenue 2025","value":"0","unit":"B JPY/year","year":"2025"},{"id":"fa-pf-revenue-2026","label":"Revenue 2026","value":"0","unit":"B JPY/year","year":"2026"},{"id":"fa-pf-revenue-2027","label":"Revenue 2027","value":"2","unit":"B JPY/year","year":"2027"},{"id":"fa-pf-revenue-2028","label":"Revenue 2028","value":"8","unit":"B JPY/year","year":"2028"},{"id":"fa-pf-revenue-2029","label":"Revenue 2029","value":"18","unit":"B JPY/year","year":"2029"},{"id":"fa-pf-titanium-exchange-ratio","label":"Titanium exchange ratio","value":"0.3","unit":"ratio","year":"2030/2035"},{"id":"fa-pf-trips-per-node-2030","label":"Trips per node 2030","value":"73","unit":"trips/node-day","year":"2030"},{"id":"fa-pf-trips-per-node-2035","label":"Trips per node 2035","value":"140","unit":"trips/node-day","year":"2035"},{"id":"fa-sales-coefficient","label":"Sales Coefficient","value":"0.5","unit":"ratio","year":"2030/2035"},{"id":"fa-titanium-sales-price","label":"Titanium Exchange Sales Price","value":"72000","unit":"JPY/truck/year","year":"2030/2035"},{"id":"fa-titanium-unit-cost","label":"Titanium Exchange Unit Cost","value":"6000","unit":"JPY/truck/year","year":"2030/2035"},{"id":"fa-trip-fee","label":"Trip Fee","value":"2000","unit":"JPY/trip","year":"2030"},{"id":"fa-truck-stock","label":"Trucks","value":"80000","unit":"units/year","year":"2030/2035"},{"id":"p-control-delay","label":"Control delay","value":"≤20","unit":"ms","year":"2030"},{"id":"p-conversion-rate","label":"Conversion rate","value":"≥0.23","unit":"ratio","year":"2030"},{"id":"p-demand-generation-rate","label":"Demand generation rate","value":"≥0.30","unit":"ratio","year":"2030"},{"id":"p-dispatch-success-rate","label":"Dispatch success rate","value":"≥0.95","unit":"ratio","year":"2030"},{"id":"p-dispatch-success-rate-2035","label":"Dispatch success 2035","value":"≥0.99","unit":"ratio","year":"2035"},{"id":"p-electricity-cost","label":"Electricity unit cost","value":"6.7","unit":"JPY/kWh","year":"2030/2035"},{"id":"p-electricity-sales-price","label":"Electricity sales price","value":"15","unit":"JPY/kWh","year":"2030/2035"},{"id":"p-energy-efficiency","label":"End-to-end energy efficiency","value":"0.58","unit":"ratio","year":"2030"},{"id":"p-energy-per-trip","label":"Net traction energy per trip","value":"28.5","unit":"kWh/trip","year":"2030"},{"id":"p-execution-rate","label":"Execution Rate","value":"100","unit":"Hz","year":"2030"},{"id":"p-fleet-count","label":"Fleet sizing","value":"13","unit":"vehicles","year":"2030"},{"id":"p-fleet-count-2035","label":"Fleet sizing 2035","value":"24","unit":"vehicles","year":"2035"},{"id":"p-fleet-idle-ratio","label":"Fleet idle ratio","value":"≤0.25","unit":"ratio","year":"2030"},{"id":"p-fuel-lhv-input","label":"Fuel-LHV input","value":"3467.5","unit":"kWh/day","year":"2030"},{"id":"p-fuel-lhv-input-2035","label":"Fuel-LHV input 2035","value":"5700","unit":"kWh/day","year":"2035"},{"id":"p-h2-density","label":"H2 Density","value":"33.3","unit":"kWh/kg","year":"2030"},{"id":"p-h2-sales-price","label":"Hydrogen sales price","value":"333","unit":"JPY/kg","year":"2030/2035"},{"id":"p-h2-supply","label":"H2-equivalent requirement","value":"104.1","unit":"kg/day","year":"2030"},{"id":"p-h2-supply-2035","label":"H2-equivalent requirement 2035","value":"171.2","unit":"kg/day","year":"2035"},{"id":"p-input-energy","label":"Net traction demand","value":"2080.5","unit":"kWh/day","year":"2030"},{"id":"p-input-energy-2035","label":"Net traction demand 2035","value":"3990","unit":"kWh/day","year":"2035"},{"id":"p-latency","label":"Latency","value":"≤1","unit":"sec","year":"2030"},{"id":"p-load-factor","label":"Load Factor","value":"0.70","unit":"ratio","year":"2030"},{"id":"p-matching-rate","label":"Matching rate","value":"≥0.90","unit":"ratio","year":"2030"},{"id":"p-night-trip-fee","label":"Mobility Night Trip Fee","value":"2700","unit":"JPY/trip","year":"2030"},{"id":"p-node-latency","label":"Node latency","value":"≤50","unit":"ms","year":"2030"},{"id":"p-node-utilization","label":"Node utilization","value":"≥0.80","unit":"ratio","year":"2030"},{"id":"p-passenger-wait-2030","label":"Passenger waiting time 2030","value":"≤360","unit":"sec","year":"2030"},{"id":"p-passenger-wait-2035","label":"Passenger waiting time 2035","value":"≤180","unit":"sec","year":"2035"},{"id":"p-planning-latency","label":"Planning latency","value":"≤100","unit":"ms","year":"2030"},{"id":"p-position-error","label":"Position Error","value":"≤10","unit":"cm","year":"2030"},{"id":"p-pv-capacity","label":"PV Capacity","value":"1500","unit":"kW","year":"2030"},{"id":"p-pv-loss","label":"PV Loss","value":"0.15","unit":"ratio","year":"2030"},{"id":"p-pv-yield","label":"PV Yield","value":"1100","unit":"kWh/kW/yr","year":"2030"},{"id":"p-sofc-efficiency","label":"SOFC electrical efficiency","value":"0.60","unit":"ratio","year":"2030"},{"id":"p-sofc-efficiency-2035","label":"SOFC electrical efficiency 2035","value":"0.70","unit":"ratio","year":"2035"},{"id":"p-throughput","label":"Throughput","value":"40","unit":"veh/h","year":"2030"},{"id":"p-trip-fee","label":"Mobility Trip Fee","value":"2000","unit":"JPY/trip","year":"2030"},{"id":"p-trip-request-rate","label":"Trip request rate","value":"≥0.95","unit":"ratio","year":"2030"},{"id":"p-trips-per-day","label":"Trips","value":"73","unit":"trips/day","year":"2030"},{"id":"p-trips-per-day-2035","label":"Trips 2035","value":"140","unit":"trips/day","year":"2035"},{"id":"p-utilization","label":"Utilization","value":"0.75","unit":"ratio","year":"2030"},{"id":"p-utilization-2035","label":"Operating utilization 2035","value":"0.85","unit":"ratio","year":"2035"},{"id":"p-vibration","label":"Vibration","value":"≤0.3","unit":"Hz","year":"2030"},{"id":"p-waiting-time","label":"Dispatch response time","value":"≤60","unit":"sec","year":"2030"}]};
+const PUBLIC_BUILD = true;
+
+(() => {
+  'use strict';
+  const E = FinanceEngine;
+  const M = E.indexMap(BASELINE);
+  const REC = new Map(BASELINE.records.map((r) => [r.id, r]));
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // ---------- Language ----------
+  // Money: the engine works in B JPY. Japanese shows 億円 (1 B JPY = 10 億円, 1 decimal); English shows B JPY (2 decimals).
+  const I18N = {
+    ja: {
+      docTitle: '事業収支ラボ', title: '事業収支ラボ', metricGroup: '指標', swingGroup: '振れ幅',
+      tornadoTitle: '効く前提の順位', op35: '2035年 営業利益', npvShort: 'NPV（8%）',
+      tornadoLead: 'Federationの指数を1つずつ動かし、指標がどれだけ変わるかを大きい順に並べています。バーを押すと、その値を仮入力としてシナリオに入れます。',
+      legendLow: '前提を下げたとき', legendHigh: '前提を上げたとき', computing: '計算しています…',
+      cfTitle: 'フリーキャッシュフロー 2025–2035', cfScenario: 'シナリオ（年次）', cfPlan: '計画値（年次）', cfCum: 'シナリオ累計',
+      scenarioTitle: 'シナリオ', reset: '計画値に戻す', addPh: '指数を名前かIDで探す（例: fare, hpc price）', addAria: '追加する指数', add: '追加',
+      askTitle: 'Claudeに聞く', askPh: '例: 2035年の営業利益を守るには、どの前提を一番固めるべき？', askClear: '会話を消す', askGo: '質問する',
+      savedTitle: '保存したシナリオ', savePh: 'シナリオ名（例: HPC単価−20%）', saveAria: 'シナリオ名', save: '保存',
+      unit: '億円', vsPlan: 'vs 計画値', k30: '2030年 営業利益', k35: '2035年 営業利益', kIrr: 'プロジェクトIRR', kNpv: 'NPV（割引率8%）',
+      kPay: '累計FCFの回収年', after2045: '2045年超', yearUnit: '年', planIs: '計画値 {v}', flat2035: '2035年FCFの横置き',
+      setTo: '{label} を {v} にする（{d}{u}）', noLever: '動かして変化する指数がありません。', tNote: '単位: {u}（{n}指数中の上位{k}）',
+      planFcf: '{y} 計画値 FCF {v}{u}', scnFcf: '{y} シナリオ FCF {v}{u}', cfAria: '2025年から2035年のフリーキャッシュフロー',
+      cfNote: '2035年の累計FCFは {v}{u}（計画値 {p}{u}）。2031–2034年は2030年と2035年の間を直線でつないだ値です。',
+      tag: '仮入力', planVal: '計画値', resetOne: '{label} を計画値に戻す',
+      emptyOv: 'すべて計画値（Federationの指数）で計算しています。順位のバーを押すか、下で指数を探して値を変えてください。',
+      calcErr: '計算できませんでした: ', noMatch: '一致する指数がありません',
+      meta: '計算エンジン {e} · Federation指数 {b} · 計算に使う指数 {n}件',
+      foot: '数値はシミュレータの事業収支画面と同じ計算エンジンと、シミュレータが持つFederation指数のスナップショットから計算しています。ここで変えた値は仮入力で、Federationの指数や英文ポートフォリオの計画値は変わりません。金額は億円、2031–2034年は2030年と2035年の補間です。',
+      askLead: '質問すると、Claudeがこのページの計算エンジンを実際に回して答えます。数字は推測ではなく試算結果です。',
+      askLeadOff: 'このビューではClaudeへの質問は使えません。順位とシナリオで試算できます。',
+      suggest: ['2035年の営業利益に一番効く前提はどれ？', 'NPVをプラスにするには何がどれだけ必要？', 'HPCの単価が半分になったら？', 'いまのシナリオを面接官向けに3行で説明して'],
+      thinking: '考えています…', applyAi: 'Claudeが試した仮入力をシナリオに入れる（{n}件）', answering: '計算しながら回答中', question: '質問: ',
+      empty: '（回答が空でした）', truncated: '回答が途中で切れました', notGranted: 'Claudeへの質問が許可されていません',
+      busyMsg: '利用が混み合っています。少し時間をおいて質問してください。', failed: '回答を取得できませんでした。', connecting: '接続を確認中',
+      savedEmpty: '保存したシナリオがここに並びます。値を変えてから名前を付けて保存してください。', noName: '名前なし',
+      savedRow: '2035営業利益 {op}{u} · NPV {npv}{u} · IRR {irr}% · 仮入力{n}件', load: '読み込む', del: '削除', delFail: '削除できませんでした',
+      needName: 'シナリオ名を入れてください', saved: '保存しました', noPerm: '保存する権限がありません', saveFail: '保存できませんでした',
+      openInClaude: 'Claudeのビューで開くと使えます', notHere: 'このビューでは使えません', signIn: 'サインインすると保存できます',
+      slow: '読み込みに時間がかかっています', readFail: '保存済みシナリオを読めませんでした',
+      brief: [
+        'あなたは自動運転モビリティ事業の事業収支を説明するアナリストです。トヨタ／Woven by Toyotaの採用面接で使うポートフォリオの補助として答えます。',
+        '必ず日本語で、短く具体的に答えてください。見出しや表は使わず、数字は億円と%で示します（ツールの *_oku は億円）。',
+        '数字は推測せず、必ずツール（find_inputs, run_scenario, top_drivers）で計算してから述べてください。',
+        '計画値＝Federationの指数（英文ポートフォリオ基準）。このページで変えた値や、あなたが試した値は「仮入力」と呼び、計画値と混同しないでください。',
+        '2031–2034年は2030年と2035年の補間で、実績ではありません。前提に根拠が必要なときは、根拠がまだ無いと正直に述べてください。',
+      ],
+      briefPlan: '計画値の結果', briefOv: 'ページで今入っている仮入力', briefCur: 'その仮入力での結果',
+    },
+    en: {
+      docTitle: 'Project Finance Lab', title: 'Project Finance Lab', metricGroup: 'Metric', swingGroup: 'Swing',
+      tornadoTitle: 'Which assumptions matter most', op35: '2035 operating profit', npvShort: 'NPV (8%)',
+      tornadoLead: 'Each Federation index is moved one at a time, and the indices are ranked by how much the metric changes. Click a bar to put that value into the scenario as a provisional input.',
+      legendLow: 'Assumption lowered', legendHigh: 'Assumption raised', computing: 'Calculating…',
+      cfTitle: 'Free cash flow 2025–2035', cfScenario: 'Scenario (annual)', cfPlan: 'Plan (annual)', cfCum: 'Scenario cumulative',
+      scenarioTitle: 'Scenario', reset: 'Back to plan', addPh: 'Find an index by name or ID (e.g. fare, hpc price)', addAria: 'Index to add', add: 'Add',
+      askTitle: 'Ask Claude', askPh: 'e.g. Which assumption most needs evidence to protect 2035 operating profit?', askClear: 'Clear', askGo: 'Ask',
+      savedTitle: 'Saved scenarios', savePh: 'Scenario name (e.g. HPC price −20%)', saveAria: 'Scenario name', save: 'Save',
+      unit: 'B JPY', vsPlan: 'vs plan', k30: '2030 operating profit', k35: '2035 operating profit', kIrr: 'Project IRR', kNpv: 'NPV (8% discount)',
+      kPay: 'Cumulative FCF payback', after2045: 'After 2045', yearUnit: '', planIs: 'Plan {v}', flat2035: '2035 FCF held flat',
+      setTo: 'Set {label} to {v} ({d}{u})', noLever: 'No index changes the metric.', tNote: 'Unit: {u} (top {k} of {n} indices)',
+      planFcf: '{y} plan FCF {v} {u}', scnFcf: '{y} scenario FCF {v} {u}', cfAria: 'Free cash flow from 2025 to 2035',
+      cfNote: 'Cumulative FCF in 2035 is {v} {u} (plan {p} {u}). 2031–2034 are a straight line between 2030 and 2035.',
+      tag: 'Provisional', planVal: 'plan', resetOne: 'Reset {label} to plan',
+      emptyOv: 'Everything uses the plan values (Federation indices). Click a bar in the ranking, or find an index below and change its value.',
+      calcErr: 'Could not calculate: ', noMatch: 'No matching index',
+      meta: 'Engine {e} · Federation indices {b} · {n} indices used',
+      foot: 'Figures come from the same calculation engine as the simulator\'s project-finance screen and the simulator\'s snapshot of the Federation indices. Values changed here are provisional inputs; they do not change the Federation indices or the planned figures in the English portfolio. Amounts are in B JPY; 2031–2034 are interpolated between 2030 and 2035.',
+      askLead: 'Claude answers by running this page\'s calculation engine, so the numbers are computed, not guessed.',
+      askLeadOff: 'Questions to Claude are not available in this view. The ranking and scenario still work.',
+      suggest: ['Which assumption moves 2035 operating profit most?', 'What would it take for NPV to turn positive?', 'What if the HPC price halves?', 'Explain the current scenario to an interviewer in three lines'],
+      thinking: 'Thinking…', applyAi: 'Put Claude\'s provisional inputs into the scenario ({n})', answering: 'Calculating and answering', question: 'Question: ',
+      empty: '(The answer was empty)', truncated: 'The answer was cut off', notGranted: 'Questions to Claude are not allowed here',
+      busyMsg: 'Claude is busy right now. Ask again in a little while.', failed: 'Could not get an answer.', connecting: 'Connecting',
+      savedEmpty: 'Saved scenarios appear here. Change some values, name the scenario and save it.', noName: 'Untitled',
+      savedRow: '2035 op. profit {op} {u} · NPV {npv} {u} · IRR {irr}% · {n} provisional', load: 'Load', del: 'Delete', delFail: 'Could not delete',
+      needName: 'Enter a scenario name', saved: 'Saved', noPerm: 'You do not have permission to save', saveFail: 'Could not save',
+      openInClaude: 'Available when opened in Claude', notHere: 'Not available in this view', signIn: 'Sign in to save',
+      slow: 'Loading is taking a while', readFail: 'Could not read saved scenarios',
+      brief: [
+        'You are an analyst explaining the project finance of an autonomous-mobility business, supporting a portfolio used in interviews with Toyota / Woven by Toyota.',
+        'Answer in English, briefly and concretely. No headings or tables. Give amounts in B JPY and percent (tool fields *_bjpy are B JPY).',
+        'Never guess numbers: calculate with the tools (find_inputs, run_scenario, top_drivers) before stating them.',
+        'Plan values = the Federation indices (based on the English portfolio). Call values changed on this page or tried by you "provisional inputs" and never mix them up with plan values.',
+        '2031–2034 are interpolated between 2030 and 2035, not actuals. If an assumption needs evidence that does not exist yet, say so plainly.',
+      ],
+      briefPlan: 'Plan results', briefOv: 'Provisional inputs on the page now', briefCur: 'Results with those inputs',
+    },
+  };
+  let lang = (() => {
+    const h = (location.hash || '').replace('#', '');
+    if (h === 'en' || h === 'ja') return h;
+    try { const s = localStorage.getItem('finance-lab-lang'); if (s === 'en' || s === 'ja') return s; } catch {}
+    return /^ja\b/i.test(navigator.language || '') ? 'ja' : 'en';
+  })();
+  const t = (k, vars) => {
+    let s = I18N[lang][k];
+    if (vars) s = s.replace(/\{(\w+)\}/g, (m, n) => (n in vars ? vars[n] : m));
+    return s;
+  };
+  const locale = () => (lang === 'ja' ? 'ja-JP' : 'en-US');
+  // money(b): b in B JPY → the displayed number in this language's unit.
+  const money = (b) => (lang === 'ja' ? b * 10 : b);
+  const moneyDp = () => (lang === 'ja' ? 1 : 2);
+  const fmtMoney = (b) => { const x = money(b); const d = moneyDp(); const r = Math.round(x * 10 ** d) / 10 ** d;
+    return (r < 0 ? '−' : '') + Math.abs(r).toLocaleString(locale(), { minimumFractionDigits: d, maximumFractionDigits: d }); };
+  const sgn = (b) => (b < 0 ? '−' : '+') + fmtMoney(Math.abs(b));
+  function applyStatic() {
+    document.documentElement.lang = lang;
+    document.title = t('docTitle');
+    document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
+    document.querySelectorAll('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+    $('lang-ja').setAttribute('aria-pressed', String(lang === 'ja'));
+    $('lang-en').setAttribute('aria-pressed', String(lang === 'en'));
+  }
+
+  // ---------- Engine helpers (all amounts in B JPY) ----------
+  const reader = (ov) => (id) => {
+    if (Object.prototype.hasOwnProperty.call(ov, id)) return ov[id];
+    if (!M.has(id)) throw new Error('Missing Federation index: ' + id);
+    return M.get(id);
+  };
+  const quick = (ov) => {
+    const v = reader(ov);
+    const p30 = E.pnlYear(v, 2030), p35 = E.pnlYear(v, 2035);
+    const cf = E.cashFlow(v, p30, p35);
+    return { op30: p30.totals.operatingProfit, op35: p35.totals.operatingProfit, npv8: cf.npv8, irr: cf.irr, rows: cf.rows };
+  };
+  const full = (ov) => {
+    const r = E.runProjectFinance(BASELINE, ov);
+    return { op30: r.pnl[2030].totals.operatingProfit, op35: r.pnl[2035].totals.operatingProfit, rev35: r.pnl[2035].totals.revenue,
+      irr: r.results.projectIRRPercent, npv8: r.results.NPV8_BJPY, payback: r.results.nominalPaybackYear,
+      achieved: r.results.achievedBy2035, capex: r.results.totalCapex, rows: r.cashFlow };
+  };
+  const fmtPct = (p) => (p === null || p === undefined || !isFinite(p) ? '—' : (p < 0 ? '−' : '') + Math.abs(p).toFixed(1));
+  const fmtVal = (x) => (Math.abs(x) >= 1000 ? x.toLocaleString(locale(), { maximumFractionDigits: 2 }) : String(Math.round(x * 10000) / 10000));
+
+  // Every index the calculation actually reads (same method as financeView.usedInputs).
+  const USED = (() => {
+    const seen = new Set();
+    const v = (id) => { if (!M.has(id)) throw new Error('Missing Federation index: ' + id); seen.add(id); return M.get(id); };
+    const p30 = E.pnlYear(v, 2030), p35 = E.pnlYear(v, 2035); E.cashFlow(v, p30, p35);
+    return [...seen].sort();
+  })();
+  const LABEL = (id) => (REC.get(id) || {}).label || id;
+  const UNIT = (id) => (REC.get(id) || {}).unit || '';
+  // Calendar and clock settings are not business levers.
+  const NOT_LEVER = /(^|-)base-year$|hours-per-year$/;
+  const LEVERS = USED.filter((id) => !NOT_LEVER.test(id) && M.get(id) !== 0);
+
+  const BASE = full({});
+  const state = { ov: {}, metric: 'op35', swing: 0.2 };
+  let current = BASE;
+
+  // ---------- KPI strip ----------
+  function renderKpis(cur) {
+    const changed = Object.keys(state.ov).length > 0;
+    const d = (a, b, f, unit) => {
+      if (!changed || a === null || b === null) return '';
+      const x = a - b; if (Math.abs(x) < 1e-9) return '<span class="muted">±0</span>';
+      return `<span class="${x > 0 ? 'pos' : 'neg'}">${x > 0 ? '+' : '−'}${f(Math.abs(x))}${unit} ${t('vsPlan')}</span>`;
+    };
+    const tile = (label, value, unit, delta, negative) =>
+      `<div class="kpi"><div class="label">${label}</div><div class="value ${negative ? 'neg' : ''}">${value}<small>${unit}</small></div><div class="delta">${delta}</div></div>`;
+    const u = t('unit'), mu = lang === 'ja' ? u : ' ' + u;
+    const payTxt = (y) => (y ? String(y) : t('after2045'));
+    $('kpis').innerHTML = [
+      tile(t('k30'), fmtMoney(cur.op30), u, d(cur.op30, BASE.op30, fmtMoney, mu), cur.op30 < 0),
+      tile(t('k35'), fmtMoney(cur.op35), u, d(cur.op35, BASE.op35, fmtMoney, mu), cur.op35 < 0),
+      tile(t('kIrr'), fmtPct(cur.irr), '%', d(cur.irr, BASE.irr, (x) => x.toFixed(1), 'pt'), cur.irr !== null && cur.irr < 0),
+      tile(t('kNpv'), fmtMoney(cur.npv8), u, d(cur.npv8, BASE.npv8, fmtMoney, mu), cur.npv8 < 0),
+      tile(t('kPay'), payTxt(cur.payback), cur.payback ? t('yearUnit') : '',
+        changed && cur.payback !== BASE.payback ? `<span class="muted">${esc(t('planIs', { v: payTxt(BASE.payback) }))}</span>` : (cur.payback && !cur.achieved ? `<span class="muted">${esc(t('flat2035'))}</span>` : ''), false),
+    ].join('');
+  }
+
+  // ---------- Tornado ----------
+  let tornadoCache = null;
+  function computeTornado() {
+    const base = quick(state.ov);
+    const pick = (r) => (state.metric === 'op35' ? r.op35 : r.npv8);
+    const b = pick(base);
+    const rows = [];
+    for (const id of LEVERS) {
+      const v0 = Object.prototype.hasOwnProperty.call(state.ov, id) ? state.ov[id] : M.get(id);
+      const lo = v0 * (1 - state.swing), hi = v0 * (1 + state.swing);
+      let dLo, dHi;
+      try { dLo = pick(quick({ ...state.ov, [id]: lo })) - b; dHi = pick(quick({ ...state.ov, [id]: hi })) - b; } catch { continue; }
+      if (!isFinite(dLo) || !isFinite(dHi)) continue;
+      const span = Math.max(Math.abs(dLo), Math.abs(dHi));
+      if (span < 1e-6) continue;
+      rows.push({ id, lo, hi, dLo, dHi, span });
+    }
+    rows.sort((a, c) => c.span - a.span);
+    return { rows, base: b };
+  }
+  function renderTornado(recompute = true) {
+    if (recompute || !tornadoCache) tornadoCache = computeTornado();
+    const top = tornadoCache.rows.slice(0, 14);
+    const max = Math.max(...top.map((r) => r.span), 1e-9);
+    const pos = (x) => 50 + (x / max) * 36; // leaves room for the value labels at both ends
+    const u = t('unit');
+    const bar = (d, cls, val, id) => {
+      const a = pos(0), z = pos(d);
+      const left = Math.min(a, z), width = Math.max(Math.abs(z - a), 0.6);
+      const labelSide = d < 0 ? `right:calc(100% + 4px)` : `left:calc(100% + 4px)`;
+      return `<button type="button" class="tbar ${cls}" style="left:${left}%;width:${width}%" data-id="${esc(id)}" data-val="${val}" aria-label="${esc(t('setTo', { label: LABEL(id), v: fmtVal(val), d: sgn(d), u: lang === 'ja' ? u : ' ' + u }))}"><span style="${labelSide}">${sgn(d)}</span></button>`;
+    };
+    $('tornado').innerHTML = top.length ? top.map((r) =>
+      `<div class="trow"><div class="name">${esc(LABEL(r.id))}<span class="id">${esc(r.id)}</span></div>` +
+      `<div class="track"><div class="axis"></div>${bar(r.dLo, 'lo', r.lo, r.id)}${bar(r.dHi, 'hi', r.hi, r.id)}</div></div>`
+    ).join('') : `<div class="empty">${esc(t('noLever'))}</div>`;
+    $('t-note').textContent = t('tNote', { u, n: tornadoCache.rows.length, k: top.length });
+  }
+
+  // ---------- Cash flow chart ----------
+  function renderChart(cur) {
+    const rows = cur.rows, base = BASE.rows;
+    const W = 640, H = 260, L = 56, R = 12, T = 14, B = 30;
+    const vals = [...rows.map((r) => r.fcf), ...base.map((r) => r.fcf), ...rows.map((r) => r.cumulativeFcf), 0].map(money);
+    let lo = Math.min(...vals), hi = Math.max(...vals);
+    const pad = (hi - lo) * 0.08 || 1; lo -= pad; hi += pad;
+    const step = niceStep((hi - lo) / 5);
+    lo = Math.floor(lo / step) * step; hi = Math.ceil(hi / step) * step;
+    const y = (v) => T + (hi - v) / (hi - lo) * (H - T - B);
+    const bw = (W - L - R) / rows.length;
+    const x = (i) => L + i * bw;
+    const u = t('unit');
+    let g = '';
+    for (let tk = lo; tk <= hi + step / 2; tk += step) {
+      g += `<line x1="${L}" x2="${W - R}" y1="${y(tk)}" y2="${y(tk)}" stroke="var(--line)" stroke-width="${Math.abs(tk) < step / 2 ? 1.4 : 1}"/>`;
+      g += `<text x="${L - 6}" y="${y(tk) + 4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono, monospace">${Math.round(tk).toLocaleString(locale())}</text>`;
+    }
+    rows.forEach((r, i) => {
+      const bf = money(base[i].fcf), sf = money(r.fcf);
+      g += `<rect x="${x(i) + bw * 0.14}" width="${bw * 0.3}" y="${Math.min(y(0), y(bf))}" height="${Math.max(Math.abs(y(bf) - y(0)), 0.5)}" fill="var(--bar-base)"><title>${esc(t('planFcf', { y: r.year, v: fmtMoney(base[i].fcf), u }))}</title></rect>`;
+      g += `<rect x="${x(i) + bw * 0.48}" width="${bw * 0.36}" y="${Math.min(y(0), y(sf))}" height="${Math.max(Math.abs(y(sf) - y(0)), 0.5)}" fill="var(--accent)"><title>${esc(t('scnFcf', { y: r.year, v: fmtMoney(r.fcf), u }))}</title></rect>`;
+      g += `<text x="${x(i) + bw / 2}" y="${H - 10}" text-anchor="middle" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono, monospace">${r.year}</text>`;
+    });
+    const pts = rows.map((r, i) => `${x(i) + bw / 2},${y(money(r.cumulativeFcf))}`).join(' ');
+    g += `<polyline points="${pts}" fill="none" stroke="var(--warn)" stroke-width="2"/>`;
+    const last = rows.at(-1);
+    g += `<circle cx="${x(rows.length - 1) + bw / 2}" cy="${y(money(last.cumulativeFcf))}" r="3.5" fill="var(--warn)"/>`;
+    g += `<text x="${L}" y="10" font-size="10" fill="var(--muted)">${esc(u)}</text>`;
+    $('chart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(t('cfAria'))}">${g}</svg>`;
+    $('cf-note').textContent = t('cfNote', { v: fmtMoney(last.cumulativeFcf), p: fmtMoney(BASE.rows.at(-1).cumulativeFcf), u });
+  }
+  function niceStep(raw) { const p = 10 ** Math.floor(Math.log10(raw)); const n = raw / p; return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * p; }
+
+  // ---------- Scenario editor ----------
+  function renderOverrides() {
+    const ids = Object.keys(state.ov);
+    $('ovs').innerHTML = ids.length ? ids.map((id) =>
+      `<div class="ov"><div class="lbl">${esc(LABEL(id))}<span class="tag">${esc(t('tag'))}</span><span class="sub">${esc(id)} · ${esc(t('planVal'))} ${fmtVal(M.get(id))} ${esc(UNIT(id))}</span></div>` +
+      `<input type="number" step="any" id="ov-${esc(id)}" data-id="${esc(id)}" value="${state.ov[id]}" aria-label="${esc(LABEL(id))}">` +
+      `<button type="button" class="x" data-del="${esc(id)}" aria-label="${esc(t('resetOne', { label: LABEL(id) }))}">×</button></div>`
+    ).join('') : `<div class="empty">${esc(t('emptyOv'))}</div>`;
+  }
+  function setOverride(id, val) {
+    if (!M.has(id) || !isFinite(val)) return;
+    if (Math.abs(val - M.get(id)) < 1e-12) delete state.ov[id]; else state.ov[id] = val;
+    refresh(true);
+  }
+  let pending = null;
+  function refresh(rebuildEditor) {
+    let cur;
+    try { cur = full(state.ov); } catch (e) { $('foot').textContent = t('calcErr') + e.message; return; }
+    current = cur;
+    renderKpis(cur); renderChart(cur);
+    if (rebuildEditor) renderOverrides();
+    clearTimeout(pending); pending = setTimeout(() => renderTornado(true), 60);
+    try { localStorage.setItem('finance-lab-ov', JSON.stringify(state.ov)); } catch {}
+    return cur;
+  }
+  function renderStaticText() {
+    applyStatic();
+    $('meta').innerHTML = esc(t('meta', { e: '\u0000e', b: '\u0000b', n: USED.length }))
+      .replace('\u0000e', `<span class="num">${esc(E.PROJECT_FINANCE_ENGINE_VERSION)}</span>`)
+      .replace('\u0000b', `<span class="num">${esc(BASELINE.version)}</span>`);
+    $('foot').textContent = t('foot');
+  }
+
+  $('tornado').addEventListener('click', (e) => { const b = e.target.closest('.tbar'); if (b) setOverride(b.dataset.id, Number(b.dataset.val)); });
+  $('ovs').addEventListener('change', (e) => { const i = e.target.closest('input[data-id]'); if (i) setOverride(i.dataset.id, Number(i.value)); });
+  $('ovs').addEventListener('click', (e) => { const b = e.target.closest('[data-del]'); if (b) { delete state.ov[b.dataset.del]; refresh(true); } });
+  $('reset').addEventListener('click', () => { state.ov = {}; refresh(true); });
+  $('add-list').innerHTML = LEVERS.map((id) => `<option value="${esc(id)}">${esc(LABEL(id))}</option>`).join('');
+  const addFromInput = () => {
+    const q = $('add-input').value.trim(); if (!q) return;
+    const id = M.has(q) ? q : LEVERS.find((x) => LABEL(x).toLowerCase() === q.toLowerCase()) || LEVERS.find((x) => (x + ' ' + LABEL(x)).toLowerCase().includes(q.toLowerCase()));
+    if (!id) { $('add-input').setCustomValidity(t('noMatch')); $('add-input').reportValidity(); return; }
+    $('add-input').setCustomValidity(''); $('add-input').value = '';
+    if (!(id in state.ov)) { state.ov[id] = M.get(id); renderOverrides(); }
+    const el = document.getElementById('ov-' + id); if (el) el.focus();
+  };
+  $('add-btn').addEventListener('click', addFromInput);
+  $('add-input').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); addFromInput(); } });
+
+  const setSeg = (a, b, on) => { $(a).setAttribute('aria-pressed', String(on)); $(b).setAttribute('aria-pressed', String(!on)); };
+  $('m-op35').addEventListener('click', () => { state.metric = 'op35'; setSeg('m-op35', 'm-npv', true); renderTornado(); });
+  $('m-npv').addEventListener('click', () => { state.metric = 'npv'; setSeg('m-op35', 'm-npv', false); renderTornado(); });
+  $('s-10').addEventListener('click', () => { state.swing = 0.1; setSeg('s-10', 's-20', true); renderTornado(); });
+  $('s-20').addEventListener('click', () => { state.swing = 0.2; setSeg('s-10', 's-20', false); renderTornado(); });
+
+  const langHooks = [];
+  function setLang(next) {
+    if (next === lang) return;
+    lang = next;
+    try { localStorage.setItem('finance-lab-lang', lang); } catch {}
+    renderStaticText(); renderKpis(current); renderChart(current); renderOverrides(); renderTornado(false);
+    langHooks.forEach((f) => f());
+  }
+  $('lang-ja').addEventListener('click', () => setLang('ja'));
+  $('lang-en').addEventListener('click', () => setLang('en'));
+  window.addEventListener('hashchange', () => { const h = location.hash.replace('#', ''); if (h === 'ja' || h === 'en') setLang(h); });
+
+  try { const saved = JSON.parse(localStorage.getItem('finance-lab-ov') || '{}'); for (const [k, v] of Object.entries(saved)) if (M.has(k) && isFinite(v)) state.ov[k] = v; } catch {}
+  renderStaticText();
+  refresh(true);
+
+  if (!PUBLIC_BUILD) {
+  // ---------- Ask Claude (sample capability) ----------
+  const history = []; // {role, content}
+  let lastToolScenario = null;
+  let sample = null, sampleChecked = false, busy = false, abort = null;
+  const renderChips = () => { $('chips').innerHTML = t('suggest').map((s) => `<button type="button" class="chip">${esc(s)}</button>`).join(''); };
+  const renderAskLead = () => { $('ask-lead').textContent = sampleChecked && !sample ? t('askLeadOff') : t('askLead'); };
+  renderChips(); renderAskLead();
+  langHooks.push(renderChips, renderAskLead);
+  $('chips').addEventListener('click', (e) => { const c = e.target.closest('.chip'); if (c) { $('ask-input').value = c.textContent; ask(); } });
+
+  const r1 = (x) => Math.round(x * 100) / 100;
+  const summary = (r) => ({
+    operatingProfit2030_bjpy: r1(r.op30), operatingProfit2030_oku: r1(r.op30 * 10),
+    operatingProfit2035_bjpy: r1(r.op35), operatingProfit2035_oku: r1(r.op35 * 10),
+    projectIRR_percent: r.irr === null ? null : Math.round(r.irr * 10) / 10,
+    npv8_bjpy: r1(r.npv8), npv8_oku: r1(r.npv8 * 10),
+    paybackYear: r.payback || 'after 2045', totalCapex_bjpy: r1(r.capex), totalCapex_oku: r1(r.capex * 10),
+  });
+  const TOOLS = [
+    { name: 'find_inputs', description: 'Search the Federation indices that the project-finance calculation reads. Returns id, label, plan value, unit and year. Use before changing a value.',
+      inputSchema: { type: 'object', properties: { query: { type: 'string', description: 'words from the label or id, e.g. "hpc price" or "fare"' } }, required: ['query'] },
+      execute: ({ query }) => {
+        const words = String(query || '').toLowerCase().split(/\s+/).filter(Boolean);
+        return LEVERS.filter((id) => words.every((w) => (id + ' ' + LABEL(id)).toLowerCase().includes(w))).slice(0, 25)
+          .map((id) => ({ id, label: LABEL(id), planValue: M.get(id), unit: UNIT(id), year: (REC.get(id) || {}).year || '' }));
+      } },
+    { name: 'run_scenario', description: 'Run the real project-finance engine with some indices replaced. Values are in each index\'s own unit. The page\'s current scenario is NOT included unless you pass it. Returns results in B JPY (*_bjpy), 億円 (*_oku) and percent.',
+      inputSchema: { type: 'object', properties: { overrides: { type: 'object', description: 'map of index id to number', additionalProperties: { type: 'number' } } }, required: ['overrides'] },
+      execute: ({ overrides }) => {
+        const ov = {}, unknown = [];
+        for (const [k, v] of Object.entries(overrides || {})) { if (M.has(k) && isFinite(Number(v))) ov[k] = Number(v); else unknown.push(k); }
+        const r = full(ov); lastToolScenario = ov;
+        return { applied: ov, unknownIds: unknown, results: summary(r), plan: summary(BASE) };
+      } },
+    { name: 'top_drivers', description: 'Rank indices by how much a ±swing changes 2035 operating profit or NPV(8%), around the page\'s current scenario. Deltas in B JPY and 億円.',
+      inputSchema: { type: 'object', properties: { metric: { type: 'string', enum: ['op35', 'npv'] }, swingPercent: { type: 'number' } } },
+      execute: ({ metric = 'op35', swingPercent = 20 }) => {
+        const keep = { metric: state.metric, swing: state.swing };
+        state.metric = metric === 'npv' ? 'npv' : 'op35'; state.swing = Math.min(Math.max(Number(swingPercent) || 20, 1), 90) / 100;
+        const tr = computeTornado(); Object.assign(state, keep);
+        return tr.rows.slice(0, 10).map((r) => ({ id: r.id, label: LABEL(r.id), lowValue: r.lo, highValue: r.hi,
+          deltaAtLow_bjpy: r1(r.dLo), deltaAtHigh_bjpy: r1(r.dHi), deltaAtLow_oku: r1(r.dLo * 10), deltaAtHigh_oku: r1(r.dHi * 10) }));
+      } },
+  ];
+
+  function brief() {
+    const cur = full(state.ov);
+    return [...t('brief'),
+      `${t('briefPlan')}: ${JSON.stringify(summary(BASE))}`,
+      `${t('briefOv')}: ${JSON.stringify(state.ov)}`,
+      `${t('briefCur')}: ${JSON.stringify(summary(cur))}`,
+    ].join('\n');
+  }
+
+  function renderThread(liveText) {
+    const items = history.map((m) => `<div class="msg ${m.role === 'user' ? 'user' : 'ai'}">${esc(m.content)}</div>`);
+    if (liveText !== undefined) items.push(`<div class="msg ai">${esc(liveText || t('thinking'))}</div>`);
+    $('thread').innerHTML = items.join('');
+    const lastAi = $('thread').querySelector('.msg.ai:last-child');
+    if (liveText === undefined && lastAi && lastToolScenario && Object.keys(lastToolScenario).length) {
+      const act = document.createElement('div'); act.className = 'act';
+      act.innerHTML = `<button type="button" class="btn ghost" id="apply-ai">${esc(t('applyAi', { n: Object.keys(lastToolScenario).length }))}</button>`;
+      lastAi.appendChild(act);
+      $('apply-ai').addEventListener('click', () => { state.ov = { ...lastToolScenario }; refresh(true); });
+    }
+    $('thread').scrollTop = $('thread').scrollHeight;
+  }
+
+  async function ask() {
+    const q = $('ask-input').value.trim();
+    if (!q || busy || !sample) return;
+    busy = true; $('ask-go').disabled = true; $('ask-status').textContent = t('answering');
+    lastToolScenario = null;
+    history.push({ role: 'user', content: q }); $('ask-input').value = '';
+    renderThread('');
+    abort = new AbortController();
+    // The model keeps no memory between calls: send the whole conversation, with the current brief on the latest question.
+    const msgs = history.map((m) => ({ role: m.role, content: m.content }));
+    msgs[msgs.length - 1] = { role: 'user', content: brief() + '\n\n' + t('question') + q };
+    try {
+      const res = await sample(msgs, { tools: TOOLS, modelTier: 'default', cache: false, signal: abort.signal, onText: ({ text }) => renderThread(text) });
+      history.push({ role: 'assistant', content: res.text || t('empty') });
+      $('ask-status').textContent = res.truncated ? t('truncated') : '';
+    } catch (e) {
+      const code = e && e.code;
+      if (code === 'not_granted') { history.pop(); $('ask-status').textContent = t('notGranted'); }
+      else if (code === 'rate_limited') { history.push({ role: 'assistant', content: t('busyMsg') }); $('ask-status').textContent = ''; }
+      else { history.push({ role: 'assistant', content: (e && e.text) || t('failed') + (e && e.message ? ' (' + e.message + ')' : '') }); $('ask-status').textContent = ''; }
+    } finally { busy = false; $('ask-go').disabled = false; renderThread(); }
+  }
+  $('ask-go').addEventListener('click', ask);
+  $('ask-input').addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { e.preventDefault(); ask(); } });
+  $('ask-clear').addEventListener('click', () => { if (abort) abort.abort(); history.length = 0; lastToolScenario = null; renderThread(); $('ask-status').textContent = ''; });
+  $('ask-go').disabled = true; $('ask-status').textContent = t('connecting');
+
+  // ---------- Saved scenarios (db capability) ----------
+  let db = null, user = null, canDelete = false, savedDocs = [];
+  function renderSaved() {
+    if (!savedDocs.length) { $('saved').innerHTML = `<div class="empty">${esc(t('savedEmpty'))}</div>`; return; }
+    const u = t('unit');
+    const amt = (oku) => (oku === null || oku === undefined ? '—' : fmtMoney(Number(oku) / 10));
+    $('saved').innerHTML = savedDocs.map((d) => {
+      const x = d.data() || {}; const n = Object.keys(x.overrides || {}).length;
+      return `<div class="srow"><div><div class="nm">${esc(x.name || t('noName'))}</div><div class="kv">${esc(t('savedRow', { op: amt(x.op35_oku), npv: amt(x.npv8_oku), irr: x.irr ?? '—', n, u }))}</div></div>` +
+        `<div style="display:flex;gap:6px"><button type="button" class="btn ghost" data-load="${esc(d.id)}">${esc(t('load'))}</button>${canDelete ? `<button type="button" class="x" data-rm="${esc(d.id)}" aria-label="${esc(t('del'))}">×</button>` : ''}</div></div>`;
+    }).join('');
+  }
+  renderSaved();
+  langHooks.push(renderSaved);
+  $('saved').addEventListener('click', async (e) => {
+    const l = e.target.closest('[data-load]'); const r = e.target.closest('[data-rm]');
+    if (l) { const d = savedDocs.find((x) => x.id === l.dataset.load); const x = d && d.data(); if (x) { state.ov = {}; for (const [k, v] of Object.entries(x.overrides || {})) if (M.has(k) && isFinite(v)) state.ov[k] = v; refresh(true); } }
+    if (r && db) { try { await db.doc('scenarios/' + r.dataset.rm).delete(); } catch (err) { $('saved-status').textContent = t('delFail'); } }
+  });
+  $('save-btn').addEventListener('click', async () => {
+    if (!db) return;
+    const name = $('save-name').value.trim();
+    if (!name) { $('save-name').focus(); $('saved-status').textContent = t('needName'); return; }
+    const r = full(state.ov);
+    $('save-btn').disabled = true;
+    try {
+      await db.collection('scenarios').add({ name: name.slice(0, 80), overrides: { ...state.ov }, op35_oku: Math.round(r.op35 * 100) / 10,
+        npv8_oku: Math.round(r.npv8 * 100) / 10, irr: r.irr === null ? null : Math.round(r.irr * 10) / 10,
+        baseline: BASELINE.version, engine: E.PROJECT_FINANCE_ENGINE_VERSION, by: user ? await user.id() : null, at: Date.now() });
+      $('save-name').value = ''; $('saved-status').textContent = t('saved');
+    } catch (err) { $('saved-status').textContent = err && err.code === 'permission_denied' ? t('noPerm') : t('saveFail'); }
+    finally { $('save-btn').disabled = false; }
+  });
+  $('save-btn').disabled = true;
+
+  (async () => {
+    const c = window.claude;
+    if (!c || !c.use) { $('ask-status').textContent = t('openInClaude'); $('saved-status').textContent = t('openInClaude'); return; }
+    c.use('sample').then((s) => {
+      sample = s; sampleChecked = true; renderAskLead();
+      if (s) { $('ask-go').disabled = false; $('ask-status').textContent = ''; }
+      else { $('ask-status').textContent = t('notHere'); }
+    });
+    user = await c.use('user');
+    canDelete = user ? await user.canEdit() : false;
+    db = await c.use('db');
+    if (!db) { $('saved-status').textContent = t('signIn'); return; }
+    $('save-btn').disabled = false;
+    const timer = setTimeout(() => { $('saved-status').textContent = t('slow'); }, 10000);
+    db.collection('scenarios').orderBy('at', 'desc').limit(30).onSnapshot((snap) => { clearTimeout(timer); $('saved-status').textContent = ''; savedDocs = snap.docs; renderSaved(); },
+      () => { clearTimeout(timer); $('saved-status').textContent = t('readFail'); });
+  })();
+  }
+})();
+</script>
+
+</body>
+</html>
