@@ -1,0 +1,2497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>System Planning — Initial Concept</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Initial system planning concept for autonomous mobility services: user journeys, MVP scope, shared platform for reservations, dispatch, energy coordination and remote support, verification and sharing constraints.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: navy masthead as on the portfolio site; sticky contents rail on wide screens; each PDF page becomes one numbered chapter (P01–P30) built from labelled panels, flows and sequence lanes. */
+:root{
+  --bg:#f5f7fa; --paper:#ffffff; --panel:#eef3f8; --panel-2:#e3ebf3;
+  --ink:#17243a; --muted:#536277; --line:#d3dde8; --rule:#9fb2c6;
+  --navy:#14253c; --navy-ink:#ffffff; --accent:#075b78; --accent-soft:#d8eaf0; --cyan:#86d5e3;
+  --warn:#8a5a00; --warn-soft:#fbf1dc;
+  --sans:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1622; --paper:#142030; --panel:#1a293c; --panel-2:#21334a;
+  --ink:#e4ebf3; --muted:#9fb0c4; --line:#2a3c53; --rule:#4c6582;
+  --navy:#0a1525; --navy-ink:#eef4fa; --accent:#6cc3d8; --accent-soft:#163a48; --cyan:#86d5e3;
+  --warn:#f0c46c; --warn-soft:#3a2f17; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1622; --paper:#142030; --panel:#1a293c; --panel-2:#21334a;
+  --ink:#e4ebf3; --muted:#9fb0c4; --line:#2a3c53; --rule:#4c6582;
+  --navy:#0a1525; --navy-ink:#eef4fa; --accent:#6cc3d8; --accent-soft:#163a48; --cyan:#86d5e3;
+  --warn:#f0c46c; --warn-soft:#3a2f17; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:16px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-text-size-adjust:100%}
+a{color:var(--accent)}
+a:focus-visible,summary:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* masthead */
+.mast{background:var(--navy);color:var(--navy-ink)}
+.mast-in{max-width:1240px;margin:0 auto;padding-block:48px 44px}
+.mast .eyebrow{margin:0 0 14px;color:var(--cyan);font-size:.76rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.mast h1{margin:0;font-size:clamp(2rem,4.6vw,3.3rem);line-height:1.12;letter-spacing:-.03em;text-wrap:balance}
+.mast .lead{max-width:62ch;margin:18px 0 0;color:#d7e3eb;font-size:clamp(1rem,1.7vw,1.13rem)}
+.mast-meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:26px;font-size:.84rem;color:#b9cad8}
+.mast-meta b{color:#fff;font-weight:600}
+.mast-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:7px;font-weight:600;font-size:.88rem;text-decoration:none}
+.btn-light{background:#fff;color:#14253c}
+.btn-ghost{border:1px solid #4a6280;color:#e8f0f6}
+.btn:hover{filter:brightness(1.06)}
+.status{display:inline-block;margin-top:20px;padding:6px 10px;border-radius:6px;background:rgba(134,213,227,.12);color:#cfe9f0;font-size:.8rem}
+
+/* frame */
+.frame{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px;padding-block:28px 64px}
+@media (min-width:1100px){.frame{grid-template-columns:250px minmax(0,1fr)}}
+.toc{font-size:.84rem}
+@media (min-width:1100px){.toc{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto;padding-right:6px}}
+.toc details{border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.toc summary{cursor:pointer;padding:12px 14px;font-weight:600}
+@media (min-width:1100px){.toc details{border:0;background:transparent}.toc summary{display:none}}
+.toc-body{padding:0 14px 12px}
+@media (min-width:1100px){.toc-body{padding:0}}
+.toc h2{margin:14px 0 6px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.toc ol{list-style:none;margin:0;padding:0;display:grid;gap:1px}
+.toc a{display:grid;grid-template-columns:2.6em 1fr;gap:4px;padding:5px 8px;border-radius:6px;color:var(--ink);text-decoration:none;line-height:1.35}
+.toc a span{font:500 .74rem/1.6 var(--mono);color:var(--muted)}
+.toc a:hover{background:var(--panel)}
+.toc a.on{background:var(--accent-soft);color:var(--accent)}
+.toc a.on span{color:var(--accent)}
+.doc{min-width:0;display:grid;gap:28px}
+.part{margin:8px 0 -8px;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+
+/* chapter = one PDF page */
+.pg{min-width:0;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:clamp(18px,3vw,34px);display:grid;gap:22px;scroll-margin-top:16px}
+.pg-head{display:grid;gap:6px}
+.pg-head .eyebrow{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pg-head .eyebrow .no{font:500 .78rem var(--mono);letter-spacing:0;color:var(--accent)}
+.pg-head h2{margin:0;font-size:clamp(1.35rem,2.6vw,1.8rem);line-height:1.22;letter-spacing:-.02em;text-wrap:balance}
+.pg-head .lead{margin:0;max-width:80ch;color:var(--muted)}
+.pg-foot{margin:0;padding-top:12px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+
+/* section bar (navy band in the PDF) */
+.blk{min-width:0;display:grid;gap:14px}
+h3.bar{margin:0;padding:9px 14px;border-radius:6px;background:var(--navy);color:var(--navy-ink);font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.4}
+h3.bar .n{font-family:var(--mono);font-weight:500;letter-spacing:0;margin-right:8px;color:var(--cyan)}
+h4{margin:0 0 4px;font-size:.95rem;line-height:1.35;color:var(--ink)}
+p{margin:0}
+.lbl{display:block;margin-bottom:4px;font-size:.7rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.k{font-weight:700;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-right:6px}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+
+/* panels */
+.box{min-width:0;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:.88rem;line-height:1.5}
+.box.plain{background:var(--paper)}
+.box.key{background:var(--accent-soft);border-color:var(--accent)}
+.box.key .big{font-size:clamp(1.05rem,2vw,1.25rem);font-weight:700;line-height:1.3;color:var(--ink)}
+.box.warn{background:var(--warn-soft);border-color:var(--warn)}
+.box ul,.box ol{margin:4px 0 0;padding-left:1.1em}
+.box li{margin:2px 0}
+.box > * + *{margin-top:6px}
+.lines{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.lines li{padding-left:0}
+
+/* grids */
+.cols{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--min,200px)),1fr))}
+.c2{--min:300px}.c3{--min:220px}.c4{--min:180px}.c5{--min:150px}.c6{--min:130px}
+
+/* statements */
+.rule{padding:10px 14px;border-left:3px solid var(--accent);background:var(--panel);border-radius:0 6px 6px 0;font-size:.88rem}
+.rule b:first-child{font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);margin-right:6px}
+.note{font-size:.82rem;color:var(--muted);line-height:1.5}
+.note b{color:var(--ink)}
+
+/* flow of steps */
+.flow{list-style:none;margin:0;padding:0;display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--min,150px)),1fr));counter-reset:none}
+.flow > li{position:relative;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:.86rem;line-height:1.45}
+.flow > li .step{display:block;font:500 .72rem var(--mono);color:var(--muted)}
+.flow > li strong{display:block;font-size:.95rem}
+@media (min-width:700px){.flow.arrows > li:not(:last-child)::after{content:"";position:absolute;right:-9px;top:50%;width:8px;height:8px;border-top:2px solid var(--accent);border-right:2px solid var(--accent);transform:translateY(-50%) rotate(45deg);background:transparent}}
+.down{display:flex;justify-content:center;color:var(--accent);font-size:1.1rem;line-height:1}
+
+/* formulas, payloads */
+.mono,code{font-family:var(--mono);font-size:.84em}
+pre.code{margin:0;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel-2);font:.8rem/1.55 var(--mono);white-space:pre-wrap;word-break:break-word;overflow-x:auto;color:var(--ink)}
+.cols pre.code{white-space:pre;word-break:normal;font-size:.76rem}
+.eq{padding:12px 14px;border-radius:8px;background:var(--panel-2);font:.9rem/1.6 var(--mono);overflow-x:auto;text-align:center}
+
+/* tables */
+.scroll{min-width:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table.tbl{width:100%;border-collapse:collapse;font-size:.84rem;line-height:1.45}
+.tbl th,.tbl td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.tbl th{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--panel)}
+.tbl td:first-child{font-weight:600}
+.tbl .mono{white-space:nowrap}
+
+/* swimlane matrix (rows = actor, cols = stage) */
+.lanes{display:grid;grid-template-columns:110px repeat(var(--n),minmax(130px,1fr));gap:6px;min-width:calc(110px + var(--n)*136px);font-size:.82rem;line-height:1.4}
+.lanes > .h{padding:8px;border-radius:6px;background:var(--navy);color:var(--navy-ink);font-weight:600;text-align:center}
+.lanes > .rh{padding:8px 4px;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);align-self:center}
+.lanes > .cell{padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.lanes > .cell.hint{background:transparent;border-style:dashed;font-size:.75rem;color:var(--muted)}
+.lanes > .blank{visibility:hidden}
+
+/* sequence diagram: --n lanes; each .msg sets --s (start lane), --e (end lane) with s<e; add .l for a leftward arrow, .self for a self-step on lane --s */
+.seq{--lw:150px;position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(var(--lw),1fr));row-gap:2px;min-width:calc(var(--n)*var(--lw));font-size:.76rem;line-height:1.3;padding-bottom:6px;
+  background-image:linear-gradient(to right,transparent calc(50% - .5px),var(--rule) calc(50% - .5px),var(--rule) calc(50% + .5px),transparent calc(50% + .5px));
+  background-size:calc(100% / var(--n)) 100%;background-repeat:repeat-x}
+.seq > .who{position:sticky;top:0;z-index:1;margin:0 4px 8px;padding:7px 6px;border:1px solid var(--accent);border-radius:6px;background:var(--paper);font-weight:700;font-size:.78rem;text-align:center}
+.seq > .msg{--span:calc(var(--e) - var(--s) + 1);grid-column:var(--s) / calc(var(--e) + 1);position:relative;margin-inline:calc(100% / var(--span) / 2);padding:2px 10px 6px;text-align:center;color:var(--ink)}
+.seq > .msg::before{content:"";position:absolute;left:0;right:0;bottom:2px;border-bottom:1.5px solid var(--accent)}
+.seq > .msg::after{content:"";position:absolute;bottom:-1px;right:0;width:7px;height:7px;border-top:1.5px solid var(--accent);border-right:1.5px solid var(--accent);transform:rotate(45deg)}
+.seq > .msg.l::after{right:auto;left:0;transform:rotate(-135deg)}
+.seq > .msg.dash::before{border-bottom-style:dashed}
+.seq > .msg.self{grid-column:var(--s);margin-inline:0;margin-left:50%;text-align:left;padding:3px 6px 3px 12px}
+.seq > .msg.self::before{left:0;right:auto;top:2px;bottom:2px;width:8px;border:1.5px solid var(--accent);border-left:0;border-radius:0 4px 4px 0}
+.seq > .msg.self::after{display:none}
+.seq > .frag{grid-column:1 / -1;margin:6px 0 2px;padding:5px 10px;border:1px solid var(--rule);border-radius:5px;background:var(--panel);font-size:.74rem;line-height:1.35;position:relative;z-index:1}
+.seq > .frag b{font-family:var(--mono);font-weight:500;color:var(--accent);margin-right:6px}
+.seq > .act{grid-column:var(--s);justify-self:center;margin:2px 6px;padding:4px 8px;border:1px solid var(--line);border-radius:5px;background:var(--paper);font-size:.72rem;text-align:center;position:relative;z-index:1}
+
+/* SVG diagrams (state machines, timelines, topology) use these classes */
+.fig{min-width:0;overflow-x:auto}
+.fig svg{display:block;width:100%;height:auto;min-width:var(--svgmin,640px);font-family:var(--sans)}
+svg .nd{fill:var(--panel);stroke:var(--accent);stroke-width:1.2}
+svg .nd2{fill:var(--paper);stroke:var(--rule);stroke-width:1}
+svg .ndk{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.4}
+svg .t{fill:var(--ink);font-size:12px}
+svg .tb{fill:var(--ink);font-size:12.5px;font-weight:700}
+svg .ts{fill:var(--muted);font-size:10.5px}
+svg .ta{fill:var(--accent);font-size:10.5px}
+svg .ed{fill:none;stroke:var(--accent);stroke-width:1.3}
+svg .ed2{fill:none;stroke:var(--rule);stroke-width:1.2;stroke-dasharray:4 3}
+svg .ax{fill:none;stroke:var(--rule);stroke-width:1}
+svg .bar{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1}
+svg .ah{fill:var(--accent)}
+svg .ah2{fill:var(--rule)}
+
+a.ref{font-weight:600;text-decoration:none;border-bottom:1px dotted currentColor}
+.backtop{justify-self:start;font-size:.8rem;text-decoration:none}
+footer.end{max-width:1240px;margin:0 auto;padding-block:20px 48px;border-top:1px solid var(--line);color:var(--muted);font-size:.84rem;display:grid;gap:6px}
+@media print{.toc,.mast-actions{display:none}.frame{display:block}.pg{break-inside:avoid-page;margin-bottom:16px}}
+</style>
+
+</head>
+<body>
+<header class="mast gut">
+  <div class="mast-in">
+    <p class="eyebrow">Autonomous mobility service · System planning</p>
+    <h1>System Planning — Initial Concept</h1>
+    <p class="lead">An initial planning concept for autonomous mobility services, connecting user journeys, MVP scope, and KPIs with a shared platform for reservations, dispatch, energy coordination, and remote support. Architecture diagrams, interaction flows, data contracts, and verification plans define operating responsibilities and phased deployment, including shared rides and passenger–freight services with capacity, service-quality, and economic constraints.</p>
+    <div class="mast-meta"><span><b>Satofumi Goto</b></span><span>Proposed design basis · Rev. 2026-10-15</span><span>30 chapters · P01–P30</span></div>
+    <div class="mast-actions">
+      <a class="btn btn-light" href="#p01">Start reading</a>
+      <a class="btn btn-ghost" href="https://satofumi-goto.github.io/capabilities/documents/System_Planning_Initial_Concept_20261012.pdf" target="_blank" rel="noopener noreferrer">PDF edition (A4, 30 pages) ↗</a>
+      <a class="btn btn-ghost" href="https://satofumi-goto.github.io/capabilities/" target="_blank" rel="noopener noreferrer">Portfolio ↗</a>
+    </div>
+    <span class="status">Proposed concept · Separately prepared models, not copied from Honda internal documents · Field validation and implementation pending</span>
+  </div>
+</header>
+
+<div class="gut">
+<div class="frame">
+  <nav class="toc" aria-label="Contents">
+    <details id="toc-d">
+      <summary>Contents · 30 chapters</summary>
+      <div class="toc-body">
+<h2>Part 1 · Product management supplement</h2><ol><li><a href="#p01"><span>P01</span>Customer touchpoints and mobility service value</a></li><li><a href="#p02"><span>P02</span>End-to-end journey across user, operation and platform</a></li><li><a href="#p03"><span>P03</span>MVP boundary and product prioritization</a></li><li><a href="#p04"><span>P04</span>Interaction concept for user app and operator workspace</a></li><li><a href="#p05"><span>P05</span>Five mechanisms, service guardrails and net value</a></li><li><a href="#p06"><span>P06</span>Controlled experiments and evidence workflow</a></li><li><a href="#p07"><span>P07</span>Roadmap from discovery to repeatable deployment</a></li></ol><h2>Part 2 · System planning</h2><ol><li><a href="#p08"><span>P08</span>Container architecture and deployment boundaries</a></li><li><a href="#p09"><span>P09</span>Joint scheduling, resource timing and states</a></li><li><a href="#p10"><span>P10</span>Entity relationships and message contracts</a></li><li><a href="#p11"><span>P11</span>Booking saga, cancellation and dispatch gate</a></li><li><a href="#p12"><span>P12</span>Energy control loops and contribution accounting</a></li><li><a href="#p13"><span>P13</span>Remote mission protocol and exception handling</a></li><li><a href="#p14"><span>P14</span>Remote architecture and control authority</a></li><li><a href="#p15"><span>P15</span>Roadside sensing and edge computing architecture</a></li><li><a href="#p16"><span>P16</span>Roadside observation and remote monitoring sequence</a></li><li><a href="#p17"><span>P17</span>Telemetry coverage and alarm decision logic</a></li><li><a href="#p18"><span>P18</span>Orthogonal states and guarded return to service</a></li><li><a href="#p19"><span>P19</span>Remote assistance: contextual advice sequence</a></li><li><a href="#p20"><span>P20</span>Link loss, authority fencing and reconciliation</a></li><li><a href="#p21"><span>P21</span>Operator workspace and incident response</a></li><li><a href="#p22"><span>P22</span>Action-specific guards and time validity</a></li><li><a href="#p23"><span>P23</span>Activity saga, service workflow and AI authority</a></li><li><a href="#p24"><span>P24</span>Verification coverage and release dependencies</a></li><li><a href="#p25"><span>P25</span>Service capacity and geographic coverage</a></li><li><a href="#p26"><span>P26</span>Replenishment and departure readiness</a></li><li><a href="#p27"><span>P27</span>Degraded operation and recovery capacity</a></li><li><a href="#p28"><span>P28</span>Operating feasibility and verification evidence</a></li><li><a href="#p29"><span>P29</span>Shared rides: route feasibility and passenger outcomes</a></li><li><a href="#p30"><span>P30</span>Passenger–freight sharing: capacity and net contribution</a></li></ol>
+      </div>
+    </details>
+  </nav>
+  <main class="doc">
+<p class="part" id="part-1">Part 1 · Product management supplement</p>
+<section class="pg" id="p01" aria-labelledby="p01-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Mobility service planning / Product management supplement</span><span class="no">P01 / 30</span></p>
+    <h2 id="p01-t">Customer touchpoints and mobility service value</h2>
+    <p class="lead">A proposed service model connects consented intent to reachable supply, additional activity and feasible travel choices.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">01</span>Product outcome &amp; scope</h3>
+    <div class="box key">
+      <span class="lbl">Product hypothesis</span>
+      <p class="big">Customer intent and shared transport capacity can improve service outcomes through five testable mechanisms.</p>
+    </div>
+    <p class="rule"><b>Consented signals</b>Intended arrival, booking lead time, free-time interval and optional preferences. Purpose, expiry and withdrawal remain explicit.</p>
+    <div class="cols c4">
+      <div class="box plain"><h4>Resident / visitor</h4><p>Share plans, free time and preferences with consent. Retain control of timing, price and accessibility needs.</p></div>
+      <div class="box plain"><h4>Mobility operator</h4><p>Position reachable vehicles, protect committed trips and own exceptions within finite operating capacity.</p></div>
+      <div class="box plain"><h4>Service provider</h4><p>Return activity slots, prices and service capacity. Confirm reservations and observed use.</p></div>
+      <div class="box plain"><h4>City partner</h4><p>Set ODD, access and coverage conditions. Review outcomes for underserved places and users.</p></div>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box">
+      <h4>MaaS product layer</h4>
+      <p class="small">C01 identity / API → C02 booking &amp; consent → C03 feasibility / reservation → C04 dispatch &amp; status → C06 support / cases → C07 usage / settlement &nbsp;|&nbsp; C05 energy capability constrains feasible supply</p>
+    </div>
+    <p class="rule"><b>Decision inputs</b>Intent, reachable supply, provider slots, hub / energy limits and accepted terms</p>
+    <span class="lbl">End-to-end service loop</span>
+    <ol class="flow arrows" style="--min:130px">
+      <li><span class="step">01</span><strong>Intent</strong></li>
+      <li><span class="step">02</span><strong>Feasible offer</strong></li>
+      <li><span class="step">03</span><strong>Confirmed plan</strong></li>
+      <li><span class="step">04</span><strong>Trip + support</strong></li>
+      <li><span class="step">05</span><strong>Verified outcome</strong></li>
+    </ol>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar">Five value mechanisms / Information and shared capacity</h3>
+    <div class="cols c3">
+      <div class="box plain"><h4>01 Advance positioning</h4>
+        <ul class="lines small"><li><span class="k">Input</span>Received plan + lead time.</li><li><span class="k">Action</span>Position reachable supply before pickup.</li><li><span class="k">Test</span>Wait, empty km and unmet demand.</li><li><span class="k">Limit</span>Cancellation, forecast error and energy.</li></ul></div>
+      <div class="box plain"><h4>02 Additional demand</h4>
+        <ul class="lines small"><li><span class="k">Input</span>Free time + preference + spare capacity.</li><li><span class="k">Action</span>Offer a feasible activity and trip.</li><li><span class="k">Test</span>Additional use and net contribution.</li><li><span class="k">Limit</span>Substitution and induced congestion.</li></ul></div>
+      <div class="box plain"><h4>03 Demand smoothing</h4>
+        <ul class="lines small"><li><span class="k">Input</span>Flexible window + alternative total price.</li><li><span class="k">Action</span>Move an accepted trip in time.</li><li><span class="k">Test</span>Peak load and missed pickups.</li><li><span class="k">Limit</span>Refusal and discount cost.</li></ul></div>
+    </div>
+    <div class="box">
+      <span class="lbl">04 Shared rides / 05 Passenger–freight sharing</span>
+      <p>Match compatible passenger journeys within seat, access and detour limits. Test passenger output, discounts and net contribution. 05: Insert eligible cargo within payload, space and handling limits. Include freight revenue, added dwell and displaced passenger trips. Detailed operating conditions: <a class="ref" href="#p29">P29–P30</a>.</p>
+    </div>
+    <p class="note"><b>SERVICE CONTRACT</b> C02 keeps each passenger / shipment intent. C03 checks route and segment capacity. C04 records the shared mission. C06 owns passenger recovery and cargo exceptions. C07 reconciles revenue and shared costs. C05 constrains energy.<br><b>VALUE TEST</b> Protect consent and accepted service limits. Report additional demand, shifted demand and shared-route efficiency separately. Include rejection, cancellation, handling and recovery. Capacity / continuity: <a class="ref" href="#p25">P25–P28</a>. Sharing rules: <a class="ref" href="#p29">P29–P30</a>.</p>
+  </div>
+</section>
+<section class="pg" id="p02" aria-labelledby="p02-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Mobility service planning / Product management supplement</span><span class="no">P02 / 30</span></p>
+    <h2 id="p02-t">End-to-end journey across user, operation and platform</h2>
+    <p class="lead">Passenger bookings, activity reservations and shipments retain distinct identities through shared routes, revised offers and verified outcomes.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">02</span>Service blueprint</h3>
+    <div class="scroll">
+      <div class="lanes" style="--n:5">
+        <div class="rh"></div>
+        <div class="h">1 Plan</div>
+        <div class="h">2 Request</div>
+        <div class="h">3 Confirm</div>
+        <div class="h">4 Travel</div>
+        <div class="h">5 Complete</div>
+
+        <div class="rh">User</div>
+        <div class="cell">Share plan / time and preferences</div>
+        <div class="cell">Compare activity, travel and price</div>
+        <div class="cell">Accept timing and total terms</div>
+        <div class="cell">Track status; request help</div>
+        <div class="cell">Confirm trip and activity use</div>
+
+        <div class="rh"></div>
+        <div class="cell hint"><b>CONSENT</b><br>Scope / expiry<br>Received time</div>
+        <div class="cell hint"><b>OFFER</b><br>Activity + trip<br>Total price / expiry</div>
+        <div class="cell hint"><b>ACCEPTANCE</b><br>Terms version<br>Time change</div>
+        <div class="cell hint"><b>LIVE STATUS</b><br>ETA / age<br>Help owner</div>
+        <div class="cell hint"><b>OUTCOME</b><br>Trip / activity<br>Refund status</div>
+
+        <div class="rh">Operator / Provider</div>
+        <div class="cell">Read received booking signals</div>
+        <div class="cell">Check seats, cargo and time limits</div>
+        <div class="cell">Commit route, slots and handoff</div>
+        <div class="cell">Monitor trip and own exceptions</div>
+        <div class="cell">Verify passenger / cargo outcomes</div>
+
+        <div class="rh"></div>
+        <div class="cell hint"><b>VALIDATE</b><br>Known at decision<br>No future leakage</div>
+        <div class="cell hint"><b>FEASIBILITY</b><br>Supply / ODD<br>Slots / energy</div>
+        <div class="cell hint"><b>COMMIT</b><br>Resource holds<br>Revision check</div>
+        <div class="cell hint"><b>RECOVERY</b><br>Missing ACK<br>Query / re-plan</div>
+        <div class="cell hint"><b>RECONCILE</b><br>Intent outcome<br>Usage / cost</div>
+
+        <div class="rh">Product / Platform</div>
+        <div class="cell">Record consent / signal receipt</div>
+        <div class="cell">Check each route segment capacity</div>
+        <div class="cell">Link each intent to route revision</div>
+        <div class="cell">Publish current state and case</div>
+        <div class="cell">Reconcile fares, freight and costs</div>
+      </div>
+    </div>
+    <p class="note"><b>STAGE EVIDENCE</b> Plan: consent + receipt time &nbsp; Request: eligible offer + capacity &nbsp; Confirm: accepted terms + committed holds &nbsp; Travel: observed pickup + owned exception &nbsp; Complete: trip / activity actuals + cost</p>
+    <div class="box">
+      <span class="lbl">Exception loop</span>
+      <p>A revised plan releases obsolete holds only after reconciliation. Cancellation or capacity loss updates positioning, ETA and the recovery owner.</p>
+    </div>
+    <div class="box key">
+      <span class="lbl">Traceability contract</span>
+      <p class="big mono">intentId + passenger / shipmentId + bookingRev + routeRev + missionId</p>
+      <p class="small">Record offers, accepted terms, original / revised times, route stops and segment occupancy. Link every passenger and shipment to observed boarding, alighting or delivery. Preserve source / receipt time, consent and custody evidence. Shared mission costs remain unique.</p>
+    </div>
+    <div class="box">
+      <span class="lbl">Acceptance invariants</span>
+      <p class="small">Positioning uses information already received. Commit all required holds before confirmation. Check seats, accessible space, payload and cargo volume on every segment. Recompute existing passenger limits after insertion. Time shifts preserve request identity. Suggestions need acceptance. Unknown effects require reconciliation. Completion uses passenger / cargo evidence separately. Each exception retains an owner and deadline.</p>
+    </div>
+  </div>
+</section>
+<section class="pg" id="p03" aria-labelledby="p03-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Mobility service planning / Product management supplement</span><span class="no">P03 / 30</span></p>
+    <h2 id="p03-t">MVP boundary and product prioritization</h2>
+    <p class="lead">A complete service slice provides the baseline. Five controlled mechanisms test information value and shared-capacity economics.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">03</span>MVP &amp; prioritization</h3>
+    <div class="box key">
+      <span class="lbl">Priority rule</span>
+      <p class="big">Rank by measured service benefit, net contribution, feasibility and learning value.</p>
+      <p class="small">Common fleet / hubs / demand conditions support comparison. Capacity and service guardrails remain binding.</p>
+    </div>
+    <p class="rule"><b>Dependency order</b>Reliable request / outcome records precede effect measurement. Finite capacity and recovery precede offer expansion.</p>
+    <div class="cols c3">
+      <div class="box">
+        <span class="lbl">Pilot MVP</span>
+        <h4>One selected service slice</h4>
+        <ol class="flow" style="--min:100%">
+          <li><span class="step">01</span>Capture intent, needs, consent and idempotent request</li>
+          <li><span class="step">02</span>Return feasible options, binding reasons and expiry</li>
+          <li><span class="step">03</span>Commit booking + resource bundle with revision checks</li>
+          <li><span class="step">04</span>Track state, freshness, support case and recovery owner</li>
+          <li><span class="step">05</span>Reconcile actual trip, service use and passenger outcome</li>
+        </ol>
+        <p class="small"><b>Exit only when normal + recovery paths pass acceptance; operator can resolve exceptions; event and cost records reconcile.<br>Required evidence: valid, rejected, cancelled and recovered journeys. Reconcile every request to one final disposition and every cost to one owner.</b></p>
+      </div>
+      <div class="box">
+        <span class="lbl">Iterate</span>
+        <h4>Five controlled mechanisms</h4>
+        <ol class="flow" style="--min:100%">
+          <li><span class="step">01</span>Use received plans for feasible advance positioning</li>
+          <li><span class="step">02</span>Offer activities within spare time and capacity</li>
+          <li><span class="step">03</span>Shift accepted trips with clear timing and price</li>
+          <li><span class="step">04</span>Pool compatible riders within each detour limit</li>
+          <li><span class="step">05</span>Insert eligible cargo within payload and time limits</li>
+        </ol>
+        <p class="small"><b>Advance when gains survive service guardrails, realistic acceptance, full costs and supply stress.<br>Retain independent controls for all five effects. Test late signals, substitution, peak overload, no-shows, cargo dwell and failed handovers.</b></p>
+      </div>
+      <div class="box">
+        <span class="lbl">Extend platform</span>
+        <h4>Repeatable operating model</h4>
+        <ol class="flow" style="--min:100%">
+          <li><span class="step">01</span>Versioned adapters and purpose-limited consent</li>
+          <li><span class="step">02</span>Energy, hub throughput and staffing in feasibility</li>
+          <li><span class="step">03</span>Guarded support and owned passenger recovery</li>
+          <li><span class="step">04</span>Calibrate by zone, time and user segment</li>
+          <li><span class="step">05</span>Reusable configuration, evidence and rollback</li>
+        </ol>
+        <p class="small"><b>Expand after second-site tests preserve service quality and net contribution with local demand, capacity and operating costs. Replication tests: different OD pattern, provider capacity, support load and energy limits. Retain tenant isolation and configuration / policy versions.</b></p>
+      </div>
+    </div>
+    <div class="box">
+      <span class="lbl">MVP control</span>
+      <p class="small">MVP entry criteria: selected geography / ODD / channel / segment; named service and incident owners; provider, fleet and site capacity confirmed; legal, privacy, accessibility and partner constraints reviewed; C01–C07 data and authority boundaries agreed. Pilot exit: normal + cancellation + disruption / recovery traces pass; queue and support coverage are staffed; KPI baseline, missing-data behavior and cost ledger reconcile; rollback and customer communication are rehearsed. Optional C05 optimization, remote assistance and I09 roadside sensing stay out until separately gated.</p>
+      <p class="small">G2 constraint register: ODD = approved operating conditions (road, speed, weather, time, etc.). DDT = real-time operational / tactical functions needed to operate in traffic (including OEDR); record which actor performs them. Define DDT fallback separately by actor, trigger, response and intervention boundary. Also record operating limits (hours / staffing / recovery), infrastructure (node power / energy / footprint) and business limits (fare / demand / transit overlap). For each, record variable, unit / value or TBD, source URL, owner, affected KPI and PL line. Set thresholds only after evidence and ownership are confirmed. Source: SAE J3016_202609, doi:10.4271/J3016_202609.</p>
+    </div>
+  </div>
+</section>
+<section class="pg" id="p04" aria-labelledby="p04-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Mobility service planning / Product management supplement</span><span class="no">P04 / 30</span></p>
+    <h2 id="p04-t">Interaction concept for user app and operator workspace</h2>
+    <p class="lead">A simple request–offer–service flow exposes meaningful choices. Detail appears when the user compares or changes a plan.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">04</span>UX flow &amp; prototype</h3>
+    <span class="lbl">Resident / visitor app • Conceptual</span>
+    <ol class="flow arrows" style="--min:220px">
+      <li><span class="step">01 REQUEST</span><strong>Plan a journey</strong>
+        <ul class="lines small">
+          <li>Origin / destination + pickup point</li>
+          <li>Time window + allowed detour</li>
+          <li>Party + access + luggage needs</li>
+          <li>Consent + sharing preference</li>
+        </ul>
+        <p class="rule">Validate → submit intent</p>
+      </li>
+      <li><span class="step">02 OFFER</span><strong>Choose a feasible plan</strong>
+        <ul class="lines small">
+          <li>Activity / trip + sharing option</li>
+          <li>Pickup / arrival + detour limit</li>
+          <li>Seat / access + cargo compatibility</li>
+          <li>Total price + discount / refund</li>
+        </ul>
+        <p class="rule">Accept plan / keep original</p>
+      </li>
+      <li><span class="step">03 SERVICE</span><strong>Track and get help</strong>
+        <ul class="lines small">
+          <li>Booking / mission state + age</li>
+          <li>ETA + last update</li>
+          <li>Pickup / onboard / arrival proof</li>
+          <li>Help, cancel or recovery path</li>
+        </ul>
+        <p class="rule">Confirm outcome / recover</p>
+      </li>
+    </ol>
+    <p class="rule"><b>Choice rule</b>Keep the original plan visible. Confirm timing, total price and cancellation terms.</p>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar">Operator workspace • Action context</h3>
+    <div class="cols c3">
+      <div class="box plain"><span class="lbl">Capacity &amp; queue</span>
+        <ul class="lines small">
+          <li>Demand by zone / time</li>
+          <li>Reachable vehicles + ready time</li>
+          <li>Seats / cargo space per segment</li>
+          <li>Hub / loading slots and queues</li>
+          <li>Committed trips + spare capacity</li>
+          <li>Cases by severity / dueAt</li>
+          <li>Passenger recovery reserve</li>
+          <li>Cargo custody / failed handover</li>
+          <li>Throttle infeasible new offers</li>
+        </ul></div>
+      <div class="box plain"><span class="lbl">Why this offer</span>
+        <ul class="lines small">
+          <li>Received plan + consent scope</li>
+          <li>Capacity / evidence age</li>
+          <li>Original and inserted route</li>
+          <li>Pickup / arrival / detour impact</li>
+          <li>Discount + freight revenue</li>
+          <li>Dwell, route and handling cost</li>
+          <li>Passenger / cargo rejection reason</li>
+          <li>Original choice stays accessible</li>
+          <li>No feasible capacity: no promise</li>
+        </ul></div>
+      <div class="box plain"><span class="lbl">Permitted action</span>
+        <ul class="lines small">
+          <li>Recheck all route segments</li>
+          <li>Protect accepted passenger limits</li>
+          <li>Hold seats / cargo / loading slot</li>
+          <li>Confirm terms and custody owner</li>
+          <li>Reconcile timeout / lost ACK</li>
+          <li>Audit each route revision</li>
+          <li>Release only cleared capacity</li>
+          <li>Recover each passenger party</li>
+          <li>Own return / failed delivery</li>
+        </ul></div>
+    </div>
+    <div class="box key">
+      <span class="lbl">Usability tasks to test</span>
+      <p>Test optional data access, original choice, revised timing and total cost. Measure success, decision time, comprehension, opt-out and acceptance by accessibility need. Include refusal, stale capacity, cancellation after positioning and lost ACK.<br>Users must identify the committed plan, decline while retaining the original option and reach help. Operators must explain infeasibility, protect commitments and recover without duplicates. Record critical errors and failed recovery separately.</p>
+    </div>
+    <p class="note">Prototype evidence: decision time, price / timing comprehension, recovery completion and reasons for refusal. No forced consent or automatic schedule change.</p>
+    <div class="box">
+      <span class="lbl">State model</span>
+      <p class="small mono">DRAFT → QUOTED (expiresAt) → PENDING (hold) → CONFIRMED (commit) → IN_SERVICE → COMPLETED (actuals + passenger outcome) / CANCELLED (reason + release). Timeout / lost acknowledgement → UNKNOWN → query and reconcile; never duplicate a side effect. Revision conflict → refresh terms; stale evidence → block offer or action with reason.</p>
+    </div>
+  </div>
+</section>
+<section class="pg" id="p05" aria-labelledby="p05-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Mobility service planning / Product management supplement</span><span class="no">P05 / 30</span></p>
+    <h2 id="p05-t">Five mechanisms, service guardrails and net value</h2>
+    <p class="lead">Evaluate information effects and transport sharing against matched baselines, with separate passenger, shipment and vehicle measures.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">05</span>Success measures</h3>
+    <div class="box key">
+      <span class="lbl">North star</span>
+      <p class="big">Verified completed journeys</p>
+      <p class="small">count only when mission evidence + service actual + user outcome reconcile</p>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="cols c4">
+      <div class="box">
+        <span class="lbl">01 Positioning</span>
+        <h4>Pickup wait</h4>
+        <p class="box plain small"><b>max(0, actual pickup − requested pickup time). Median / p95.</b></p>
+        <p class="note">C02 request + C04 arrival<br>Report late and missed pickup separately.</p>
+        <h4>Empty travel</h4>
+        <p class="box plain small"><b>Empty vehicle-km / completed trip. Include advance positioning.</b></p>
+        <p class="note">C04 movement trace<br>Include failed positioning and returns.</p>
+        <h4>Dispatch success</h4>
+        <p class="box plain small"><b>Assigned missions / eligible requests. Retain capacity rejects.</b></p>
+        <p class="note">C02 request + C04 assignment<br>Assignment is not completed service.</p>
+        <h4>Required fleet</h4>
+        <p class="box plain small"><b>Minimum tested fleet meeting all service gates, with uncertainty.</b></p>
+        <p class="note">Fleet sweep + <a class="ref" href="#p25">P25–P28</a><br>Hold demand / hubs / service gates fixed.</p>
+      </div>
+      <div class="box">
+        <span class="lbl">02 New demand</span>
+        <h4>Offer conversion</h4>
+        <p class="box plain small"><b>Accepted activity offers / eligible offers shown.</b></p>
+        <p class="note">C02 offer and acceptance<br>Deduplicate repeat offer impressions.</p>
+        <h4>Additional trips</h4>
+        <p class="box plain small"><b>Treatment − matched baseline completed trips. Identify substitution.</b></p>
+        <p class="note">Intent linkage + comparison arm<br>Net change includes displaced use.</p>
+        <h4>Fleet utilization</h4>
+        <p class="box plain small"><b>Productive / available hours. Also report scheduled hours.</b></p>
+        <p class="note">C04 + fleet schedule<br>State productive-hour scope explicitly.</p>
+        <h4>Activity use</h4>
+        <p class="box plain small"><b>Verified additional provider visits. Keep gross and net use separate.</b></p>
+        <p class="note">Provider actuals + comparison<br>Separate visits from user spending.</p>
+      </div>
+      <div class="box">
+        <span class="lbl">03 Smoothing</span>
+        <h4>Shift acceptance</h4>
+        <p class="box plain small"><b>Accepted time changes / eligible shift offers shown.</b></p>
+        <p class="note">C02 offer + booking revision<br>Retain refusals and expired offers.</p>
+        <h4>Peak demand</h4>
+        <p class="box plain small"><b>Requests per fixed interval before / after accepted time shifts.</b></p>
+        <p class="note">Original and revised request time<br>Fix interval width across all runs.</p>
+        <h4>Unserved demand</h4>
+        <p class="box plain small"><b>Unserved eligible requests / all eligible requests by zone and time.</b></p>
+        <p class="note">C02 + final request disposition<br>Show cause, zone and peak interval.</p>
+        <h4>Promise kept</h4>
+        <p class="box plain small"><b>On-time pickups / pickups due. Include missed pickups.</b></p>
+        <p class="note">Accepted window + C04 arrival<br>Report original-window change too.</p>
+      </div>
+      <div class="box">
+        <span class="lbl">Net economics</span>
+        <h4>Net revenue</h4>
+        <p class="box plain small"><b>Recognized revenue after discounts / refunds, counted once.</b></p>
+        <p class="note">C07 contract + ledger<br>Keep operator / provider scope distinct.</p>
+        <h4>Incremental cost</h4>
+        <p class="box plain small"><b>Extra travel, energy, service and app operating cost.</b></p>
+        <p class="note">C04 / C05 + cost ledger<br>Include added support and refunds.</p>
+        <h4>Incremental contribution</h4>
+        <p class="box plain small"><b>Δ recognized revenue − Δ attributable cost. Report total and per completed trip. Include app cost once and document allocation.</b></p>
+        <p class="note">Matched arms + C07 ledger<br>Show total and unit economics.</p>
+        <h4>Interaction effect</h4>
+        <p class="box plain small"><b>Combined gain − sum of separately tested gains. Report overlap and capacity effects.</b></p>
+        <p class="note">Paired runs / controlled pilot<br>Gains share one baseline and unit.</p>
+      </div>
+    </div>
+    <p class="rule"><b>Paired estimate</b><span class="mono">ΔK = K_effect − K_baseline.</span> Report repeated-run differences and uncertainty.</p>
+    <div class="box key">
+      <span class="lbl">04 / 05 Shared-capacity measures</span>
+      <p class="big">Passenger output, freight delivery and net contribution</p>
+      <p class="small">Passenger journeys / vehicle-hour; seat-km utilization; detour; freight delivery / lateness; cargo dwell; displaced passenger trips. Detail: <a class="ref" href="#p29">P29–P30</a>.</p>
+    </div>
+    <div class="box">
+      <span class="lbl">Measurement contract</span>
+      <p>Service gates apply to each passenger and shipment. Separate booking counts, people, deliveries and vehicle missions. Targets require baseline evidence.</p>
+      <p class="small">ATTRIBUTION: separate additional demand, time shifts, substitution, pooled passengers and delivered shipments. A shared route has several intents but one vehicle mission. Count route distance and common costs once. Effects 01–03 use matched inputs. Compare 04 / 05 in four conditions, then test interactions.<br>SERVICE: retain unserved passenger and cargo requests. Check pickup / arrival promises, detour, seats, payload, volume, hub queues and recovery. Report passenger and freight fulfillment separately. Confirm observed use and custody outcomes.<br>FINANCE: net passenger fares already reflect sharing discounts and displaced trips. Add recognized freight revenue, then deduct route, handling, energy, support, cleaning, recovery, returns and app costs once. Show total contribution alongside unit measures. Keep CAPEX and project cash flow distinct.</p>
+    </div>
+  </div>
+</section>
+<section class="pg" id="p06" aria-labelledby="p06-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Mobility service planning / Product management supplement</span><span class="no">P06 / 30</span></p>
+    <h2 id="p06-t">Controlled experiments and evidence workflow</h2>
+    <p class="lead">Simulation tests five mechanisms under stated assumptions. Field trials measure actual acceptance, shared-route performance and handling time.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">06</span>Discovery &amp; validation</h3>
+    <ol class="flow arrows" style="--min:180px">
+      <li><strong>OBSERVE</strong>Observe journeys and unmet needs<br>Capture booking lead time, free time, price sensitivity and alternatives</li>
+      <li><strong>FRAME</strong>Separate measured inputs from assumptions<br>Define each mechanism, outcome and failure condition</li>
+      <li><strong>PROTOTYPE</strong>Test original and alternative offers<br>Include refusal, cancellation, stale data and recovery</li>
+      <li><strong>DECIDE</strong>Compare service and net value<br>Record uncertainty, adverse outcomes and continue / revise / stop</li>
+    </ol>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box key">
+      <span class="lbl">Matched comparison and field validation</span>
+      <p class="big">Same initial conditions and random seeds for paired simulation runs. A bounded pilot measures actual acceptance and service outcomes.</p>
+      <ul class="lines small">
+        <li><span class="k">Scenario</span>OD / time demand, lead time, acceptance, substitution, discount, fleet / hub capacity and faults.</li>
+        <li><span class="k">Output</span>Request outcome, pickup delay, empty km, activity use, queues, recovery load and net contribution.</li>
+      </ul>
+    </div>
+    <div class="down" aria-hidden="true">↺ new evidence</div>
+    <p class="rule"><b>Evidence loop</b>Observe demand and choices / calibrate assumptions / repeat comparisons / approve the next bounded test</p>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar">Experiment design / Attribution and interaction</h3>
+    <ol class="flow arrows" style="--min:180px">
+      <li><span class="lbl">Baseline</span>
+        <ul class="lines small"><li>All effects off</li><li>Same fleet / hubs</li><li>Same demand and faults</li><li>Fixed accounting basis</li><li>Demand / outage trace fixed</li><li>Same cost boundary</li></ul></li>
+      <li><span class="lbl">Isolated effects</span>
+        <ul class="lines small"><li>Effects 01–03 alone</li><li>Pooling only</li><li>Cargo only</li><li>Paired outcome tests</li><li>Fixed shared inputs</li><li>Separate effect controls</li></ul></li>
+      <li><span class="lbl">Combined effects</span>
+        <ul class="lines small"><li>Pooling + cargo</li><li>Four conditions</li><li>01–03 held fixed</li><li>Then all five effects</li><li>Capacity interaction</li><li>Cost counted once</li></ul></li>
+      <li><span class="lbl">Field check</span>
+        <ul class="lines small"><li>Sharing acceptance</li><li>Actual detour / wait</li><li>Cargo dwell / delivery</li><li>Net service and cost</li><li>Assignment / spillover</li><li>Stop / rollback rules</li></ul></li>
+    </ol>
+    <div class="box warn">
+      <span class="lbl">Stress tests</span>
+      <p>Sweep lead time, forecast error, acceptance, substitution and discounts. Vary route overlap, party size, allowed detour, cargo mass / volume, handling time and delivery windows. Test peak demand, hub loss, no-shows, absent recipients and vehicle recovery. Preserve passenger / shipment identity. Reject future-information leakage. Gains fail when realistic costs erase contribution or any accepted service limit breaks.</p>
+    </div>
+    <p class="note">Proposed tests only. Simulation outputs do not establish field impact or guarantee service-level attainment.</p>
+    <div class="box">
+      <span class="lbl">Reproducible evidence record</span>
+      <p class="small">Record engine / scenario version, input units / sources, demand trace, information receipt times, initial fleet / hub state, seed and effect switches. Retain offer / intent linkage, acceptance, original / revised time, trip / activity actuals, rejected demand and ledger entries. Report paired differences and uncertainty across repeated runs.<br>Field design: predefine assignment unit, observation window and thresholds. Shared vehicles create spillover across users and zones. Check non-participation, displacement and rebound demand. Keep simulated acceptance distinct from measured behavior.<br>Decision packet: input provenance, reproducible run, outcome distribution, guardrail failures, sensitivity, accountable owner and a documented continue / revise / stop decision. Unsupported effects stay unvalidated.</p>
+    </div>
+  </div>
+</section>
+<section class="pg" id="p07" aria-labelledby="p07-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Mobility service planning / Product management supplement</span><span class="no">P07 / 30</span></p>
+    <h2 id="p07-t">Roadmap from discovery to repeatable deployment</h2>
+    <p class="lead">Each gate adds evidence for customer response, operating feasibility and net value before the service expands.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">07</span>Release &amp; scale gates</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>G1 / DISCOVER</strong>
+        <p>Select users, zones and time windows. Observe lead time, unmet demand, activity alternatives and willingness to shift. Establish traceable service and cost baselines. Record sampling gaps and consent boundaries.</p>
+        <ul class="lines small"><li><span class="k">Evidence</span>Journey / demand map, request denominators, alternatives and constraints.</li><li><span class="k">Check</span>Missing demand and selection bias.</li><li><span class="k">Owner</span>PM + Operations.</li></ul>
+        <span class="step">GO / HOLD / REVISE</span></li>
+      <li><strong>G2 / DEFINE</strong>
+        <p>Define five mechanisms and separate controls. Prototype sharing, detour, price and cargo terms. Set passenger and freight gates, cost boundaries and comparison design. Agree consent, capacity and custody ownership before evaluation.</p>
+        <ul class="lines small"><li><span class="k">Evidence</span>Causal model, offer tests, KPI dictionary and comparison design.</li><li><span class="k">Check</span>Consent, cost boundary and failure criteria.</li><li><span class="k">Owner</span>PM + Design + Finance.</li></ul>
+        <span class="step">GO / HOLD / REVISE</span></li>
+      <li><strong>G3 / PILOT READY</strong>
+        <p>Pass C01–C07 normal and fault paths. Verify seat / payload limits per segment, route revisions, no duplicate intents and auditable costs. Staff passenger recovery and cargo handling. Rehearse no-show, failed delivery and rollback.</p>
+        <ul class="lines small"><li><span class="k">Evidence</span>Acceptance traces, finite capacity, ledger and staffed recovery.</li><li><span class="k">Check</span>Fault injection and rollback rehearsal.</li><li><span class="k">Owner</span>Engineering + Operations.</li></ul>
+        <span class="step">GO / HOLD / REVISE</span></li>
+    </ol>
+    <div class="down" aria-hidden="true">↓</div>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>G4 / LEARN</strong>
+        <p>Compare individual and combined effects with matched inputs. Measure sharing acceptance, detour and handling time. Retain displaced passenger trips and failed deliveries. Check service gates and net contribution under realistic conditions.</p>
+        <ul class="lines small"><li><span class="k">Evidence</span>Effect range, adverse outcomes, full costs and counter-evidence.</li><li><span class="k">Check</span>Net gain survives realistic response.</li><li><span class="k">Owner</span>PM + Operations + Finance.</li></ul>
+        <span class="step">GO / HOLD / REVISE</span></li>
+      <li><strong>G5 / REPEAT</strong>
+        <p>Repeat at a second site with local demand, provider capacity and costs. Confirm gains survive weak acceptance and supply loss. Package configuration, training, monitoring and recovery. Approve expansion within a verified operating envelope.</p>
+        <ul class="lines small"><li><span class="k">Evidence</span>Second-site results, support cost, sensitivity and partner acceptance.</li><li><span class="k">Check</span>Local limits preserve service and value.</li><li><span class="k">Owner</span>Rollout lead + site owner.</li></ul>
+        <span class="step">GO / HOLD / REVISE</span></li>
+    </ol>
+    <div class="box plain">
+      <h4>HOLD / REPLAN RULES</h4>
+      <p>Schedule alone never passes a gate. HOLD for unresolved safety / privacy / legal risk, unknown execution, missing evidence, unstaffed support, partner unreadiness, unreliable data or unreconciled cost.</p>
+      <p>REVISE with named owner, required evidence, deadline and temporary scope restriction. Return to an earlier gate when new evidence changes the user problem or service boundary. Record rollback trigger and resume authority.</p>
+    </div>
+    <p class="rule"><b>Gate transition rule</b>Gates are evidence checkpoints, not fixed calendar phases. A failed condition returns to the earliest gate whose assumption is invalidated; scope stays held until the named owner closes the evidence gap and the decision is recorded.</p>
+    <div class="box">
+      <span class="lbl">Product decision ownership</span>
+      <p>PM owns user outcomes, scope and KPI decisions. Design owns comprehension and accessibility. Engineering owns contracts, trace quality and release. Operations / partners own service capacity and recovery. Finance verifies revenue scope, cost allocation and investment assumptions. Every HOLD has a named closure owner.</p>
+    </div>
+    <div class="box key">
+      <span class="lbl">Decision basis</span>
+      <p class="big">Service feasibility and customer choice remain binding even when aggregate contribution improves.</p>
+    </div>
+    <div class="box">
+      <span class="lbl">Technical evidence in the following system design</span>
+      <p>Reservation and service contracts: <a class="ref" href="#p08">slides 8–11</a> • Remote operation and roadside interfaces: <a class="ref" href="#p13">slides 13–23</a> • Fault injection and release dependencies: <a class="ref" href="#p24">slide 24</a></p>
+      <p class="note">Capacity, replenishment, recovery and verification: <a class="ref" href="#p25">P25–P28</a>. Shared rides and passenger–freight rules: <a class="ref" href="#p29">P29–P30</a>. All tests remain proposed.</p>
+    </div>
+    <div class="box plain">
+      <span class="lbl">GO / HOLD record</span>
+      <p class="small">Decision + date • user segment / site • baseline and observed KPI • acceptance trace • unresolved safety / legal / operational risk • scope restriction • accountable owner • next review trigger. GO requires named service owner, trained operation, support coverage, data quality and rollback path. Finance record: CAPEX and OPEX by node and project; node and project payback; IRR; sensitivity range; Variable / Value / Source URL / formula-use link for every assumption.</p>
+    </div>
+  </div>
+</section>
+<p class="part" id="part-2">Part 2 · System planning</p>
+<section class="pg" id="p08" aria-labelledby="p08-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P08 / 30</span></p>
+    <h2 id="p08-t">Container architecture and deployment boundaries</h2>
+    <p class="lead">Proposed common PaaS for integrated reservation, dispatch and energy operations. Diagrams define candidate boundaries and contracts. Desk review is complete; implementation and validation remain pending.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">1.1</span>Logical containers, request paths and event distribution</h3>
+    <div class="fig" style="--svgmin:760px">
+      <svg viewBox="0 0 976 596" role="img" aria-label="Logical containers, request paths and event distribution">
+        <defs>
+          <marker id="p08-ah" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="ah" d="M0,0 L8,4 L0,8 z"/></marker>
+          <marker id="p08-ah2" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="ah2" d="M0,0 L8,4 L0,8 z"/></marker>
+        </defs>
+        <!-- channels -->
+        <rect class="nd" x="22" y="10" width="290" height="74" rx="4"/>
+        <text class="tb" x="32" y="30">Municipal / partner channels</text>
+        <text class="t" x="32" y="52">Resident app / phone / corporate fleet</text>
+        <text class="t" x="32" y="68">Outlook, Google, Tabelog, Ikyu, Hot Pepper</text>
+        <rect class="nd" x="342" y="10" width="290" height="74" rx="4"/>
+        <text class="tb" x="352" y="30">Operator / provider consoles</text>
+        <text class="t" x="352" y="52">Transport / activities / parking lessors</text>
+        <text class="t" x="352" y="68">Scoped UI and assisted workflow</text>
+        <rect class="nd" x="662" y="10" width="290" height="74" rx="4"/>
+        <text class="tb" x="672" y="30">Vehicle and equipment edge</text>
+        <text class="t" x="672" y="52">Vehicle / AD<tspan x="760">Home / corporate EMS</tspan></text>
+        <text class="t" x="672" y="68">CEMS / meters / service work terminals</text>
+        <!-- channel requests to C01 -->
+        <path class="ed" d="M167,84 V117" marker-end="url(#p08-ah)"/>
+        <text class="ta" x="175" y="104">HTTPS / I01</text>
+        <path class="ed" d="M487,84 V117" marker-end="url(#p08-ah)"/>
+        <text class="ta" x="495" y="104">HTTPS / I02, I06</text>
+        <!-- C01 -->
+        <rect class="ndk" x="22" y="118" width="610" height="48" rx="4"/>
+        <text class="tb" x="32" y="138">C01 API gateway + adapters  [application]</text>
+        <text class="tb" x="32" y="156">Identity • object/tenant access • consent • schema • source cursor</text>
+        <!-- trust boundary -->
+        <rect class="nd2" x="14" y="182" width="946" height="404" rx="4"/>
+        <text class="tb" x="180" y="202">TRUST BOUNDARY: authenticated domain commands / scoped event subscriptions</text>
+        <path class="ed" d="M167,166 V221" marker-end="url(#p08-ah)"/>
+        <!-- dashed I05 feedback route -->
+        <path class="ed2" d="M22,500 H6 V174 H780 V85" marker-end="url(#p08-ah2)"/>
+        <!-- I04 edge link -->
+        <path class="ed" d="M952,47 H968 V356 H900 V341" marker-end="url(#p08-ah)"/>
+        <text class="ta" x="934" y="230">I04</text>
+        <!-- row B -->
+        <rect class="nd" x="22" y="222" width="290" height="118" rx="4"/>
+        <text class="tb" x="32" y="242">C02 Booking / activities</text>
+        <text class="t" x="32" y="264">D1 bookingRev, terms, intent, saga</text>
+        <text class="t" x="32" y="280">I02 commit / amend / cancel</text>
+        <text class="t" x="32" y="296">Owns customer and provider outcomes</text>
+        <text class="t" x="32" y="312">Single writer + transactional outbox</text>
+        <path class="ed" d="M312,286 H341" marker-end="url(#p08-ah)"/>
+        <text class="ta" x="327" y="278" text-anchor="middle">I03</text>
+        <rect class="nd" x="342" y="222" width="290" height="118" rx="4"/>
+        <text class="tb" x="352" y="242">C03 Joint reservation authority</text>
+        <text class="t" x="352" y="264">D2 route / segment capacity and bundles</text>
+        <text class="t" x="352" y="280">I03 quote / hold / atomic replacement</text>
+        <text class="t" x="352" y="296">Seats, cargo, bay, charge and work slots</text>
+        <text class="t" x="352" y="312">One D2 transaction per bundle resource</text>
+        <text class="t" x="352" y="328">set</text>
+        <path class="ed" d="M632,286 H661" marker-end="url(#p08-ah)"/>
+        <text class="ta" x="647" y="278" text-anchor="middle">I04</text>
+        <rect class="nd" x="662" y="222" width="290" height="118" rx="4"/>
+        <text class="tb" x="672" y="242">C04 Fleet / vehicle adapter</text>
+        <text class="t" x="672" y="264">D3 command and status journal</text>
+        <text class="t" x="672" y="280">I04 mission / receipt / execution</text>
+        <text class="t" x="672" y="296">ETA, availability, observed evidence</text>
+        <text class="t" x="672" y="312">D1 permit gates dispatch; unknown blocks</text>
+        <text class="t" x="672" y="328">reuse</text>
+        <!-- to C09 -->
+        <path class="ed" d="M167,340 V367" marker-end="url(#p08-ah)"/>
+        <path class="ed" d="M487,340 V367" marker-end="url(#p08-ah)"/>
+        <path class="ed" d="M807,340 V367" marker-end="url(#p08-ah)"/>
+        <rect class="ndk" x="22" y="368" width="930" height="48" rx="4"/>
+        <text class="tb" x="32" y="388">C09 EVENT BACKBONE  [at-least-once delivery + transactional outbox + idempotent inbox + replay isolation]</text>
+        <text class="tb" x="32" y="406">BookingChanged / AllocationCommitted / MissionObserved / EnergyUpdated / UsageVerified / CaseChanged</text>
+        <path class="ed" d="M167,416 V443" marker-end="url(#p08-ah)"/>
+        <path class="ed" d="M487,416 V443" marker-end="url(#p08-ah)"/>
+        <path class="ed" d="M807,416 V443" marker-end="url(#p08-ah)"/>
+        <!-- row C -->
+        <rect class="nd" x="22" y="444" width="290" height="104" rx="4"/>
+        <text class="tb" x="32" y="464">C05 Energy / EMS adapters</text>
+        <text class="t" x="32" y="486">D4 plans, ACKs and market commitments</text>
+        <text class="t" x="32" y="502">I05 capacity, setpoints, derating</text>
+        <text class="t" x="32" y="518">PPA + vehicle departure constraints</text>
+        <text class="t" x="32" y="534">Plant protection remains local</text>
+        <rect class="nd" x="342" y="444" width="290" height="104" rx="4"/>
+        <text class="tb" x="352" y="464">C06 + C08 Operations</text>
+        <text class="t" x="352" y="486">D5 vehicle cases / owner leases</text>
+        <text class="t" x="352" y="502">D7 service cases / AI tool traces</text>
+        <text class="t" x="352" y="518">I07 permissions differ by case type</text>
+        <text class="t" x="352" y="534">No AI bypass of command guards</text>
+        <rect class="nd" x="662" y="444" width="290" height="104" rx="4"/>
+        <text class="tb" x="672" y="464">C07 Usage / settlement</text>
+        <text class="t" x="672" y="486">D6 actuals / contract / billRev</text>
+        <text class="t" x="672" y="502">I08 units, quality and correction links</text>
+        <text class="t" x="672" y="518">Passenger fares / freight / shared costs</text>
+        <text class="t" x="672" y="534">Idempotent payment and payroll jobs</text>
+        <text class="ts" x="24" y="574">Dashed route: I05 equipment feedback via C05 adapters. Solid arrows: principal requests / committed events.</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">1.2</span>Runtime deployment, isolation and recovery</h3>
+    <div class="fig" style="--svgmin:720px">
+      <svg viewBox="0 0 976 184" role="img" aria-label="Runtime deployment, isolation and recovery">
+        <rect class="nd2" x="22" y="6" width="424" height="172" rx="4"/>
+        <text class="tb" x="36" y="30">REGIONAL CORE / active reservation authority</text>
+        <rect class="nd" x="36" y="46" width="190" height="116" rx="4"/>
+        <text class="tb" x="46" y="68">Application workers</text>
+        <text class="t" x="46" y="90">C01 / C02 / C03 / C05</text>
+        <text class="t" x="46" y="106">Stateless request workers</text>
+        <text class="t" x="46" y="122">Fenced writer ownership</text>
+        <text class="t" x="46" y="138">Tenant/object access guards</text>
+        <rect class="nd" x="242" y="46" width="190" height="116" rx="4"/>
+        <text class="tb" x="252" y="68">Durable state</text>
+        <text class="t" x="252" y="90">D1–D7 logical stores</text>
+        <text class="t" x="252" y="106">Resource constraints in D2</text>
+        <text class="t" x="252" y="122">Outbox + command journal</text>
+        <text class="t" x="252" y="138">Recovery-consistent backup</text>
+        <path class="ed" d="M432,104 H543" marker-end="url(#p08-ah)"/>
+        <text class="ta" x="488" y="96" text-anchor="middle">events</text>
+        <rect class="nd2" x="530" y="6" width="424" height="172" rx="4"/>
+        <text class="tb" x="544" y="30">OPERATIONS / integration and projections</text>
+        <rect class="nd" x="544" y="46" width="186" height="116" rx="4"/>
+        <text class="tb" x="554" y="68">Broker / consumers</text>
+        <text class="t" x="554" y="90">C09 event delivery</text>
+        <text class="t" x="554" y="106">Per-aggregate revision</text>
+        <text class="t" x="554" y="122">Inbox deduplication</text>
+        <text class="t" x="554" y="138">Lag + poison-event alerts</text>
+        <path class="ed" d="M730,104 H755" marker-end="url(#p08-ah)"/>
+        <rect class="nd" x="756" y="46" width="186" height="116" rx="4"/>
+        <text class="tb" x="766" y="68">External adapters</text>
+        <text class="t" x="766" y="90">C04 / I05 / I06 / I08</text>
+        <text class="t" x="766" y="106">Protocol + retry journal</text>
+        <text class="t" x="766" y="122">Provider reconciliation</text>
+        <text class="t" x="766" y="138">Local edge fallback</text>
+      </svg>
+    </div>
+    <ol class="flow arrows" style="--min:200px">
+      <li><strong>RESTORE</strong>Restore domain state, consent, outboxes and command history.</li>
+      <li><strong>RECONCILE</strong>Rebuild projections and verify external effects by original IDs.</li>
+      <li><strong>ENABLE DISPATCH</strong>Fence the writer, confirm freshness and operator-approved readiness.</li>
+    </ol>
+    <div class="box key">
+      <p><b>Connector failure may leave local intake available; confirmation still requires all mandatory dependencies. Stale vehicle/site state blocks affected capacity. Replay must use separate projections and idempotent effect handlers.</b></p>
+    </div>
+    <p class="note">G2 decisions: hosting zones, failover mechanism, protocols, RPO/RTO, latency and freshness budgets. The primary service integrates booking, dispatch and energy. Equipment/JV/eVTOL options attach through capability interfaces.</p>
+  </div>
+</section>
+<section class="pg" id="p09" aria-labelledby="p09-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P09 / 30</span></p>
+    <h2 id="p09-t">Joint scheduling, resource timing and states</h2>
+    <p class="lead">Feasibility covers shared-route insertion, passenger and cargo dwell, turnaround, replenishment and the next departure. All accepted passenger limits remain binding.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">2.1</span>C03 component decomposition and constraint propagation</h3>
+    <div class="fig" style="--svgmin:720px">
+      <svg viewBox="0 0 870 278" role="img" aria-label="C03 component decomposition and constraint propagation">
+        <defs>
+          <marker id="p09-ah" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="ah" d="M0,0 L8,4 L0,8 z"/></marker>
+        </defs>
+        <rect class="nd" x="10" y="8" width="200" height="104" rx="3"/>
+        <text class="tb" x="20" y="30">Demand / policy inputs</text>
+        <text class="t" x="20" y="52">Passenger / cargo time windows</text>
+        <text class="t" x="20" y="68">Party, access, mass and volume</text>
+        <text class="t" x="20" y="84">Detour / handling / consent</text>
+        <text class="t" x="20" y="100">Policy version + snapshot time</text>
+        <path class="ed" d="M210,48 H243" marker-end="url(#p09-ah)"/>
+        <rect class="nd" x="244" y="8" width="253" height="104" rx="3"/>
+        <text class="tb" x="254" y="30">Candidate generator</text>
+        <text class="t" x="254" y="52">Location / vehicle capability filter</text>
+        <text class="t" x="254" y="68">Pool compatibility / tour insertion</text>
+        <text class="t" x="254" y="84">Candidate site and work-slot joins</text>
+        <text class="t" x="254" y="100">F01 intent → F02 candidates</text>
+        <path class="ed" d="M497,48 H531" marker-end="url(#p09-ah)"/>
+        <rect class="nd" x="532" y="8" width="328" height="104" rx="3"/>
+        <text class="tb" x="542" y="30">Hard constraint evaluator</text>
+        <text class="t" x="542" y="52">ODD / seats / payload / cargo space</text>
+        <text class="t" x="542" y="68">Capacity checked on each route segment</text>
+        <text class="t" x="542" y="84">All passenger limits + delivery / energy</text>
+        <text class="t" x="542" y="100">OUT feasible bundle or binding reason</text>
+        <!-- C05 energy feasibility into evaluator -->
+        <path class="ed" d="M134,170 V138 H700 V113" marker-end="url(#p09-ah)"/>
+        <text class="ta" x="330" y="132">energy feasibility</text>
+        <!-- evaluator output to ranking -->
+        <path class="ed" d="M700,138 V152 H429 V169" marker-end="url(#p09-ah)"/>
+        <rect class="nd" x="10" y="170" width="250" height="100" rx="3"/>
+        <text class="tb" x="20" y="192">C05 energy envelope</text>
+        <text class="t" x="20" y="214">kW limit + charging efficiency</text>
+        <text class="t" x="20" y="230">Arrival kWh / next-trip kWh / reserve</text>
+        <text class="t" x="20" y="246">EMS capabilityRev + freshness</text>
+        <rect class="nd" x="304" y="170" width="250" height="100" rx="3"/>
+        <text class="tb" x="314" y="192">Feasible-plan ranking</text>
+        <text class="t" x="314" y="214">Weighted empty km / wait / cost / risk</text>
+        <text class="t" x="314" y="230">Normalised terms + reason retained</text>
+        <text class="t" x="314" y="246">Never relax a hard constraint</text>
+        <path class="ed" d="M554,220 H597" marker-end="url(#p09-ah)"/>
+        <rect class="nd" x="598" y="170" width="262" height="100" rx="3"/>
+        <text class="tb" x="608" y="192">D2 reservation transaction</text>
+        <text class="t" x="608" y="214">Resource revision set + ordered locks</text>
+        <text class="t" x="608" y="230">Exclusive / pooled-capacity checks</text>
+        <text class="t" x="608" y="246">D2 local commit + outbox atomically</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">2.2</span>Coordinated timeline: one vehicle, one bay and one charging session</h3>
+    <div class="fig" style="--svgmin:700px">
+      <svg viewBox="0 0 900 230" role="img" aria-label="Coordinated timeline for vehicle, parking bay, charge port and service work">
+        <text class="tb" x="230" y="16" text-anchor="middle">t₀</text>
+        <text class="tb" x="338" y="16" text-anchor="middle">t₁</text>
+        <text class="tb" x="446" y="16" text-anchor="middle">t₂</text>
+        <text class="tb" x="554" y="16" text-anchor="middle">t₃</text>
+        <text class="tb" x="662" y="16" text-anchor="middle">t₄</text>
+        <text class="tb" x="770" y="16" text-anchor="middle">t₅</text>
+        <text class="tb" x="878" y="16" text-anchor="middle">t₆</text>
+        <path class="ed2" d="M230,24 V224 M338,24 V224 M446,24 V224 M554,24 V224 M662,24 V224 M770,24 V224 M878,24 V224"/>
+        <text class="tb" x="10" y="61">Vehicle</text>
+        <rect class="bar" x="230" y="40" width="108" height="32"/>
+        <text class="t" x="284" y="60" text-anchor="middle">Reposition</text>
+        <rect class="bar" x="338" y="40" width="216" height="32"/>
+        <text class="t" x="446" y="60" text-anchor="middle">Wait / charge</text>
+        <rect class="bar" x="554" y="40" width="216" height="32"/>
+        <text class="t" x="662" y="60" text-anchor="middle">Passenger trip</text>
+        <rect class="bar" x="770" y="40" width="108" height="32"/>
+        <text class="t" x="824" y="60" text-anchor="middle">Turnaround</text>
+        <text class="tb" x="10" y="109">Parking bay</text>
+        <rect class="nd" x="338" y="88" width="216" height="32"/>
+        <text class="t" x="446" y="108" text-anchor="middle">Reserved occupancy</text>
+        <rect class="nd" x="770" y="88" width="108" height="32"/>
+        <text class="t" x="824" y="108" text-anchor="middle">Service bay</text>
+        <text class="tb" x="10" y="157">Charge port</text>
+        <rect class="nd" x="365" y="136" width="156" height="32"/>
+        <text class="t" x="443" y="156" text-anchor="middle">Charge to target</text>
+        <text class="tb" x="10" y="205">Service work</text>
+        <rect class="nd" x="770" y="184" width="108" height="32"/>
+        <text class="t" x="824" y="204" text-anchor="middle">Clean / inspect</text>
+      </svg>
+    </div>
+    <p class="small">Departure guard: all required tasks finish before departure; precedence permits only approved overlap. Electrical branch: <code>E_dep = E_arr + Σ(η_ch P_AC Δt_h) − E_aux</code>, with <code>E_trip + E_reserve ≤ E_dep ≤ E_usable,max</code>. kW × hours = kWh.</p>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">2.3</span>Selected reservation transitions and replacement constraints</h3>
+    <div class="fig" style="--svgmin:720px">
+      <svg viewBox="0 0 960 392" role="img" aria-label="Selected reservation state transitions">
+        <defs>
+          <marker id="p09-ah3" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="ah" d="M0,0 L8,4 L0,8 z"/></marker>
+        </defs>
+        <circle class="ah" cx="12" cy="81" r="5"/>
+        <path class="ed" d="M17,81 H29" marker-end="url(#p09-ah3)"/>
+        <!-- row 1 -->
+        <rect class="nd" x="30" y="50" width="180" height="62" rx="8"/>
+        <text class="tb" x="120" y="72" text-anchor="middle">REQUESTED</text>
+        <text class="t" x="40" y="96">Validate input</text>
+        <path class="ed" d="M210,81 H269" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="240" y="74" text-anchor="middle">feasible</text>
+        <rect class="nd" x="270" y="50" width="180" height="62" rx="8"/>
+        <text class="tb" x="360" y="72" text-anchor="middle">HELD</text>
+        <text class="t" x="280" y="96">expiry / resourceRev</text>
+        <path class="ed" d="M450,81 H509" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="480" y="74" text-anchor="middle">accept</text>
+        <rect class="nd" x="510" y="50" width="180" height="62" rx="8"/>
+        <text class="tb" x="600" y="72" text-anchor="middle">COMMIT_PENDING</text>
+        <text class="t" x="520" y="96">durable intent</text>
+        <path class="ed" d="M690,74 H749" marker-end="url(#p09-ah3)"/>
+        <rect class="nd" x="750" y="50" width="180" height="62" rx="8"/>
+        <text class="tb" x="840" y="72" text-anchor="middle">CONFIRMED</text>
+        <text class="t" x="760" y="96">verified bundle</text>
+        <!-- amend loop -->
+        <path class="ed" d="M840,50 V30 H600 V49" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="720" y="22" text-anchor="middle">amend: new terms / keep old allocation</text>
+        <!-- verticals -->
+        <path class="ed" d="M120,112 V189" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="114" y="155" text-anchor="end">infeasible</text>
+        <path class="ed" d="M360,112 V189" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="354" y="155" text-anchor="end">expiry</text>
+        <path class="ed" d="M600,112 V189" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="594" y="155" text-anchor="end">outcome unknown</text>
+        <path class="ed" d="M840,112 V189" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="834" y="155" text-anchor="end">execution observed</text>
+        <!-- row 2 -->
+        <rect class="nd" x="30" y="190" width="180" height="62" rx="8"/>
+        <text class="tb" x="120" y="212" text-anchor="middle">REJECTED</text>
+        <text class="t" x="40" y="236">reason + alternative</text>
+        <rect class="nd" x="270" y="190" width="180" height="62" rx="8"/>
+        <text class="tb" x="360" y="212" text-anchor="middle">EXPIRED</text>
+        <text class="t" x="280" y="236">release unused hold</text>
+        <rect class="nd" x="510" y="190" width="180" height="62" rx="8"/>
+        <text class="tb" x="600" y="212" text-anchor="middle">RECONCILING</text>
+        <text class="t" x="520" y="236">query original intent</text>
+        <path class="ed" d="M690,230 H720 V92 H749" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="720" y="272" text-anchor="middle">verified</text>
+        <rect class="nd" x="750" y="190" width="180" height="62" rx="8"/>
+        <text class="tb" x="840" y="212" text-anchor="middle">IN_SERVICE</text>
+        <text class="t" x="760" y="236">observed execution</text>
+        <path class="ed" d="M840,252 V319" marker-end="url(#p09-ah3)"/>
+        <text class="ta" x="834" y="292" text-anchor="end">observed end</text>
+        <rect class="nd" x="750" y="320" width="180" height="62" rx="8"/>
+        <text class="tb" x="840" y="342" text-anchor="middle">COMPLETED</text>
+        <text class="t" x="760" y="366">actuals verified</text>
+      </svg>
+    </div>
+    <p class="small">Replacement holds new capacity before retiring old. Swap applies only to unstarted allocations. Started/unknown missions retain occupancy until physical clearance. PENDING does not expire on quote TTL. Cancellation uses <a class="ref" href="#p11">P11</a>; shared seats enforce summed capacity per segment.</p>
+    <p class="note">Shared rides and cargo require segment capacity, route revision and distinct booking outcomes (<a class="ref" href="#p29">P29–P30</a>). Count the vehicle cycle once, including empty travel, boarding, cargo dwell, turnaround and energy. Reserve loading bays, staff and hub capacity separately (<a class="ref" href="#p25">P25–P26</a>).</p>
+  </div>
+</section>
+<section class="pg" id="p10" aria-labelledby="p10-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P10 / 30</span></p>
+    <h2 id="p10-t">Entity relationships and message contracts</h2>
+    <p class="lead">Identifiers, cardinalities, revisions and uniqueness constraints preserve the chain from an accepted journey to resource use and settlement. Example payloads define proposed contracts.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">3.1</span>Domain model with keys and ownership</h3>
+    <div class="fig" style="--svgmin:760px">
+      <svg viewBox="0 0 870 616" role="img" aria-label="Domain model with keys and ownership">
+        <defs>
+          <marker id="p10-ah" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="ah" d="M0,0 L8,4 L0,8 z"/></marker>
+          <marker id="p10-ah2" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="ah2" d="M0,0 L8,4 L0,8 z"/></marker>
+        </defs>
+        <!-- row 1 -->
+        <rect class="nd" x="10" y="8" width="252" height="164"/>
+        <rect class="ndk" x="10" y="8" width="252" height="28"/>
+        <text class="tb" x="20" y="27">PlanReference  /  C01</text>
+        <text class="t" x="20" y="54">PK tenantId, planRefId</text>
+        <text class="t" x="20" y="70">provider, accountRef, sourceEventId</text>
+        <text class="t" x="20" y="86">instanceId, sourceRevision</text>
+        <text class="t" x="20" y="102">consentId, purpose, expiresAt</text>
+        <text class="t" x="20" y="118">startUTC, endUTC, IANA zone</text>
+        <text class="t" x="20" y="134">Unique within tenant:</text>
+        <text class="t" x="20" y="150">provider/account/event/instance</text>
+        <path class="ed" d="M262,62 H307" marker-end="url(#p10-ah)"/>
+        <text class="ta" x="285" y="56" text-anchor="middle">0..1 : N</text>
+        <rect class="nd" x="308" y="8" width="252" height="164"/>
+        <rect class="ndk" x="308" y="8" width="252" height="28"/>
+        <text class="tb" x="318" y="27">Booking  /  C02</text>
+        <text class="t" x="318" y="54">PK tenantId, bookingId</text>
+        <text class="t" x="318" y="70">FK planRefId (optional for app input)</text>
+        <text class="t" x="318" y="86">bookingRev, termsRev, state</text>
+        <text class="t" x="318" y="102">riderRef, pickupWindow, destination</text>
+        <text class="t" x="318" y="118">currentBundleId, intentId</text>
+        <text class="t" x="318" y="134">CAS: expectedBookingRev</text>
+        <path class="ed" d="M560,62 H605" marker-end="url(#p10-ah)"/>
+        <text class="ta" x="583" y="56" text-anchor="middle">1 : N</text>
+        <rect class="nd" x="606" y="8" width="254" height="164"/>
+        <rect class="ndk" x="606" y="8" width="254" height="28"/>
+        <text class="tb" x="616" y="27">ResourceBundle  /  C03</text>
+        <text class="t" x="616" y="54">PK tenantId, bundleId</text>
+        <text class="t" x="616" y="70">FK bookingId, replacesBundleId?</text>
+        <text class="t" x="616" y="86">bundleRev, state, expiresAt</text>
+        <text class="t" x="616" y="102">policyVersion, inputSnapshotRef</text>
+        <text class="t" x="616" y="118">intentId, idempotencyKey, result</text>
+        <text class="t" x="616" y="134">Unique: tenant/intent/key</text>
+        <!-- Booking 1:N ActivitySaga -->
+        <path class="ed" d="M434,172 V200 H136 V227" marker-end="url(#p10-ah)"/>
+        <text class="ta" x="240" y="194" text-anchor="middle">1 : N</text>
+        <!-- Bundle 1:N ResourceInterval -->
+        <path class="ed" d="M733,172 V212 H434 V227" marker-end="url(#p10-ah)"/>
+        <text class="ta" x="583" y="206" text-anchor="middle">1 : N</text>
+        <!-- row 2 -->
+        <rect class="nd" x="10" y="228" width="252" height="164"/>
+        <rect class="ndk" x="10" y="228" width="252" height="28"/>
+        <text class="tb" x="20" y="247">ActivitySaga / WorkOrder</text>
+        <text class="t" x="20" y="274">PK tenantId + sagaId / workOrderId</text>
+        <text class="t" x="20" y="290">FK bookingId, bundleId?</text>
+        <text class="t" x="20" y="306">providerRef, slotRef, staffRefs[]</text>
+        <text class="t" x="20" y="322">conditionsRev, acceptedTermsRev</text>
+        <text class="t" x="20" y="338">state, owner, dueAt, evidenceRef</text>
+        <text class="t" x="20" y="354">Tasks: cleaning / inspection / handover</text>
+        <rect class="nd" x="308" y="228" width="252" height="164"/>
+        <rect class="ndk" x="308" y="228" width="252" height="28"/>
+        <text class="tb" x="318" y="247">ResourceInterval  /  C03</text>
+        <text class="t" x="318" y="274">PK tenantId, intervalId</text>
+        <text class="t" x="318" y="290">FK bundleId, resourceId</text>
+        <text class="t" x="318" y="306">startUTC, endUTC [half-open]</text>
+        <text class="t" x="318" y="322">capacityType, quantity, unit</text>
+        <text class="t" x="318" y="338">reservationRev, allocationState</text>
+        <text class="t" x="318" y="354">Exclusive: no overlap; pooled: sum ≤</text>
+        <text class="t" x="318" y="370">capacity</text>
+        <path class="ed" d="M560,310 H605" marker-end="url(#p10-ah)"/>
+        <text class="ta" x="583" y="304" text-anchor="middle">N : 1</text>
+        <rect class="nd" x="606" y="228" width="254" height="164"/>
+        <rect class="ndk" x="606" y="228" width="254" height="28"/>
+        <text class="tb" x="616" y="247">Resource / Capability</text>
+        <text class="t" x="616" y="274">PK tenantId, resourceId</text>
+        <text class="t" x="616" y="290">kind: vehicle/bay/charger/staff</text>
+        <text class="t" x="616" y="306">siteId?, operatorRef, contractRef</text>
+        <text class="t" x="616" y="322">capabilityRev, status, observedAt</text>
+        <text class="t" x="616" y="338">capacity, constraints, quality</text>
+        <text class="t" x="616" y="354">Availability needs current evidence</text>
+        <!-- bundle references -->
+        <text class="tb" x="10" y="418">Bundle references below: 1:N Mission commands • 1:N EnergyPlan revisions • 1:N verified usage and ledger entries</text>
+        <path class="ed2" d="M136,426 V445" marker-end="url(#p10-ah2)"/>
+        <path class="ed2" d="M434,426 V445" marker-end="url(#p10-ah2)"/>
+        <path class="ed2" d="M733,426 V445" marker-end="url(#p10-ah2)"/>
+        <!-- row 3 -->
+        <rect class="nd" x="10" y="446" width="252" height="164"/>
+        <rect class="ndk" x="10" y="446" width="252" height="28"/>
+        <text class="tb" x="20" y="465">Mission / Command  /  C04</text>
+        <text class="t" x="20" y="492">PK tenantId, commandId</text>
+        <text class="t" x="20" y="508">FK bundleId, vehicleId</text>
+        <text class="t" x="20" y="524">missionRev, routeRef, validUntil</text>
+        <text class="t" x="20" y="540">deliveryState, executionState</text>
+        <text class="t" x="20" y="556">statusSeq, observedAt, receivedAt</text>
+        <text class="t" x="20" y="572">Same commandId: one immutable</text>
+        <text class="t" x="20" y="588">payloadHash</text>
+        <rect class="nd" x="308" y="446" width="252" height="164"/>
+        <rect class="ndk" x="308" y="446" width="252" height="28"/>
+        <text class="tb" x="318" y="465">EnergyPlan  /  C05</text>
+        <text class="t" x="318" y="492">PK tenantId, planId, planRev</text>
+        <text class="t" x="318" y="508">FK bundleId, siteId</text>
+        <text class="t" x="318" y="524">capabilityRev, powerIntervals[]</text>
+        <text class="t" x="318" y="540">departureMinKWh, expiresAt</text>
+        <text class="t" x="318" y="556">acceptedRev, executionEvidence</text>
+        <text class="t" x="318" y="572">Plan revision ACK ≠ delivered energy</text>
+        <rect class="nd" x="606" y="446" width="254" height="164"/>
+        <rect class="ndk" x="606" y="446" width="254" height="28"/>
+        <text class="tb" x="616" y="465">UsageFact / Ledger  /  C07</text>
+        <text class="t" x="616" y="492">PK tenantId + usageId / ledgerEntryId</text>
+        <text class="t" x="616" y="508">FK bundleId, contractRev</text>
+        <text class="t" x="616" y="524">meterPointId, interval, qty, unit</text>
+        <text class="t" x="616" y="540">quality, sourceRev, payerRef</text>
+        <text class="t" x="616" y="556">correctionOf?, billRev, currency</text>
+        <text class="t" x="616" y="572">No destructive overwrite of actuals</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">3.2</span>Command, result and event examples</h3>
+    <div class="cols c3">
+      <div class="box">
+        <h4>I03 CommitBundle / command</h4>
+<pre class="code">{
+  tenantId: "operator-A",
+  intentId: "amend-41",
+  bookingId: "bk-18",
+  expectedBookingRev: 6,
+  newBundleId: "rb-52",
+  oldBundleId: "rb-37",
+  expectedResourceRevs: [104, 28],
+  acceptedTermsRev: 3,
+  capabilityRev: "cap-9",
+  idempotencyKey: "amend-41"
+}</pre>
+        <p>Same key + different payload:<br>reject IDEMPOTENCY_CONFLICT.</p>
+      </div>
+      <div class="box">
+        <h4>I03 Result / guarded outcome</h4>
+<pre class="code">{
+  intentId: "amend-41",
+  state: "COMMITTED",
+  bundleId: "rb-52",
+  bundleRev: 105,
+  intentIdForD1: "amend-41",
+  committedAt: "&lt;UTC instant&gt;",
+  externalReleaseJobs: ["j-4"]
+}</pre>
+        <p>Other explicit outcomes:<br>HELD / REJECTED / PENDING<br>reasonCode + retryability<br>Unknown ≠ rejection.</p>
+      </div>
+      <div class="box">
+        <h4>Event envelope / all domains</h4>
+<pre class="code">{
+  eventId: "evt-902",
+  type: "AllocationCommitted",
+  schemaVersion: 1,
+  tenantId: "operator-A",
+  aggregateId: "rb-52",
+  aggregateRevision: 105,
+  occurredAt: "&lt;UTC instant&gt;",
+  receivedAt: "&lt;UTC instant&gt;",
+  correlationId: "amend-41"
+}</pre>
+        <p>Inbox dedup → revision check<br>→ apply / fetch gap / quarantine</p>
+      </div>
+    </div>
+    <p class="note">Keys/FKs include tenant scope; validate references within that scope. expectedResourceRevs maps to the ordered resource set. D1 owns bookingRev. Atomic guarantees cover D2 only. Examples are conceptual payloads, not complete API schemas.</p>
+  </div>
+</section>
+<section class="pg" id="p11" aria-labelledby="p11-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P11 / 30</span></p>
+    <h2 id="p11-t">Booking saga, cancellation and dispatch gate</h2>
+    <p class="lead">C02 owns booking intent and cancellation. D2 makes only local atomic allocation changes. External EMS effects use a reconciled saga; no distributed atomic commit is assumed.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">4.1</span>Hold promotion, external outcome and authoritative dispatch permit</h3>
+    <div class="scroll">
+      <div class="seq" style="--n:5;--lw:140px">
+        <div class="who">Client / rider</div>
+        <div class="who">C02 Booking / D1</div>
+        <div class="who">C03 Planner</div>
+        <div class="who">D2 Resources</div>
+        <div class="who">C05 / Site EMS</div>
+
+        <div class="msg" style="--s:1;--e:2">01 Quote/amend(reqId)</div>
+        <div class="msg" style="--s:2;--e:3">02 Plan(terms,windows)</div>
+        <div class="frag"><b>parallel checks:</b>resource snapshot and energy capability are versioned inputs, not one shared revision</div>
+        <div class="msg" style="--s:3;--e:4">03 Read resourceRevs</div>
+        <div class="msg" style="--s:3;--e:5">04 Read capability(site,window,minEnergy)</div>
+        <div class="msg l dash" style="--s:3;--e:4">05 Intervals / revisions</div>
+        <div class="msg l dash" style="--s:3;--e:5">06 Limits / capabilityRev / age</div>
+        <div class="frag"><b>D2 transaction:</b>validate ordered resource set and pooled limits; create expiring HELD bundle + outbox</div>
+        <div class="msg" style="--s:3;--e:4">07 Hold(snapshot)</div>
+        <div class="msg l dash" style="--s:3;--e:4">08 holdId / expiresAt</div>
+        <div class="msg l dash" style="--s:2;--e:3">09 Offer + hold expiry</div>
+        <div class="msg l dash" style="--s:1;--e:2">10 Terms + expiresAt</div>
+        <div class="msg" style="--s:1;--e:2">11 Accept(termsRev)</div>
+        <div class="frag"><b>guard:</b>expired/changed input rejects. Otherwise D1 persists COMMIT_PENDING, intent and outbox</div>
+        <div class="msg" style="--s:2;--e:3">12 Commit(intent,key)</div>
+        <div class="msg" style="--s:3;--e:4">13 PromoteHold(intent)</div>
+        <div class="msg l dash" style="--s:3;--e:4">14 PENDING / reject</div>
+        <div class="frag">PENDING occupancy stays blocked during unknown external effects; quote TTL must not release it</div>
+        <div class="msg" style="--s:3;--e:5">15 ReserveEnergy(planId,rev,key)</div>
+        <div class="msg l dash" style="--s:3;--e:5">16 Accept / reject / unknown</div>
+        <div class="msg" style="--s:3;--e:5">17 Query same planId until resolved or escalated</div>
+        <div class="frag"><b>branch:</b>accepted + valid capacity permits local commit; rejected/conflict starts compensation; unknown stays blocked</div>
+        <div class="msg" style="--s:3;--e:4">18 CommitSwap(intent)</div>
+        <div class="msg l dash" style="--s:3;--e:4">19 Durable outcome</div>
+        <div class="msg" style="--s:3;--e:5">20 Release old / undo new as required</div>
+        <div class="msg l dash" style="--s:2;--e:3">21 Outcome(intent)</div>
+        <div class="frag"><b>interrupt at any phase:</b>D1 records cancelRequested against intent; cancel and permit issuance serialize in D1</div>
+        <div class="msg" style="--s:1;--e:2">22 Cancel(intent,rev)</div>
+        <div class="msg" style="--s:2;--e:3">23 Reconcile / cancel</div>
+        <div class="msg l dash" style="--s:2;--e:3">24 Persisted result</div>
+        <div class="frag">D1 finalise by CAS. Only CONFIRMED + no pending cancel can issue a current dispatch permit</div>
+        <div class="msg l dash" style="--s:1;--e:2">25 Customer outcome</div>
+        <div class="msg" style="--s:2;--e:3">26 Permit / keep blocked</div>
+      </div>
+    </div>
+    <p class="note">C04 obtains the current D1 permit before releasing a mission. Cancellation after permit issuance becomes cancel/replan of an in-flight mission, not a guarantee of zero movement. Release old physical capacity only after vehicle/EMS clearance. Failed compensation stays owned and reconciled.</p>
+  </div>
+</section>
+<section class="pg" id="p12" aria-labelledby="p12-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P12 / 30</span></p>
+    <h2 id="p12-t">Energy control loops and contribution accounting</h2>
+    <p class="lead">The mobility schedule imposes departure-energy constraints. C05 allocates feasible power, reconciles equipment response and sends shortages back to C03. C07 settles measured contributions.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">5.1</span>Hierarchical control and measurement paths</h3>
+    <div class="cols c3">
+      <div class="box plain"><h4>C03 Mobility constraints</h4>
+        <ul class="lines small"><li>bundleId / arrival / departure</li><li>E_arrival, E_next_trip, E_reserve</li><li>Bay / work / charge intervals</li><li>Priority and accepted service promise</li></ul></div>
+      <div class="box plain"><h4>Forecast / capability inputs</h4>
+        <ul class="lines small"><li>Building demand + PV forecast</li><li>SOFC / GTFC availability and limits</li><li>Grid / storage / site connection caps</li><li>capabilityRev + observedAt + quality</li></ul></div>
+      <div class="box plain"><h4>Market / aggregator commitments</h4>
+        <ul class="lines small"><li>Sale schedule and realised results</li><li>Balancing kW + duration + baseline</li><li>Reserved capacity / response limits</li><li>Eligibility and access gates</li></ul></div>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box">
+      <h4>C05 Constrained scheduler / rolling replanning</h4>
+      <p class="note">infeasible → replan ↑</p>
+      <p>Objective: minimise configured energy and delay cost subject to firm service constraints.</p>
+      <p class="mono">AC bus: P_import + P_gen,net + P_dis,AC = P_load,AC + P_EV,AC + P_ch,AC + P_export</p>
+      <p>All P are net kW at one AC boundary; conversion losses belong in storage-energy updates, not twice.</p>
+      <p>Reserve firm demand first. Bound SOC/energy/ramp; prevent simultaneous import/export or storage charge/discharge.</p>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box">
+      <h4>I05 Plan journal and execution guard</h4>
+      <p class="mono">planId / planRev / bundleId / capabilityRev / validUntil / powerIntervals[]</p>
+      <p>Validate current limits → persist command → send → ACK / reject / unknown</p>
+      <p>Unknown → query status. Electrical scope; fuel/H2 requires a separate capability.</p>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="cols c3">
+      <div class="box plain"><h4>Home EMS / charger</h4>
+        <ul class="lines small"><li>Time-rented household parking bay</li><li>PV / SOFC / storage / charging</li><li>Household load and connection limit</li><li>Local protection and outage behaviour</li><li>Cleaning is a separately agreed task</li></ul></div>
+      <div class="box plain"><h4>Corporate EMS / charger</h4>
+        <ul class="lines small"><li>Building and company-fleet demand</li><li>After-hours / holiday employee use</li><li>Business return deadline and energy</li><li>Track business / private utilisation</li><li>Daily inspection by staffed site</li></ul></div>
+      <div class="box plain"><h4>District CEMS / GTFC option</h4>
+        <ul class="lines small"><li>Fuel / heat / ramp / maintenance</li><li>Net available supply and storage</li><li>HTS route, cooling, losses, capacity</li><li>Equipment workstream validates limits</li><li>PV/SOFC and GTFC tracks can parallel</li></ul></div>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box key">
+      <p><b>Observed power / energy / meter quality / site alarms</b><br><b class="mono">I08: meterPointId + interval + sourceRev + quantity + unit + contractRev</b></p>
+      <p class="note">feedback ↑</p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">5.2</span>Settlement dataflow and household contribution formula</h3>
+    <div class="cols c5">
+      <div class="box plain"><h4>Space / equipment</h4><p class="mono">qᵢₐ × pₐ</p><p class="small muted">Rented duration, agreed tasks</p></div>
+      <div class="box plain"><h4>Service electricity</h4><p class="mono">Eᵢₜ × pᵢₜ</p><p class="small muted">Exclude home self-use</p></div>
+      <div class="box plain"><h4>Adjustment revenue</h4><p class="mono">αᵢₘ × Sₘ</p><p class="small muted">Net distributable pool</p></div>
+      <div class="box plain"><h4>Sharing revenue</h4><p class="mono">βᵢₛ × Uᵢₛ</p><p class="small muted">Separate eligible revenue</p></div>
+      <div class="box plain"><h4>Assigned costs</h4><p class="mono">− Cᵢ</p><p class="small muted">Versioned deductions</p></div>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="eq">Rᵢ = Σₐ qᵢₐpₐ + Σₜ Eᵢₜpᵢₜ + Σₘ αᵢₘSₘ + Σₛ βᵢₛUᵢₛ − Cᵢ</div>
+    <p class="note">wᵢₘ ≥ 0; αᵢₘ = wᵢₘ / Σⱼwⱼₘ when Σw &gt; 0. Zero total weight leaves the pool unallocated for review.</p>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box key">
+      <p><b>Validate actuals → apply contractRev → allocate payer/credit → reconcile → issue billRev → correction entries</b><br><b>Net pools exclude prior credits/costs. Unique earning IDs prevent duplicate payment; missing data stays provisional.</b></p>
+    </div>
+    <p class="note">Replenishment queues, site derating and reserve energy constrain each next departure (<a class="ref" href="#p26">P26</a>). Settle measured delivery under a versioned contract. Keep net pools, credits and assigned costs non-overlapping. Availability kW and delivered kWh remain distinct.</p>
+  </div>
+</section>
+<section class="pg" id="p13" aria-labelledby="p13-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P13 / 30</span></p>
+    <h2 id="p13-t">Remote mission protocol and exception handling</h2>
+    <p class="lead">I04 delivery acknowledgment, vehicle execution and I07 case resolution carry different evidence. Permission checks and local vehicle authority constrain every remote action.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">6.1</span>Persistent command, uncertain execution, case ownership and recovery</h3>
+    <div class="scroll">
+      <div class="seq" style="--n:5;--lw:140px">
+        <div class="who">C04 Fleet</div>
+        <div class="who">Adapter / journal</div>
+        <div class="who">Vehicle / AD</div>
+        <div class="who">C06 Case</div>
+        <div class="who">Remote operator</div>
+
+        <div class="msg" style="--s:1;--e:2">01 Mission(id,validTo)</div>
+        <div class="msg" style="--s:2;--e:3">02 Persist / send cmd</div>
+        <div class="msg l dash" style="--s:2;--e:3">03 Receipt(cmdId)</div>
+        <div class="msg l dash" style="--s:2;--e:3">04 Accept / reject</div>
+        <div class="msg l dash" style="--s:1;--e:2">05 Journal outcome</div>
+        <div class="frag"><b>opt</b>[acceptance unknown / fault / stale telemetry] retain command identity and block affected capacity</div>
+        <div class="msg l dash" style="--s:1;--e:2">06 UNKNOWN; block reuse</div>
+        <div class="msg" style="--s:2;--e:3">07 Query(cmdId)</div>
+        <div class="msg l dash" style="--s:2;--e:3">08 Execution + seq</div>
+        <div class="frag"><b>loop</b>[query budget remains] verify observedAt / seq / clock quality; old or repeated state cannot prove recovery</div>
+        <div class="msg" style="--s:2;--e:3">09 Query original id</div>
+        <div class="msg" style="--s:2;--e:4">10 OpenCase(command, last observation, severity, deadline)</div>
+        <div class="msg" style="--s:4;--e:5">11 Assign(lease,dueAt)</div>
+        <div class="msg l dash" style="--s:4;--e:5">12 ACK(caseRev)</div>
+        <div class="frag"><b>opt</b>[lease expired / missing ACK / urgent deadline] reject stale action and assign backup owner</div>
+        <div class="msg" style="--s:4;--e:5">13 Escalate / new lease</div>
+        <div class="msg l" style="--s:4;--e:5">14 Action + evidence</div>
+        <div class="frag"><b>guard</b>[motion-enabling action] role, caseRev, authority fence, current evidence and expected state; see <a class="ref" href="#p22">P22</a></div>
+        <div class="msg l" style="--s:2;--e:4">15 Authorise scoped action</div>
+        <div class="msg" style="--s:2;--e:3">16 Persist / send cmd</div>
+        <div class="msg l dash" style="--s:2;--e:3">17 Receipt only</div>
+        <div class="msg l dash" style="--s:2;--e:3">18 Accepted / rejected</div>
+        <div class="frag"><b>alt</b>[accepted] observe execution and correlate evidence; receipt alone cannot resolve the case</div>
+        <div class="msg l dash" style="--s:2;--e:3">19 Executing(seq,time)</div>
+        <div class="msg" style="--s:2;--e:4">20 Correlated evidence</div>
+        <div class="msg l dash" style="--s:2;--e:3">21 Complete / abort</div>
+        <div class="msg" style="--s:2;--e:4">22 Verified result</div>
+        <div class="frag"><b>else</b>[rejected / unknown] keep case open and query state or initiate an approved fallback</div>
+        <div class="msg l" style="--s:2;--e:4">23 Reconcile / fallback</div>
+        <div class="frag"><b>opt</b>[fresh state + accepted release authority] close with evidence and restore availability</div>
+        <div class="msg l" style="--s:4;--e:5">24 Release decision</div>
+        <div class="msg l dash" style="--s:1;--e:4">25 Availability revised; physical completion evidence attached</div>
+      </div>
+    </div>
+    <div class="box">
+      <p><b>Delivery: PERSISTED → SENT → RECEIVED</b> &nbsp; <b>Execution: ACCEPTED → EXECUTING → COMPLETED / ABORTED</b></p>
+      <p>Case: OPEN → ASSIGNED → ACK → ACTIVE → RESOLVED → CLOSED. Material new evidence reopens the case.<br>UNKNOWN is a knowledge state, not a vehicle state. Expiry blocks a new command but never stops status reconciliation.</p>
+    </div>
+    <p class="note">Vehicle/ADS owns driving and fallback. Read-only queries and emergency escalation remain available with stale data. Case closure follows <a class="ref" href="#p18">P18</a>; motion requests use <a class="ref" href="#p22">P22</a> action-specific guards. Rejected/unknown effects stay reconciled.</p>
+  </div>
+</section>
+<section class="pg" id="p14" aria-labelledby="p14-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P14 / 30</span></p>
+    <h2 id="p14-t">Remote architecture and control authority</h2>
+    <p class="lead">RM-01 / RM-02. Level 4 ADS retains DDT and fallback authority. Remote monitoring, contextual assistance and passenger support use separate permissions and evidence paths.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">7.1</span>Onboard functions, remote channels and command boundary</h3>
+    <div class="box plain">
+      <span class="lbl">Vehicle trust zone / device identity, boot epoch and capability revision</span>
+      <div class="cols c3">
+        <div class="box"><h4>ADS / local safety authority</h4>
+          <ul class="lines small"><li>OEDR: detect and respond to road events</li><li>DDT: tactical / operational driving</li><li>Perception, localisation, motion control</li><li>DDT fallback initiates local response</li><li>MRM seeks MRC with achieved-state evidence. Zero speed alone is not MRC.</li></ul></div>
+        <div class="box"><h4>Edge adapter / durable journal</h4>
+          <ul class="lines small"><li>Vehicle state, ODD and diagnostic feed</li><li>Command identity, expiry and dedup</li><li>Receipt / acceptance / execution split</li><li>Safety checks remain onboard</li><li>Prioritised uplink + event buffer</li><li>No cloud override of ADS constraints</li></ul></div>
+        <div class="box"><h4>Media / passenger interface</h4>
+          <ul class="lines small"><li>Exterior views and calibration IDs</li><li>Scene / frame capture timestamps</li><li>Optional approved cabin channels</li><li>Passenger SOS / accessible voice</li><li>Independent media-health evidence</li><li>No stale frame rendered as live</li></ul></div>
+      </div>
+    </div>
+    <div class="down" aria-hidden="true">↓ ↑ ↓</div>
+    <div class="cols c3">
+      <div class="box plain"><h4>Telemetry / alarm channel</h4>
+        <ul class="lines small"><li>Reliable events + heartbeat + seq</li><li>Gaps, clock quality, age and validity</li><li>A missing signal is explicit uncertainty.</li></ul></div>
+      <div class="box plain"><h4>Command / result channel</h4>
+        <ul class="lines small"><li>Authenticated, scoped, expiring action</li><li>Current lease + capability + scene</li><li>Onboard accept/reject + observed result</li></ul></div>
+      <div class="box plain"><h4>Evidence / media channel</h4>
+        <ul class="lines small"><li>Adaptive video / keyframe evidence</li><li>Separate channel health and age</li><li>Replay mode disables live actions.</li></ul></div>
+    </div>
+    <div class="down" aria-hidden="true">↓ ↑ ↓</div>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>C04 vehicle adapter / I04</strong>
+        <ul class="lines small"><li>Validate schema, identity, unit and seq</li><li>Project state with observation quality</li><li>Journal command effects and unknowns</li><li>Preserve raw events and evidence gaps</li><li>Query original IDs after lost responses</li><li>Never default missing state to healthy</li></ul></li>
+      <li><strong>C06 cases / I07 policy</strong>
+        <ul class="lines small"><li>Correlate vehicle + I09 roadside evidence</li><li>Qualified seat + single action lease</li><li>Bounded RA advice / escalation</li><li>Preserve source quality and conflicts</li><li>Fresh vehicle evidence gates release</li><li>Service AI cannot authorise motion</li></ul></li>
+      <li><strong>Operator / PaaS consumers</strong>
+        <ul class="lines small"><li>Focus scene, history and evidence age</li><li>C03 holds affected vehicle capacity</li><li>C02 revises journey / passenger offer</li><li>C05 revises feasible energy / site slots</li><li>No automatic re-entry on reconnect</li><li>No release merely because case closed</li></ul></li>
+    </ol>
+    <p class="note">Roadside sensors / RSU / edge → C10 I09 validation → C06 monitoring evidence &nbsp; [details <a class="ref" href="#p15">P15–P16</a>]</p>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">7.2</span>Operational roles and failure containment</h3>
+    <div class="cols c2">
+      <div><h4>Remote assistance and remote driving</h4><p class="small">RA supplies contextual advice that the ADS can reject after re-evaluating the scene and ODD. Real-time remote DDT is outside this baseline. Adding remote driving requires a distinct operating envelope, control arbitration, communications safety analysis and operator / approval evidence.</p></div>
+      <div><h4>Operational and legal responsibility</h4><p class="small">Map system roles to the permitted operation, designated supervisor and field-response organisation. Passenger support cannot override door interlocks or authorise motion. Vehicle-specific link-loss and fallback behaviour remains local and does not depend on a remote reply.</p></div>
+    </div>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Active authority</strong>
+        <ul class="lines small"><li>Durable cases / command journal</li><li>Replicated evidence + backlog</li><li>Vehicle fence ACK gates new actions</li></ul></li>
+      <li><strong>Standby promotion</strong>
+        <ul class="lines small"><li>Acquire higher authority epoch</li><li>Require vehicle fence ACK (<a class="ref" href="#p20">P20</a>)</li><li>Reconcile prior effects before action</li></ul></li>
+      <li><strong>Degraded service</strong>
+        <ul class="lines small"><li>Hold affected assignments</li><li>Preserve priority safety traffic</li><li>Escalate without hiding uncertainty</li></ul></li>
+    </ol>
+    <p class="note">Acceptance: independently partition telemetry, media, primary centre and workstation. Old-epoch requests reject after the vehicle installs its fence. Test durable deduplication and unknown outcomes. Reconnect and case closure require the release predicate on <a class="ref" href="#p18">P18</a> before availability can change.</p>
+  </div>
+</section>
+<section class="pg" id="p15" aria-labelledby="p15-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P15 / 30</span></p>
+    <h2 id="p15-t">Roadside sensing and edge computing architecture</h2>
+    <p class="lead">RM-13. Roadside observations supplement vehicle evidence. Sensor, compute and communication functions have separate ownership. Proposed I09 feeds monitoring and operational review, not direct actuation.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">8.1</span>Deployment topology and data / management plane separation</h3>
+    <div class="fig" style="--svgmin:760px">
+      <svg viewBox="0 0 910 500" role="img" aria-label="Deployment topology and data / management plane separation">
+        <defs>
+          <marker id="p15-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+          <marker id="p15-ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah2" d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="nd2" x="10" y="10" width="880" height="300" rx="4"/>
+        <text class="tb" x="22" y="32">FIELD TRUST ZONE / site-scoped identity, clock and calibration</text>
+
+        <rect class="nd" x="24" y="46" width="240" height="114" rx="3"/>
+        <text class="tb" x="34" y="68">Roadside sensing</text>
+        <text class="t" x="34" y="92"><tspan x="34">Camera / lidar / radar as selected</tspan><tspan x="34" dy="16">Time stamp + calibrationRef</tspan><tspan x="34" dy="16">Coverage polygon + occlusion</tspan><tspan x="34" dy="16">Health / quality / sensor revision</tspan></text>
+
+        <rect class="nd" x="296" y="46" width="272" height="114" rx="3"/>
+        <text class="tb" x="306" y="68">Edge / MEC observation worker</text>
+        <text class="t" x="306" y="92"><tspan x="306">Detect → track → classify → summarise</tspan><tspan x="306" dy="16">Local frame → agreed map frame</tspan><tspan x="306" dy="16">Scoped tracks + quality + lineage</tspan><tspan x="306" dy="16">Bounded buffer and priority queues</tspan></text>
+
+        <rect class="nd" x="600" y="46" width="276" height="114" rx="3"/>
+        <text class="tb" x="610" y="68">RSU + backhaul gateway</text>
+        <text class="t" x="610" y="92"><tspan x="610">RSU: selected V2X interface</tspan><tspan x="610" dy="16">Backhaul: authenticated IP transport</tspan><tspan x="610" dy="16">Separate identity / profile / rate limit</tspan><tspan x="610" dy="16">No assumption of integrated sensing</tspan></text>
+
+        <path class="ed" d="M264,104 H294" marker-end="url(#p15-ah)"/>
+        <text class="ta" x="280" y="96" text-anchor="middle">I09a</text>
+        <path class="ed" d="M568,104 H598" marker-end="url(#p15-ah)"/>
+        <text class="ta" x="584" y="96" text-anchor="middle">I09b</text>
+
+        <rect class="nd" x="24" y="192" width="400" height="100" rx="3"/>
+        <text class="tb" x="34" y="214">PPA site services / installation contract</text>
+        <text class="t" x="34" y="238"><tspan x="34">Power capacity / backup autonomy / thermal budget</tspan><tspan x="34" dy="16">Cabinet / network / physical access / maintenance</tspan><tspan x="34" dy="16">Separate sensor site where coverage requires it</tspan></text>
+
+        <rect class="nd" x="448" y="192" width="428" height="100" rx="3"/>
+        <text class="tb" x="458" y="214">Edge management / separate control plane</text>
+        <text class="t" x="458" y="238"><tspan x="458">Signed model + config version / staged release + rollback</tspan><tspan x="458" dy="16">CPU, memory, queue age and sensor health monitoring</tspan><tspan x="458" dy="16">Regional failover uses new epoch; re-qualify observations</tspan></text>
+
+        <path class="ed2" d="M220,192 V176 H420 V162" marker-end="url(#p15-ah2)"/>
+        <path class="ed2" d="M660,192 V176 H500 V162" marker-end="url(#p15-ah2)"/>
+
+        <path class="ed" d="M876,104 H900 V326 H160 V350" marker-end="url(#p15-ah)"/>
+        <text class="ta" x="455" y="320" text-anchor="middle">I09c / authenticated observations + health</text>
+
+        <rect class="nd" x="10" y="354" width="262" height="134" rx="3"/>
+        <text class="tb" x="20" y="376">C10 Roadside ingestion [proposed]</text>
+        <text class="t" x="20" y="400"><tspan x="20">I09c schema / source / access checks</tspan><tspan x="20" dy="16">Clock bound + age + sequence gates</tspan><tspan x="20" dy="16">Frame / calibration / coverage checks</tspan><tspan x="20" dy="16">Accepted / quarantine / diagnostic</tspan><tspan x="20" dy="16">Unknown ≠ clear road</tspan></text>
+
+        <rect class="nd" x="304" y="354" width="276" height="134" rx="3"/>
+        <text class="tb" x="314" y="376">C06 Monitoring + case evidence</text>
+        <text class="t" x="314" y="400"><tspan x="314">Time/space association with I04</tspan><tspan x="314" dy="16">Retain conflicting source hypotheses</tspan><tspan x="314" dy="16">Attach provenance + coverage state</tspan><tspan x="314" dy="16">Operator context / owned escalation</tspan><tspan x="314" dy="16">No observation-to-command bypass</tspan></text>
+
+        <rect class="nd" x="612" y="354" width="278" height="134" rx="3"/>
+        <text class="tb" x="622" y="376">C04 / vehicle evidence</text>
+        <text class="t" x="622" y="400"><tspan x="622">I04 vehicle pose, time + state</tspan><tspan x="622" dy="16">Mission / ODD / local hazards</tspan><tspan x="622" dy="16">Separate authenticated source</tspan><tspan x="622" dy="16">ADS retains DDT and fallback</tspan><tspan x="622" dy="16">Advice follows guarded I07 path</tspan></text>
+
+        <path class="ed" d="M272,428 H302" marker-end="url(#p15-ah)"/>
+        <text class="ta" x="288" y="420" text-anchor="middle">I09</text>
+        <path class="ed" d="M612,428 H582" marker-end="url(#p15-ah)"/>
+        <text class="ta" x="597" y="420" text-anchor="middle">I04</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">8.2</span>Proposed observation contract and association keys</h3>
+    <div class="cols c2">
+      <div class="box plain"><h4>ObservationEnvelope / I09c</h4>
+<pre class="code">tenantId, siteId, sourceId, sensorIds[], bootEpoch, seq
+observedAt, emittedAt, clockErrorBound_s, expiresAt
+trackKey = sourceId / bootEpoch / localTrackId
+frameId, mapRev, calibrationRev, coverageRef
+position_m, velocity_mps, uncertainty / covariance
+class + confidence, visibility, modelRev, evidenceRef
+Signature / authenticated transport + payloadHash</pre></div>
+      <div class="box plain"><h4>CoverageHealth + association evidence</h4>
+        <ul class="lines small">
+          <li>coverageId / polygon / exclusions / sampledAt</li>
+          <li>Sensor availability, clock validity, calibration status</li>
+          <li>Occlusion / weather / queueAge / processing status</li>
+          <li>Vehicle association: spatial-temporal gate + uncertainty</li>
+          <li>Candidate link has confidence, method and expiry</li>
+          <li>No global identity assumed from local track IDs</li>
+          <li>Multiple reports retain source lineage to avoid double count</li>
+        </ul></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">8.3</span>Evidence eligibility, overload and storage boundaries</h3>
+    <ol class="flow arrows" style="--min:200px">
+      <li><strong>VALIDATE</strong>Identity + schema + bounded age<br>Frame + calibration + coverage</li>
+      <li><strong>ASSOCIATE</strong>Time/space gate; preserve uncertainty and conflicting evidence</li>
+      <li><strong>PRESENT / ESCALATE</strong>Attach quality and provenance<br>Operator action follows <a class="ref" href="#p22">P22</a> guards</li>
+    </ol>
+    <div class="cols c2">
+      <div class="box"><h4>Invalid / stale / overloaded</h4><p>Quarantine observations, publish coverage degradation.<br>Reserve queue capacity for health / critical events.<br>Drop policy is explicit; historical replay cannot act live.</p></div>
+      <div class="box"><h4>Evidence / privacy / regional placement</h4><p>Raw clips by purpose + access + retention contract.<br>Edge summaries first; authorised evidence on request.<br>Regional workers scale independently of ADS control.</p></div>
+    </div>
+    <p class="note">Thresholds for age, association, coverage and queue size are agreed per use case. CPM mapping and radio profile require a separately verified adapter. Proposed monitoring path does not claim collision avoidance or perception completeness.</p>
+  </div>
+</section>
+<section class="pg" id="p16" aria-labelledby="p16-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P16 / 30</span></p>
+    <h2 id="p16-t">Roadside observation and remote monitoring sequence</h2>
+    <p class="lead">RM-14. A roadside event becomes scoped monitoring evidence only after validation. The sequence retains independent ADS behaviour, conflicting evidence and unknown outcomes.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">9.1</span>Observation, evidence correlation and guarded response</h3>
+    <div class="scroll">
+      <div class="seq" style="--n:5">
+        <div class="who">Sensor + edge</div>
+        <div class="who">RSU / backhaul</div>
+        <div class="who">C10 ingest / C06</div>
+        <div class="who">Remote operator</div>
+        <div class="who">C04 / ADS</div>
+
+        <div class="frag"><b>loop</b>[sensor capture / health heartbeat; ADS continues local DDT and fallback independently]</div>
+        <div class="msg self" style="--s:1">01 Detect / track / quality</div>
+        <div class="msg" style="--s:1;--e:2">02 I09 observation + coverage</div>
+        <div class="msg" style="--s:2;--e:3">03 Authenticated envelope</div>
+        <div class="msg self" style="--s:3">04 Identity / age / frame / dedup</div>
+
+        <div class="frag"><b>alt</b>[invalid, stale, unknown clock bound, bad calibration or lost coverage]</div>
+        <div class="msg l dash" style="--s:2;--e:3">05 Reject / diagnostic receipt</div>
+        <div class="msg" style="--s:3;--e:4">06 Coverage degraded + owner</div>
+
+        <div class="frag"><b>else</b>[eligible evidence; association remains probabilistic]</div>
+        <div class="msg l dash" style="--s:3;--e:5">07 I04 pose / status / time / quality</div>
+        <div class="msg self" style="--s:3">08 Time-space association</div>
+        <div class="msg" style="--s:3;--e:4">09 Evidence / conflicts</div>
+        <div class="msg l" style="--s:3;--e:4">10 Request scoped clip / history</div>
+        <div class="msg l" style="--s:1;--e:3">11 Authorised evidence request</div>
+        <div class="msg dash" style="--s:1;--e:3">12 EvidenceRef + source / retention</div>
+
+        <div class="frag"><b>opt</b>[operator action warranted; current authority + action-specific evidence + onboard capability]</div>
+        <div class="msg l" style="--s:3;--e:4">13 Action request + rationale</div>
+        <div class="msg" style="--s:3;--e:5">14 I07 guarded advice / request</div>
+        <div class="msg l dash" style="--s:3;--e:5">15 Receive / accept / reject + reason</div>
+        <div class="msg l dash" style="--s:3;--e:5">16 Execution / observed outcome</div>
+        <div class="msg" style="--s:3;--e:4">17 Outcome / escalation</div>
+
+        <div class="frag"><b>opt</b>[result reconciled; case closure and fleet release remain separate predicates]</div>
+        <div class="msg l" style="--s:3;--e:4">18 Review outcome / close case</div>
+        <div class="msg self" style="--s:3">19 Append audit; <a class="ref" href="#p18">P18</a> release gate</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">9.2</span>Fault branches and planned verification</h3>
+    <div class="cols c2">
+      <div class="box plain"><span class="lbl">LINK / EDGE LOSS</span><p>Heartbeat expiry → coverage UNKNOWN; retain source time. No stale frame displayed as current. Reconnect uses new epoch, resync + health checks; replay is historical only. Test disconnect, reboot, reordering, duplicate delivery.</p></div>
+      <div class="box plain"><span class="lbl">CONFLICT / OVERLOAD</span><p>Keep both source claims; no silent override of ADS state. Overload reports queue age and dropped observations. Test occlusion, weather, false association and saturation. Measure quality, end-to-end age and operator workload.</p></div>
+    </div>
+  </div>
+</section>
+<section class="pg" id="p17" aria-labelledby="p17-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P17 / 30</span></p>
+    <h2 id="p17-t">Telemetry coverage and alarm decision logic</h2>
+    <p class="lead">RM-03 / RM-04. Capability-specific signals feed versioned detection and triage. Alarm priorities are operational response classes, not ASIL classifications. Every action uses current, valid evidence.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">10.1</span>Signal families, decision context and missing-data behaviour</h3>
+    <div class="cols c3">
+      <div class="box plain"><h4>ADS / ODD</h4>
+        <p>adsMode, engagementState, oddVerdict/reason, oddProfileRev<br>Route / geofence / weather / illumination constraints as supported.</p>
+        <p class="rule">ODD or mode inconsistency opens a case. Cloud context never widens ODD.</p></div>
+      <div class="box plain"><h4>Motion / localisation</h4>
+        <p>pose + coordinateFrame, speed, heading, localisationHealth<br>Covariance and integrity bounds remain distinct supplier quantities.</p>
+        <p class="rule">Detect unexpected stop / deviation. Uncertain pose cannot prove location.</p></div>
+      <div class="box plain"><h4>Perception / planning</h4>
+        <p>sensorHealth, occlusionFlags, plannerStatus, blockageReason<br>assistanceRequest + sceneRev + mapRev + frame capture time</p>
+        <p class="rule">Review ambiguity in context. Generic “AI confidence” cannot permit motion.</p></div>
+      <div class="box plain"><h4>Chassis / fallback</h4>
+        <p>brake / steering / propulsion health, emergencyStopStatus<br>fallbackReason, mrmState, mrcAchieved, standstill / secureState</p>
+        <p class="rule">Separate manoeuvre progress from achieved MRC. Failed fallback escalates.</p></div>
+      <div class="box plain"><h4>Passenger / mission</h4>
+        <p>missionId/rev, pickup/drop-off state, door/ramp/restraint status<br>SOS, occupancy quality, accessibility and handover exceptions</p>
+        <p class="rule">Local interlocks prevail. Unknown occupancy requires supported confirmation.</p></div>
+      <div class="box plain"><h4>Energy / link</h4>
+        <p>SOC, usableEnergy, HV/thermal fault, departure reserve margin<br>heartbeat, RTT, loss, jitter, mediaAge, seqGap, clockQuality</p>
+        <p class="rule">Energy shortage revises feasibility. Link loss marks remote state UNKNOWN.</p></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">10.2</span>Evidence validation, alarm lifecycle and response classes</h3>
+    <ol class="flow arrows" style="--min:200px">
+      <li><strong>Validate / detect</strong>Identity, schema, unit, epoch/seq<br>Age / source quality / clock bound<br>Predicate + persistence + hysteresis</li>
+      <li><strong>Correlate / assign</strong>Vehicle / cause / incident window<br>Severity + exposure + dueAt<br>Qualified seat + ACK + lease</li>
+      <li><strong>Act / verify / clear</strong>Guard action and observe outcome<br>Stable clear condition + release<br>Reopen on contradictory evidence</li>
+    </ol>
+    <div class="scroll">
+      <table class="tbl">
+        <tbody>
+          <tr><td class="mono">P0</td><td>Collision / fire / SOS / failed fallback. Immediate escalation, no debounce.</td></tr>
+          <tr><td class="mono">P1</td><td>ODD exit / MRM / critical fault / unknown active state. Hold capacity, urgent response.</td></tr>
+          <tr><td class="mono">P2</td><td>Assistance / obstruction / boarding failure. Assess exposure and escalate if worsening.</td></tr>
+          <tr><td class="mono">P3</td><td>Noncritical service or diagnostic issue. Schedule work under explicit restrictions.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Vehicle I04 / roadside I09 remain separate source envelopes. I09 adds coverageRef, frame/map/calibrationRev, clock bound and source lineage. Preserve original observation time; repeated or replayed samples never refresh it.</p>
+    <p class="note">Clear only after valid samples span an agreed stable interval. ACK does not clear health. Common-cause grouping retains vehicle exposure and deadlines. Snooze needs reason/expiry and cannot suppress P0. Missing/invalid data raise their own event.</p>
+  </div>
+</section>
+<section class="pg" id="p18" aria-labelledby="p18-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P18 / 30</span></p>
+    <h2 id="p18-t">Orthogonal states and guarded return to service</h2>
+    <p class="lead">RM-05. ADS operation, assistance workflow, remote knowledge and fleet eligibility are separate dimensions. An ADS can continue its approved local behaviour while a remote assistance request is pending.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">11.1</span>Vehicle-reported operating state: selected transitions</h3>
+    <div class="fig" style="--svgmin:720px">
+      <svg viewBox="0 0 870 280" role="img" aria-label="Vehicle-reported operating state: selected transitions">
+        <defs>
+          <marker id="p18-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker>
+        </defs>
+        <rect class="nd" x="10" y="10" width="250" height="80" rx="8"/>
+        <text class="tb" x="135" y="30" text-anchor="middle">READY / STATIONARY</text>
+        <text class="t" x="20" y="54"><tspan x="20">Local readiness evidence</tspan><tspan x="20" dy="15">Mission acceptance is separate</tspan></text>
+
+        <rect class="nd" x="310" y="10" width="250" height="80" rx="8"/>
+        <text class="tb" x="435" y="30" text-anchor="middle">DDT ACTIVE</text>
+        <text class="t" x="320" y="54"><tspan x="320">ADS controls driving within ODD</tspan><tspan x="320" dy="15">Includes ordinary traffic stops</tspan></text>
+
+        <rect class="nd" x="610" y="10" width="250" height="80" rx="8"/>
+        <text class="tb" x="735" y="30" text-anchor="middle">MRM EXECUTING</text>
+        <text class="t" x="620" y="54"><tspan x="620">Locally triggered fallback manoeuvre</tspan><tspan x="620" dy="15">Report progress / failure</tspan></text>
+
+        <rect class="nd" x="10" y="145" width="250" height="90" rx="8"/>
+        <text class="tb" x="135" y="165" text-anchor="middle">OUT OF SERVICE</text>
+        <text class="t" x="20" y="189"><tspan x="20">Fault or field recovery required</tspan><tspan x="20" dy="15">Hold remains until evidence clears</tspan><tspan x="20" dy="15">No assumed recovery path</tspan></text>
+
+        <rect class="nd" x="310" y="145" width="250" height="90" rx="8"/>
+        <text class="tb" x="435" y="165" text-anchor="middle">RE-ENTRY CHECK</text>
+        <text class="t" x="320" y="189"><tspan x="320">Readiness / ODD / authority</tspan><tspan x="320" dy="15">Physical and mission reconciliation</tspan><tspan x="320" dy="15">Separate service release below</tspan></text>
+
+        <rect class="nd" x="610" y="145" width="250" height="90" rx="8"/>
+        <text class="tb" x="735" y="165" text-anchor="middle">MRC REPORTED</text>
+        <text class="t" x="620" y="189"><tspan x="620">Achieved condition + provenance</tspan><tspan x="620" dy="15">Remaining hazards assessed</tspan><tspan x="620" dy="15">MRC does not equal ready to drive</tspan></text>
+
+        <path class="ed" d="M260,48 H308" marker-end="url(#p18-ah)"/>
+        <text class="ta" x="284" y="40" text-anchor="middle">engage</text>
+        <path class="ed" d="M560,48 H608" marker-end="url(#p18-ah)"/>
+        <text class="ta" x="584" y="40" text-anchor="middle">fallback</text>
+        <path class="ed" d="M735,90 V143" marker-end="url(#p18-ah)"/>
+        <text class="ta" x="743" y="122">achieved</text>
+        <path class="ed" d="M610,190 H562" marker-end="url(#p18-ah)"/>
+        <text class="ta" x="586" y="182" text-anchor="middle">eligible</text>
+        <path class="ed" d="M310,190 H262" marker-end="url(#p18-ah)"/>
+        <text class="ta" x="286" y="182" text-anchor="middle">fails</text>
+        <path class="ed" d="M435,145 V117 H135 V92" marker-end="url(#p18-ah)"/>
+        <text class="ta" x="285" y="111" text-anchor="middle">passed local checks</text>
+        <path class="ed" d="M735,235 V256 H135 V237" marker-end="url(#p18-ah)"/>
+        <text class="ta" x="435" y="272" text-anchor="middle">field action / failure evidence</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">11.2</span>Assistance lifecycle runs independently of ADS operation</h3>
+    <ol class="flow arrows" style="--min:200px">
+      <li><strong>REQUESTED / ASSIGNED</strong>SceneRef + requestId + dueAt<br>Qualified owner + bounded lease</li>
+      <li><strong>ADVICE / VEHICLE REVIEW</strong>Current scene / capability / expiry<br>ADS accepts or rejects advice</li>
+      <li><strong>RESOLVED / ESCALATED</strong>Observed outcome or owned follow-up<br>No implied ADS mode transition</li>
+    </ol>
+    <div class="cols c2">
+      <div class="box plain"><h4>Remote knowledge</h4><p>CURRENT / DEGRADED / UNKNOWN is per required signal. Fresh data may still report a fault. Unknown physical execution blocks conflicting reuse.</p></div>
+      <div class="box plain"><h4>Fleet eligibility / case state</h4><p>AVAILABLE / RESTRICTED / HELD differs from OPEN / ACTIVE / CLOSED. Closing a case never changes ADS mode or automatically clears an operational hold.</p></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">11.3</span>All release predicates must hold; none substitutes for another</h3>
+    <div class="cols c2">
+      <div class="box"><h4><span class="k">V</span>Vehicle evidence</h4><p>Current, mutually consistent required signals<br>Local readiness and ODD status accepted</p></div>
+      <div class="box"><h4><span class="k">C</span>Corrective action</h4><p>Cause removed or approved restriction recorded<br>Field / inspection work complete if required</p></div>
+      <div class="box"><h4><span class="k">A</span>Authorised ownership</h4><p>Current case revision + valid release authority<br>No blocking incident or unresolved command</p></div>
+      <div class="box"><h4><span class="k">F</span>Feasible mission</h4><p>Passenger outcome known; D1 permit current<br>Route, energy and resource bundle reconciled</p></div>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box key">
+      <p class="eq">RELEASE_ELIGIBLE = V ∧ C ∧ A ∧ F</p>
+      <p>Guarded approval allows C03 to reassess availability.<br>It does not command the ADS to move.</p>
+    </div>
+    <p class="note">Test cross-products, not only one state chain: DDT_ACTIVE + RA_PENDING; MRC + stale evidence; CLOSED case + critical fault; fresh telemetry + unresolved command. A reported zero speed never suffices for MRC or restart.</p>
+  </div>
+</section>
+<section class="pg" id="p19" aria-labelledby="p19-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P19 / 30</span></p>
+    <h2 id="p19-t">Remote assistance: contextual advice sequence</h2>
+    <p class="lead">RM-06. Example: the ADS encounters an ambiguous obstruction. A bounded advice transaction carries a scene reference and expiry. The ADS retains trajectory generation, collision checks and motion control.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">RM-06A</span>Request, evidence, advice validation and observed outcome</h3>
+    <div class="scroll">
+      <div class="seq" style="--n:5">
+        <div class="who">Vehicle / ADS</div>
+        <div class="who">C04 gateway</div>
+        <div class="who">C06 case / policy</div>
+        <div class="who">RA operator</div>
+        <div class="who">C03 / booking</div>
+        <div class="msg" style="--s:1;--e:2">01 RARequest(sceneRev)</div>
+        <div class="msg" style="--s:2;--e:3">02 Evidence + quality</div>
+        <div class="frag"><b>par</b>[ADS continues its approved local behaviour] remote case handling must not suspend onboard fallback</div>
+        <div class="msg" style="--s:1;--e:2">03 Mode / ODD / motion</div>
+        <div class="msg" style="--s:3;--e:4">04 Assign(case,lease)</div>
+        <div class="msg l" style="--s:3;--e:4">05 ACK + request view</div>
+        <div class="msg l" style="--s:2;--e:3">06 Fetch(sceneRev)</div>
+        <div class="msg dash" style="--s:2;--e:4">07 Scene / age / media / quality</div>
+        <div class="frag"><b>alt</b>[evidence incomplete / expired / inconsistent] refuse advice; escalate and preserve the local ADS response</div>
+        <div class="msg l" style="--s:3;--e:4">08 InsufficientEvidence</div>
+        <div class="msg" style="--s:3;--e:5">09 Hold affected capacity / revise ETA</div>
+        <div class="frag"><b>else</b>[context sufficient] advice only within supported capability and the current operating envelope</div>
+        <div class="msg l" style="--s:3;--e:4">10 Advice(type,scope)</div>
+        <div class="msg l" style="--s:2;--e:3">11 GuardedAdvice(ref)</div>
+        <div class="msg l" style="--s:1;--e:2">12 Persist / forward</div>
+        <div class="msg dash" style="--s:1;--e:2">13 Receipt(adviceId)</div>
+        <div class="frag"><b>guard</b>[onboard validation] check scene change, ODD, capability, expiry and current safety constraints</div>
+        <div class="msg dash" style="--s:1;--e:2">14 Accept / reject</div>
+        <div class="msg dash" style="--s:2;--e:3">15 Reason + action state</div>
+        <div class="frag"><b>alt</b>[accepted] ADS independently plans and executes; receipt or acceptance alone does not prove progress</div>
+        <div class="msg" style="--s:1;--e:2">16 Executing + seq</div>
+        <div class="msg" style="--s:2;--e:3">17 Correlated evidence</div>
+        <div class="msg" style="--s:1;--e:2">18 End / renewed need</div>
+        <div class="msg" style="--s:2;--e:3">19 Outcome + sceneRev</div>
+        <div class="frag"><b>else</b>[rejected / expired / scene changed] discard old advice; query or request fresh assistance</div>
+        <div class="msg" style="--s:3;--e:4">20 New context / escalate</div>
+        <div class="msg l" style="--s:2;--e:3">21 Query original id</div>
+        <div class="frag"><b>opt</b>[observed outcome + release predicate] reconcile mission and communicate revised service plan</div>
+        <div class="msg" style="--s:3;--e:5">22 Reconcile availability / ETA / booking</div>
+        <div class="msg dash" style="--s:3;--e:4">23 Close or retain case</div>
+      </div>
+    </div>
+    <p class="rule"><b>RM-06 invariant:</b>an advice response cannot widen ODD, disable collision avoidance or create a direct actuator path. Timeout/rejection requires reassessment; fresh autonomous resolution can close the case. Executing effects retain their identity.</p>
+  </div>
+</section>
+<section class="pg" id="p20" aria-labelledby="p20-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P20 / 30</span></p>
+    <h2 id="p20-t">Link loss, authority fencing and reconciliation</h2>
+    <p class="lead">RM-07. Centre authority and vehicle execution require separate evidence. New cloud ownership does not instantly revoke an unreachable vehicle’s old authority. Unreachable vehicles remain held.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">13.1</span>Centre change with per-vehicle fence installation</h3>
+    <div class="scroll">
+      <div class="seq" style="--n:5">
+        <div class="who">ADS / edge</div>
+        <div class="who">C04 primary</div>
+        <div class="who">C06 authority</div>
+        <div class="who">Backup centre</div>
+        <div class="who">C03 fleet</div>
+        <div class="msg" style="--s:1;--e:2">01 Status(boot,seq)</div>
+        <div class="msg" style="--s:2;--e:3">02 State + quality</div>
+        <div class="frag"><b>parallel:</b>loss of fresh evidence marks remote knowledge UNKNOWN; the ADS follows its local link-loss policy</div>
+        <div class="msg" style="--s:2;--e:3">03 Stale / link lost</div>
+        <div class="msg" style="--s:3;--e:5">04 Hold capacity / preserve incident ownership</div>
+        <div class="frag"><b>centre failure:</b>quorum-backed authority promotes backup; existing vehicle effects are still unresolved</div>
+        <div class="msg l" style="--s:3;--e:4">05 Acquire new epoch</div>
+        <div class="msg dash" style="--s:3;--e:4">06 Signed grant + journal</div>
+        <div class="msg l" style="--s:1;--e:4">07 Read-only snapshot query</div>
+        <div class="frag"><b>alt</b>[unreachable] no new motion-enabling action; field/emergency escalation remains available</div>
+        <div class="msg l" style="--s:3;--e:4">08 Still unknown</div>
+        <div class="msg" style="--s:3;--e:5">09 Alternate service / owned field response</div>
+        <div class="frag"><b>else</b>[reachable] verify vehicle identity and boot epoch, then install the authority fence durably onboard</div>
+        <div class="msg dash" style="--s:1;--e:4">10 Snapshot / prior command states</div>
+        <div class="msg l" style="--s:1;--e:4">11 InstallFence(epoch, signed grant)</div>
+        <div class="msg dash" style="--s:1;--e:4">12 PersistedFenceACK(epoch)</div>
+        <div class="frag"><b>guard:</b>no ACK means no new action. Old-epoch packets reject after fence install; prior accepted effects still reconcile</div>
+        <div class="msg l" style="--s:1;--e:4">13 Query each unresolved commandId</div>
+        <div class="msg dash" style="--s:1;--e:4">14 Accepted / executing / terminal evidence</div>
+        <div class="frag"><b>loop</b>[gaps or executing old work] cancel/replan only if supported; otherwise wait or escalate with capacity held</div>
+        <div class="msg l" style="--s:1;--e:4">15 Scoped cancel/query under new epoch</div>
+        <div class="msg dash" style="--s:1;--e:4">16 Current state + physical-clearance evidence</div>
+        <div class="msg l" style="--s:3;--e:4">17 Reconciled journal</div>
+        <div class="frag"><b>guard</b>[fence installed + old effects resolved + fresh state + <a class="ref" href="#p18">P18</a> release predicates] decide availability</div>
+        <div class="msg" style="--s:3;--e:5">18 Release eligibility / remaining restrictions</div>
+        <div class="msg l dash" style="--s:3;--e:5">19 Current allocation / D1 permit</div>
+        <div class="msg" style="--s:3;--e:4">20 Authorised action scope</div>
+        <div class="msg l" style="--s:1;--e:4">21 New mission(id,epoch,expiry)</div>
+        <div class="msg dash" style="--s:1;--e:4">22 Accept / reject, then observed result</div>
+      </div>
+    </div>
+    <div class="box">
+      <p>Fence contract: vehicle durably stores its accepted authority epoch and validates signed grants, expiry and command identity. Reboot without recoverable authority/journal evidence blocks new action until resynchronised.<br>Centre ownership loss blocks new dispatch, but cannot erase an already accepted physical effect. No automatic resend with a new ID. An unsupported fence/dedup capability excludes automated centre handover for that vehicle.</p>
+    </div>
+  </div>
+</section>
+<section class="pg" id="p21" aria-labelledby="p21-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P21 / 30</span></p>
+    <h2 id="p21-t">Operator workspace and incident response</h2>
+    <p class="lead">RM-08 / RM-09. A focused workspace links fleet triage, ADS evidence, passenger contact and field recovery. Each workstream retains a qualified owner and its own authority.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">14.1</span>HMI wireframe: evidence, authority and operator handover</h3>
+    <div class="box plain">
+      <p class="mono"><b>CENTRE ACTIVE / epoch 42</b> &nbsp; <b>Operator O-17 / qualified RA</b> &nbsp; <b>Case C-204 / lease current</b></p>
+      <div class="cols" style="--min:220px">
+        <div class="box"><h4>Fleet / incident queue</h4>
+          <ul class="lines small"><li>Severity / vehicle / dueAt</li><li>Passenger exposure / owner</li><li>Oldest unacknowledged case</li><li>Common-cause incident link</li><li>Seat qualification and health</li><li>Escalation always accessible</li><li>Colour is not the only cue.</li></ul></div>
+        <div class="box"><h4>Scene / media / synchronised history</h4>
+          <ul class="lines small"><li>Exterior views / pose / route / scene objects</li><li>Map and calibration revision / ADS intended path</li><li>LIVE, DELAYED or REPLAY with capture age</li><li>Missing view explicit / source quality visible</li><li>Align observedAt and receivedAt / mark gaps</li><li>Replay disables action. Annotation keeps author, time, evidence reference and case revision.</li></ul></div>
+        <div class="box"><h4>State / permitted actions</h4>
+          <ul class="lines small"><li>ADS mode / ODD / MRM / MRC</li><li>Motion, chassis, door, energy</li><li>Per-signal age and validity</li><li>Assess / advise / stop request</li><li>Passenger / field contact</li><li>Disabled action shows reason</li><li>Scope confirmation before submit</li></ul></div>
+      </div>
+      <div class="box"><h4>Action and handover record</h4>
+        <ul class="lines small"><li>Vehicle + mission + case revision + lease epoch + reason + advice type + expiry + expected outcome</li><li>Action-specific guards use evidence and vehicle authority. Status queries remain available with stale data.</li><li>Handover requires acceptance of pending commands, passenger status, field ETA and next deadline.</li><li>Expired / unacknowledged ownership triggers reassignment, not silent abandonment.</li><li>Relief capacity and supervisor escalation handle concurrent incidents and a failed seat.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">14.2</span>Incident workflow with parallel vehicle and passenger outcomes</h3>
+    <div class="fig" style="--svgmin:660px">
+      <svg viewBox="-2 -2 864 396" role="img" aria-label="14.2 Incident workflow with parallel vehicle and passenger outcomes">
+        <defs><marker id="p21-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <rect class="nd" x="0" y="0" width="250" height="105" rx="4"/>
+        <text class="tb" x="10" y="22">SOS / boarding / interruption</text>
+        <text class="t" x="10" y="48">App / voice / cabin / ADS event</text>
+        <text class="t" x="10" y="65">Record location and uncertainty</text>
+        <text class="t" x="10" y="82">Accessibility and passenger needs</text>
+        <rect class="nd" x="305" y="0" width="250" height="105" rx="4"/>
+        <text class="tb" x="315" y="22">C06 incident lead</text>
+        <text class="t" x="315" y="48">Assign severity and accountable lead</text>
+        <text class="t" x="315" y="65">Emergency escalation if required</text>
+        <text class="t" x="315" y="82">Preserve evidence and deadlines</text>
+        <rect class="nd" x="610" y="0" width="250" height="105" rx="4"/>
+        <text class="tb" x="620" y="22">ADS / vehicle response</text>
+        <text class="t" x="620" y="48">Local safety / interlock decisions</text>
+        <text class="t" x="620" y="65">Current MRM / secure-state evidence</text>
+        <text class="t" x="620" y="82">Remote observation with quality</text>
+        <rect class="nd" x="0" y="165" width="250" height="105" rx="4"/>
+        <text class="tb" x="10" y="187">Passenger support</text>
+        <text class="t" x="10" y="213">Accessible contact / status updates</text>
+        <text class="t" x="10" y="230">No unsafe exit instruction</text>
+        <text class="t" x="10" y="247">Replacement journey via C02</text>
+        <rect class="nd" x="305" y="165" width="250" height="105" rx="4"/>
+        <text class="tb" x="315" y="187">Coordinate and track</text>
+        <text class="t" x="315" y="213">Qualified field responder + ETA</text>
+        <text class="t" x="315" y="230">Separate passenger / vehicle tasks</text>
+        <text class="t" x="315" y="247">Escalate missing ACK or overdue work</text>
+        <rect class="nd" x="610" y="165" width="250" height="105" rx="4"/>
+        <text class="tb" x="620" y="187">Field recovery / inspection</text>
+        <text class="t" x="620" y="213">Confirm physical vehicle condition</text>
+        <text class="t" x="620" y="230">Recover / inspect within authority</text>
+        <text class="t" x="620" y="247">Attach evidence and restrictions</text>
+        <rect class="ndk" x="228" y="315" width="404" height="76" rx="8"/>
+        <text class="tb" x="430" y="337" text-anchor="middle">RESOLUTION / RELEASE REVIEW</text>
+        <text class="t" x="238" y="360">Passenger outcome + vehicle disposition + owned follow-up</text>
+        <text class="t" x="238" y="377"><a href="#p18"><tspan class="ta">P18</tspan></a> release predicate governs return to availability.</text>
+        <path class="ed" d="M250,52 H303" marker-end="url(#p21-ah)"/>
+        <path class="ed" d="M610,52 H557" marker-end="url(#p21-ah)"/>
+        <path class="ed" d="M430,105 V163" marker-end="url(#p21-ah)"/>
+        <path class="ed" d="M305,217 H252" marker-end="url(#p21-ah)"/>
+        <path class="ed" d="M555,217 H608" marker-end="url(#p21-ah)"/>
+        <path class="ed" d="M125,270 V352 H226" marker-end="url(#p21-ah)"/>
+        <path class="ed" d="M735,270 V352 H634" marker-end="url(#p21-ah)"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">14.3</span>Workload and scenario acceptance</h3>
+    <p>Staffing input: <span class="mono">A = Σ(λ_k × E[S_k])</span> in matched time units. A/m is a mean-load screen, not a service-level guarantee. Test bursts, breaks, common-cause alarms, handover and centre loss. Include field-team travel and replacement-trip capacity separately. Record detection, ACK, resolution, overdue cases and failed recovery. Restrict new commitments when response capacity is exhausted. <a class="ref" href="#p27">P27</a> defines service-mode and return-to-service gates. Every open branch retains an owner and deadline.</p>
+  </div>
+</section>
+<section class="pg" id="p22" aria-labelledby="p22-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P22 / 30</span></p>
+    <h2 id="p22-t">Action-specific guards and time validity</h2>
+    <p class="lead">RM-10 / RM-12. Permissions depend on action class. Read-only recovery and emergency escalation remain possible when telemetry is stale. Motion-enabling advice requires current contextual evidence.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">15.1</span>Action class determines its evidence and authority requirements</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Read / escalate</strong><ul class="lines"><li>Authenticated status or history query</li><li>Allowed while state is UNKNOWN</li><li>No movement or allocation side effect</li></ul></li>
+      <li><strong>Request / advise</strong><ul class="lines"><li>Current owner, fence and capability</li><li>Action-specific scene/state evidence</li><li>Stop request uses vehicle contract</li></ul></li>
+      <li><strong>Onboard decision</strong><ul class="lines"><li>Accept/reject with explicit reason</li><li>Local ODD and safety checks prevail</li><li>No remote steering/throttle baseline</li></ul></li>
+    </ol>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">15.2</span>Proposed command and immutable outcome envelopes</h3>
+    <div class="cols c2">
+      <div class="box plain">
+        <h4>RemoteActionRequest</h4>
+        <pre class="code">tenantId, vehicleId, missionId?, commandId
+caseId?, expectedCaseRev?, actionType, parameters
+capabilityRev, sceneRef?, expectedVehicleStateRev?
+operatorId, qualificationRef, authorityEpoch
+issuedAt, expiresAt, nonce, payloadHash
+reasonCode, evidenceRefs[], approvalRef?</pre>
+        <ul class="lines small"><li>Required fields follow a versioned action schema.</li><li><span class="mono">CONTEXT_ADVICE / STOP_REQUEST / MISSION_CHANGE_REQUEST / STATUS_QUERY</span></li><li>Same ID with changed payload is rejected.</li></ul>
+      </div>
+      <div class="box plain">
+        <h4>CommandAuditEvent</h4>
+        <pre class="code">tenantId, eventId, commandId, correlationId
+producerId, bootEpoch, streamId, sequence
+observedAt, receivedAt, clock-bound metadata
+RECEIVED / ACCEPTED / REJECTED / EXECUTING /
+COMPLETED / ABORTED / EXPIRED + reason
+stateRevision, evidenceRefs, policyVersion, actor</pre>
+        <ul class="lines small"><li>UNKNOWN belongs to the observer, not the ADS.</li><li>Keep raw event + validation result append-only.</li><li>Missing terminal evidence stays unresolved.</li><li>Expiry blocks new acceptance, not reconciliation.</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">15.3</span>Freshness uses bounded clock error and future-time rejection</h3>
+    <pre class="code">Δ_i = t_now − t_observed,i     U_i = u_source,i + u_observer
+ageUpper_i = max(0, Δ_i + U_i)
+timeOK_i = boundsKnown ∧ clocksValid ∧ (Δ_i ≥ −U_i) ∧ (ageUpper_i ≤ F_i)
+valid_i = identityOK ∧ schemaOK ∧ sourceOK ∧ epoch/sequenceOK ∧ timeOK_i</pre>
+    <p class="small">All terms use seconds. U includes synchronisation error and drift since the last trusted update.<br>No finite clock bound means time validity is UNKNOWN. Local timers use a monotonic clock.</p>
+    <div class="cols c2">
+      <div><h4>Response and execution deadlines</h4><p class="small"><span class="mono">D_remote = D_detect + D_queue + D_ack + D_assess + D_transmit + D_accept</span>. Budget is operational. Do not use it to justify onboard safety deadlines. Expiry uses the receiver’s validated time bound; clock uncertainty rejects new time-critical acceptance.</p></div>
+      <div><h4>Ownership and release parameters</h4><p class="small">ADS owner: local link-loss/fallback, action capability, fence and journal persistence. Platform: F_i, clock bounds, sampling, loss, retry and retention. Operations: response class, seat/field coverage and escalation. Each value needs a unit, rationale and boundary test.</p></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">15.4</span>Audit scope and evidence lifecycle</h3>
+    <p>Purpose-limited capture, scoped access, encryption, retained incident evidence and read-only replay. AI may draft or summarise within task scope; it cannot independently authorise ADS movement. Test cross-tenant access, expired authority, future timestamps, unknown clock bounds and duplicate effects.</p>
+    <p class="note">Desk-reviewed architecture proposal; implementation, performance and safety validation remain pending. Public references support terminology and patterns, not this system’s certification. Sources in notes: SAE J3016 baseline, ISO 34503, NHTSA, Waymo, NPA, AWS, Microsoft, Hazelcast, PostgreSQL, RFC 5905 and calendar API documentation.</p>
+  </div>
+</section>
+<section class="pg" id="p23" aria-labelledby="p23-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P23 / 30</span></p>
+    <h2 id="p23-t">Activity saga, service workflow and AI authority</h2>
+    <p class="lead">Care outings, after-school care and community events share coordination logic. Each provider retains service responsibility, staffing and handover obligations.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">16.1</span>Swimlane activity flow with parallel holds and partial-failure compensation</h3>
+    <div class="fig" style="--svgmin:760px">
+      <svg viewBox="20 183 870 720" role="img" aria-label="Swimlane activity flow across Resident / staff, Activity provider, C02 Coordinator and C03 Mobility">
+        <defs><marker id="p23-ah" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path class="ah" d="M0,0 L8,4 L0,8 z"/></marker></defs>
+        <!-- lanes -->
+        <rect class="nd2" x="30" y="193" width="202" height="700"/>
+        <rect class="nd2" x="246" y="193" width="202" height="700"/>
+        <rect class="nd2" x="461" y="193" width="202" height="700"/>
+        <rect class="nd2" x="677" y="193" width="201" height="700"/>
+        <rect class="nd" x="30" y="193" width="202" height="36"/>
+        <rect class="nd" x="246" y="193" width="202" height="36"/>
+        <rect class="nd" x="461" y="193" width="202" height="36"/>
+        <rect class="nd" x="677" y="193" width="201" height="36"/>
+        <text class="tb" x="131" y="216" text-anchor="middle">Resident / staff</text>
+        <text class="tb" x="347" y="216" text-anchor="middle">Activity provider</text>
+        <text class="tb" x="562" y="216" text-anchor="middle">C02 Coordinator</text>
+        <text class="tb" x="777" y="216" text-anchor="middle">C03 Mobility</text>
+
+        <!-- edges -->
+        <path class="ed" d="M218,282 H473" marker-end="url(#p23-ah)"/>
+        <text class="ta" x="352" y="273" text-anchor="middle">I01 / confirmed fields</text>
+        <path class="ed" d="M562,316 V334" marker-end="url(#p23-ah)"/>
+        <path class="ed" d="M482,338 H347 V364" marker-end="url(#p23-ah)"/>
+        <text class="ta" x="392" y="356" text-anchor="middle">I06</text>
+        <path class="ed" d="M643,338 H778 V364" marker-end="url(#p23-ah)"/>
+        <text class="ta" x="694" y="356" text-anchor="middle">I03</text>
+        <path class="ed" d="M347,436 V492 H465" marker-end="url(#p23-ah)"/>
+        <path class="ed" d="M778,436 V492 H659" marker-end="url(#p23-ah)"/>
+        <path class="ed" d="M480,508 H230 V499 H220" marker-end="url(#p23-ah)"/>
+        <text class="ta" x="320" y="524" text-anchor="middle">no / unknown</text>
+        <path class="ed" d="M562,527 V546 H131 V559" marker-end="url(#p23-ah)"/>
+        <text class="ta" x="297" y="539" text-anchor="middle">yes / offer</text>
+        <path class="ed" d="M218,593 H473" marker-end="url(#p23-ah)"/>
+        <text class="ta" x="352" y="584" text-anchor="middle">acceptedTermsRev</text>
+        <path class="ed" d="M475,611 H347 V652" marker-end="url(#p23-ah)"/>
+        <path class="ed" d="M649,611 H778 V652" marker-end="url(#p23-ah)"/>
+        <path class="ed" d="M347,722 V778 H465" marker-end="url(#p23-ah)"/>
+        <path class="ed" d="M778,722 V778 H659" marker-end="url(#p23-ah)"/>
+        <path class="ed" d="M480,796 H232 V781 H220" marker-end="url(#p23-ah)"/>
+        <text class="ta" x="329" y="811" text-anchor="middle">no / uncertain</text>
+        <path class="ed" d="M562,813 V840" marker-end="url(#p23-ah)"/>
+        <text class="ta" x="628" y="834" text-anchor="middle">yes</text>
+
+        <!-- parallel fork -->
+        <rect class="ndk" x="482" y="335" width="161" height="6"/>
+
+        <!-- nodes -->
+        <rect class="nd" x="44" y="250" width="174" height="66" rx="8"/>
+        <text class="tb" x="131" y="269" text-anchor="middle">Need / consent</text>
+        <text class="t" x="52" y="291">Time, place, support</text>
+
+        <rect class="nd" x="475" y="250" width="174" height="66" rx="8"/>
+        <text class="tb" x="562" y="269" text-anchor="middle">Normalise intent</text>
+        <text class="t" x="483" y="291">Source + conditionsRev</text>
+
+        <rect class="nd" x="260" y="366" width="174" height="70" rx="8"/>
+        <text class="tb" x="347" y="385" text-anchor="middle">Hold activity</text>
+        <text class="t" x="268" y="407">Slot, staff, terms, expiry</text>
+
+        <rect class="nd" x="690" y="366" width="174" height="70" rx="8"/>
+        <text class="tb" x="777" y="385" text-anchor="middle">Hold mobility</text>
+        <text class="t" x="698" y="407">Vehicle, bay, charge</text>
+
+        <path class="nd" d="M562,457 L657,492 L562,527 L467,492 z"/>
+        <text class="tb" x="562" y="489" text-anchor="middle">All holds</text>
+        <text class="tb" x="562" y="503" text-anchor="middle">valid?</text>
+
+        <rect class="nd" x="44" y="467" width="174" height="63" rx="8"/>
+        <text class="tb" x="131" y="486" text-anchor="middle">Owned exception</text>
+        <text class="t" x="52" y="508">Release known holds</text>
+
+        <rect class="nd" x="44" y="561" width="174" height="64" rx="8"/>
+        <text class="tb" x="131" y="580" text-anchor="middle">Accept terms</text>
+        <text class="t" x="52" y="602">Activity + travel cost</text>
+
+        <rect class="nd" x="475" y="561" width="174" height="64" rx="8"/>
+        <text class="tb" x="562" y="580" text-anchor="middle">Commit intent</text>
+        <text class="t" x="483" y="602">D1 saga + outbox</text>
+
+        <rect class="nd" x="260" y="654" width="174" height="68" rx="8"/>
+        <text class="tb" x="347" y="673" text-anchor="middle">Confirm activity</text>
+        <text class="t" x="268" y="695">providerRef + state</text>
+
+        <rect class="nd" x="690" y="654" width="174" height="68" rx="8"/>
+        <text class="tb" x="777" y="673" text-anchor="middle">Commit bundle</text>
+        <text class="t" x="698" y="695">bundleId + revision</text>
+
+        <path class="nd" d="M562,743 L657,778 L562,813 L467,778 z"/>
+        <text class="tb" x="562" y="769" text-anchor="middle">All required</text>
+        <text class="tb" x="562" y="782" text-anchor="middle">commits</text>
+        <text class="tb" x="562" y="795" text-anchor="middle">verified?</text>
+
+        <rect class="nd" x="44" y="744" width="174" height="74" rx="8"/>
+        <text class="tb" x="131" y="763" text-anchor="middle">Compensate / reconcile</text>
+        <text class="t" x="52" y="785">Query before compensation.</text>
+        <text class="t" x="52" y="800">Track fees / failed recovery.</text>
+
+        <rect class="ndk" x="475" y="842" width="390" height="36"/>
+        <text class="tb" x="484" y="864">Verified commitments → permitted service → actuals</text>
+      </svg>
+    </div>
+    <p class="note">Service guards: care = assistance + care-staff capacity; school care = guardian authority + verified handover; community event = venue/stop + host capacity. ETA changes re-enter the saga with a new revision. Provider and transport reservations are not one distributed transaction.</p>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">16.2</span>AI assistance as a constrained tool pipeline</h3>
+    <ol class="flow arrows" style="--min:180px">
+      <li><strong>Observe / extract</strong>Conversation + event evidence<br>Normalise missing fields</li>
+      <li><strong>Validate / propose</strong>Typed schema + consent<br>Deterministic constraints</li>
+      <li><strong>Authorise / execute</strong>Role + tool allowlist + lease<br>Idempotent domain command</li>
+      <li><strong>Verify / review</strong>Observed outcome + reviewer<br>Offline improvement / controlled release</li>
+    </ol>
+    <p class="note">outside scope / low confidence / added cost / custody exception → human decision</p>
+    <div class="box key">
+      <p><b>Release stages: shadow comparison → staff-approved actions → bounded automatic tasks</b><br><b>Independent guards enforce consent and accepted terms. Model updates require offline evaluation and versioned release.</b></p>
+    </div>
+    <p class="small">Calendar changes produce proposed intent, never auto-booking by default. Sync deletion/resync must not erase D1 bookings. Commercial APIs need access and hold/commit/cancel support; otherwise use an owned manual workflow.</p>
+  </div>
+</section>
+<section class="pg" id="p24" aria-labelledby="p24-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P24 / 30</span></p>
+    <h2 id="p24-t">Verification coverage and release dependencies</h2>
+    <p class="lead">RM-11. Remote-operation requirements join the PaaS acceptance plan. The cases below are planned tests, not passed results. Release requires reproducible evidence and operating readiness.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">17.1</span>Fault injection and observable remote-operation invariants</h3>
+    <div class="scroll">
+      <table class="tbl">
+        <tbody>
+          <tr><td class="mono">T-R01 / RM-03–04</td><td>→ Delay, reorder, clock jump, reboot</td><td>→ Stale/future data blocks motion; query stays usable.</td></tr>
+          <tr><td class="mono">T-R02 / RM-01,05</td><td>→ ODD limit / sensor degradation</td><td>→ Correct response, no remote extension of ODD.</td></tr>
+          <tr><td class="mono">T-R03 / RM-06,10</td><td>→ Expired / changed-scene advice</td><td>→ Reject with reason and renew context if required.</td></tr>
+          <tr><td class="mono">T-R04 / <a class="ref" href="#p13">P13</a>,RM-07</td><td>→ Lose ACK / replay command ID</td><td>→ No duplicate effect; lost result remains reconciled.</td></tr>
+          <tr><td class="mono">T-R05 / RM-02,07</td><td>→ Lose telemetry / media / voice</td><td>→ Independent quality flags; local policy + escalation.</td></tr>
+          <tr><td class="mono">T-R06 / RM-02,10</td><td>→ Centre partition / old operator</td><td>→ Fence ACK + reconcile prior accepted effects.</td></tr>
+          <tr><td class="mono">T-R07 / RM-05,09</td><td>→ SOS + MRM failure / no field team</td><td>→ Emergency and passenger work remain owned.</td></tr>
+          <tr><td class="mono">T-R08 / RM-04,08</td><td>→ Alarm storm / unauthorised AI</td><td>→ No hidden P0; deny AI motion-authorisation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">17.2</span>Shared PaaS invariants and fault recovery</h3>
+    <div class="fig" style="--svgmin:640px">
+      <svg viewBox="20 690 870 145" role="img" aria-label="Fault / uncertain effect leads to known outcome, or to owned exception when the deadline is reached and the outcome is still unknown">
+        <rect class="nd" x="30" y="697" width="266" height="114"/>
+        <text class="tb" x="39" y="717">Fault / uncertain effect</text>
+        <text class="t" x="39" y="741"><tspan x="39">Quarantine affected resource</tspan><tspan x="39" dy="15">Query original intent or cmdId</tspan><tspan x="39" dy="15">Preserve observed/source times</tspan></text>
+        <rect class="nd" x="322" y="697" width="264" height="114"/>
+        <text class="tb" x="331" y="717">Known outcome</text>
+        <text class="t" x="331" y="741"><tspan x="331">Recover from durable journal</tspan><tspan x="331" dy="15">Rebuild projections without effect</tspan><tspan x="331" dy="15">Retain uncertainty if budget expires</tspan></text>
+        <rect class="nd" x="614" y="697" width="264" height="114"/>
+        <text class="tb" x="623" y="717">Owned exception</text>
+        <text class="t" x="623" y="741"><tspan x="623">Deadline, backup owner, fallback</tspan><tspan x="623" dy="15">Current evidence + valid state</tspan><tspan x="623" dy="15">Authorised re-entry only</tspan></text>
+        <path class="ed" d="M296,754 H316"/>
+        <path class="ah" d="M321,754 l-6,-3.5 v7 z"/>
+        <path class="ed" d="M163,811 V824 H750 V817"/>
+        <path class="ah" d="M750,812 l-3.5,6 h7 z"/>
+        <text class="ta" x="497" y="821" text-anchor="middle">deadline reached / outcome still unknown</text>
+      </svg>
+    </div>
+    <p class="small">Add roadside clock/calibration, coverage, false association, reboot and replay tests (<a class="ref" href="#p15">P15–P16</a>). <a class="ref" href="#p25">P25–P28</a> extend acceptance to peak demand, spatial imbalance, finite hub capacity, replenishment queues and combined failures. Retain settlement regression tests.</p>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">17.3</span>Evidence chain, milestones and parallel workstreams</h3>
+    <ol class="flow arrows" style="--min:130px">
+      <li><strong>G1 Target</strong></li>
+      <li><strong>G2 Requirements</strong></li>
+      <li><strong>G3 Pilot ready</strong></li>
+      <li><strong>G4 Continue</strong></li>
+      <li><strong>G5 Expand</strong></li>
+    </ol>
+    <div class="cols c3">
+      <div class="box plain"><h4>Product / local service</h4><p>Demand / service quality / economics<br>Responsibilities and operating plan</p></div>
+      <div class="box plain"><h4>Platform / QA / operations</h4><p>Contracts, fault tests, trained fallback<br>Security, recovery and human trials</p></div>
+      <div class="box plain"><h4>Partners / energy</h4><p>EMS capability / access agreements<br>Connector recovery and repeatability</p></div>
+    </div>
+    <p class="small">G3 evidence: scenario/ODD slice, initial state, revisions, injected fault, trace and oracle result, tested in SIL/HIL/operator/vehicle trials as applicable. G4 uses observed outcomes. G5 adds repeatable onboarding. Record owner, residual risk/restriction and signed decision at each gate.</p>
+  </div>
+</section>
+<section class="pg" id="p25" aria-labelledby="p25-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P25 / 30</span></p>
+    <h2 id="p25-t">Service capacity and geographic coverage</h2>
+    <p class="lead">Operating feasibility depends on time and location. Fleet and hub totals become usable capacity only when vehicle readiness, travel time and the full service cycle align.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">18.1</span>Demand, reachable supply and commitment</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Demand by zone and time</strong>Passenger and shipment OD / windows<br>Lead time, overlap and peak shape<br>Party, access, cargo mass / volume<br>Cancellations and no-shows</li>
+      <li><strong>Feasible supply</strong>Position, ready time and route revision<br>Seats, payload and cargo space<br>Passenger detour / arrival limits<br>Delivery, energy and next-task limits</li>
+      <li><strong>Service commitment</strong>Hold the complete resource bundle<br>Confirm only after verified commit<br>Return a binding reason if infeasible<br>Retain unmet demand in reporting</li>
+    </ol>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box key">
+      <h4>C03 evaluation at each planning interval</h4>
+      <p class="eq">t_ready,v + travelTime(v, origin, departure time) ≤ latestPickup</p>
+      <p>Recompute each existing passenger and delivery deadline after an insertion.<br>Count shared travel, stop dwell, repositioning, turnaround and replenishment once per vehicle.</p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">18.2</span>Fleet conservation and workload screen</h3>
+    <div class="cols c5">
+      <div class="box plain"><h4>Ready</h4><p>Assignable now</p></div>
+      <div class="box plain"><h4>Committed</h4><p>Held / pre-position</p></div>
+      <div class="box plain"><h4>In service</h4><p>Pickup / passenger</p></div>
+      <div class="box plain"><h4>Replenishing</h4><p>Queue / energy</p></div>
+      <div class="box plain"><h4>Unavailable</h4><p>Fault / inspection</p></div>
+    </div>
+    <p class="eq">N_total = N_ready + N_committed + N_service + N_replenishing + N_unavailable</p>
+    <div class="cols c2">
+      <div class="box"><h4>Vehicle workload screen</h4>
+        <p><span class="mono">Σ_r vehicleHours_r ≤ available vehicle-hours</span> in the same interval.<br>Use distinct vehicle routes, including empty travel, dwell and energy stops.<br>Pooling must not multiply route hours by passenger bookings.<br>Check segment capacity and local service windows separately.</p></div>
+      <div class="box"><h4>Spatial and peak-time check</h4>
+        <p>Average capacity does not prove pickup feasibility.<br>Test demand bursts and directional imbalance by zone.<br>Hold operational reserve for faults and recovery.<br>Intercity transfers require explicit travel and authority.</p></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">18.3</span>Hub function, allocation and service outcome</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Hub resources</strong>Parking bays and pickup space<br>Connectors / dispensers / site power<br>Cleaning and inspection positions<br>Qualified staff and opening hours</li>
+      <li><strong>Finite allocation</strong>Use time intervals per resource<br>Sum pooled demand against limits<br>Reserve only accessible capacity<br>Propagate queues and outage derating</li>
+      <li><strong>Observable outcome</strong>Passenger / freight fulfillment<br>Detour, delay and unmet requests<br>Handling, queue and recovery load<br>Net contribution / vehicle-hour</li>
+    </ol>
+    <p class="small">Planning record: zone / time interval, OD input, initial vehicle positions, hub resources, availability policy and service windows. Compare feasible alternatives under the same demand trace. A hub count alone does not specify throughput or coverage.</p>
+  </div>
+</section>
+<section class="pg" id="p26" aria-labelledby="p26-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P26 / 30</span></p>
+    <h2 id="p26-t">Replenishment and departure readiness</h2>
+    <p class="lead">The operating plan reserves replenishment capacity within a vehicle’s duty cycle. Daily energy sufficiency and on-time departure are separate acceptance conditions.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">19.1</span>Vehicle cycle with finite replenishment resources</h3>
+    <ol class="flow arrows" style="--min:140px">
+      <li><strong>Arrive</strong>Observed energy<br>Arrival time</li>
+      <li><strong>Queue</strong>Bay / connector<br>Staff eligibility</li>
+      <li><strong>Replenish</strong>Power or fuel<br>Actual delivery</li>
+      <li><strong>Turnaround</strong>Clean / inspect<br>Required evidence</li>
+      <li><strong>Release</strong>Energy + tasks<br>Next departure</li>
+    </ol>
+    <div class="box key">
+      <h4>Departure constraint</h4>
+      <p class="eq">t_arrival + t_queue + t_replenish + t_required_work ≤ t_departure</p>
+      <p>Required work includes passenger / cargo handling, cleaning and inspection as applicable.<br>Overlap only approved tasks. Recheck route energy and all next departure / delivery commitments.</p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">19.2</span>Electrical and fuel branches use distinct units</h3>
+    <div class="cols c2">
+      <div class="box"><h4>Electrical charging</h4>
+        <pre class="code">E_depart = E_arrive + η_ch ∫ P_AC(t) dt − E_aux
+E_next_trip + E_reserve ≤ E_depart ≤ E_usable,max</pre>
+        <p>P_AC in kW, time in hours, energy in kWh.<br>Use charger / battery limits and charging efficiency.<br>Energy plan ACK does not prove delivered energy.</p></div>
+      <div class="box"><h4>Fuel / hydrogen replenishment</h4>
+        <pre class="code">m_depart = m_arrive + m_delivered − m_consumed
+m_next_trip + m_reserve ≤ m_depart ≤ m_usable,max</pre>
+        <p>Mass in kg, flow in kg/min, duration in minutes.<br>Bound usable stock, dispenser flow and turnaround.<br>Fuel-to-energy conversion needs an explicit model.</p></div>
+    </div>
+    <div class="box key">
+      <span class="lbl">Site limits at every time interval</span>
+      <p class="eq">Σ P_charge,i(t) ≤ P_site,available(t) &nbsp;&nbsp; and &nbsp;&nbsp; occupied connectors ≤ serviceable connectors</p>
+      <p>P_site,available reflects building load, generation, storage and connection limits at the same boundary.<br>Fuel stock remains non-negative after deliveries and withdrawals. One hub can contain several resources.</p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">19.3</span>Shortage propagation and recovery</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Detect</strong>Power derating / site outage<br>Low stock / supply delay<br>Queue growth / delayed arrival<br>Stale capability or meter data</li>
+      <li><strong>Re-plan</strong>Recalculate departure readiness<br>Use feasible alternative site / vehicle<br>Hold affected assignments<br>Revise ETA and notify service owner</li>
+      <li><strong>Reconcile and release</strong>Observe actual delivered quantity<br>Complete inspection and required work<br>Confirm current resource revisions<br>Release only verified capacity</li>
+    </ol>
+    <p class="small">Acceptance evidence: arrival / departure energy, measured delivery, queue duration, site-limit trace and missed departures. Test concurrent arrivals, one resource unavailable, reduced power and delayed fuel delivery. Report reserve violations and unmet trips even when aggregate daily energy balances.</p>
+  </div>
+</section>
+<section class="pg" id="p27" aria-labelledby="p27-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P27 / 30</span></p>
+    <h2 id="p27-t">Degraded operation and recovery capacity</h2>
+    <p class="lead">Operational continuity requires bounded service reductions, passenger support and a verified return to service. Recovery uses the same finite fleet, site and staffing resources.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">20.1</span>Failure propagation across the service system</h3>
+    <div class="cols c2">
+      <div class="box plain"><h4>Demand pressure</h4><p>Peak arrivals / directional imbalance<br>Longer trips / slow turnaround</p></div>
+      <div class="box plain"><h4>Supply loss</h4><p>Vehicle fault / site outage / energy shortfall<br>Communication loss / staff absence</p></div>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <div class="box">
+      <h4>Impact assessment</h4>
+      <p>Identify affected bookings and intervals. Recompute reachable vehicles, usable hubs and qualified response capacity.<br>Preserve already accepted commitments and unknown physical effects. Record unmet demand and passenger exposure.</p>
+    </div>
+    <div class="down" aria-hidden="true">↓</div>
+    <ol class="flow arrows" style="--min:200px">
+      <li><strong>NORMAL</strong>Service promise feasible<br>Capacity and evidence current</li>
+      <li><strong>CONSTRAINED</strong>Restrict new offers by zone / time<br>Protect accepted journeys</li>
+      <li><strong>SUSPENDED</strong>Stop affected new commitments<br>Maintain support and local fallback</li>
+    </ol>
+    <p class="note">Transitions use configured triggers, persistence and owner approval. Recovery thresholds include hysteresis to avoid repeated entry / exit.<br>Local ADS safety decisions remain independent of this service-mode model.</p>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">20.2</span>Parallel passenger, asset and capacity recovery</h3>
+    <div class="cols c3">
+      <div class="box plain"><h4>Passenger outcome</h4>
+        <ul class="lines"><li>Contact every affected passenger party</li><li>Explain revised ETA / alternatives</li><li>Reserve feasible replacement journeys</li><li>Track each handover and resolution</li><li>Own compensation / refund decision</li></ul></div>
+      <div class="box plain"><h4>Vehicle / site outcome</h4>
+        <ul class="lines"><li>Retain fault and command history</li><li>Assign qualified field responder</li><li>Observe secure state and clearance</li><li>Inspect and record restrictions</li><li>Reconcile unresolved physical effects</li></ul></div>
+      <div class="box plain"><h4>Resource outcome</h4>
+        <ul class="lines"><li>Reserve relief / field capacity</li><li>Cargo custody / storage / returns</li><li>Revise passenger / cargo plans</li><li>Include staff travel and queues</li><li>Escalate recovery shortfall</li></ul></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">20.3</span>Return-to-service gate and staffing condition</h3>
+    <div class="cols c2">
+      <div class="box"><h4>Return-to-service gate</h4>
+        <p>Cause addressed + fresh evidence + authorised release<br>+ feasible next mission + passenger outcome resolved.<br>Connectivity restoration alone cannot release capacity.<br>Observe sustained recovery before widening offers.</p></div>
+      <div class="box"><h4>Response capacity</h4>
+        <p class="eq">A = Σ λ_k E[S_k] in matched time units.</p>
+        <p>A &lt; qualified staffed seats is only a mean-load screen.<br>Test bursts, common-cause alarms, breaks and travel.<br>Every open case needs an owner, deadline and backup.<br>Keep field response separate from remote assistance.</p></div>
+    </div>
+    <p class="rule">Record trigger, affected scope, admission restriction, accountable owner, next review and recovery evidence for each degraded period.</p>
+  </div>
+</section>
+<section class="pg" id="p28" aria-labelledby="p28-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P28 / 30</span></p>
+    <h2 id="p28-t">Operating feasibility and verification evidence</h2>
+    <p class="lead">A configuration qualifies only within its tested demand, geography and operating conditions. Service quality, resource limits, recovery and economics require separate evidence.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">21.1</span>Measurement chain and explicit denominators</h3>
+    <ol class="flow arrows" style="--min:150px">
+      <li><strong>Requests</strong>Unique service intents</li>
+      <li><strong>Dispatch</strong>Verified assignment</li>
+      <li><strong>Pickup</strong>Physical arrival</li>
+      <li><strong>Completion</strong>Verified trip outcome</li>
+    </ol>
+    <div class="cols c2">
+      <div class="box plain"><h4>Service quality</h4>
+        <p>Dispatch success = assigned / eligible dispatch requests.<br>Keep capacity and admission rejects in the denominator.<br>Demand fulfillment = completed / eligible requests.<br>Report customer cancellations separately by reason.</p></div>
+      <div class="box plain"><h4>Pickup and utilization</h4>
+        <p>Wait starts at request time for immediate demand, or agreed pickup time for a reservation. Report p50 / p95 with the observed-arrival count and missing outcomes. Show on-time pickups / pickups due, including failures. Separate available hours from scheduled fleet hours.</p></div>
+    </div>
+    <p class="note">At cut-off, classify every passenger booking and shipment separately: completed, cancelled, rejected, expired, unresolved or active. A pooled mission is not one passenger request. Retain people counts separately from booking counts. Show exclusions, censoring and missing evidence.</p>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">21.2</span>Reproducible scenario design and pass conditions</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Freeze inputs</strong>
+        <ul class="lines"><li>Passenger / cargo OD and windows</li><li>Lead time and sharing acceptance</li><li>Party, mass, volume and handling time</li><li>Fleet, hubs and response limits</li><li>Input / policy / route revisions</li></ul></li>
+      <li><strong>Exercise conditions</strong>
+        <ul class="lines"><li>Single-party / pooling / cargo / both</li><li>Peak and directional concentration</li><li>Vehicle / hub / energy capacity loss</li><li>No-show / failed cargo handover</li><li>Combined faults and recovery ramp</li></ul></li>
+      <li><strong>Evaluate each case</strong>
+        <ul class="lines"><li>Passenger and freight service gates</li><li>Seats, payload, volume and energy</li><li>Detour, dwell and recovery workload</li><li>Unserved / unresolved outcomes</li><li>Binding constraint and owner</li></ul></li>
+    </ol>
+    <div class="box key">
+      <span class="lbl">PASS RECORD</span>
+      <p>State target, denominator, time window and acceptance rule before running. Use repeatable demand traces or recorded seeds, then independent trials. Preserve every run and failure. Finite synthetic tests establish a tested envelope only. Pilot evidence determines field readiness.</p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">21.3</span>Capacity decision and business consequence</h3>
+    <div class="cols c2">
+      <div class="box plain"><h4>Feasible alternatives</h4>
+        <p>Compare fleet, hub placement and service policy only after all required operating conditions pass. Rank cost within the feasible tested set. If none qualifies, report the binding constraint and re-plan.</p></div>
+      <div class="box plain"><h4>Economic reconciliation</h4>
+        <p>Reconcile passenger fares and freight revenue.<br>Count shared route / infrastructure costs once.<br>Include dwell, displaced trips, handling and returns.<br>Separate operating contribution, CAPEX and cash flow.</p></div>
+    </div>
+    <p class="note">Release evidence: input revision, scenario / seed, execution trace, metric definitions, pass / fail by condition, residual restriction and accountable decision. Operational feasibility does not by itself establish project profitability or safety certification.</p>
+  </div>
+</section>
+<section class="pg" id="p29" aria-labelledby="p29-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P29 / 30</span></p>
+    <h2 id="p29-t">Shared rides: route feasibility and passenger outcomes</h2>
+    <p class="lead">04. Sharing can improve passenger output per vehicle-hour when compatible journeys fit the same route. Seat occupancy alone does not prove better service or contribution.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">22.1</span>Request compatibility and guarded route insertion</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Eligible requests</strong>
+        <ul class="lines"><li>Pickup / arrival windows</li><li>Party size and accessible space</li><li>Sharing consent and fare terms</li><li>Maximum accepted ride time</li></ul></li>
+      <li><strong>Candidate insertion</strong>
+        <ul class="lines"><li>Insert pickup before drop-off</li><li>Recompute every downstream ETA</li><li>Check capacity on every segment</li><li>Keep existing passenger promises</li></ul></li>
+      <li><strong>Commit and observe</strong>
+        <ul class="lines"><li>Hold seats and route revision</li><li>Confirm accepted terms per party</li><li>Observe boarding / alighting</li><li>Keep each intent and outcome</li></ul></li>
+    </ol>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">22.2</span>Segment capacity and individual service constraints</h3>
+    <div class="box">
+      <h4>Capacity along the route</h4>
+      <p class="eq">For each segment s: Σ_i onboard(i,s) × partySize_i ≤ seats_usable(s)</p>
+      <p>Check accessible positions and luggage space separately under the vehicle configuration.<br>A pooled route is one vehicle mission with several passenger bookings. Count its distance once.</p>
+    </div>
+    <div class="cols c2">
+      <div class="box plain"><h4>Passenger time constraints</h4>
+        <pre class="code">earliestPickup_i ≤ pickup_i ≤ latestPickup_i
+arrival_i ≤ latestArrival_i
+rideTime_i − directTime_i ≤ detourAllowance_i</pre>
+        <p>Direct time uses the same traffic / time basis.<br>Include boarding, alighting and intermediate dwell.</p></div>
+      <div class="box plain"><h4>Insertion and consent rules</h4>
+        <p>Recheck every onboard and committed passenger.<br>Protect accepted windows and access requirements.<br>Offer sharing price and allowed detour explicitly.<br>An infeasible insertion returns a binding reason.<br>No-show or cancellation triggers reconciliation.</p></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">22.3</span>Revenue gain, service loss and the comparison basis</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Passenger output</strong>
+        <ul class="lines"><li>Passenger journeys / vehicle-hour</li><li>Passenger-km / vehicle-km</li><li>Seat-km used / available seat-km</li><li>Wait, detour and missed pickups</li></ul></li>
+      <li><strong>Net contribution</strong>
+        <ul class="lines"><li>Recognized fares after discounts</li><li>Less route, energy and support cost</li><li>Include added dwell and recovery</li><li>Route cost allocated only once</li></ul></li>
+      <li><strong>Comparable alternatives</strong>
+        <ul class="lines"><li>Same underlying passenger intents</li><li>Same fleet, hubs and faults</li><li>Single-party vs shared operation</li><li>Rejected and displaced trips visible</li></ul></li>
+    </ol>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">22.4</span>Failure cases and release evidence</h3>
+    <div class="box">
+      <h4>Stress cases</h4>
+      <p>Mismatched OD / low overlap; full accessible space; delayed boarding; no-show after insertion;<br>traffic delay; cancellation while onboard; vehicle loss with several parties needing recovery.<br>Stop adding riders when an accepted passenger limit or response-capacity constraint would fail.</p>
+    </div>
+    <p class="note">Evidence: route revision, ordered stops, segment occupancy, accepted detour / fare, actual passenger times and booking-level outcomes. Show total contribution and passenger fulfillment together. Higher occupancy can coexist with fewer completed journeys. Agree thresholds and operating authority before pilot release.</p>
+  </div>
+</section>
+<section class="pg" id="p30" aria-labelledby="p30-t">
+  <header class="pg-head">
+    <p class="eyebrow"><span>Autonomous mobility service / System planning — Initial concept</span><span class="no">P30 / 30</span></p>
+    <h2 id="p30-t">Passenger–freight sharing: capacity and net contribution</h2>
+    <p class="lead">05. Cargo uses compatible spare route and vehicle capacity. Incremental freight revenue must cover handling and detour costs while preserving passenger service commitments.</p>
+  </header>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">23.1</span>Cargo eligibility, route insertion and custody</h3>
+    <ol class="flow arrows" style="--min:220px">
+      <li><strong>Shipment request</strong>
+        <ul class="lines"><li>Origin / destination and windows</li><li>Mass, volume and compartment needs</li><li>Handling time and handover contact</li><li>Permitted goods / service policy</li></ul></li>
+      <li><strong>Joint feasibility</strong>
+        <ul class="lines"><li>Passenger windows remain binding</li><li>Check payload, space and access</li><li>Insert loading / unloading dwell</li><li>Reserve staff and loading space</li></ul></li>
+      <li><strong>Verified delivery</strong>
+        <ul class="lines"><li>Link shipment to route revision</li><li>Record pickup / custody handovers</li><li>Delivery or failed-attempt proof</li><li>Own return, loss and damage cases</li></ul></li>
+    </ol>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">23.2</span>Capacity is a vector at each route segment</h3>
+    <div class="box">
+      <h4>Independent constraints</h4>
+      <p>Passenger seats and accessible positions remain within their configured limits.</p>
+      <p class="eq">Σ_j cargoVolume_j,s ≤ usableCargoVolume_s &nbsp;&nbsp; and &nbsp;&nbsp; Σ_j onboardMass_j,s ≤ payloadLimit_s</p>
+      <p>Onboard mass includes people, luggage and cargo under the same payload boundary.<br>Check segregation, securement, door access and passenger comfort before accepting a job.</p>
+    </div>
+    <div class="cols c2">
+      <div class="box plain"><h4>Time and recovery constraint</h4>
+        <p>Route time = travel + passenger dwell<br>+ cargo handling + required turnaround.<br>Recompute every pickup, arrival and delivery ETA.<br>Cargo waiting / failed handover consumes capacity.<br>Protect passenger recovery and energy reserve.</p></div>
+      <div class="box plain"><h4>Service policy and authority</h4>
+        <p>Use an approved vehicle / goods combination.<br>Confirm transport, insurance and partner eligibility.<br>Assign loading, custody and exception owners.<br>Decline cargo that breaks passenger commitments.<br>Apply return / storage rules after failed delivery.</p></div>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">23.3</span>Four operating conditions on the same demand basis</h3>
+    <div class="cols c4">
+      <div class="box plain"><h4>Single-party</h4><p>No pooling / cargo</p></div>
+      <div class="box plain"><h4>Shared rides</h4><p>Pooling only</p></div>
+      <div class="box plain"><h4>Passenger + cargo</h4><p>Cargo only</p></div>
+      <div class="box plain"><h4>Combined</h4><p>Pooling + cargo</p></div>
+    </div>
+    <div class="box">
+      <h4>Economic comparison</h4>
+      <p class="eq">Δ contribution = Δ passenger revenue + freight revenue − Δ total attributable operating cost</p>
+      <p>Passenger revenue reflects discounts and displaced / unserved trips. Do not subtract that loss twice.<br>Include handling, detours, energy, cleaning, support, returns / claims and app cost. Count route cost once.</p>
+    </div>
+  </div>
+
+  <div class="blk">
+    <h3 class="bar"><span class="n">23.4</span>Outcome and failure evidence</h3>
+    <p>Report passenger fulfillment / delay and freight delivery / lateness separately, plus vehicle-hours, payload / volume limits, dwell and total contribution. Test full payload, long unloading, absent recipient, incompatible goods, cancellation and vehicle loss. Keep passenger and shipment identities within one shared mission. Hold effects 01–03 constant across the four conditions, then test interactions.</p>
+  </div>
+</section>
+  </main>
+</div>
+</div>
+<footer class="end gut">
+  <span>System Planning — Initial Concept · Satofumi Goto · Proposed design basis · Rev. 2026-10-15</span>
+  <span>Proposed concept. Separately prepared models, not copied from Honda internal documents. Field validation and implementation pending.</span>
+</footer>
+<script>
+(function(){
+  var d=document.getElementById('toc-d');
+  function sync(){ if(window.matchMedia('(min-width:1100px)').matches) d.open=true; }
+  sync(); window.addEventListener('resize',sync);
+  d.addEventListener('click',function(e){ if(e.target.closest('a') && !window.matchMedia('(min-width:1100px)').matches) d.open=false; });
+  var links={}; document.querySelectorAll('.toc a[href^="#p"]').forEach(function(a){links[a.getAttribute('href').slice(1)]=a;});
+  if(!('IntersectionObserver' in window)) return;
+  var cur=null;
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ if(cur) cur.classList.remove('on'); cur=links[e.target.id]; if(cur){cur.classList.add('on');} } });},{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section.pg').forEach(function(s){io.observe(s);});
+})();
+</script>
+
+</body>
+</html>
