@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T21:39:21.031Z",
-  "source": "Policy-first 2026-11-03T21:39:21.031Z: release_freeze=false, quota_recovery=quota_blocked. Four consoles published shared-board UI snapshots with independent anonymous verification, Federation administrator release-receipt audit #41721526280 succeeded (3 queued, 1 duplicate). New source main heads recorded, no official authenticated E2E acceptance (0/7); Matsuko #774 blocked. No Actions/Publish/paid requests triggered by orchestrator.",
+  "generated_at": "2026-11-03T22:40:49.201Z",
+  "source": "Policy-first 2026-11-03T22:40:49.201Z: release_freeze.enabled=false, ci.quota_recovery.state=quota_blocked. Current main source heads refreshed. Four controlled Base44 releases fail at the same executed Builder exact-revision publication step (Activity/Fleet/Service/Urban). Federation Design KPI publish step success not sufficient because actual browser QA fails; PR #879 browser verification passes with publish skipped. 7-app formal authenticated acceptance 0/7. Matsuko #774 unchanged and blocked. No workflows, builds, publish, API or DB operations triggered by this orchestrator cycle.",
   "completed_total": 0,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
-      "head": "e723fea4376c23cdf6c9a80fcb4e41b441ca67e7",
-      "summary": "2026-11-03T21:39:21.031Z: main e723fea4。保護付き公式GitHub取り込み・共有ボード匿名閲覧・管理経路receiptを確認。認証済み本番E2E未証明。正式公開受入れに必要な現行SHA CI・順序・認証済み本番E2Eを満たした証拠なし（0/7）。",
+      "head": "7d4c06ac255831668780ae7814e61ef8d9becd4a",
+      "summary": "2026-11-03T22:40:49.201Z: main 7d4c06ac. PR #63 merged; six-console responsibility/source changes. Same-head controlled release #41732596818 failed at exact Builder publication after steps; site and authenticated E2E unverified. Official 7-app acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
-      "main_sha": "e723fea4376c23cdf6c9a80fcb4e41b441ca67e7",
+      "main_sha": "7d4c06ac255831668780ae7814e61ef8d9becd4a",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "53906da8dee7a1095136ddd3482366152ffed2dc",
-      "summary": "2026-11-03T21:39:21.031Z: main 53906da8。共有ボード公開・匿名閲覧・Federation管理経路receipt queued。実業務API往復未証明。正式公開受入れに必要な現行SHA CI・順序・認証済み本番E2Eを満たした証拠なし（0/7）。",
+      "head": "e537271cb8b32ffcb184d8eaa3f5dc1ae4c8ed8e",
+      "summary": "2026-11-03T22:40:49.201Z: main e537271c. PR #60 merged; six-console responsibility/source changes. Same-head controlled release #41732371715 failed at exact Builder publication; Guard succeeded, not production E2E. Draft #53 retained. Official 7-app acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "53906da8dee7a1095136ddd3482366152ffed2dc",
+      "main_sha": "e537271cb8b32ffcb184d8eaa3f5dc1ae4c8ed8e",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -31,10 +31,10 @@
     {
       "name": "Service Hub",
       "status": "red",
-      "head": "ddb49f40274dc79f0fa37f230ed47ed5c4d85206",
-      "summary": "2026-11-03T21:39:21.031Z: main ddb49f40。共有ボード公開・匿名閲覧・Federation管理経路receipt queued。実業務API往復未証明。正式公開受入れに必要な現行SHA CI・順序・認証済み本番E2Eを満たした証拠なし（0/7）。",
+      "head": "1d0543d4d837a8aff23ae43f6ab167fdfe1ec40e",
+      "summary": "2026-11-03T22:40:49.201Z: main 1d0543d4. Six-console source main and same-SHA CI success; guarded release #41732068530 failed exact Builder publication; later publication/E2E skipped. Official 7-app acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/service-hub-console",
-      "main_sha": "ddb49f40274dc79f0fa37f230ed47ed5c4d85206",
+      "main_sha": "1d0543d4d837a8aff23ae43f6ab167fdfe1ec40e",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "f2692add810011da46f686d24bc98ba7f8713e1c",
@@ -43,10 +43,10 @@
     {
       "name": "Urban",
       "status": "red",
-      "head": "a470ea82330c14fa988ed94c4d077f0206845e3d",
-      "summary": "2026-11-03T21:39:21.031Z: main a470ea82。共有ボード公開版はda37ab10、現行main a470eaは後続の確認専用コミット。管理経路receipt queued、認証済み実業務E2E未証明。正式公開受入れに必要な現行SHA CI・順序・認証済み本番E2Eを満たした証拠なし（0/7）。",
+      "head": "083ac19a1bf6ff9691abac1be3888cc3df37aa77",
+      "summary": "2026-11-03T22:40:49.201Z: main 083ac19a. Six-console source main and same-SHA CI success; guarded release #41731765523 failed exact Builder publication; later publication/E2E skipped. Official 7-app acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/urban-operation-console",
-      "main_sha": "a470ea82330c14fa988ed94c4d077f0206845e3d",
+      "main_sha": "083ac19a1bf6ff9691abac1be3888cc3df37aa77",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "53d183c54744ae8dc9f0055cda915b2c1f513ae3",
-      "summary": "2026-11-03T21:39:21.031Z: main 53d183c5、#874で4コンソール公開記録を管理者経路で補完（run 41721526280、ingressPersisted=true）。続いて#866知識画面デザイン改修をソース統合。Federation自身のBuilder現行main同期・正式Publish・認証済みLive Missionは未証明。研究#774 blocked、正式受入れ0/7。",
+      "head": "e8a707f5864b1a2f4bfafb8c4047ac1f82f596be",
+      "summary": "2026-11-03T22:40:49.201Z: main e8a707f5. Design KPI source changes merged. Run #41728007289 Builder synchronization/publish step succeeded but real browser runtime/KPI verification failed. PR #879 six-console head QA passed run #41731491492; publish skipped, not merged. Current-main formal publication and Live Mission E2E not proven. Official 7-app acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "53d183c54744ae8dc9f0055cda915b2c1f513ae3",
+      "main_sha": "e8a707f5864b1a2f4bfafb8c4047ac1f82f596be",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -1094,7 +1094,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-03T21:39:21.031Z: policy quota_recovery.state=quota_blocked (unchanged). 4-console independent publication/receipt evidence does not prove policy-required official ordered release E2E; no probes or retries started.",
+    "ci_state": "2026-11-03T22:40:49.201Z: policy quota_recovery=quota_blocked unchanged; real workflows sometimes acquire runners, but only policy change/external recovery evidence may clear block. No new probes/retries by orchestrator.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1159,6 +1159,15 @@
           "failed_reason": "operational-api-http-401:federation-authentication-required",
           "authenticated_e2e": false,
           "observed_at": "2026-11-01T03:38:39Z"
+        },
+        "latest_formal_release_attempt": {
+          "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41732596818",
+          "head_sha": "7d4c06ac255831668780ae7814e61ef8d9becd4a",
+          "conclusion": "failure",
+          "executed_runner_steps": true,
+          "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
+          "site_publish_and_authenticated_e2e_verified": false,
+          "observed_at": "2026-11-03T22:40:49.201Z"
         }
       },
       "fleet": {
@@ -1217,6 +1226,15 @@
           "classification": "executed_builder_publication_failure_not_quota_blocker",
           "observed_at": "2026-11-01T00:40:08.000Z",
           "post_fix_release_unverified": true
+        },
+        "latest_formal_release_attempt": {
+          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41732371715",
+          "head_sha": "e537271cb8b32ffcb184d8eaa3f5dc1ae4c8ed8e",
+          "conclusion": "failure",
+          "executed_runner_steps": true,
+          "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
+          "site_publish_and_authenticated_e2e_verified": false,
+          "observed_at": "2026-11-03T22:40:49.201Z"
         }
       },
       "service": {
@@ -1272,6 +1290,15 @@
           "failed_reason": "operational-api-http-401:federation-authentication-required",
           "authenticated_e2e": false,
           "observed_at": "2026-11-01T03:38:39Z"
+        },
+        "latest_formal_release_attempt": {
+          "run": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/41732068530",
+          "head_sha": "1d0543d4d837a8aff23ae43f6ab167fdfe1ec40e",
+          "conclusion": "failure",
+          "executed_runner_steps": true,
+          "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
+          "site_publish_and_authenticated_e2e_verified": false,
+          "observed_at": "2026-11-03T22:40:49.201Z"
         }
       },
       "urban": {
@@ -1327,6 +1354,15 @@
           "failed_reason": "operational-api-http-401:federation-authentication-required",
           "authenticated_e2e": false,
           "observed_at": "2026-11-01T03:38:39Z"
+        },
+        "latest_formal_release_attempt": {
+          "run": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/41731765523",
+          "head_sha": "083ac19a1bf6ff9691abac1be3888cc3df37aa77",
+          "conclusion": "failure",
+          "executed_runner_steps": true,
+          "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
+          "site_publish_and_authenticated_e2e_verified": false,
+          "observed_at": "2026-11-03T22:40:49.201Z"
         }
       },
       "simulator": {
@@ -1597,6 +1633,23 @@
           "business_synchronization": "unverified",
           "formal_ordered_acceptance": false,
           "observed_at": "2026-11-01T03:38:39Z"
+        },
+        "latest_design_kpi_attempt": {
+          "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41728007289",
+          "head_sha": "f93fbd9403808d4b5f8738dec9a47b8d716d0173",
+          "builder_sync_publish_step": "success",
+          "real_browser_runtime_kpi_verification": "failure",
+          "formal_acceptance": false,
+          "observed_at": "2026-11-03T22:40:49.201Z"
+        },
+        "latest_six_console_pr_qa": {
+          "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41731491492",
+          "pr": 879,
+          "source_head": "f1c44b3508f0a48cc5f73e94bb7f6556488ca080",
+          "real_browser_qa": "success",
+          "publish_job": "skipped",
+          "merged": false,
+          "observed_at": "2026-11-03T22:40:49.201Z"
         }
       },
       "seneschal_schedule_observation": {
@@ -1830,8 +1883,8 @@
         }
       }
     },
-    "last_cycle": "2026-11-03T21:39:21.031Z",
-    "current_action": "2026-11-03T21:39:21.031Z: policy freeze=false / quota_blocked。Activity/Fleet/Service/Urbanに公式GitHub取込+共有ボード公開版の匿名UI検証あり。Federation #874 管理者経路の4コンソール公開記録（run #41721526280, ingressPersisted=true、3 queued/1 duplicate）を確認。各mainの新SHA記録、Federation #866知識画面ソース統合。4コンソールの公開SHAと最新main差（Urban）に注意。正式順序付きrelease workflows/認証済み業務E2E/Live Mission未証明で7アプリ0/7。マツコ独立研究#774は更新なし、認証済みGemini receipt/独立永続DB/バックアップなし。Draft #778/#779/#780および#870/#871は未マージ。新規Actions/Build/Publish/有料API/DB/PRマージなし。",
+    "last_cycle": "2026-11-03T22:40:49.201Z",
+    "current_action": "2026-11-03T22:40:49.201Z: 7 current main heads and existing workflows inspected. Activity #41732596818, Fleet #41732371715, Service #41732068530, Urban #41731765523 all failed at 'Publish exact synchronized Builder revision with scoped PAT', later site/E2E steps did not complete. Source update is not production acceptance. Federation main e8a707f5, design KPI #41728007289 failed published browser KPI checks; PR #879 6-console browser test passed (#41731491492) but Publish skipped, still open. #774 open unchanged and independent Gemini receipt/DB persistence unverified. Policy quota_blocked retained, no new actions triggered.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -2836,7 +2889,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-03T21:39:21.031Z",
+    "last_observed_at": "2026-11-03T22:40:49.201Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -2930,7 +2983,7 @@
       "priority": 1,
       "owner": "Federation Builder recovery",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-01T13:42:47.643Z: Federation main 40c95a42 includes tutorial polish and exact-head tutorial-only site publish #41307713358. This does not prove whole Builder metadata + served release SHA or upstream six authenticated release gates. PRs #778/#779/#780 remain draft; do not merge/trigger formal Federation ahead of Activity. E2E #41301698444 failed earlier upstream SHA check.",
+      "action": "2026-11-03T22:40:49.201Z: Federation main e8a707f5. Design KPI run #41728007289 reached clean Builder synchronize/publish step but real browser runtime/KPI verification failed. Current-main entire Builder/site/E2E still unproven; avoid reset/clean/force push/repeat.",
       "blocked_by": [
         "Current Federation main exact Builder/public SHA not proven; latest auxiliary success is older SHA.",
         "Previous six upstream app Base44 metadata 404 unverified resolution.",
@@ -2988,7 +3041,7 @@
       "priority": 2,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/life-transaction-console",
-      "action": "2026-11-01T11:42:45.442Z: Activity main fe3001da. Manual run #41291536480 succeeded at scoped Builder publication step but skipped proxy, health, public SHA and durable Federation ACK steps. Separate UI-smoke #41294331302 succeeded at different head. Same-main formal authenticated release remains unverified and gates downstream apps.",
+      "action": "2026-11-03T22:40:49.201Z: Current main 7d4c06ac. Controlled release run #41732596818 acquired runner, failed exact Builder revision publication after credential/safety checks. No completed authenticated production E2E. Do not retry without diagnosed state and recovery evidence.",
       "blocked_by": [
         "Formal same-main authenticated console health and durable release-event ACK not completed; all subsequent job steps skipped."
       ],
@@ -2999,7 +3052,8 @@
         "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41264009730",
         "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41278137026",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41277963556",
-        "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41288307298"
+        "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41288307298",
+        "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41732596818"
       ],
       "freeze_is_release_gate": false
     },
@@ -3007,7 +3061,7 @@
       "priority": 3,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
-      "action": "2026-11-01T11:42:45.442Z: Fleet main 64b426f6; formal run #41291046583 executed runner and failed Builder publication step; downstream API/receipt tests skipped. UI-smoke success at another SHA does not count. Activity predecessor gate unverified.",
+      "action": "2026-11-03T22:40:49.201Z: Current main e537271c. Controlled release run #41732371715 acquired runner, failed exact Builder revision publication after credential/safety checks. No completed authenticated production E2E. Do not retry without diagnosed state and recovery evidence.",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity predecessor authenticated acceptance missing."
@@ -3022,7 +3076,8 @@
         "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41259160737",
         "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41260040403",
         "https://github.com/Satofumi-Goto/fleet-operations-console/pull/46",
-        "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41288674617"
+        "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41288674617",
+        "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41732371715"
       ],
       "freeze_is_release_gate": false
     },
@@ -3030,7 +3085,7 @@
       "priority": 4,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/service-hub-console",
-      "action": "2026-11-01T11:42:45.442Z: Service Hub main 8d660908; formal run #41291049488 failed Builder publication step, downstream checks skipped. UI-smoke succeeded on different SHA only; Activity and Fleet accepted releases missing.",
+      "action": "2026-11-03T22:40:49.201Z: Current main 1d0543d4. Controlled release run #41732068530 acquired runner, failed exact Builder revision publication after credential/safety checks. No completed authenticated production E2E. Do not retry without diagnosed state and recovery evidence.",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity/Fleet predecessors not accepted."
@@ -3042,7 +3097,8 @@
         "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/41262021896",
         "https://github.com/Satofumi-Goto/federation-portal/pull/803",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41264396870",
-        "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/41288731535"
+        "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/41288731535",
+        "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/41732068530"
       ],
       "freeze_is_release_gate": false
     },
@@ -3050,7 +3106,7 @@
       "priority": 5,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/urban-operation-console",
-      "action": "2026-11-01T11:42:45.442Z: Urban main 2bd7b743; formal run #41291052554 failed Builder publication step, downstream checks skipped. UI-smoke succeeded on a different SHA only; predecessor gates unmet.",
+      "action": "2026-11-03T22:40:49.201Z: Current main 083ac19a. Controlled release run #41731765523 acquired runner, failed exact Builder revision publication after credential/safety checks. No completed authenticated production E2E. Do not retry without diagnosed state and recovery evidence.",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity/Fleet/Service predecessors not accepted."
@@ -3060,7 +3116,8 @@
         "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/40914041814",
         "https://github.com/Satofumi-Goto/urban-operation-console/actions",
         "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/41263387069",
-        "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/41288677254"
+        "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/41288677254",
+        "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/41731765523"
       ],
       "freeze_is_release_gate": false
     },
@@ -3114,7 +3171,7 @@
       "priority": 8,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-01T12:37:00.996Z: Federation main e24d6a51 (documentation-only change). Numeric change-only session acceptance is reported in owner-supplied Cloud Shell evidence, and independent public browser run #41304664910 confirms Simulator iframe READY. Formal Federation Base44 Builder/public current-main parity, six upstream ordered releases and authenticated Live Mission E2E still unverified; final E2E #41301698444 failed at public SHA checks. Draft #778/#779/#780 remain unmerged.",
+      "action": "2026-11-03T22:40:49.201Z: Federation main e8a707f5. PR #879 six-console browser verification succeeded at PR SHA, Publish skipped; PR not merged. Design KPI published runtime browser verification failed at main SHA #41728007289. No formal complete release.",
       "blocked_by": [
         "Whole Federation Builder/source/main SHA match unverified; individual deployed function hash match is insufficient.",
         "First six authenticated releases not accepted; PR #778/#779/#780 Draft.",
@@ -3135,7 +3192,7 @@
       "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-01T11:42:45.442Z: Formal acceptance 0/7. Final E2E run #41301698444 failed at seven app public SHA verification; all authenticated cross-app and Live Mission stages skipped. Require Activity→Fleet→Service→Urban→Simulator→Seneschal→Federation each exact same-SHA with persisted authenticated acceptance, then full E2E.",
+      "action": "2026-11-03T22:40:49.201Z: Formal seven-app ordered release acceptance 0/7, despite four consoles source progress, anonymous UI verification and saved receipts. Current four guarded releases fail Builder publication; final authenticated E2E remains pending.",
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
         "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production."
@@ -3162,13 +3219,13 @@
     "priority_policy_source_complete": true,
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "activity": "e723fea4376c23cdf6c9a80fcb4e41b441ca67e7",
-      "fleet": "53906da8dee7a1095136ddd3482366152ffed2dc",
-      "service": "ddb49f40274dc79f0fa37f230ed47ed5c4d85206",
-      "urban": "a470ea82330c14fa988ed94c4d077f0206845e3d",
+      "activity": "7d4c06ac255831668780ae7814e61ef8d9becd4a",
+      "fleet": "e537271cb8b32ffcb184d8eaa3f5dc1ae4c8ed8e",
+      "service": "1d0543d4d837a8aff23ae43f6ab167fdfe1ec40e",
+      "urban": "083ac19a1bf6ff9691abac1be3888cc3df37aa77",
       "simulator": "d4328689b14a16745a24c7ce2bfd13743a7039bf",
       "seneschal": "7998f0a0319f157f4c1dc6d00bf8e4cb914d13de",
-      "federation": "53d183c54744ae8dc9f0055cda915b2c1f513ae3"
+      "federation": "e8a707f5864b1a2f4bfafb8c4047ac1f82f596be"
     },
     "mission_contract": {
       "modes": [
@@ -3233,7 +3290,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-03T21:39:21.031Z",
+    "latest_review_at": "2026-11-03T22:40:49.201Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
@@ -3242,7 +3299,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-11-03T21:39:21.031Z",
+    "last_review_at": "2026-11-03T22:40:49.201Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
