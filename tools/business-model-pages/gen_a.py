@@ -2,15 +2,15 @@ from lib import *
 
 # ---------- value flow diagram ----------
 W, H = 758, 212
-s = [f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="利用者・車両・保険会社・自治体・開発側とFederation共通基盤の間のデータ・価値・対価の流れ"><defs>{MARKERS}'
+s = [f'<svg viewBox="0 0 {W} {H}" width="100%" role="img" aria-label="利用者・車両・保険会社・自治体・開発側と安全データ基盤の間のデータ・価値・対価の流れ"><defs>{MARKERS}'
      '<linearGradient id="hubg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#123d8f"/><stop offset="1" stop-color="#071d4d"/></linearGradient>'
      '<filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.6" flood-color="#0b2a6b" flood-opacity=".22"/></filter></defs>']
 # hub
 hx, hw = 289, 180
 s.append(f'<rect x="{hx}" y="4" width="{hw}" height="{H-8}" rx="10" fill="url(#hubg)" filter="url(#sh)"/>')
-s.append(f'<text x="{hx+hw/2}" y="24" fill="#f2b705" font-size="9.5" font-weight="700" text-anchor="middle" letter-spacing="1.5">事業開発環境</text>')
-s.append(f'<text x="{hx+hw/2}" y="44" fill="#fff" font-size="19" font-weight="700" text-anchor="middle" class="nm">Federation</text>')
-s.append(f'<text x="{hx+hw/2}" y="59" fill="#cfe0ff" font-size="9.5" font-weight="700" text-anchor="middle">共通基盤（構想）</text>')
+s.append(f'<text x="{hx+hw/2}" y="24" fill="#f2b705" font-size="9.5" font-weight="700" text-anchor="middle" letter-spacing="1.5">事業者（構想）</text>')
+s.append(f'<text x="{hx+hw/2}" y="44" fill="#fff" font-size="15" font-weight="900" text-anchor="middle">安全データ基盤</text>')
+s.append(f'<text x="{hx+hw/2}" y="59" fill="#cfe0ff" font-size="9.5" font-weight="700" text-anchor="middle">判定・評価・権利管理を一体運営</text>')
 funcs = [('scan-eye', '統合判定', '人・車・RSUを同時刻で照合'), ('badge-check', '品質評価・アノテーション', '学習データ候補を選別'),
          ('lock', '同意・匿名化・権利管理', '提供範囲を主体ごとに管理'), ('radio-tower', 'RSU・エッジ・クラウド', '警告配信・ログ保存')]
 for i, (icn, t, d) in enumerate(funcs):
@@ -50,15 +50,15 @@ s.append('</svg>')
 flow = ''.join(s)
 
 cards = [
- ('o', 'hand-coins', '顧客・支払者', ['保険会社（自動車保険・事故対応）', '自治体（交通安全・道路管理）', '自動車メーカー・Tier1・フリート事業者']),
- ('g', 'sparkles', '提供価値', ['事故リスク低減、査定・責任判断の支援', '危険地点の可視化と施策評価', '単一センサでは得にくい希少事象の補完']),
- ('o', 'coins', '収益源（想定）', ['保険向け安全サービス料・成果配分', '自治体の交通安全実証・運用委託', '開発側へのデータ利用料・評価料']),
- ('', 'gift', '無償側の参加者', ['歩行者・運転者は補助警告を受け、無償または保険料割引で参加', '参加者が増えるほど希少事象の取得量が増える']),
- ('n', 'settings', '主要活動', ['人・車・RSU情報の時刻同期と照合', 'イベント候補の抽出・品質評価', '同意・匿名化・提供範囲の管理']),
- ('n', 'database', '主要資源', ['Seneschalの本人同意データ', 'ドラレコ・OBUの車両データ', 'RSU・統合判定基盤、Scenario DB']),
- ('p', 'handshake', 'パートナー', ['保険会社、自治体・道路管理者・警察', 'ドラレコ・OBU・RSUの機器ベンダー', '自動車メーカー・Tier1']),
- ('r', 'receipt', 'コスト構造', ['RSU・エッジ設備と通信', 'クラウド保存・処理', 'アノテーション・品質評価・同意管理']),
- ('t', 'route', 'チャネル', ['保険契約者向けアプリ（Seneschal）', '自治体の実証事業', 'メーカー・Tier1との開発データ契約']),
+ ('o', 'hand-coins', '顧客・支払者', ['保険会社、自治体（交通安全・道路管理）', '自動車メーカー・Tier1・フリート事業者']),
+ ('g', 'sparkles', '提供価値', ['事故リスク低減、査定・責任判断の支援', '危険地点の可視化、希少事象の補完']),
+ ('o', 'coins', '収益源（想定）', ['保険の安全サービス料・成果配分、自治体委託', '開発側へのデータ利用料・評価料']),
+ ('', 'gift', '無償側の参加者', ['補助警告を受け、無償／保険料割引で参加', '参加者が増えるほど希少事象が増える']),
+ ('n', 'settings', '主要活動', ['人・車・RSU情報の時刻同期と照合', '候補の抽出・品質評価、同意・匿名化の管理']),
+ ('n', 'database', '主要資源', ['Seneschalの本人同意データ、車両データ', 'RSU・統合判定基盤、Scenario DB']),
+ ('p', 'handshake', 'パートナー', ['保険会社、自治体・道路管理者・警察', '機器ベンダー、自動車メーカー・Tier1']),
+ ('r', 'receipt', 'コスト構造', ['RSU・エッジ設備と通信、クラウド', 'アノテーション・品質評価・同意管理']),
+ ('t', 'route', 'チャネル', ['保険契約者向けアプリ（Seneschal）', '自治体の実証、開発データ契約']),
 ]
 cards_html = ''.join(f'<div class="card"><div class="ch"><span class="ib {c}">{ic(i)}</span>{t}</div><ul>{"".join(f"<li>{x}</li>" for x in l)}</ul></div>' for c, i, t, l in cards)
 
@@ -70,10 +70,10 @@ chev = ''.join(f'<div class="s" style="background:{bg}"><b><span class="n">{n}</
 
 kpis = [('user', '同意取得率', '同意者 ÷ アプリ利用者'), ('bell-ring', '誤警告率', '誤警告 ÷ 全警告'), ('route', '回避行動率', '警告後の減速・停止 ÷ 警告'),
         ('brain', '学習採用率', '学習に採用 ÷ イベント候補'), ('coins', '1件当たり取得費', '取得・評価費 ÷ 採用イベント'), ('shield-check', '損害率改善', '参加者と非参加者の差')]
-kpi_html = ''.join(f'<div class="tile"><div class="tl">{ic(i)}{t}</div><div class="td">{d}</div></div>' for i, t, d in kpis)
+kpi_html = ''.join(f'<div class="tile" style="padding:3px 7px"><div class="tl">{ic(i)}{t}</div><div class="td">{d}</div></div>' for i, t, d in kpis)
 
 body = f'''
-<div class="hero" style="height:110px;background-image:url({img('rsu_city')})"><div class="in">
+<div class="hero" style="height:96px;background-image:url({img('rsu_city')})"><div class="in">
   <div class="eb">BUSINESS MODEL ／ SAFETY DATA LOOP</div>
   <div class="th">人・車・路側の相互警告で集めた希少事象を、<br>保険・自治体・開発の3者が払う価値に変える</div>
   <div class="chips"><span class="chip">{ic('hand-coins')}対価を払う主体：保険・自治体・開発側</span><span class="chip">{ic('gift')}参加者は無償／保険料割引</span><span class="chip">{ic('lock')}提供は同意・品質評価済みのみ</span></div>
@@ -104,10 +104,19 @@ body = f'''
     <div class="hb r">{ic('triangle-exclamation-point')}前提と制約</div>
     <div class="card" style="border-color:var(--red);flex:1"><ul>
       <li>補助警告であり、車両制御・安全保証を代替しない</li>
-      <li>責任は法令・許可・契約に基づき個別に定める</li>
       <li>保険料割引・料金水準は保険会社と監督当局の確認が前提</li>
       <li>保険・データ利用の収益は英文ポートフォリオのP/Lに含めていない（上振れ要因として別管理）</li>
     </ul></div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="hb o">{ic('receipt')}収益と費用の見積もり式<small>単価・数量はPoCと契約で決める（未設定）。1件当たり取得費が1件当たり収入を下回るかで採算を判定</small></div>
+  <div class="row" style="grid-template-columns:repeat(4,1fr);gap:5px">
+    <div class="card" style="border-top:3px solid var(--orange)"><div class="ch"><span class="ib o">{ic('shield-check')}</span>保険会社から</div>参加契約者数 × 1人当たり安全サービス料<br>＋ 損害額の減少分 × 成果配分率</div>
+    <div class="card" style="border-top:3px solid var(--orange)"><div class="ch"><span class="ib o">{ic('landmark')}</span>自治体から</div>対象交差点・区間数 × 運用委託単価<br>＋ 実証期間の委託費</div>
+    <div class="card" style="border-top:3px solid var(--orange)"><div class="ch"><span class="ib o">{ic('cpu')}</span>開発側から</div>学習に採用されたイベント数 × データ単価<br>＋ 評価件数 × 評価サービス単価</div>
+    <div class="card" style="border-top:3px solid var(--red)"><div class="ch"><span class="ib r">{ic('receipt')}</span>費用</div>RSU台数 ×（設備償却＋通信）<br>＋ イベント候補数 × 品質評価単価<br>＋ 保存量 × クラウド単価</div>
   </div>
 </section>
 

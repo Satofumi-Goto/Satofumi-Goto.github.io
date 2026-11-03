@@ -23,7 +23,6 @@ def page(key, title, theme, h1, lead, body, msg, pg):
 <h1><span class="k">Business Model</span>｜{h1}</h1>
 <p class="lead">{lead}</p>
 {body}
-<div class="ft"><div class="nm"><small>事業開発環境</small><b>Federation</b></div><div class="msg">{msg}</div><a class="url" href="https://federation.base44.app" target="_blank" rel="noopener noreferrer">https://federation.base44.app</a></div>
 <div class="pg">Page {pg}/12</div>
 </div></div>
 <script>

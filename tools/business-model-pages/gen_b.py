@@ -14,7 +14,7 @@ for im, t, name, payer, icn in slots:
 <div style="position:absolute;left:0;right:0;top:0;padding:4px 7px;background:linear-gradient(180deg,rgba(7,29,77,.85),rgba(7,29,77,0));color:#fff;font-family:var(--num);font-weight:700;font-size:12px">{t}</div>
 <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 7px 5px;background:linear-gradient(0deg,rgba(7,29,77,.95) 55%,rgba(7,29,77,0));color:#fff">
 <div style="font-weight:900;font-size:12.5px">{name}</div><div style="font-size:9px;font-weight:700;color:#f2b705">支払者：{payer}</div></div></div>''')
-hero = f'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;height:150px;flex:none">{"".join(tiles)}</div>'
+hero = f'<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;height:124px;flex:none">{"".join(tiles)}</div>'
 
 # ---------- 24h donut ----------
 cx, cy, ro, ri = 112, 112, 100, 62
@@ -102,6 +102,14 @@ body = f'''
   <div style="display:grid;place-items:center;color:var(--orange);font-size:20px">{ic('chevron-right')}</div>
   <div style="background:var(--orange-t);border:1.5px solid var(--orange);border-radius:6px;padding:5px 7px;font-size:9.5px;line-height:1.4"><b style="color:var(--orange);font-size:10.5px">委託対価の成果連動部分</b><br>連動の割合は契約で設定（未設定）</div></div>
 </section>
+<section class="sec"><div class="hb g">{ic('map-pin')}段階展開<small>2030年・2035年は英文ポートフォリオの計画値。PoCは仮入力</small></div>
+  <div class="chev">
+    <div class="s" style="background:#5b7fc4"><b><span class="n">PoC</span>1地域で立ち上げ</b>Node 1か所。介護・学童の日中2サービスから開始<br><em>自治体委託で運行費を確保</em></div>
+    <div class="s" style="background:#2f5fb3"><b><span class="n">2030</span>夜間を加え4Node</b>車両25台・Node 4。稼働率0.75、夜間比率0.35<br><em>運行73回／Node・日</em></div>
+    <div class="s" style="background:#0b2a6b"><b><span class="n">2035</span>面展開で36Node</b>車両500台・Node 36。稼働率0.85、夜間比率0.60<br><em>運行140回／Node・日</em></div>
+  </div>
+</section>
+
 <div class="punch">{ic('sparkles')}三つの専用事業ではなく、一つの運行基盤を24時間で売る。支払者を重ねるほど固定費が薄まる</div>
 '''
 import re

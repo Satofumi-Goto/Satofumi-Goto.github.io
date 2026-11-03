@@ -105,8 +105,26 @@ ue = [('ticket', '1運行当たり売上', '¥6,650', '¥9,680', '座席×積載
       ('droplet', '水素換算／Node・日', '104.1', '171.2', 'kg（効率0.60／0.70）'), ('route', '運行回数／Node・日', '73', '140', '車両25台 → 500台')]
 ueh = ''.join(f'<div class="tile"><div class="tl">{ic(i)}{t}</div><div class="tv" style="font-size:14px">{a} <span class="arrow">→</span> {b}</div><div class="td">{d}</div></div>' for i, t, a, b, d in ue)
 
+
+# ---------- investment in service ----------
+D, Q, H = '#0b2a6b', '#0e8a8a', '#d9670a'
+iv = ['<svg viewBox="0 0 520 74" width="100%" role="img" aria-label="稼働中の投資額の内訳（2030年1,486.5億円、2035年3,220.0億円）">']
+kx = 380 / 3220.0
+for i, (yr, parts, tot) in enumerate([('2030年', [(1000.0, D, '開発'), (426.5, Q, 'Node・エネルギー設備'), (60.0, H, 'HPC・量子')], '1,486.5'),
+                                     ('2035年', [(1333.0, D, '開発'), (1317.0, Q, 'Node・エネルギー設備'), (570.0, H, 'HPC・量子')], '3,220.0')]):
+    y = 6 + i * 30; x = 50
+    iv.append(f'<text x="0" y="{y+14}" font-size="10" font-weight="700" fill="#16202f">{yr}</text>')
+    for v, c, n in parts:
+        w = v * kx
+        iv.append(f'<rect x="{x:.1f}" y="{y}" width="{w:.1f}" height="20" fill="{c}" stroke="#fff" stroke-width="1"/>')
+        if w > 60: iv.append(f'<text x="{x+w/2:.1f}" y="{y+13.5}" font-size="8.6" font-weight="700" fill="#fff" text-anchor="middle">{n} {v:,.1f}</text>')
+        x += w
+    iv.append(f'<text x="{x+4:.1f}" y="{y+14}" font-size="10" font-weight="700" fill="#0b2a6b" class="nm">{tot}</text>')
+iv.append('<text x="50" y="70" font-size="8" fill="#5a6578">開発＝車両開発・Platform開発・試作／設備＝Node・GTFC・ミル・電池・磁気冷凍・HTS・水道設備（億円）</text></svg>')
+iv = ''.join(iv)
+
 body = f'''
-<div class="hero" style="height:130px;background-image:url({img('vertiport')});background-position:center 40%"><div class="in" style="max-width:100%;flex-direction:row;align-items:center;justify-content:space-between;gap:14px">
+<div class="hero" style="height:108px;background-image:url({img('vertiport')});background-position:center 40%"><div class="in" style="max-width:100%;flex-direction:row;align-items:center;justify-content:space-between;gap:14px">
   <div style="display:flex;flex-direction:column;gap:5px;max-width:52%"><div class="eb">BUSINESS MODEL ／ ENERGY-LED MOBILITY</div>
   <div class="th">運賃で稼ぐのではなく、エネルギー・演算・<br>運行基盤で稼ぎ、自動運転を需要源にする</div></div>
   <div style="display:flex;gap:6px">
@@ -124,6 +142,13 @@ body = f'''
   <div class="sec" style="grid-column:span 2"><div class="hb o">{ic('chart-column')}損益の構造<small>単位：億円。年ごとに縮尺が異なる</small></div>
     <div class="row" style="grid-template-columns:1fr 1fr;gap:5px"><div class="panel" style="padding:3px 5px">{w30}</div><div class="panel" style="padding:3px 5px">{w35}</div></div></div>
   <div class="sec"><div class="hb r">{ic('scale')}柱ごとの収支</div><div class="panel" style="padding:3px 5px">{pv}</div></div>
+</section>
+
+<section class="row" style="grid-template-columns:1fr 210px">
+  <div class="sec"><div class="hb">{ic('factory')}投資の内訳<small>稼働中の資産（償却の対象）</small></div><div class="panel" style="padding:4px 7px">{iv}</div></div>
+  <div class="sec"><div class="hb o">{ic('triangle-exclamation-point')}読み取れること</div><div class="card tint" style="flex:1">
+    <p>2030年は投資の<b style="color:var(--orange)">67%</b>が開発。償却203.06億円が営業赤字の主因</p>
+    <p style="margin-top:3px">2035年は設備とHPCが増え、収益を生む資産の比率が<b style="color:var(--green)">59%</b>に上がる</p></div></div>
 </section>
 
 <section class="sec"><div class="hb g">{ic('trending-up')}黒字化の筋道</div><div class="chev">{chev}</div></section>
