@@ -1,549 +1,557 @@
 {
- "_readme": "改訂ログの単一データ源。ページ上の各カード下の折り畳み(.rev)はここから tools/revision-log/render.mjs が生成する。HTMLを直接編集しない。更新日(updated)は自動、本文を書くかどうかは revisions/IMPACT-RULES.md の基準で判定し、結果を revisions/decisions.jsonl に残す。reviewed_at は、そのカードの変更を評価済みの時刻。",
- "revision": 1,
- "labels": {
-  "en": {
-   "summary": "Revision log",
-   "meta": "Rev. {rev} · updated {date}"
+  "_readme": "改訂ログの単一データ源。ページ上の各カード下の折り畳み(.rev)はここから tools/revision-log/render.mjs が生成する。HTMLを直接編集しない。更新日(updated)は自動、本文を書くかどうかは revisions/IMPACT-RULES.md の基準で判定し、結果を revisions/decisions.jsonl に残す。reviewed_at は、そのカードの変更を評価済みの時刻。",
+  "revision": 1,
+  "labels": {
+    "en": {
+      "summary": "Revision log",
+      "meta": "Rev. {rev} · updated {date}"
+    },
+    "ja": {
+      "summary": "改訂履歴",
+      "meta": "第{rev}回改訂 · {date}更新"
+    }
   },
-  "ja": {
-   "summary": "改訂履歴",
-   "meta": "第{rev}回改訂 · {date}更新"
+  "pages": {
+    "index.html": {
+      "lang": "en",
+      "cards": [
+        "sim",
+        "bizdev",
+        "concept",
+        "bmstudy",
+        "feasibility",
+        "seneschal",
+        "federation"
+      ]
+    },
+    "capabilities/index.html": {
+      "lang": "en",
+      "cards": [
+        "sim",
+        "bizdev",
+        "concept",
+        "bmstudy",
+        "feasibility",
+        "seneschal",
+        "federation"
+      ]
+    }
+  },
+  "cards": {
+    "sim": {
+      "updated": "2026-11-04",
+      "watch": [
+        "simulator-source",
+        "regional-demo",
+        "capabilities/fleet-hub-study-20261015.json"
+      ],
+      "upstream": [
+        "Satofumi-Goto/mobility-business-lab"
+      ],
+      "en": {
+        "head": "Expanded the simulator to connect operating choices with investment recovery, making the conditions for a viable mobility business easier to examine.",
+        "items": [
+          {
+            "lead": "Find the assumptions that decide the investment case.",
+            "text": " A standalone page ranks every planning index by its effect on 2035 operating profit and NPV, using the simulator’s own finance engine. Change any value and watch profit, IRR and cash flow respond. Works in English or Japanese, with no sign-in."
+          },
+          {
+            "lead": "Work back from a business target.",
+            "text": " Enter a target to explore operating conditions, compare candidates and run stress tests. Interactive results help identify which changes bring the business closer to its goal."
+          },
+          {
+            "lead": "Compare regions on common terms.",
+            "text": " Tokyo, Nagoya and Toyota share comparable inputs. Move staging and overnight sites, then follow bookings through to pickup to examine how site placement affects operations."
+          },
+          {
+            "lead": "Evaluate the business value of the customer touchpoint.",
+            "text": " Models connect control of the user interface with dispatch and revenue. Disruption scenarios bring normal-operation economics and resilience into the same comparison."
+          },
+          {
+            "lead": "Turn an operating plan into an investment case.",
+            "text": " Operations, profit and cash flow are calculated together, including tax and equipment renewal in the recovery assessment. Cost breakdowns and sensitivity analysis reveal which conditions drive viability."
+          },
+          {
+            "lead": "Compare a measure’s benefits and trade-offs before adoption.",
+            "text": " Before-and-after comparisons of city operations, services, ride sharing and control link to Federation demonstrations. Improvements and adverse effects inform technical targets for profit improvement."
+          },
+          {
+            "lead": "Test how the plan holds up as conditions change.",
+            "text": " Repeated trials and sensitivity analysis show the range of outcomes and performance under demanding conditions. Higher-profit candidates support comparison, while the user decides which plan to adopt."
+          },
+          {
+            "lead": "Move from the conclusion to its evidence in one place.",
+            "text": " Read the key investment indicators first, then inspect profit breakdowns, calculations and input sources. Shared inputs with Federation and consistent calculated results support discussion across the related materials."
+          }
+        ],
+        "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
+      },
+      "reviewed_at": "2026-11-04T00:00:00Z",
+      "ja": {
+        "head": "運行方式の比較から投資回収までをつなぎ、モビリティ事業が成立する条件を検討できる環境へ拡張しました。",
+        "items": [
+          {
+            "lead": "投資判断を左右する前提を、すぐに特定。",
+            "text": "シミュレータと同じ計算エンジンで、すべての計画指数を2035年営業利益とNPVへの影響順に並べる単独ページを公開。値を変えると損益・IRR・キャッシュフローがその場で変わり、日英どちらでも、ログインなしで試せます。"
+          },
+          {
+            "lead": "事業目標から、実行条件を探る。",
+            "text": "目標を入力すると、運行条件の探索・候補比較・ストレステストまでを実行。どの条件を変えれば目標に近づくかを、画面を操作しながら検討できます。"
+          },
+          {
+            "lead": "地域が変わっても、同じ基準で比較。",
+            "text": "東京・名古屋・豊田を共通条件で比較し、待機・夜間拠点の配置を変更。予約受付から乗車まで追うことで、拠点配置が運行に与える影響を確認できます。"
+          },
+          {
+            "lead": "顧客接点の価値を、配車と収益で検討。",
+            "text": "利用者接点を持つことが配車・収益にどう効くかをモデル化。運行障害を加えた比較で、平常時の採算と障害時の対応力を併せて検討できます。"
+          },
+          {
+            "lead": "運行計画を、投資判断につなぐ。",
+            "text": "運行の計算と損益・キャッシュフローを統合し、税金や設備更新まで含めた投資回収を評価。費用の内訳と感度分析から、事業成立を左右する条件を探れます。"
+          },
+          {
+            "lead": "施策の効果と代償を、導入前に比較。",
+            "text": "都市運行・サービス・相乗り・制御の施策を、Federationの実演と連動して変更前後で比較。改善点と悪化点を確認し、利益改善案を技術目標の検討へつなげられます。"
+          },
+          {
+            "lead": "条件の揺らぎまで含めて判断。",
+            "text": "複数の試行と感度分析で結果の幅を示し、厳しい条件での運行を確認。収益性の高い候補も比較材料として提示し、採用する計画は利用者が決められます。"
+          },
+          {
+            "lead": "結論から根拠まで、一つの画面で確認。",
+            "text": "主要な投資指標を素早く把握し、必要に応じて損益の内訳・計算根拠・入力の出所まで確認できます。Federationと入力を連携し、関連資料と共通の計算結果で議論を進められます。"
+          }
+        ],
+        "note": "地域や運行経路は仮想条件で、入力値は編集可能です。結果は事業計画の試算であり、運行実績ではありません。"
+      }
+    },
+    "value": {
+      "updated": "2026-10-25",
+      "watch": [
+        "capabilities/value-proposition.html",
+        "Value_Proposition_Toyota_Woven_20260930.pdf",
+        "portfolio/提供価値.pdf"
+      ],
+      "upstream": [],
+      "en": {
+        "head": "A sharper theme and one consistent voice, from the homepage to the PDF.",
+        "items": [
+          {
+            "lead": "30 Sept edition published",
+            "text": " as the entry document of the site."
+          },
+          {
+            "lead": "First page rewritten",
+            "text": " around the AI-and-mobility career theme."
+          },
+          {
+            "lead": "Detailed first page restored,",
+            "text": " with company-specific headings generalised."
+          },
+          {
+            "lead": "Business-expansion concept",
+            "text": " restored on page four in concrete, neutral wording."
+          },
+          {
+            "lead": "Profile refocused",
+            "text": " on connecting vehicles with the cities they operate in."
+          },
+          {
+            "lead": "Wording synchronised",
+            "text": " across the homepage, this overview and the portfolio descriptions."
+          },
+          {
+            "lead": "Target-company references removed",
+            "text": " from the public PDFs while system names were kept."
+          }
+        ],
+        "note": ""
+      },
+      "reviewed_at": "2026-10-19T03:15:00Z"
+    },
+    "bmstudy": {
+      "updated": "2026-11-04",
+      "watch": [
+        "capabilities/Autonomous_Driving_Service_Business_Model_Study.pdf",
+        "Autonomous_Mobility_Business_Model_Design.pdf",
+        "portfolio/Autonomous_Mobility_Business_Model_Design.pdf"
+      ],
+      "upstream": [],
+      "en": {
+        "head": "Reorganised the relationship between mobility services and their operating foundation, connecting customer value with the conditions for a viable business.",
+        "items": [
+          {
+            "lead": "Understand the service and what it takes to sustain it.",
+            "text": " Mobility demand and diverse services are explained alongside the vehicle, site and energy concepts, making the relationship between customer value and the operating foundation easier to follow."
+          },
+          {
+            "lead": "Understand the concept through aligned diagrams and explanations.",
+            "text": " The FC skateboard illustration and related descriptions are aligned, helping readers see how the vehicle concept connects with services."
+          }
+        ],
+        "note": ""
+      },
+      "reviewed_at": "2026-10-22T02:10:00Z",
+      "ja": {
+        "head": "移動サービスと運行基盤の関係を整理し、顧客価値から事業成立条件まで読み解ける構成にしました。",
+        "items": [
+          {
+            "lead": "サービスと、その成立条件を一体で捉える。",
+            "text": "移動需要と多様なサービスを、車両・拠点・エネルギーの構想と結び付けて説明。利用者に届ける価値と、それを支える運行基盤の関係を追えるようにしました。"
+          },
+          {
+            "lead": "構想の関係を、図と説明で把握。",
+            "text": "FCスケートボードの図と関連資料の説明をそろえ、車両構想とサービスのつながりを視覚的にも確認できるようにしました。"
+          }
+        ],
+        "note": ""
+      }
+    },
+    "feasibility": {
+      "updated": "2026-10-23",
+      "watch": [
+        "Autonomous_Mobility_System_Business_Feasibility.pdf",
+        "tools/simulation-sync"
+      ],
+      "upstream": [],
+      "en": {
+        "head": "Aligned operations, finance and investment recovery on common assumptions to clarify the conditions that still need to be met for commercialisation.",
+        "items": [
+          {
+            "lead": "Connect operating scale with financial and investment results.",
+            "text": " Aligned assumptions for passenger revenue, hydrogen demand and depreciation make the link between operations and finance traceable. Shared figures with the simulator support examination of business viability."
+          },
+          {
+            "lead": "Separate operating profit from investment recovery.",
+            "text": " Cash flow and investment indicators make clear that operating profitability does not yet deliver investment recovery in the plan. The investment remains unrecovered even when 2035 cash flow is extended, identifying the need for further business-case development."
+          },
+          {
+            "lead": "Evaluate shared infrastructure as a new revenue opportunity.",
+            "text": " Added a quantum-computing scenario that shares cooling, buildings, power and communications at hydrogen-cooled sites. Incremental equipment and operating costs and revenue from reserved computing time enable comparison with the case without quantum computing."
+          }
+        ],
+        "note": "Figures are planning-scenario values from editable assumptions, not operating results."
+      },
+      "ja": {
+        "head": "運行・収支・投資回収を共通の前提で検証し、事業化に向けて解くべき条件を明確にしました。",
+        "items": [
+          {
+            "lead": "運行規模から投資回収まで、つながる評価へ。",
+            "text": "旅客売上・水素需要・減価償却の前提をそろえ、運行と収支の関係を追えるようにしました。シミュレータと共通の数値に基づき、事業成立条件を検討できます。"
+          },
+          {
+            "lead": "黒字化と投資回収を分け、次の課題を明確に。",
+            "text": "営業黒字でも投資回収に至らない計画であることを、キャッシュフローと投資指標で明示。2035年のキャッシュフローを延長しても未回収という結果を示し、事業化に向けた追加検討の必要性を明確にしました。"
+          },
+          {
+            "lead": "共用インフラを、新たな収益機会として評価。",
+            "text": "水素冷却拠点の冷却・建屋・電力・通信を量子計算に共用する案を追加。追加設備・運用費と時間販売による収益を計上し、量子計算を含まない場合と投資指標を比較できるようにしました。"
+          }
+        ],
+        "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
+      },
+      "reviewed_at": "2026-10-23T09:30:00Z"
+    },
+    "seneschal": {
+      "updated": "2026-10-27",
+      "watch": [],
+      "upstream": [
+        "Satofumi-Goto/seneschal"
+      ],
+      "en": {
+        "head": "Connected a personalised assistant, contextual usage guidance and support for schedules and travel, taking everyday plans from conversation to action.",
+        "items": [
+          {
+            "lead": "Choose an assistant that suits you.",
+            "text": " Seneschal now has an avatar with personalised appearance, personality, conversation style and operating rules. Customers can select and configure an assistant around their preferences and ways of working."
+          },
+          {
+            "lead": "Choose around your plan and AI-service account.",
+            "text": " Available features are made explicit for each service plan and integration with the customer’s AI-service subscription, helping customers choose how to use the app with a clear view of the conditions."
+          },
+          {
+            "lead": "Ask in the search bar, get guidance at the controls.",
+            "text": " Ask how to use Seneschal from each page’s search bar. The chosen assistant answers in a guidance card and points to the relevant controls, so customers can follow the explanation as they work. Standard searches, schedule queries and action requests retain priority."
+          },
+          {
+            "lead": "Turn everyday information into scheduling and travel decisions.",
+            "text": " Weather, disaster, parking and charging information connects with the calendar and guidance. Electricity supply–demand and heat information add context, while bookings reflect congestion-aware travel time, helping users move from checking information to considering action."
+          },
+          {
+            "lead": "Discuss a schedule, then decide what to apply.",
+            "text": " A single request becomes a schedule proposal that is applied after the user approves it. Fixed events are respected, so users can review and compare proposals before deciding."
+          },
+          {
+            "lead": "Consider a family meeting point after an alert (demonstration).",
+            "text": " An earthquake alert leads to map-based options for going home or meeting family. Reported road closures inform candidate selection, demonstrating a flow in which users review a proposal before deciding."
+          },
+          {
+            "lead": "Consider calendar events and service options together.",
+            "text": " Two-way sync with a public sample Google Calendar and Square search suggestions connect schedule review with the search for service options."
+          },
+          {
+            "lead": "Organise a consultation and pick it up again.",
+            "text": " Private conversations with the assistant are saved by project. Example prompts help customers decide what to ask and support continued discussion."
+          },
+          {
+            "lead": "Reach the screens you need more readily.",
+            "text": " Screens and features now load when needed, reducing the initial loading burden and helping users get to their schedules and services."
+          }
+        ],
+        "note": "Prototype with demonstration data where noted in the app. External-data features use free public APIs."
+      },
+      "ja": {
+        "head": "利用者に合う担当セネシャル、使い方の案内、予定と移動の支援をつなぎ、日常の行動を相談から操作まで進められるアプリへ拡張しました。",
+        "items": [
+          {
+            "lead": "自分に合う担当セネシャルを選べる。",
+            "text": "Seneschalをアバター化し、見た目・性格・会話スタイル・運用ルールを個別化。お客様の好みや使い方に合わせて、担当セネシャルを選択・設定できるようにしました。"
+          },
+          {
+            "lead": "利用プランとAI契約に合わせて選べる。",
+            "text": "利用プランとお客様のAIサービス契約との連携状況に応じ、使える機能を明確化。利用条件を確認しながら、自分に合う使い方を選べるようにしました。"
+          },
+          {
+            "lead": "検索バーから質問、操作箇所まで案内。",
+            "text": "各ページの検索バーで使い方を質問すると、担当セネシャルが案内カードで回答し、該当する操作箇所を示します。説明を読みながら操作を進められ、通常の検索・予定照会・操作依頼も優先して使えます。"
+          },
+          {
+            "lead": "暮らしの情報を、予定と移動の判断へ。",
+            "text": "天気・災害・駐車・充電の情報を、カレンダーや案内につなぎました。電力需給や暑さの情報も取り込み、予約には渋滞を考慮した所要時間を反映。情報の確認から行動の検討へ進められます。"
+          },
+          {
+            "lead": "予定づくりを相談し、納得して反映。",
+            "text": "一つの依頼から予定案を作り、利用者の承認を経てカレンダーへ反映。固定した予定を尊重し、提案を比較・確認してから決められる仕組みにしました。"
+          },
+          {
+            "lead": "災害情報から、家族との合流を検討（デモ）。",
+            "text": "地震の警報から、帰宅や家族との合流候補を地図で確認する流れを追加。通行止めの情報を候補選択に反映し、提案を確認して判断する体験をデモで示しました。"
+          },
+          {
+            "lead": "予定とサービスの候補を、一緒に検討。",
+            "text": "公開サンプルのGoogleカレンダーとの双方向同期と、Squareの検索候補を接続。予定を確認しながらサービスの選択肢を探せるようにしました。"
+          },
+          {
+            "lead": "相談を整理し、続きから考えられる。",
+            "text": "担当セネシャルとの非公開の相談を、プロジェクトごとに整理して保存。会話例も用意し、何を相談するかを考えるところから継続的に支援します。"
+          },
+          {
+            "lead": "必要な画面へ、軽快にアクセス。",
+            "text": "画面や機能を必要なときに読み込む構成へ改め、初期読み込みの負担を軽減。予定やサービスを確認する操作へ進みやすくしました。"
+          }
+        ],
+        "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
+      },
+      "reviewed_at": "2026-10-22T02:10:00Z"
+    },
+    "federation": {
+      "updated": "2026-10-28",
+      "watch": [],
+      "upstream": [
+        "Satofumi-Goto/federation-portal",
+        "Satofumi-Goto/fleet-operations-console",
+        "Satofumi-Goto/service-hub-console",
+        "Satofumi-Goto/urban-operation-console"
+      ],
+      "en": {
+        "head": "Connected vehicle planning, service-hub technologies and business-feasibility evaluation in one development environment, with guided use and 97 deliverable documents to support decisions from concept through operations.",
+        "items": [
+          {
+            "lead": "Move through the work with a tutorial and help.",
+            "text": " Matsuko guides users through the screens and workflow in a 37-card tutorial, while settings help and chat address usage questions. The introduction connects finding and improving service operating breakdowns with deriving the technical targets required for business viability."
+          },
+          {
+            "lead": "Control Seneschal, the simulator and four consoles in real time.",
+            "text": " Connected Seneschal and the simulator with activity, fleet-operations, service-hub and urban-operations consoles. Shared states and constraints across demand, vehicles, roads, hubs and energy support coordinated service operations across the operating domains."
+          },
+          {
+            "lead": "Automatically find operating breakdowns and build up improvements.",
+            "text": " Implemented consistency, scoring and autonomy engines to find the points where service operations become unviable and repeat cause analysis, improvement and verification. The improvement cycle connects technical conditions, operations and business feasibility."
+          },
+          {
+            "lead": "Evaluate vehicle planning, hub technologies and business viability together.",
+            "text": " Concept-stage vehicle planning and service-hub technical configurations connect with assessments of operations, service quality, financial performance and investment recovery. Users can examine how technical conditions affect the service and its economics, then assess operational improvements and further technical development against shared viability conditions. Requirements and evidence also trace upstream and downstream change impacts and design options to support decisions across disciplines."
+          },
+          {
+            "lead": "Take the concept toward design and execution with 97 deliverables.",
+            "text": " Prepared 69 Artifact and 28 Blueprint documents spanning concepts, requirements, vehicle and hub design, specifications, verification, operating procedures, financial plans, investment decisions and execution plans. Stakeholders can work from concrete materials throughout the assessment."
+          },
+          {
+            "lead": "Choose improvements using shared figures and financial evidence.",
+            "text": " Simulator results and Federation indices align assumptions across applications and materials. Profit, cash flow and investment indicators connect with checks on revenue, operating scale, investment and depreciation, helping users compare improvement candidates and decide which changes to adopt."
+          },
+          {
+            "lead": "Turn outside information into reviewable update proposals.",
+            "text": " Collected data becomes dated proposals to update indices. Users can review each proposal and decide whether to incorporate the change into the plan."
+          },
+          {
+            "lead": "Improve AI-generated work with traceable evidence.",
+            "text": " Independent review of design and deliverable cards connects diagnosis, correction and re-review. Open findings and evidence remain traceable, and review performance is itself tested to identify missed issues."
+          },
+          {
+            "lead": "Connect anomaly detection with response and handover.",
+            "text": " Detection, cause analysis, candidate comparison and verification form one operating flow. Execution records and estimates are distinguished, while shared handover items help people coordinate the response."
+          },
+          {
+            "lead": "Follow connected knowledge to deepen an assessment.",
+            "text": " Sourced notes on autonomous-mobility service operations are linked in a graph, giving users access to related knowledge for design and operating decisions."
+          }
+        ],
+        "note": "Planning-scenario values from editable assumptions, not operating results."
+      },
+      "ja": {
+        "head": "車両企画・サービス拠点の技術構成・事業性評価を一つの事業開発環境に統合。使い方案内と97枚の成果物資料を整え、構想から運用までの検討と判断を支援します。",
+        "items": [
+          {
+            "lead": "チュートリアルとヘルプで、検討を進められる。",
+            "text": "マツコが37枚のチュートリアルで画面と検討の流れを案内し、設定内ヘルプとチャットで操作上の疑問に対応。運行の崩壊点を見つけて改善し、事業成立に必要な技術目標値を逆算する目的まで、一続きで理解できます。"
+          },
+          {
+            "lead": "Seneschal・シミュレータ・4コンソールを、リアルタイム制御。",
+            "text": "Seneschalとシミュレータ、活動・フリート運用・サービス拠点・都市運行の4コンソールを接続。需要・車両・道路・拠点・エネルギーの状態と制約を共有し、個別の現場をまたいでサービス運行を調整する仕組みを実装しました。"
+          },
+          {
+            "lead": "運行の崩壊点を自動で見つけ、改善を積み重ねる。",
+            "text": "整合・採点・自律エンジンを実装。サービス運行が成立しなくなる崩壊点を見つけ、原因分析・改善・再検証を繰り返す仕組みを構築しました。技術・運用・事業性のつながりを確認しながら、カイゼンを積み重ねられます。"
+          },
+          {
+            "lead": "車両企画・拠点技術・事業性を、一体で評価。",
+            "text": "構想段階の車両企画とサービス拠点の技術構成を、運行・品質・収支・投資回収の評価につなぎました。技術条件がサービスと採算に与える影響を確認し、運用改善と次の技術開発を共通の成立条件から検討できます。要求と証跡から設計変更の上流・下流への影響と選択肢をたどり、分野をまたぐ判断を支援します。"
+          },
+          {
+            "lead": "97枚の成果物で、構想を設計と実行へ。",
+            "text": "Artifact 69枚とBlueprint 28枚を整備。構想・要求・車両／拠点設計から、仕様・検証・運用手順・収支・投資判断・実行計画までを参照でき、関係者が具体的な資料に基づいて検討を進められます。"
+          },
+          {
+            "lead": "共通の数値と採算の根拠から、改善策を選ぶ。",
+            "text": "シミュレータの計算結果とFederationの指数を連携し、関連アプリ・資料の前提を統一。損益・キャッシュフロー・投資指標と、売上・運行規模・投資・減価償却の整合を確認し、利益改善の候補を比較して採否を判断できます。"
+          },
+          {
+            "lead": "外部情報を、判断できる更新提案へ。",
+            "text": "収集した外部データを日付付きの指数更新案として提示。変化を計画に取り込む前に、利用者が内容を確認し採否を決められます。"
+          },
+          {
+            "lead": "AIが作る内容を、根拠付きで改善。",
+            "text": "設計・成果物カードへの独立レビューを、診断・修正・再確認につなぎました。未解決の指摘と証跡をたどり、レビューの見落としも検証して、改善すべき点を確認できます。"
+          },
+          {
+            "lead": "異常の検知から、対応の引継ぎまで接続。",
+            "text": "検知・原因分析・候補比較・検証を一つの運用の流れに統合。実行記録と推定を区別し、担当者間で引継ぎ事項を共有して対応を進められます。"
+          },
+          {
+            "lead": "関連する知見をたどり、検討を深める。",
+            "text": "自動運転サービスの運用知識を、出典付きのノートとして接続。関連する知見をグラフでたどり、設計や運用の検討に必要な情報へアクセスできます。"
+          }
+        ],
+        "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
+      },
+      "reviewed_at": "2026-10-19T03:15:00Z"
+    },
+    "bizdev": {
+      "updated": "2026-10-22",
+      "watch": [
+        "capabilities/Business_Development_Capabilities_20261013.pdf"
+      ],
+      "upstream": [],
+      "en": {
+        "head": "Clarified the path from customer needs to a business opportunity, partner coordination and a decision on whether to proceed to a pilot.",
+        "items": [
+          {
+            "lead": "Translate customer value into business requirements.",
+            "text": " Experience across account development, business planning and technology planning is organised around customer value, showing how customer needs become operating and system requirements."
+          },
+          {
+            "lead": "Bring partners together around an executable plan.",
+            "text": " Roles, responsibilities and commercial terms across vehicles, services and sites are set out to support practical coordination on a cross-domain concept."
+          },
+          {
+            "lead": "Carry comparison through to a pilot decision.",
+            "text": " Simulation-based comparisons, partner roles and pilot decision criteria form one path, showing what needs to be examined before taking a concept to its next stage."
+          }
+        ],
+        "note": ""
+      },
+      "reviewed_at": "2026-10-22T02:10:00Z",
+      "ja": {
+        "head": "顧客課題を事業機会へ変え、パートナー連携と実証判断まで進める事業開発の道筋を明確にしました。",
+        "items": [
+          {
+            "lead": "顧客価値から、事業化の要件へ。",
+            "text": "顧客にもたらす価値を起点に、法人営業・事業企画・技術企画の経験を整理。顧客ニーズを運行要件やシステム要件へ展開する進め方を示しました。"
+          },
+          {
+            "lead": "関係者を結び、実行できる計画へ。",
+            "text": "車両・サービス・拠点などの役割と責任、取引条件を整理。分野をまたぐ構想を、事業パートナーが連携して進めるための具体的な検討につなげました。"
+          },
+          {
+            "lead": "比較検討を、実証するかの判断へ。",
+            "text": "シミュレータによる比較、パートナー間の役割整理、実証判断を一続きに整理。構想を次の段階へ進めるために、何を確認するかを示しました。"
+          }
+        ],
+        "note": ""
+      }
+    },
+    "concept": {
+      "updated": "2026-11-04",
+      "watch": [
+        "capabilities/System_Planning_Initial_Concept_20261012.pdf",
+        "capabilities/initial-concept/index.html"
+      ],
+      "upstream": [],
+      "en": {
+        "head": "Developed the mobility concept into operating and verification requirements, supporting discussion of what it takes to deliver the service.",
+        "items": [
+          {
+            "lead": "Read it as an engineering specification.",
+            "text": " Every chapter now expands into technical figures, 91 in total: sequence diagrams that include failure and compensation paths, state machines, interface and data-model tables, and verification matrices, each traced to its source chapter. A notation guide, a figure index and a technical reference with a component map, interface catalog and requirement trace take reviewers from concept to design detail in one step."
+          },
+          {
+            "lead": "Navigate the full design on any screen.",
+            "text": " The 30-page concept is now a web edition. Chapter navigation and linked page references take readers straight to the architecture, sequence and state diagrams they need, and every diagram stays sharp on a laptop or a phone. The A4 PDF remains available."
+          },
+          {
+            "lead": "Turn the concept into requirements for operation.",
+            "text": " More detailed operating specifications connect customer-touchpoint mechanisms with their validation methods, so the proposed service and the questions to be tested can be followed together."
+          },
+          {
+            "lead": "Examine service quality and economics together.",
+            "text": " Capacity, service-quality and economic constraints are set out for shared rides and combined passenger–freight service, supporting comparison of the conditions and trade-offs involved."
+          },
+          {
+            "lead": "Discuss the business and system on shared assumptions.",
+            "text": " Simulation, the feasibility materials and Federation’s design baseline are connected, aligning operating and numerical assumptions so business planning and system design can be examined together."
+          }
+        ],
+        "note": ""
+      },
+      "reviewed_at": "2026-11-04T21:10:00Z",
+      "ja": {
+        "head": "モビリティの構想を運用・検証の要件へ具体化し、サービスの実現条件を議論できる資料へ深めました。",
+        "items": [
+          {
+            "lead": "構想を、設計の詳細まで読める技術仕様書へ。",
+            "text": "全30章を展開すると技術図が現れる構成に。障害・補償の経路まで描いたシーケンス図、状態遷移図、インタフェース・データモデル表、検証マトリクスの計91図を、根拠となる章とひも付けて収録しました。記法の凡例、図の一覧、構成図・インタフェース一覧・要件トレースをまとめた技術リファレンスから、必要な設計の詳細へすぐにたどれます。"
+          },
+          {
+            "lead": "設計の全体を、どの画面でもすぐ読める形へ。",
+            "text": "30ページの構想をWeb版に再構成。目次とページ間のリンクで、アーキテクチャ・シーケンス・状態遷移の図へ直接たどれます。PCでもスマホでも図は鮮明なまま。A4のPDF版も引き続き参照できます。"
+          },
+          {
+            "lead": "構想を、動かすための要件へ。",
+            "text": "顧客接点の仕組みと検証方法まで運用仕様を具体化。どのようなサービスを提供し、そのために何を確かめるかを一続きで追えるようにしました。"
+          },
+          {
+            "lead": "サービス品質と採算を、同時に検討。",
+            "text": "相乗り・貨客混載について、車両容量・サービス品質・採算の制約を整理。複数の需要を組み合わせる際に、成立条件とトレードオフを検討できます。"
+          },
+          {
+            "lead": "事業とシステムを、共通の前提で議論。",
+            "text": "シミュレータ・事業性資料・Federationの設計基準を接続。運行条件と数値の前提をそろえ、事業計画とシステム設計を対応づけて検討できる構成にしました。"
+          }
+        ],
+        "note": "自動運転システムは、事業構想上TIER IV（ティアフォー／Autoware）を前提とします。導入や提携の実績を示すものではありません。"
+      }
+    }
   }
- },
- "pages": {
-  "index.html": {
-   "lang": "en",
-   "cards": [
-    "sim",
-    "bizdev",
-    "concept",
-    "bmstudy",
-    "feasibility",
-    "seneschal",
-    "federation"
-   ]
-  },
-  "capabilities/index.html": {
-   "lang": "en",
-   "cards": [
-    "sim",
-    "bizdev",
-    "concept",
-    "bmstudy",
-    "feasibility",
-    "seneschal",
-    "federation"
-   ]
-  }
- },
- "cards": {
-  "sim": {
-   "updated": "2026-11-04",
-   "watch": [
-    "simulator-source",
-    "regional-demo",
-    "capabilities/fleet-hub-study-20261015.json"
-   ],
-   "upstream": [
-    "Satofumi-Goto/mobility-business-lab"
-   ],
-   "en": {
-    "head": "Expanded the simulator to connect operating choices with investment recovery, making the conditions for a viable mobility business easier to examine.",
-    "items": [
-     {
-      "lead": "Find the assumptions that decide the investment case.",
-      "text": " A standalone page ranks every planning index by its effect on 2035 operating profit and NPV, using the simulator’s own finance engine. Change any value and watch profit, IRR and cash flow respond. Works in English or Japanese, with no sign-in."
-     },
-     {
-      "lead": "Work back from a business target.",
-      "text": " Enter a target to explore operating conditions, compare candidates and run stress tests. Interactive results help identify which changes bring the business closer to its goal."
-     },
-     {
-      "lead": "Compare regions on common terms.",
-      "text": " Tokyo, Nagoya and Toyota share comparable inputs. Move staging and overnight sites, then follow bookings through to pickup to examine how site placement affects operations."
-     },
-     {
-      "lead": "Evaluate the business value of the customer touchpoint.",
-      "text": " Models connect control of the user interface with dispatch and revenue. Disruption scenarios bring normal-operation economics and resilience into the same comparison."
-     },
-     {
-      "lead": "Turn an operating plan into an investment case.",
-      "text": " Operations, profit and cash flow are calculated together, including tax and equipment renewal in the recovery assessment. Cost breakdowns and sensitivity analysis reveal which conditions drive viability."
-     },
-     {
-      "lead": "Compare a measure’s benefits and trade-offs before adoption.",
-      "text": " Before-and-after comparisons of city operations, services, ride sharing and control link to Federation demonstrations. Improvements and adverse effects inform technical targets for profit improvement."
-     },
-     {
-      "lead": "Test how the plan holds up as conditions change.",
-      "text": " Repeated trials and sensitivity analysis show the range of outcomes and performance under demanding conditions. Higher-profit candidates support comparison, while the user decides which plan to adopt."
-     },
-     {
-      "lead": "Move from the conclusion to its evidence in one place.",
-      "text": " Read the key investment indicators first, then inspect profit breakdowns, calculations and input sources. Shared inputs with Federation and consistent calculated results support discussion across the related materials."
-     }
-    ],
-    "note": "Synthetic regions and editable assumptions. Results are planning-scenario values, not operating results."
-   },
-   "reviewed_at": "2026-11-04T00:00:00Z",
-   "ja": {
-    "head": "運行方式の比較から投資回収までをつなぎ、モビリティ事業が成立する条件を検討できる環境へ拡張しました。",
-    "items": [
-     {
-      "lead": "投資判断を左右する前提を、すぐに特定。",
-      "text": "シミュレータと同じ計算エンジンで、すべての計画指数を2035年営業利益とNPVへの影響順に並べる単独ページを公開。値を変えると損益・IRR・キャッシュフローがその場で変わり、日英どちらでも、ログインなしで試せます。"
-     },
-     {
-      "lead": "事業目標から、実行条件を探る。",
-      "text": "目標を入力すると、運行条件の探索・候補比較・ストレステストまでを実行。どの条件を変えれば目標に近づくかを、画面を操作しながら検討できます。"
-     },
-     {
-      "lead": "地域が変わっても、同じ基準で比較。",
-      "text": "東京・名古屋・豊田を共通条件で比較し、待機・夜間拠点の配置を変更。予約受付から乗車まで追うことで、拠点配置が運行に与える影響を確認できます。"
-     },
-     {
-      "lead": "顧客接点の価値を、配車と収益で検討。",
-      "text": "利用者接点を持つことが配車・収益にどう効くかをモデル化。運行障害を加えた比較で、平常時の採算と障害時の対応力を併せて検討できます。"
-     },
-     {
-      "lead": "運行計画を、投資判断につなぐ。",
-      "text": "運行の計算と損益・キャッシュフローを統合し、税金や設備更新まで含めた投資回収を評価。費用の内訳と感度分析から、事業成立を左右する条件を探れます。"
-     },
-     {
-      "lead": "施策の効果と代償を、導入前に比較。",
-      "text": "都市運行・サービス・相乗り・制御の施策を、Federationの実演と連動して変更前後で比較。改善点と悪化点を確認し、利益改善案を技術目標の検討へつなげられます。"
-     },
-     {
-      "lead": "条件の揺らぎまで含めて判断。",
-      "text": "複数の試行と感度分析で結果の幅を示し、厳しい条件での運行を確認。収益性の高い候補も比較材料として提示し、採用する計画は利用者が決められます。"
-     },
-     {
-      "lead": "結論から根拠まで、一つの画面で確認。",
-      "text": "主要な投資指標を素早く把握し、必要に応じて損益の内訳・計算根拠・入力の出所まで確認できます。Federationと入力を連携し、関連資料と共通の計算結果で議論を進められます。"
-     }
-    ],
-    "note": "地域や運行経路は仮想条件で、入力値は編集可能です。結果は事業計画の試算であり、運行実績ではありません。"
-   }
-  },
-  "value": {
-   "updated": "2026-10-25",
-   "watch": [
-    "capabilities/value-proposition.html",
-    "Value_Proposition_Toyota_Woven_20260930.pdf",
-    "portfolio/提供価値.pdf"
-   ],
-   "upstream": [],
-   "en": {
-    "head": "A sharper theme and one consistent voice, from the homepage to the PDF.",
-    "items": [
-     {
-      "lead": "30 Sept edition published",
-      "text": " as the entry document of the site."
-     },
-     {
-      "lead": "First page rewritten",
-      "text": " around the AI-and-mobility career theme."
-     },
-     {
-      "lead": "Detailed first page restored,",
-      "text": " with company-specific headings generalised."
-     },
-     {
-      "lead": "Business-expansion concept",
-      "text": " restored on page four in concrete, neutral wording."
-     },
-     {
-      "lead": "Profile refocused",
-      "text": " on connecting vehicles with the cities they operate in."
-     },
-     {
-      "lead": "Wording synchronised",
-      "text": " across the homepage, this overview and the portfolio descriptions."
-     },
-     {
-      "lead": "Target-company references removed",
-      "text": " from the public PDFs while system names were kept."
-     }
-    ],
-    "note": ""
-   },
-   "reviewed_at": "2026-10-19T03:15:00Z"
-  },
-  "bmstudy": {
-   "updated": "2026-11-04",
-   "watch": [
-    "capabilities/Autonomous_Driving_Service_Business_Model_Study.pdf",
-    "Autonomous_Mobility_Business_Model_Design.pdf",
-    "portfolio/Autonomous_Mobility_Business_Model_Design.pdf"
-   ],
-   "upstream": [],
-   "en": {
-    "head": "Reorganised the relationship between mobility services and their operating foundation, connecting customer value with the conditions for a viable business.",
-    "items": [
-     {
-      "lead": "Understand the service and what it takes to sustain it.",
-      "text": " Mobility demand and diverse services are explained alongside the vehicle, site and energy concepts, making the relationship between customer value and the operating foundation easier to follow."
-     },
-     {
-      "lead": "Understand the concept through aligned diagrams and explanations.",
-      "text": " The FC skateboard illustration and related descriptions are aligned, helping readers see how the vehicle concept connects with services."
-     }
-    ],
-    "note": ""
-   },
-   "reviewed_at": "2026-10-22T02:10:00Z",
-   "ja": {
-    "head": "移動サービスと運行基盤の関係を整理し、顧客価値から事業成立条件まで読み解ける構成にしました。",
-    "items": [
-     {
-      "lead": "サービスと、その成立条件を一体で捉える。",
-      "text": "移動需要と多様なサービスを、車両・拠点・エネルギーの構想と結び付けて説明。利用者に届ける価値と、それを支える運行基盤の関係を追えるようにしました。"
-     },
-     {
-      "lead": "構想の関係を、図と説明で把握。",
-      "text": "FCスケートボードの図と関連資料の説明をそろえ、車両構想とサービスのつながりを視覚的にも確認できるようにしました。"
-     }
-    ],
-    "note": ""
-   }
-  },
-  "feasibility": {
-   "updated": "2026-10-23",
-   "watch": [
-    "Autonomous_Mobility_System_Business_Feasibility.pdf",
-    "tools/simulation-sync"
-   ],
-   "upstream": [],
-   "en": {
-    "head": "Aligned operations, finance and investment recovery on common assumptions to clarify the conditions that still need to be met for commercialisation.",
-    "items": [
-     {
-      "lead": "Connect operating scale with financial and investment results.",
-      "text": " Aligned assumptions for passenger revenue, hydrogen demand and depreciation make the link between operations and finance traceable. Shared figures with the simulator support examination of business viability."
-     },
-     {
-      "lead": "Separate operating profit from investment recovery.",
-      "text": " Cash flow and investment indicators make clear that operating profitability does not yet deliver investment recovery in the plan. The investment remains unrecovered even when 2035 cash flow is extended, identifying the need for further business-case development."
-     },
-     {
-      "lead": "Evaluate shared infrastructure as a new revenue opportunity.",
-      "text": " Added a quantum-computing scenario that shares cooling, buildings, power and communications at hydrogen-cooled sites. Incremental equipment and operating costs and revenue from reserved computing time enable comparison with the case without quantum computing."
-     }
-    ],
-    "note": "Figures are planning-scenario values from editable assumptions, not operating results."
-   },
-   "ja": {
-    "head": "運行・収支・投資回収を共通の前提で検証し、事業化に向けて解くべき条件を明確にしました。",
-    "items": [
-     {
-      "lead": "運行規模から投資回収まで、つながる評価へ。",
-      "text": "旅客売上・水素需要・減価償却の前提をそろえ、運行と収支の関係を追えるようにしました。シミュレータと共通の数値に基づき、事業成立条件を検討できます。"
-     },
-     {
-      "lead": "黒字化と投資回収を分け、次の課題を明確に。",
-      "text": "営業黒字でも投資回収に至らない計画であることを、キャッシュフローと投資指標で明示。2035年のキャッシュフローを延長しても未回収という結果を示し、事業化に向けた追加検討の必要性を明確にしました。"
-     },
-     {
-      "lead": "共用インフラを、新たな収益機会として評価。",
-      "text": "水素冷却拠点の冷却・建屋・電力・通信を量子計算に共用する案を追加。追加設備・運用費と時間販売による収益を計上し、量子計算を含まない場合と投資指標を比較できるようにしました。"
-     }
-    ],
-    "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
-   },
-   "reviewed_at": "2026-10-23T09:30:00Z"
-  },
-  "seneschal": {
-   "updated": "2026-10-27",
-   "watch": [],
-   "upstream": [
-    "Satofumi-Goto/seneschal"
-   ],
-   "en": {
-    "head": "Connected a personalised assistant, contextual usage guidance and support for schedules and travel, taking everyday plans from conversation to action.",
-    "items": [
-     {
-      "lead": "Choose an assistant that suits you.",
-      "text": " Seneschal now has an avatar with personalised appearance, personality, conversation style and operating rules. Customers can select and configure an assistant around their preferences and ways of working."
-     },
-     {
-      "lead": "Choose around your plan and AI-service account.",
-      "text": " Available features are made explicit for each service plan and integration with the customer’s AI-service subscription, helping customers choose how to use the app with a clear view of the conditions."
-     },
-     {
-      "lead": "Ask in the search bar, get guidance at the controls.",
-      "text": " Ask how to use Seneschal from each page’s search bar. The chosen assistant answers in a guidance card and points to the relevant controls, so customers can follow the explanation as they work. Standard searches, schedule queries and action requests retain priority."
-     },
-     {
-      "lead": "Turn everyday information into scheduling and travel decisions.",
-      "text": " Weather, disaster, parking and charging information connects with the calendar and guidance. Electricity supply–demand and heat information add context, while bookings reflect congestion-aware travel time, helping users move from checking information to considering action."
-     },
-     {
-      "lead": "Discuss a schedule, then decide what to apply.",
-      "text": " A single request becomes a schedule proposal that is applied after the user approves it. Fixed events are respected, so users can review and compare proposals before deciding."
-     },
-     {
-      "lead": "Consider a family meeting point after an alert (demonstration).",
-      "text": " An earthquake alert leads to map-based options for going home or meeting family. Reported road closures inform candidate selection, demonstrating a flow in which users review a proposal before deciding."
-     },
-     {
-      "lead": "Consider calendar events and service options together.",
-      "text": " Two-way sync with a public sample Google Calendar and Square search suggestions connect schedule review with the search for service options."
-     },
-     {
-      "lead": "Organise a consultation and pick it up again.",
-      "text": " Private conversations with the assistant are saved by project. Example prompts help customers decide what to ask and support continued discussion."
-     },
-     {
-      "lead": "Reach the screens you need more readily.",
-      "text": " Screens and features now load when needed, reducing the initial loading burden and helping users get to their schedules and services."
-     }
-    ],
-    "note": "Prototype with demonstration data where noted in the app. External-data features use free public APIs."
-   },
-   "ja": {
-    "head": "利用者に合う担当セネシャル、使い方の案内、予定と移動の支援をつなぎ、日常の行動を相談から操作まで進められるアプリへ拡張しました。",
-    "items": [
-     {
-      "lead": "自分に合う担当セネシャルを選べる。",
-      "text": "Seneschalをアバター化し、見た目・性格・会話スタイル・運用ルールを個別化。お客様の好みや使い方に合わせて、担当セネシャルを選択・設定できるようにしました。"
-     },
-     {
-      "lead": "利用プランとAI契約に合わせて選べる。",
-      "text": "利用プランとお客様のAIサービス契約との連携状況に応じ、使える機能を明確化。利用条件を確認しながら、自分に合う使い方を選べるようにしました。"
-     },
-     {
-      "lead": "検索バーから質問、操作箇所まで案内。",
-      "text": "各ページの検索バーで使い方を質問すると、担当セネシャルが案内カードで回答し、該当する操作箇所を示します。説明を読みながら操作を進められ、通常の検索・予定照会・操作依頼も優先して使えます。"
-     },
-     {
-      "lead": "暮らしの情報を、予定と移動の判断へ。",
-      "text": "天気・災害・駐車・充電の情報を、カレンダーや案内につなぎました。電力需給や暑さの情報も取り込み、予約には渋滞を考慮した所要時間を反映。情報の確認から行動の検討へ進められます。"
-     },
-     {
-      "lead": "予定づくりを相談し、納得して反映。",
-      "text": "一つの依頼から予定案を作り、利用者の承認を経てカレンダーへ反映。固定した予定を尊重し、提案を比較・確認してから決められる仕組みにしました。"
-     },
-     {
-      "lead": "災害情報から、家族との合流を検討（デモ）。",
-      "text": "地震の警報から、帰宅や家族との合流候補を地図で確認する流れを追加。通行止めの情報を候補選択に反映し、提案を確認して判断する体験をデモで示しました。"
-     },
-     {
-      "lead": "予定とサービスの候補を、一緒に検討。",
-      "text": "公開サンプルのGoogleカレンダーとの双方向同期と、Squareの検索候補を接続。予定を確認しながらサービスの選択肢を探せるようにしました。"
-     },
-     {
-      "lead": "相談を整理し、続きから考えられる。",
-      "text": "担当セネシャルとの非公開の相談を、プロジェクトごとに整理して保存。会話例も用意し、何を相談するかを考えるところから継続的に支援します。"
-     },
-     {
-      "lead": "必要な画面へ、軽快にアクセス。",
-      "text": "画面や機能を必要なときに読み込む構成へ改め、初期読み込みの負担を軽減。予定やサービスを確認する操作へ進みやすくしました。"
-     }
-    ],
-    "note": "試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。"
-   },
-   "reviewed_at": "2026-10-22T02:10:00Z"
-  },
-  "federation": {
-   "updated": "2026-10-28",
-   "watch": [],
-   "upstream": [
-    "Satofumi-Goto/federation-portal",
-    "Satofumi-Goto/fleet-operations-console",
-    "Satofumi-Goto/service-hub-console",
-    "Satofumi-Goto/urban-operation-console"
-   ],
-   "en": {
-    "head": "Connected vehicle planning, service-hub technologies and business-feasibility evaluation in one development environment, with guided use and 97 deliverable documents to support decisions from concept through operations.",
-    "items": [
-     {
-      "lead": "Move through the work with a tutorial and help.",
-      "text": " Matsuko guides users through the screens and workflow in a 37-card tutorial, while settings help and chat address usage questions. The introduction connects finding and improving service operating breakdowns with deriving the technical targets required for business viability."
-     },
-     {
-      "lead": "Control Seneschal, the simulator and four consoles in real time.",
-      "text": " Connected Seneschal and the simulator with activity, fleet-operations, service-hub and urban-operations consoles. Shared states and constraints across demand, vehicles, roads, hubs and energy support coordinated service operations across the operating domains."
-     },
-     {
-      "lead": "Automatically find operating breakdowns and build up improvements.",
-      "text": " Implemented consistency, scoring and autonomy engines to find the points where service operations become unviable and repeat cause analysis, improvement and verification. The improvement cycle connects technical conditions, operations and business feasibility."
-     },
-     {
-      "lead": "Evaluate vehicle planning, hub technologies and business viability together.",
-      "text": " Concept-stage vehicle planning and service-hub technical configurations connect with assessments of operations, service quality, financial performance and investment recovery. Users can examine how technical conditions affect the service and its economics, then assess operational improvements and further technical development against shared viability conditions. Requirements and evidence also trace upstream and downstream change impacts and design options to support decisions across disciplines."
-     },
-     {
-      "lead": "Take the concept toward design and execution with 97 deliverables.",
-      "text": " Prepared 69 Artifact and 28 Blueprint documents spanning concepts, requirements, vehicle and hub design, specifications, verification, operating procedures, financial plans, investment decisions and execution plans. Stakeholders can work from concrete materials throughout the assessment."
-     },
-     {
-      "lead": "Choose improvements using shared figures and financial evidence.",
-      "text": " Simulator results and Federation indices align assumptions across applications and materials. Profit, cash flow and investment indicators connect with checks on revenue, operating scale, investment and depreciation, helping users compare improvement candidates and decide which changes to adopt."
-     },
-     {
-      "lead": "Turn outside information into reviewable update proposals.",
-      "text": " Collected data becomes dated proposals to update indices. Users can review each proposal and decide whether to incorporate the change into the plan."
-     },
-     {
-      "lead": "Improve AI-generated work with traceable evidence.",
-      "text": " Independent review of design and deliverable cards connects diagnosis, correction and re-review. Open findings and evidence remain traceable, and review performance is itself tested to identify missed issues."
-     },
-     {
-      "lead": "Connect anomaly detection with response and handover.",
-      "text": " Detection, cause analysis, candidate comparison and verification form one operating flow. Execution records and estimates are distinguished, while shared handover items help people coordinate the response."
-     },
-     {
-      "lead": "Follow connected knowledge to deepen an assessment.",
-      "text": " Sourced notes on autonomous-mobility service operations are linked in a graph, giving users access to related knowledge for design and operating decisions."
-     }
-    ],
-    "note": "Planning-scenario values from editable assumptions, not operating results."
-   },
-   "ja": {
-    "head": "車両企画・サービス拠点の技術構成・事業性評価を一つの事業開発環境に統合。使い方案内と97枚の成果物資料を整え、構想から運用までの検討と判断を支援します。",
-    "items": [
-     {
-      "lead": "チュートリアルとヘルプで、検討を進められる。",
-      "text": "マツコが37枚のチュートリアルで画面と検討の流れを案内し、設定内ヘルプとチャットで操作上の疑問に対応。運行の崩壊点を見つけて改善し、事業成立に必要な技術目標値を逆算する目的まで、一続きで理解できます。"
-     },
-     {
-      "lead": "Seneschal・シミュレータ・4コンソールを、リアルタイム制御。",
-      "text": "Seneschalとシミュレータ、活動・フリート運用・サービス拠点・都市運行の4コンソールを接続。需要・車両・道路・拠点・エネルギーの状態と制約を共有し、個別の現場をまたいでサービス運行を調整する仕組みを実装しました。"
-     },
-     {
-      "lead": "運行の崩壊点を自動で見つけ、改善を積み重ねる。",
-      "text": "整合・採点・自律エンジンを実装。サービス運行が成立しなくなる崩壊点を見つけ、原因分析・改善・再検証を繰り返す仕組みを構築しました。技術・運用・事業性のつながりを確認しながら、カイゼンを積み重ねられます。"
-     },
-     {
-      "lead": "車両企画・拠点技術・事業性を、一体で評価。",
-      "text": "構想段階の車両企画とサービス拠点の技術構成を、運行・品質・収支・投資回収の評価につなぎました。技術条件がサービスと採算に与える影響を確認し、運用改善と次の技術開発を共通の成立条件から検討できます。要求と証跡から設計変更の上流・下流への影響と選択肢をたどり、分野をまたぐ判断を支援します。"
-     },
-     {
-      "lead": "97枚の成果物で、構想を設計と実行へ。",
-      "text": "Artifact 69枚とBlueprint 28枚を整備。構想・要求・車両／拠点設計から、仕様・検証・運用手順・収支・投資判断・実行計画までを参照でき、関係者が具体的な資料に基づいて検討を進められます。"
-     },
-     {
-      "lead": "共通の数値と採算の根拠から、改善策を選ぶ。",
-      "text": "シミュレータの計算結果とFederationの指数を連携し、関連アプリ・資料の前提を統一。損益・キャッシュフロー・投資指標と、売上・運行規模・投資・減価償却の整合を確認し、利益改善の候補を比較して採否を判断できます。"
-     },
-     {
-      "lead": "外部情報を、判断できる更新提案へ。",
-      "text": "収集した外部データを日付付きの指数更新案として提示。変化を計画に取り込む前に、利用者が内容を確認し採否を決められます。"
-     },
-     {
-      "lead": "AIが作る内容を、根拠付きで改善。",
-      "text": "設計・成果物カードへの独立レビューを、診断・修正・再確認につなぎました。未解決の指摘と証跡をたどり、レビューの見落としも検証して、改善すべき点を確認できます。"
-     },
-     {
-      "lead": "異常の検知から、対応の引継ぎまで接続。",
-      "text": "検知・原因分析・候補比較・検証を一つの運用の流れに統合。実行記録と推定を区別し、担当者間で引継ぎ事項を共有して対応を進められます。"
-     },
-     {
-      "lead": "関連する知見をたどり、検討を深める。",
-      "text": "自動運転サービスの運用知識を、出典付きのノートとして接続。関連する知見をグラフでたどり、設計や運用の検討に必要な情報へアクセスできます。"
-     }
-    ],
-    "note": "編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。"
-   },
-   "reviewed_at": "2026-10-19T03:15:00Z"
-  },
-  "bizdev": {
-   "updated": "2026-10-22",
-   "watch": [
-    "capabilities/Business_Development_Capabilities_20261013.pdf"
-   ],
-   "upstream": [],
-   "en": {
-    "head": "Clarified the path from customer needs to a business opportunity, partner coordination and a decision on whether to proceed to a pilot.",
-    "items": [
-     {
-      "lead": "Translate customer value into business requirements.",
-      "text": " Experience across account development, business planning and technology planning is organised around customer value, showing how customer needs become operating and system requirements."
-     },
-     {
-      "lead": "Bring partners together around an executable plan.",
-      "text": " Roles, responsibilities and commercial terms across vehicles, services and sites are set out to support practical coordination on a cross-domain concept."
-     },
-     {
-      "lead": "Carry comparison through to a pilot decision.",
-      "text": " Simulation-based comparisons, partner roles and pilot decision criteria form one path, showing what needs to be examined before taking a concept to its next stage."
-     }
-    ],
-    "note": ""
-   },
-   "reviewed_at": "2026-10-22T02:10:00Z",
-   "ja": {
-    "head": "顧客課題を事業機会へ変え、パートナー連携と実証判断まで進める事業開発の道筋を明確にしました。",
-    "items": [
-     {
-      "lead": "顧客価値から、事業化の要件へ。",
-      "text": "顧客にもたらす価値を起点に、法人営業・事業企画・技術企画の経験を整理。顧客ニーズを運行要件やシステム要件へ展開する進め方を示しました。"
-     },
-     {
-      "lead": "関係者を結び、実行できる計画へ。",
-      "text": "車両・サービス・拠点などの役割と責任、取引条件を整理。分野をまたぐ構想を、事業パートナーが連携して進めるための具体的な検討につなげました。"
-     },
-     {
-      "lead": "比較検討を、実証するかの判断へ。",
-      "text": "シミュレータによる比較、パートナー間の役割整理、実証判断を一続きに整理。構想を次の段階へ進めるために、何を確認するかを示しました。"
-     }
-    ],
-    "note": ""
-   }
-  },
-  "concept": {
-   "updated": "2026-11-04",
-   "watch": [
-    "capabilities/System_Planning_Initial_Concept_20261012.pdf",
-    "capabilities/initial-concept/index.html"
-   ],
-   "upstream": [],
-   "en": {
-    "head": "Developed the mobility concept into operating and verification requirements, supporting discussion of what it takes to deliver the service.",
-    "items": [
-     {
-      "lead": "Navigate the full design on any screen.",
-      "text": " The 30-page concept is now a web edition. Chapter navigation and linked page references take readers straight to the architecture, sequence and state diagrams they need, and every diagram stays sharp on a laptop or a phone. The A4 PDF remains available."
-     },
-     {
-      "lead": "Turn the concept into requirements for operation.",
-      "text": " More detailed operating specifications connect customer-touchpoint mechanisms with their validation methods, so the proposed service and the questions to be tested can be followed together."
-     },
-     {
-      "lead": "Examine service quality and economics together.",
-      "text": " Capacity, service-quality and economic constraints are set out for shared rides and combined passenger–freight service, supporting comparison of the conditions and trade-offs involved."
-     },
-     {
-      "lead": "Discuss the business and system on shared assumptions.",
-      "text": " Simulation, the feasibility materials and Federation’s design baseline are connected, aligning operating and numerical assumptions so business planning and system design can be examined together."
-     }
-    ],
-    "note": ""
-   },
-   "reviewed_at": "2026-11-04T00:00:00Z",
-   "ja": {
-    "head": "モビリティの構想を運用・検証の要件へ具体化し、サービスの実現条件を議論できる資料へ深めました。",
-    "items": [
-     {
-      "lead": "設計の全体を、どの画面でもすぐ読める形へ。",
-      "text": "30ページの構想をWeb版に再構成。目次とページ間のリンクで、アーキテクチャ・シーケンス・状態遷移の図へ直接たどれます。PCでもスマホでも図は鮮明なまま。A4のPDF版も引き続き参照できます。"
-     },
-     {
-      "lead": "構想を、動かすための要件へ。",
-      "text": "顧客接点の仕組みと検証方法まで運用仕様を具体化。どのようなサービスを提供し、そのために何を確かめるかを一続きで追えるようにしました。"
-     },
-     {
-      "lead": "サービス品質と採算を、同時に検討。",
-      "text": "相乗り・貨客混載について、車両容量・サービス品質・採算の制約を整理。複数の需要を組み合わせる際に、成立条件とトレードオフを検討できます。"
-     },
-     {
-      "lead": "事業とシステムを、共通の前提で議論。",
-      "text": "シミュレータ・事業性資料・Federationの設計基準を接続。運行条件と数値の前提をそろえ、事業計画とシステム設計を対応づけて検討できる構成にしました。"
-     }
-    ],
-    "note": "自動運転システムは、事業構想上TIER IV（ティアフォー／Autoware）を前提とします。導入や提携の実績を示すものではありません。"
-   }
-  }
- }
 }
