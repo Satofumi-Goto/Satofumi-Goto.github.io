@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T19:40:08Z",
+  "generated_at": "2026-11-02T15:02:01.849Z",
   "source": "Policy-first 2026-11-01T18:41:55.776Z: release_freeze=false, quota_recovery=quota_blocked. Seneschal PR #672 merged to main 636b7b30 after PR-head Audit #41332117693 success (executed build, regression and Chrome smoke). Other six app main heads unchanged. Formal release acceptance remains 0/7; current-main Base44 Publish, authenticated production E2E and Matsuko independent research durable write/readback unverified. No new workflows, paid calls or deployments initiated.",
   "completed_total": 0,
   "apps": [
@@ -55,10 +55,10 @@
     {
       "name": "Simulator",
       "status": "red",
-      "head": "ad2b22585b6dee8366dec807a1a782c331342b1e",
-      "summary": "2026-11-04 JST: main ad2b2258 merged PR #125: 事業収支ラボの公開版HTMLモードおよび日英切替をソースへ統合。main同一SHA CI #41704197404 check成功（live-mission-browser skipped）。Builder/サイトの同一SHA Publish・実計算2回・KPI/hash/receipt・認証済みE2E未証明。正式公開受入れ0/7。",
+      "head": "78d2398b8dd57f178d5ca21506d088b6ddb18c96",
+      "summary": "2026-11-01T22:39:02.504Z: main 78d2398b merged PR #122 (Matsuko starts first, clicking avatar changes character, shorter non-blocking explanation); PR-head CI #41356887239 check/build and Chromium fixture-only live-mission-browser both succeeded with executed steps. Current main same-SHA Base44 Builder/site Publish, served public SHA, actual production compute twice + KPI/hash/receipt and authenticated cross-app E2E remain unverified. PR #123 additional focus fix open; Seneschal #673 and Federation #862 matching guidance PRs open, not production deployed. Formal Activity-first acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab",
-      "main_sha": "ad2b22585b6dee8366dec807a1a782c331342b1e",
+      "main_sha": "78d2398b8dd57f178d5ca21506d088b6ddb18c96",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "7998f0a0319f157f4c1dc6d00bf8e4cb914d13de",
-      "summary": "2026-11-04 JST: main 7998f0a0 merged PR #674: 問診票の帳票表示/印刷・領収書印刷をソース統合（問診データ新規保存なし）。PR記録ではローカルビルド未実行、現行main同一SHA CI・Base44 Publish・認証済み本番UI/voice/E2E未証明。旧Verify production #41396767778 のUI失敗も解消未確認。正式公開受入れ0/7。",
+      "head": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
+      "summary": "2026-11-02 JST: main 636b7b30 merged PR #672 (single-feature guide ends correctly after route transitions). PR-head Audit #41332117693 success with executed build, regression, Chrome smoke and protected files; this is source integration, NOT current-main Base44 Publish or exact public SHA. Voice, Federation signed linkage and Matsuko independent durable DB E2E remain unverified. Formal ordered release acceptance 0/7. 2026-11-02 14:55–14:59 JST: scheduled Verify production #41396767778 on the same main SHA executed real browser steps and FAILED the read-only published UI check. Reported failing routes /private-car/maintenance, /providers, /ip-phone; event editor, side menu and settings/language interactions timed out; Google Directions returned OVER_QUERY_LIMIT. Separate booking/write-operation test step passed. Not a full production outage determination and not a release acceptance; do not retry while quota_blocked.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "7998f0a0319f157f4c1dc6d00bf8e4cb914d13de",
+      "main_sha": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "6492c7e84a8c3a4d467f9408201d4eccb616c84d",
-      "summary": "2026-11-04 JST: main 6492c7e8 は生成repository-index更新のみ（アプリ実装・正式公開進展なし）。Builder最新main同期・Publish・認証済みE2E未証明。PR #686はmerged、#774は認証済みGemini grounding receiptとSeneschal永続DB recordId/hash/count/readback/backupが未証明でblocked。正式公開受入れ0/7。",
+      "head": "418c5c891654a599668a5676b8f99b25085e8c5c",
+      "summary": "2026-11-02 JST: current main 418c5c89 refreshes only generated repository index files [skip ci] atop afd355c1 (PR #861); no new current-head CI or Base44 publish/E2E acceptance. #686 merged; #778/#779/#780 still Draft. Matsuko independent #774 remains blocked pending authenticated Gemini grounding receipt and durable Seneschal DB recordId/hash/count/readback/backup. Formal release acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "6492c7e84a8c3a4d467f9408201d4eccb616c84d",
+      "main_sha": "418c5c891654a599668a5676b8f99b25085e8c5c",
       "release_verified": false,
       "release_state": "auxiliary_exact_sha_published_formal_acceptance_blocked",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -3147,9 +3147,9 @@
       "fleet": "64b426f6d58a7fb6fe7148a8decc4de6d11c673e",
       "service": "8d6609086cdfb9580b561b752550e55c88635e93",
       "urban": "2bd7b743eb55b97deab312d2ef55a3404ce8457b",
-      "simulator": "ad2b22585b6dee8366dec807a1a782c331342b1e",
-      "seneschal": "7998f0a0319f157f4c1dc6d00bf8e4cb914d13de",
-      "federation": "6492c7e84a8c3a4d467f9408201d4eccb616c84d"
+      "simulator": "78d2398b8dd57f178d5ca21506d088b6ddb18c96",
+      "seneschal": "636b7b30cc4aa12d73378956afc2f01206b3b3e4",
+      "federation": "418c5c891654a599668a5676b8f99b25085e8c5c"
     },
     "mission_contract": {
       "modes": [
