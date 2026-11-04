@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T08:41:31.659Z",
+  "generated_at": "2026-11-04T08:42:51.545Z",
   "source": "2026-11-04T07:40:15Z policy-first GitHub read-only sweep: canonical freeze=false/quota_blocked; seven main heads checked, three advanced; Fleet #75 exact Builder Publish step failed again; Federation member invitation scoped Publish/browser QA succeeded at noncurrent SHA without first-six gate; new distinct entrypoint reported to draft #779. No new Actions/Build/Publish/Gemini/DB operations by orchestrator. Formal acceptance 0/7.",
   "completed_total": 0,
   "apps": [
@@ -80,7 +80,7 @@
       "name": "Federation",
       "status": "red",
       "head": "5ff626295ad0b9016dff14eb7ae5d0fdf9bfa3b9",
-      "summary": "2026-11-04T08:41:31.659Z: main 5ff62629 merges #931 replace invitation email send/resend UI with copy of public Federation URL (no access rights granted); same-main scoped URL-copy release #41799089307 executed frontend Publish, served SHA and authenticated team UI verification successfully. Earlier monthly JPY budget feature run #41798321813 verified a stopped 5,000-yen budget feature at older SHA; does not establish spend or full release. Separately new member link workflow #41800625324 failed at focused build; successor #41801004616 observed in-progress, not accepted. Official Federation release lacks verified six-app prerequisite and full Live Mission E2E; #779 remains Draft.",
+      "summary": "2026-11-04T08:42:51.545Z: Federation current main 5ff62629 merges #932 email-free invitation registration and disables mail API controls (in addition to #931 public URL copy). Earlier scoped URL copy release #41799089307 successfully published and verified SHA + authenticated team UI only for 9e51bb60 (older SHA). Current-main member-link workflow #41801341894 executed on main 5ff62629 and FAILED at prepublish 'finance-release-live-backend-source-or-owner-unverified' (deploy-shared-finance.mjs:26); live owner/source/backend gate not satisfied, downstream browser QA skipped. Never treat old 9e51 URL-copy frontend success or latest build as current-main or formal seven-app release. Draft #779 predecessor gate and #774 research E2E still blocked.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
       "main_sha": "5ff626295ad0b9016dff14eb7ae5d0fdf9bfa3b9",
       "release_verified": false,
@@ -93,7 +93,7 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "2026-11-04T08:41:31.659Z: Canonical policy freeze=false/quota_blocked. Main source updates: Fleet #79, Service/Urban #54, Simulator #134, Seneschal #713, Federation #931 (Activity unchanged). Fleet public map browser at exact d7ea2d8f verified 3 views but live traffic source missing; new traffic proxy #41801042728 failed deployed function hash verification, so not complete. Federation scoped invitation-link frontend published at same main SHA #41799089307 with authenticated team UI QA, but no six-app predecessor/full E2E. #774 Gemini → Seneschal persistent DB remains blocked; formal 0/7.",
+      "current": "2026-11-04T08:42:51.545Z: Policy freeze=false/quota_blocked. Current Federation main 5ff62629 #932 email-free invite source integrated. Current-main approved member-link workflow #41801341894 failed at finance-release-live-backend-source-or-owner-unverified before Publish; no current-main authenticated E2E. Prior URL copy QA #41799089307 SUCCESS only on older 9e51bb60. Fleet exact-public 3 maps verified #41799257663, live road volume source missing; separate new reader #41801042728 failed post-deploy digest. Other repo source/CI updated; #774 remains blocked; seven formal releases 0/7.",
       "next": "No blind workflow retry. Diagnose free-road-volume source-hash mismatch from existing run only and respect active feature PR owner; maintain exact Builder/main/final authenticated E2E gates. #779 Draft must fix upstream gate without conflict; #774 awaits authenticated Gemini receipt, durable Seneschal DB/recordId/hash/count/restart/backup proof.",
       "evidence": [
         {
@@ -109,16 +109,20 @@
           "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41801042728"
         },
         {
-          "text": "Federation member URL approved UI-only publication",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41799089307"
-        },
-        {
           "text": "Federation guarded release draft",
           "url": "https://github.com/Satofumi-Goto/federation-portal/pull/779"
         },
         {
           "text": "Matsuko independent E2E",
           "url": "https://github.com/Satofumi-Goto/federation-portal/issues/774"
+        },
+        {
+          "text": "Federation current-main live owner/backend gate failure",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41801341894"
+        },
+        {
+          "text": "Federation older-SHA scoped URL copy UI accepted only",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41799089307"
         }
       ]
     },
@@ -1151,14 +1155,15 @@
     "2026-11-02 14:55–14:59 JST: New Seneschal same-main scheduled Verify production #41396767778 failed with executed browser steps: three routes and several UI interactions timed out; Google Directions OVER_QUERY_LIMIT also observed. Separate isolated bookings/write step passed. Federation monitor #41397175486 passed local rule checks; seven main SHA unchanged; #774 independent Gemini/DB E2E still blocked; formal acceptance 0/7. No workflows/Publish/paid APIs started by orchestrator. Status-only evidence update.",
     "2026-11-03T20:45:50.026Z: Policy-first static review. Six main heads advanced since prior status by merged PRs Activity #56, Fleet #51, Service #43, Urban #41, Simulator #126, Federation #867. Seneschal unchanged. Formal release 0/7; latest CI, Builder sync, protected Publish and authenticated E2E unknown, not accepted. #774 research E2E remains blocked. 17 rows and 10 queue preserved; no actions, paid APIs, release or PR merge triggered.",
     "2026-11-04T06:43:25.687Z: Delta-only review: merged Fleet #68/#70/#71 purpose-specific 3 maps, Seneschal #698-#701 including SafeGoogleMap repair, Federation #920-#923 guarded remote read checks. Cloud Run Nov 3 image still reported in #923; no current same-main authenticated acceptance. Formal release 0/7; #774 independent Gemini/DB blocked; policy quota_blocked, freeze=false. No new CI, Publish, chargeable APIs or DB writes.",
-    "2026-11-04T08:41:31.659Z: Policy-first GitHub read-only evidence delta. Main SHA refreshed on seven apps; fleet, service, simulator, urban, seneschal, federation updated. Fleet public 3-map UI exact-source #41799257663 success but missing live road traffic; separate branch 41801042728 failed deployed function digest readback and no retry. Federation scoped same-main URL-copy Publish + authenticated team UI #41799089307 succeeded, NOT official 7-app acceptance. Matsuko #774 unchanged blocked. Kept 17 owners/10 queue; no CI dispatch, paid API, DB write, or Publish triggered."
+    "2026-11-04T08:41:31.659Z: Policy-first GitHub read-only evidence delta. Main SHA refreshed on seven apps; fleet, service, simulator, urban, seneschal, federation updated. Fleet public 3-map UI exact-source #41799257663 success but missing live road traffic; separate branch 41801042728 failed deployed function digest readback and no retry. Federation scoped same-main URL-copy Publish + authenticated team UI #41799089307 succeeded, NOT official 7-app acceptance. Matsuko #774 unchanged blocked. Kept 17 owners/10 queue; no CI dispatch, paid API, DB write, or Publish triggered.",
+    "2026-11-04T08:42:51.545Z: Corrected concurrent head-advance: Federation main is 5ff626295ad0b9016dff14eb7ae5d0fdf9bfa3b9 (#932), NOT previous 9e51bb60. Current-main workflow #41801341894 failed existing live owner/source/backend guard before Publish; previous #41799089307 was older-SHA scoped success only. No retry or public current-main acceptance."
   ],
   "orchestrator": {
     "enabled": true,
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-04T08:41:31.659Z: policy freeze=false, quota_recovery=quota_blocked unchanged. Current-main source updates fleet, service, simulator, urban, seneschal, federation; independent narrowly scoped Fleet public map verification #41799257663 and Federation URL copy Publish/browser QA #41799089307 succeeded, NOT formal seven-app authenticated acceptance. Free-road traffic reader #41801042728 failed hash readback after deployment attempt; no blind retry. No newly dispatched Actions, paid APIs or publish by orchestrator; formal 0/7.",
+    "ci_state": "2026-11-04T08:42:51.545Z: canonical freeze=false, quota_recovery=quota_blocked. Current Federation main 5ff62629 #932 source merged; same-main member-link release #41801341894 executed jobs but failed in live-backend-source/owner validation BEFORE frontend Publish (no current-main public SHA/UI QA). Earlier scoped URL copy #41799089307 passed at older 9e51bb60, not current. Fleet public 3-map read-only verification success #41799257663; separate branch traffic-proxy post-deploy source digest mismatch #41801042728. Official 0/7; no orchestrator-run CI dispatch/paid calls.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -3293,7 +3298,7 @@
       "priority": 8,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-04T08:41:31.659Z: Federation main 5ff62629 scoped URL-copy frontend Publish/served SHA/authenticated team UI QA run #41799089307 success at this main SHA. This is not overall release; first-six exact-current-SHA authenticated release/Builder all-backend/Live Mission E2E unverified. Draft #779 remains unmerged.",
+      "action": "2026-11-04T08:42:51.545Z: Current Federation main 5ff62629 #932 email-free invitation source merged. Current main #41801341894 backend source/owner pre-publish guard FAILED (no Publish, subsequent browser QA skipped). Earlier #41799089307 scoped URL-copy frontend Publish/browser QA succeeded at older 9e51bb60. Main exact Builder/public SHA and first-six authenticated releases remain unverified; #779 Draft.",
       "blocked_by": [
         "Whole Federation Builder/source/main SHA match unverified; individual deployed function hash match is insufficient.",
         "First six authenticated releases not accepted; PR #778/#779/#780 Draft.",
@@ -3315,7 +3320,7 @@
       "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-04T08:41:31.659Z: Federation scoped URL-copy publish success #41799089307 at main 5ff62629 and private team UI QA, but no mandatory first-six all-app acceptances. New member-link workflow #41800625324 failed build; #41801004616 was in progress (no accepted completion). Formal 0/7.",
+      "action": "2026-11-04T08:42:51.545Z: Current Federation main 5ff62629 #932; same-current-main attempted limited member-link Publish #41801341894 blocked by finance-release-live-backend-source-or-owner-unverified before Publish; no current-main publish or real-browser evidence. Prior scoped QA #41799089307 was at older 9e51bb60. No first-six official authenticated acceptance, full Live Mission E2E, or Matsuko #774 research DB E2E. Formal 0/7.",
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
         "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production.",
@@ -3390,6 +3395,7 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
+      "2026-11-04T08:42:51.545Z: Federation current-main #41801341894 stopped at existing live owner/backend source ancestry validation in deploy-shared-finance.mjs:26 before frontend Publish. Previous scoped URL copy #41799089307 only earlier 9e51bb60; current main 5ff62629. Do not retry or bypass live-backend-source gate.",
       "2026-11-04T07:40:15Z: Federation member-invitation release workflow independently succeeded in frontend Publish and private browser QA at e92571a3 (#41793053990), but current main ff3227a0. Static review found no mandatory first-six exact-current-SHA authenticated E2E gate before Publish; tracked #779 comment #6625454017. This is not the ordered formal seven-app release.",
       "2026-11-04T06:43:25.687Z: Federation main 47852230 has #922/#923 owner-session test guards, but PR #923 reports Cloud Run still running Nov 3 image. No new authenticated remote/Seneschal API acceptance or #774 Gemini→persistent Seneschal DB recordId/hash/count/readback. #779 remains draft. Do not equate source integration with production acceptance.",
       "2026-11-04T04:46:47.053Z: Federation shared-finance workflow merged PR #907, run #41774925909 failed Publish step after build, browser QA skipped; static workflow lacks six predecessor authenticated exact-current-SHA gate. Draft #779 review comment #6622805284 records distinct new bypass risk. No formal 7-app release.",
@@ -3425,7 +3431,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-04T08:41:31.659Z",
+    "latest_review_at": "2026-11-04T08:42:51.545Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
