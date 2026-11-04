@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T04:46:47.053Z",
+  "generated_at": "2026-11-04T05:46:58.389Z",
   "source": "2026-11-04T01:38:53.860Z policy-first GitHub static diff: release_freeze.enabled=false, CI quota_recovery.state=quota_blocked. Seven current-main SHAs advanced; verified source/CI and isolated auxiliary publish only. New Seneschal formal run #41755033303 failed credential readiness; Fleet solver credential/initialization runs failed but token metadata readback passed; Federation monthly auxiliary publish #41753399714 does not pass ordered seven-app gate. Reviewed new auxiliary gate gap on Draft #779; no new Actions/Build/Publish/API/DB runs. Production acceptance remains 0/7; Matsuko #774 unchanged.",
   "completed_total": 0,
   "apps": [
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "da3416fc94c782ccb798c628bdcf107b287e023b",
-      "summary": "2026-11-04T04:46:47.053Z: main da3416fc now integrates PR #66 (verified free-hosted authenticated ORS/VROOM/OR-Tools three-provider sync; production branch workflow #41774045181 and read-only Render validation #41774287597 succeeded). Current-main Guard #41774998473 and Export ZIP #41774998499 succeeded. Production solver receipts are a narrow infrastructure milestone, NOT exact-main formal Builder Publish, console E2E or ordered 7-app acceptance.",
+      "head": "a7e7a0485445d549c668b0f810871bfd6f7870bf",
+      "summary": "2026-11-04T05:46:58.389Z: main a7e7a048 merged PR #67 (fifteen sample vehicles, use-case map, hosted solver synchronization contracts). Guard and Export have live runners. One-shot production rollout #41780901168 FAILED after contract tests: ORS=failed(provider-request-failed), VROOM/OR-Tools=ready, state=partial, map Publish skipped. No evidence for successful 15-vehicle all-provider synchronization, no proof of exact-main formal release or authenticated console E2E. Do not blind-retry or consider partial output accepted.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "da3416fc94c782ccb798c628bdcf107b287e023b",
+      "main_sha": "a7e7a0485445d549c668b0f810871bfd6f7870bf",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "ac86aaf2f977a120ee813bf4b851005b953f525e",
-      "summary": "2026-11-04T04:44:51.289Z: main ac86aaf2: delivery stages, Wallet home, remote monitoring response and light-truck route tracking integrated (#691/#692/#693). No current-main formal Publish or voice/cross-app E2E; earlier Wallet publication #41764694848 failed.",
+      "head": "a76991b7170bec3e51abee5d414d461cfb8cb700",
+      "summary": "2026-11-04T05:46:58.389Z: main a76991b7 integrates household ledger/Wallet receipts (#695), reservation journey tutorials (#696), and existing Friends-card appointment samples (#697); source only. Live voice, authenticated cross-app E2E, same-main Builder Publish unverified; earlier formal credential gate failed.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "ac86aaf2f977a120ee813bf4b851005b953f525e",
+      "main_sha": "a76991b7170bec3e51abee5d414d461cfb8cb700",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "57d02ca9979e66f5ada22cad906ce50f318476e3",
-      "summary": "2026-11-04T04:46:47.053Z: main 57d02ca9 integrates PR #907 private shared-finance workspace and PR #906 private team. Same-main automatic shared-finance publisher #41774925909 ran build successfully then failed exact candidate frontend publish step; authenticated two-context browser QA skipped. Fixed-target remote monitoring branch release #41774680425 failed deploy prerequisites. The newly added shared-finance workflow lacks mandatory six predecessor authenticated release gates (review recorded PR #779 comment #6622805284). Formal 7-app release and independent Matsuko #774 still unverified.",
+      "head": "318d923c9a5cc9f7891eea9c2752a39d5937507e",
+      "summary": "2026-11-04T05:46:58.389Z: main 318d923c includes product polish PR #918, shared-finance operations #916 and Seneschal remote-notice ownership #919. Finance candidate #41780710218 verify SUCCESS, Publish SKIPPED; post-merge main publisher #41780931305 failed at frontend Publish after build success, browser QA skipped. No six-app predecessor authenticated gates on auxiliary publisher; draft release-guard PR #779 remains unmerged. Builder/current-main exact-SHA complete formal Publish and Matsuko #774 authenticated persistent DB E2E not proven.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "57d02ca9979e66f5ada22cad906ce50f318476e3",
+      "main_sha": "318d923c9a5cc9f7891eea9c2752a39d5937507e",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -93,24 +93,24 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "2026-10-30T05:44:42.982Z: Same 7 MAIN SHAs and policy freeze=false/quota_blocked. Fleet manual release #40971212712 failed closed at Base44 CLI key gate on older SHA; no deployed/published artifact and Activity predecessor release absent. Auxiliary Federation publication remains older than current MAIN. Formal acceptance 0/7, final E2E pending.",
-      "next": "Confirm GitHub Actions Fleet BASE44_API_KEY credential readiness via safe fail-closed workflow gate without reading the value; avoid Fleet retry before Activity authenticated exact-SHA publication. Resolve Builder source/identity and current-source publication gates in dependency order.",
+      "current": "2026-11-04T05:46:58.389Z: seven main heads refreshed under policy freeze=false/quota_blocked. Fleet #67 merged but fifteen-vehicle rollout #41780901168 failed ORS only; no map Publish. Federation finance run #41780931305 failed Publish; main advanced again. Formal 7/7 accepted 0, #774 independent research blocked.",
+      "next": "Investigate ORS provider-request-failed using nonsecret HTTP/status evidence only; avoid one-shot rerun. Preserve existing 3-engine receipts without treating 15-vehicle partial as a successful rollout. Review Federation publication and draft #779 predecessor gates; do not publish ahead of Activity's formal receipt.",
       "evidence": [
         {
-          "text": "Canonical policy",
+          "text": "Current orchestration policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "Fleet manual release fail-closed gate",
-          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40971212712"
+          "text": "Fleet 15-vehicle failed synchronization",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41780901168"
         },
         {
-          "text": "Fleet current-MAIN Guard",
-          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/40979332880"
+          "text": "Federation finance publish failure",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41780931305"
         },
         {
-          "text": "Federation older auxiliary publication",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40971638414"
+          "text": "Independent Matsuko research blocked",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/issues/774"
         }
       ]
     },
@@ -1126,7 +1126,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-04T04:46:47.053Z: release_freeze.enabled=false, quota_recovery.state=quota_blocked unchanged. Fleet PR #66 now integrated, three-provider hosted ORS/VROOM/OR-Tools run #41774045181 + Render read-only run #41774287597 succeeded, main Guard/Export succeeded. Federation #907 now integrated; automatic same-main shared-finance run #41774925909 failed publish step and browser QA was skipped; newly added publisher missing six predecessor release gate, recorded review at #779. Remote monitoring fixed-target branch #41774680425 failed deploy prerequisites. No new Actions/API/Build/Publish triggered by orchestrator; 7-app formal release/E2E 0/7.",
+    "ci_state": "2026-11-04T05:46:58.389Z: release_freeze=false, policy quota_recovery=quota_blocked (no fresh budget clearance). Fleet #67 integrated; #41780901168 completed failure in production sync: ORS provider-request-failed, VROOM+OR-Tools ready, no 15-vehicle full sync and Publish skipped. Federation #918/#916/#919 integrated, shared-finance main publisher #41780931305 failed Publish and browser QA skipped. Seneschal reservation/ledger source progressed. Seven-app formal release accepted 0/7, Matsuko #774 still blocked. Read-only investigation plus status update; no Actions/Build/Publish/Gemini/DB executions dispatched by orchestrator.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1278,6 +1278,18 @@
           "secret_values_accessed": false,
           "production_routing_e2e_verified": false,
           "observed_at": "2026-11-04T01:38:53.860Z"
+        },
+        "latest_15_vehicle_rollout": {
+          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41780901168",
+          "head_sha": "a7e7a0485445d549c668b0f810871bfd6f7870bf",
+          "conclusion": "failure",
+          "stage": "Update existing free solver service and verify fifteen vehicles in production",
+          "synced": false,
+          "ors": "failed:provider-request-failed",
+          "vroom": "ready",
+          "ortools": "ready",
+          "publish": "skipped",
+          "observed_at": "2026-11-04T05:46:58.389Z"
         }
       },
       "service": {
@@ -1712,6 +1724,15 @@
           "formal_ordered_release": false,
           "upstream_six_e2e_verified": false,
           "observed_at": "2026-11-04T01:38:53.860Z"
+        },
+        "latest_shared_finance_main_attempt": {
+          "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41780931305",
+          "head_sha": "5c98b49bac55e6f371fdd5425126f495c9536518",
+          "conclusion": "failure",
+          "stage": "Publish verified candidate frontend once and check independent served SHA",
+          "browser_qa": "skipped",
+          "current_main_matches_run": false,
+          "observed_at": "2026-11-04T05:46:58.389Z"
         }
       },
       "seneschal_schedule_observation": {
@@ -1945,8 +1966,8 @@
         }
       }
     },
-    "last_cycle": "2026-11-04T03:39:30Z",
-    "current_action": "2026-11-04T03:39:30Z: policy-first read-only compare of seven main heads, latest runs, open PRs, #774 and source-level publication gates. Static validation: management-analysis-approved-release.yml publishes from main without predecessor six-app signed exact-SHA authenticated E2E. Recorded scope of new source-integrated Fleet/Simulator/Seneschal/Federation changes and old blockers. No new Actions probe/retry, cloud job, PR merge, or secret access.",
+    "last_cycle": "2026-11-04T05:46:58.389Z",
+    "current_action": "2026-11-04T05:46:58.389Z: policy-first read of seven current main heads, status, #774, #686, live run receipts, PR overlaps; static validation of fleet-fifteen-rollout-once.yml and federation publisher. Specific new failure documented: fleet ORS-only provider-request-failed under shared 15-vehicle matrix; publisher never ran. No duplicate Actions retries, no releases/merges/secret reads.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -2951,7 +2972,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-04T04:46:47.053Z",
+    "last_observed_at": "2026-11-04T05:46:58.389Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -3291,12 +3312,12 @@
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
       "activity": "d423f5f1d47627e48052f3ed8b86606198d49ff1",
-      "fleet": "da3416fc94c782ccb798c628bdcf107b287e023b",
+      "fleet": "a7e7a0485445d549c668b0f810871bfd6f7870bf",
       "service": "0e87b7a17f83b46e84111f8ba85a432d4362df59",
       "urban": "b26362abdbc1a7fb161b43841d371c56fdd7635a",
       "simulator": "7dacc03a71a9b38c31faf8641bf4f53b7ee024a2",
-      "seneschal": "ac86aaf2f977a120ee813bf4b851005b953f525e",
-      "federation": "57d02ca9979e66f5ada22cad906ce50f318476e3"
+      "seneschal": "a76991b7170bec3e51abee5d414d461cfb8cb700",
+      "federation": "318d923c9a5cc9f7891eea9c2752a39d5937507e"
     },
     "mission_contract": {
       "modes": [
