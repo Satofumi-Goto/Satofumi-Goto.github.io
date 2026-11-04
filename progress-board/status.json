@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T04:44:51.289Z",
+  "generated_at": "2026-11-04T04:46:47.053Z",
   "source": "2026-11-04T01:38:53.860Z policy-first GitHub static diff: release_freeze.enabled=false, CI quota_recovery.state=quota_blocked. Seven current-main SHAs advanced; verified source/CI and isolated auxiliary publish only. New Seneschal formal run #41755033303 failed credential readiness; Fleet solver credential/initialization runs failed but token metadata readback passed; Federation monthly auxiliary publish #41753399714 does not pass ordered seven-app gate. Reviewed new auxiliary gate gap on Draft #779; no new Actions/Build/Publish/API/DB runs. Production acceptance remains 0/7; Matsuko #774 unchanged.",
   "completed_total": 0,
   "apps": [
@@ -20,7 +20,7 @@
       "name": "Fleet",
       "status": "red",
       "head": "da3416fc94c782ccb798c628bdcf107b287e023b",
-      "summary": "2026-11-04T04:44:51.289Z: main da3416fc: administrative sync receiver, 4-app remote incident response hooks and hosted solver source added. Independent owner-account run #41774045181 completed authenticated production ORS/VROOM/OR-Tools synchronization step; read-only Render inspection #41774287597 succeeded. Live three-provider receipt claims await independent record audit; PR #66 source alignment still open. Same-head Guard/Export success; formal ordered Base44 Publish/E2E unverified.",
+      "summary": "2026-11-04T04:46:47.053Z: main da3416fc now integrates PR #66 (verified free-hosted authenticated ORS/VROOM/OR-Tools three-provider sync; production branch workflow #41774045181 and read-only Render validation #41774287597 succeeded). Current-main Guard #41774998473 and Export ZIP #41774998499 succeeded. Production solver receipts are a narrow infrastructure milestone, NOT exact-main formal Builder Publish, console E2E or ordered 7-app acceptance.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
       "main_sha": "da3416fc94c782ccb798c628bdcf107b287e023b",
       "release_verified": false,
@@ -80,7 +80,7 @@
       "name": "Federation",
       "status": "red",
       "head": "57d02ca9979e66f5ada22cad906ce50f318476e3",
-      "summary": "2026-11-04T04:44:51.289Z: main 57d02ca9: shared private team workspace (#906), remote monitoring incident sync, administrative sync receiver source added. PR #907 finance workspace open; branch-run #41774339067 validation successful but publish job skipped. Fixed-target remote console release branch #41774680425 failed during deploy step (runner executed); no formal ordered E2E, latest Builder sync/public SHA unverified. Draft #779 gate unfinished.",
+      "summary": "2026-11-04T04:46:47.053Z: main 57d02ca9 integrates PR #907 private shared-finance workspace and PR #906 private team. Same-main automatic shared-finance publisher #41774925909 ran build successfully then failed exact candidate frontend publish step; authenticated two-context browser QA skipped. Fixed-target remote monitoring branch release #41774680425 failed deploy prerequisites. The newly added shared-finance workflow lacks mandatory six predecessor authenticated release gates (review recorded PR #779 comment #6622805284). Formal 7-app release and independent Matsuko #774 still unverified.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
       "main_sha": "57d02ca9979e66f5ada22cad906ce50f318476e3",
       "release_verified": false,
@@ -1063,6 +1063,18 @@
       "failed_step": "Deploy approved artifacts only when all four app sources and credentials are verified",
       "publish_verified": false,
       "observed_at": "2026-11-04T04:44:51.289Z"
+    },
+    "federation_shared_finance_auxiliary_publisher_20261104": {
+      "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41774925909",
+      "main_sha": "57d02ca9979e66f5ada22cad906ce50f318476e3",
+      "merged_pr": "https://github.com/Satofumi-Goto/federation-portal/pull/907",
+      "conclusion": "failure",
+      "failed_step": "Publish verified candidate frontend once and check independent served SHA",
+      "after_build": "success",
+      "browser_authenticated_qa": "skipped",
+      "predecessor_gate_present": false,
+      "review": "https://github.com/Satofumi-Goto/federation-portal/pull/779#issuecomment-6622805284",
+      "observed_at": "2026-11-04T04:46:47.053Z"
     }
   },
   "notes": [
@@ -1114,7 +1126,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-04T04:44:51.289Z: policy release_freeze.enabled=false, quota_recovery.state=quota_blocked (canonical state, no new probe). 6 repo mains advanced; four consoles+Federation gained admin receiver code, 4-app monitoring incident response source, Seneschal delivery/Wallet, Federation team private source. Fleet independently triggered authenticated ORS/VROOM/OR-Tools production sync run #41774045181 and Render metadata read-only #41774287597 successful; PR #66 not yet merged; full release not proven. Federation remote monitoring fixed-target release branch run #41774680425 failed at deployment gating, not a runnerless quota error. Seven-app ordered formal authenticated E2E remains 0/7.",
+    "ci_state": "2026-11-04T04:46:47.053Z: release_freeze.enabled=false, quota_recovery.state=quota_blocked unchanged. Fleet PR #66 now integrated, three-provider hosted ORS/VROOM/OR-Tools run #41774045181 + Render read-only run #41774287597 succeeded, main Guard/Export succeeded. Federation #907 now integrated; automatic same-main shared-finance run #41774925909 failed publish step and browser QA was skipped; newly added publisher missing six predecessor release gate, recorded review at #779. Remote monitoring fixed-target branch #41774680425 failed deploy prerequisites. No new Actions/API/Build/Publish triggered by orchestrator; 7-app formal release/E2E 0/7.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -2939,7 +2951,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-04T04:44:51.289Z",
+    "last_observed_at": "2026-11-04T04:46:47.053Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -3111,7 +3123,7 @@
       "priority": 3,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
-      "action": "2026-11-04T04:44:51.289Z: Fleet real ORS+VROOM+OR-Tools hosted synchronization workflow #41774045181 success on approved operations branch; Render read-only check #41774287597 success; PR #66 source/distribution alignment pending. Formal main exact Builder Publish, app API roundtrip and ordered seven-app E2E remain unverified. No repeat probe.",
+      "action": "2026-11-04T04:46:47.053Z: Fleet PR #66 integrated to main da3416fc; authenticated ORS/VROOM/OR-Tools live sync #41774045181 and Render read-only verification #41774287597 passed; same-head Guard/Export also passed. Ordered exact Builder Publish + authenticated production console E2E remain pending. Do not rerun without evidence.",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity predecessor authenticated acceptance missing.",
@@ -3248,7 +3260,7 @@
       "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-04T04:44:51.289Z: Formal 7-app release acceptance 0/7. Federation remote console fixed-target branch #41774680425 failed at deployment gate after executed runner; do not retry without reason. Fleet three solver real sync is separately verified, but does not constitute ordered full acceptance. Draft #779 unresolved.",
+      "action": "2026-11-04T04:46:47.053Z: Federated formal ordered E2E remains 0/7. Main 57d02ca9 #907 shared-finance auto-publisher #41774925909 failed in Publish step after build, so production authenticated two-context QA skipped. New independent publish entrypoint lacks six predecessors' required acceptance gates: tracked under Draft #779 review comment #6622805284. Remote console branch publisher #41774680425 also failed deploy prerequisites. Do not retry without evidence.",
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
         "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production."
@@ -3261,7 +3273,9 @@
         "https://github.com/Satofumi-Goto/federation-portal/pull/780#issuecomment-6542925008",
         "https://github.com/Satofumi-Goto/federation-portal/commit/cdbeb1032de406cb3311d7af0a7b03482853874e",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41301698444",
-        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41774680425"
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41774680425",
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41774925909",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/779#issuecomment-6622805284"
       ],
       "freeze_is_release_gate": false
     }
@@ -3318,6 +3332,7 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
+      "2026-11-04T04:46:47.053Z: Federation shared-finance workflow merged PR #907, run #41774925909 failed Publish step after build, browser QA skipped; static workflow lacks six predecessor authenticated exact-current-SHA gate. Draft #779 review comment #6622805284 records distinct new bypass risk. No formal 7-app release.",
       "2026-11-04T04:44:51.289Z: Federation approved remote console branch run #41774680425 had an executed runner, passed static fixed-target validation, then failed 'Deploy approved artifacts only when all four app sources and credentials are verified'; no claim of current main publish or full E2E. Fleet authenticated 3-provider solver run #41774045181 success is not ordered 7-app release approval.",
       "2026-11-04T02:41:55.454Z: Newly merged #897 added .github/workflows/product-operations-approved-release.yml (main marker push/manual) which can call deploy-admin-controls.mjs→publishFrontendArchive without six preceding app official same-current-SHA authenticated release acceptances. Existing admin-controls-approved-release.yml has same gap. Protected Draft #779 was informed via comment #6621074139; do not dispatch/retry or call auxiliary published SHA a formal seven-app acceptance.",
       "2026-11-01T03:38:39Z: Federation compensating run #41264396870 persisted four queued ingress receipts (activity 21f48039, fleet e1043a14, service 1169849e, urban e49a5f24); businessSynchronization unverified. Activity/Service/Urban manual releases failed after public exact SHA from scoped Federation API HTTP 401. Receipt persistence does NOT make official release workflow or authenticated production E2E pass. Simulator auxiliary UI published ed6b6031 but current main is c7ddffe4.",
