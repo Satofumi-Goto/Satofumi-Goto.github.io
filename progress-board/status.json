@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T06:43:25.687Z",
-  "source": "2026-11-04T06:43:25.687Z policy-first GitHub connector review: 7 current main SHA, recent PRs, #774 and publication-gate draft #779. Three app main HEAD changes recorded as source integrations, with Cloud Run Nov 3 stale-image report from #923. Prior hosted ORS and finance Publish failures persist. No new Actions/Publish/Gemini/DB execution; quota_blocked maintained; 0/7 formal acceptance.",
+  "generated_at": "2026-11-04T07:40:15Z",
+  "source": "2026-11-04T07:40:15Z policy-first GitHub read-only sweep: canonical freeze=false/quota_blocked; seven main heads checked, three advanced; Fleet #75 exact Builder Publish step failed again; Federation member invitation scoped Publish/browser QA succeeded at noncurrent SHA without first-six gate; new distinct entrypoint reported to draft #779. No new Actions/Build/Publish/Gemini/DB operations by orchestrator. Formal acceptance 0/7.",
   "completed_total": 0,
   "apps": [
     {
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "84bbc2ff9c7d06ee82db133feec879f6f00dff1d",
-      "summary": "2026-11-04T06:43:25.687Z: main 84bbc2ff includes merged #68/#70/#71: shared road matrix and separate demand/placement, delivery and mixed passenger/cargo maps, each with 15 independent sample vehicles; per-map engine requests avoid unnecessary ORS/VROOM/OR-Tools calls. The earlier hosted 15-vehicle rollout #41780901168 failed ORS provider-request-failed; no new evidence that revised flow passed authenticated production end-to-end, exact-current-main Builder Publish or public SHA verification. Source integrated, formal release unverified.",
+      "head": "ef31ea9865ed2799c76af848eb6cb1444c6d8778",
+      "summary": "2026-11-04T07:40:15Z: main ef31ea98 integrates #74 repaired mixed-map geographic roads and #75 continuous people-density heatmap; Guard succeeded at this SHA (#41793273970). Automated manual releases #41793297516 and #41793767254 failed, latter after credential/guard success specifically at exact synchronized Builder revision Publish; backend deployment, exact served SHA and authenticated fleet console API roundtrip skipped. Previous ORS 15-vehicle hosted failure not cleared. Source integrated; formal release blocked.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "84bbc2ff9c7d06ee82db133feec879f6f00dff1d",
+      "main_sha": "ef31ea9865ed2799c76af848eb6cb1444c6d8778",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "89292275d1b628855e4ce61f4f4f2cf4746453fa",
-      "summary": "2026-11-04T06:43:25.687Z: main 89292275 includes #698 preview plan/cancellation confirmation, #699 SafeGoogleMap asynchronous initialization and fallback repair, #700 service-account calendar/overlays, #701 local friend-transfer draft clearly marked unpaid. PR tests/source integration do not prove real payment, deployed Google Maps, plan billing or authenticated production E2E. Existing Base44 credential/Builder formal release issue persists; no exact-current-main publication evidence.",
+      "head": "1d4e4f658c2ea54f67571e5370be14b6dbab9509",
+      "summary": "2026-11-04T07:40:15Z: main 1d4e4f65 merges #702 single medical/reservation tutorial card and #703 wallet thumb shape/position calibration; PR-head Guard/Audit #41791468889/#41791468619 passed. No same-current-main formal Base44 Builder Publish or production voice/map/Federation authenticated E2E, credential readiness remains unresolved. Source integrated only.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "89292275d1b628855e4ce61f4f4f2cf4746453fa",
+      "main_sha": "1d4e4f658c2ea54f67571e5370be14b6dbab9509",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "47852230101c688247924059e3b53b1014bc0277",
-      "summary": "2026-11-04T06:43:25.687Z: main 47852230 includes #920 finance candidate forward-only publishing rule, #921 remote shared six-console board, #922/#923 remote/Seneschal owner-authenticated browser read verification checks. #923 explicitly reports Cloud Run still serving Nov 3 image; source-only validation is not a current Cloud Run deployment. Prior finance Publish run #41780931305 failed; no same-main official ordered release, browser/API acceptance, seven-app live mission or Matsuko #774 authenticated durable DB E2E proof. Draft release gate #779 remains unmerged.",
+      "head": "ff3227a0a930eebaf199a3d87b90d5ab690dfb7d",
+      "summary": "2026-11-04T07:40:15Z: main ff3227a0 merges #925/#927 member email invitation UI and #928 removing duplicated remote/vehicle workspace entries. Scoped member-invitation publication run #41793053990 succeeded at earlier e92571a3 with frontend, independent SHA and authenticated private browser QA; not current main and not seven-app formal release. Its workflow lacks required first-six official acceptance gate, noted on Draft #779 (#6625454017). Independent #774 Gemini grounding→Seneschal durable DB E2E still blocked.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "47852230101c688247924059e3b53b1014bc0277",
+      "main_sha": "ff3227a0a930eebaf199a3d87b90d5ab690dfb7d",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -93,35 +93,35 @@
     {
       "owner": "dot：全体統合",
       "status": "red",
-      "current": "2026-11-04T06:43:25.687Z: Policy release_freeze=false, quota_blocked. Latest main source advanced in fleet, seneschal, federation; Fleet three independent purpose maps (#68/#70/#71), Seneschal map + account + preview-plan fixes (#698-#701), Federation finance/remote browser acceptance guards (#920-#923) source integrated. Current Cloud Run image reported Nov 3, not confirmed updated. Previous Fleet 15-vehicle ORS failure and finance Publish failure remain unclosed, formal ordered production releases 0/7, Matsuko #774 blocked.",
-      "next": "Check only existing hosted Cloud Run/Seneschal owner-launch evidence to distinguish source from deployed image; ensure exact SHA and owner-authenticated readback. Diagnose Fleet ORS failure from existing nonsecret status evidence only, no blind rerun. Do not publish or merge draft #779 until predecessor current-main gates and required CI/approval pass.",
+      "current": "2026-11-04T07:40:15Z: Policy freeze=false and quota_blocked unchanged. Fleet latest ef31ea98 merges new geographic/people-density maps but exact Builder Publish failed with executed step (#41793767254); Seneschal #702/#703 source integrated to 1d4e4f65 with PR-head Audit success; Federation latest ff3227a0, scoped invitations Publish QA success at older e92571a3, NOT formal 7-app release. New publication workflow bypassing first-six gate statically verified and commented on Draft #779 (#6625454017). Matsuko #774 remains blocked; formal 0/7.",
+      "next": "Avoid release retries. Review Fleet exact Builder revision publication failure with nonsecret evidence and scope/ownership; gate every Federation auxiliary frontend publish path on predecessor exact-current-SHA authenticated acceptances before further publishing; preserve #779 draft until required CI/review. For Matsuko #774 obtain verified deployed authenticated Cloud Run/Gemini and Seneschal durable DB evidence before any billable research/write.",
       "evidence": [
         {
           "text": "Policy",
           "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
         },
         {
-          "text": "Fleet purpose map PR #71",
-          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/pull/71"
+          "text": "Fleet last failed exact Builder publish",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41793767254"
         },
         {
-          "text": "Fleet prior failed production sync",
-          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41780901168"
+          "text": "Fleet density merged PR #75",
+          "url": "https://github.com/Satofumi-Goto/fleet-operations-console/pull/75"
         },
         {
-          "text": "Seneschal Google Map repair PR #699",
-          "url": "https://github.com/Satofumi-Goto/seneschal/pull/699"
+          "text": "Seneschal wallet calibration Audit",
+          "url": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41791468619"
         },
         {
-          "text": "Federation owner browser acceptance PR #923",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/923"
+          "text": "Federation scoped invitations Publish QA",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41793053990"
         },
         {
-          "text": "Federation current release-gate draft",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/779"
+          "text": "Federation new workflow gate review",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/779#issuecomment-6625454017"
         },
         {
-          "text": "Matsuko independent research issue",
+          "text": "Matsuko independent research",
           "url": "https://github.com/Satofumi-Goto/federation-portal/issues/774"
         }
       ]
@@ -1161,7 +1161,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-04T06:43:25.687Z: policy release_freeze=false and quota_recovery=quota_blocked. Latest three main HEADs updated; no external quota recovery evidence sought, no new runner probes. No authorized same-current-SHA ordered formal seven-app release or authenticated E2E. Fleet prior ORS hosted sync and Federation finance publish remain failed; Matsuko #774 no durable independent store receipt.",
+    "ci_state": "2026-11-04T07:40:15Z: canonical release_freeze.enabled=false, quota_recovery.state=quota_blocked. Actual Fleet and Federation runs executed jobs; no evidence sufficient to override policy quota state. Fleet exact Builder Publish step failure #41793767254; Federation narrowly scoped invitations run #41793053990 succeeded at earlier SHA, prerequisite six-app gate absent. No self-initiated probe/retry; 0/7 accepted.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -3179,11 +3179,12 @@
       "priority": 3,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
-      "action": "2026-11-04T04:46:47.053Z: Fleet PR #66 integrated to main da3416fc; authenticated ORS/VROOM/OR-Tools live sync #41774045181 and Render read-only verification #41774287597 passed; same-head Guard/Export also passed. Ordered exact Builder Publish + authenticated production console E2E remain pending. Do not rerun without evidence.",
+      "action": "2026-11-04T07:40:15Z: current Fleet main ef31ea98; #41793767254 failed at exact synchronized Builder revision Publish after guard/credential steps. Earlier #41793297516 failed earlier at source/production binding. Do not retry without diagnosed fix and Activity predecessor E2E.",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity predecessor authenticated acceptance missing.",
-        "2026-11-04: Fleet solver provider credential configuration and token initialization failed; readback metadata alone is not live solver acceptance."
+        "2026-11-04: Fleet solver provider credential configuration and token initialization failed; readback metadata alone is not live solver acceptance.",
+        "Latest same-current-head scoped Builder publication failed at exact synchronized revision step (#41793767254); downstream API, site SHA, ingress unexecuted."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/fleet-operations-console/commit/23671437ec44bbaf1ee922ab883eeed07e8c4dd0",
@@ -3199,7 +3200,8 @@
         "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41732371715",
         "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41774045181",
         "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41774287597",
-        "https://github.com/Satofumi-Goto/fleet-operations-console/pull/66"
+        "https://github.com/Satofumi-Goto/fleet-operations-console/pull/66",
+        "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41793767254"
       ],
       "freeze_is_release_gate": false
     },
@@ -3316,10 +3318,11 @@
       "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-04T04:46:47.053Z: Federated formal ordered E2E remains 0/7. Main 57d02ca9 #907 shared-finance auto-publisher #41774925909 failed in Publish step after build, so production authenticated two-context QA skipped. New independent publish entrypoint lacks six predecessors' required acceptance gates: tracked under Draft #779 review comment #6622805284. Remote console branch publisher #41774680425 also failed deploy prerequisites. Do not retry without evidence.",
+      "action": "2026-11-04T07:40:15Z: scoped member invitations workflow run #41793053990 published and browser QA passed at e92571a3, but current main ff3227a0 and no first-six official authenticated release prerequisite; distinct unguarded entrypoint reviewed in draft #779 comment #6625454017. Formal 0/7.",
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
-        "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production."
+        "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production.",
+        "New `.github/workflows/member-email-invitations-approved-release.yml` publish path lacks six predecessor authenticated exact-SHA release gate; run #41793053990 is narrow only."
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/federation-portal/commit/4741a84c3fba9729e463db5d5f633ea701519742",
@@ -3331,7 +3334,9 @@
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41301698444",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41774680425",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41774925909",
-        "https://github.com/Satofumi-Goto/federation-portal/pull/779#issuecomment-6622805284"
+        "https://github.com/Satofumi-Goto/federation-portal/pull/779#issuecomment-6622805284",
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41793053990",
+        "https://github.com/Satofumi-Goto/federation-portal/pull/779#issuecomment-6625454017"
       ],
       "freeze_is_release_gate": false
     }
@@ -3347,12 +3352,12 @@
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
       "activity": "d423f5f1d47627e48052f3ed8b86606198d49ff1",
-      "fleet": "84bbc2ff9c7d06ee82db133feec879f6f00dff1d",
+      "fleet": "ef31ea9865ed2799c76af848eb6cb1444c6d8778",
       "service": "0e87b7a17f83b46e84111f8ba85a432d4362df59",
       "urban": "b26362abdbc1a7fb161b43841d371c56fdd7635a",
       "simulator": "7dacc03a71a9b38c31faf8641bf4f53b7ee024a2",
-      "seneschal": "89292275d1b628855e4ce61f4f4f2cf4746453fa",
-      "federation": "47852230101c688247924059e3b53b1014bc0277"
+      "seneschal": "1d4e4f658c2ea54f67571e5370be14b6dbab9509",
+      "federation": "ff3227a0a930eebaf199a3d87b90d5ab690dfb7d"
     },
     "mission_contract": {
       "modes": [
@@ -3388,6 +3393,7 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
+      "2026-11-04T07:40:15Z: Federation member-invitation release workflow independently succeeded in frontend Publish and private browser QA at e92571a3 (#41793053990), but current main ff3227a0. Static review found no mandatory first-six exact-current-SHA authenticated E2E gate before Publish; tracked #779 comment #6625454017. This is not the ordered formal seven-app release.",
       "2026-11-04T06:43:25.687Z: Federation main 47852230 has #922/#923 owner-session test guards, but PR #923 reports Cloud Run still running Nov 3 image. No new authenticated remote/Seneschal API acceptance or #774 Gemini→persistent Seneschal DB recordId/hash/count/readback. #779 remains draft. Do not equate source integration with production acceptance.",
       "2026-11-04T04:46:47.053Z: Federation shared-finance workflow merged PR #907, run #41774925909 failed Publish step after build, browser QA skipped; static workflow lacks six predecessor authenticated exact-current-SHA gate. Draft #779 review comment #6622805284 records distinct new bypass risk. No formal 7-app release.",
       "2026-11-04T04:44:51.289Z: Federation approved remote console branch run #41774680425 had an executed runner, passed static fixed-target validation, then failed 'Deploy approved artifacts only when all four app sources and credentials are verified'; no claim of current main publish or full E2E. Fleet authenticated 3-provider solver run #41774045181 success is not ordered 7-app release approval.",
@@ -3422,7 +3428,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-04T04:44:51.289Z",
+    "latest_review_at": "2026-11-04T07:40:15Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
@@ -3431,7 +3437,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-11-04T04:44:51.289Z",
+    "last_review_at": "2026-11-04T07:40:15Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
