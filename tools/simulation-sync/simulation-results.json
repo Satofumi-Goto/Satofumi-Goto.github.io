@@ -1,16 +1,16 @@
 {
- "engine": "project-finance-1.1.0",
+ "engine": "project-finance-1.2.0",
  "sync": "simulation-sync-1.0.0",
- "inputVersion": "2026-10-15D-5035fbf1",
+ "inputVersion": "2026-10-15D-e1ee4790",
  "financialAssessment": {
   "sourceId": "simulator-project-finance",
-  "calculatedBy": "project-finance-1.1.0",
+  "calculatedBy": "project-finance-1.2.0",
   "sourcePage": 14,
-  "projectIRRPercent": -36.49,
-  "NPV8_BJPY": -196.235,
-  "NPV12_BJPY": -183.125,
+  "projectIRRPercent": -37.37,
+  "NPV8_BJPY": -197.768,
+  "NPV12_BJPY": -184.304,
   "FCF2035_BJPY": 10.353,
-  "cumulativeFCF2035_BJPY": -228.358,
+  "cumulativeFCF2035_BJPY": -231.048,
   "totalCapex2025to2035_BJPY": 364.6,
   "nominalPaybackYear": null,
   "discountedPaybackBy2035": false,
@@ -18,138 +18,138 @@
   "hurdle2035Percent": 12
  },
  "simulationResult": {
-  "engine": "project-finance-1.1.0",
+  "engine": "project-finance-1.2.0",
   "breakdownDetail": {
    "2030": {
     "maasOps": {
      "remote-labour": 0.041,
-     "maintenance-cleaning": 0,
+     "maintenance-cleaning": 0.075,
      "insurance": 0.002,
-     "comms-cloud": 0,
-     "energy": 0,
-     "vehicle-depreciation": 0,
-     "other": 1.983
+     "comms-cloud": 0.03,
+     "energy": 0.006,
+     "vehicle-depreciation": 0.2,
+     "other": 1.672
     },
     "remoteOps": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 0.3
+     "labour": 0.21,
+     "comms-cloud": 0.06,
+     "other": 0.03
     },
     "dispatchOps": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 0.55
+     "labour": 0.303,
+     "comms-cloud": 0.193,
+     "other": 0.054
     },
     "maintenance": {
-     "labour": 0,
-     "parts-materials": 0,
-     "other": 0.25
+     "labour": 0.113,
+     "parts-materials": 0.113,
+     "other": 0.024
     },
     "platformOps": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 1
+     "labour": 0.55,
+     "comms-cloud": 0.35,
+     "other": 0.1
     },
     "cloudOpsBase": {
-     "compute-storage": 0,
-     "network": 0,
-     "other": 0.5
+     "compute-storage": 0.35,
+     "network": 0.1,
+     "other": 0.05
     },
     "aiOps": {
-     "labour": 0,
-     "compute": 0,
-     "other": 0.22
+     "labour": 0.088,
+     "compute": 0.11,
+     "other": 0.022
     },
     "customerOps": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 0.18
+     "labour": 0.135,
+     "comms-cloud": 0.027,
+     "other": 0.018
     },
     "partnerOps": {
-     "labour": 0,
-     "commissions": 0,
-     "other": 0.12
+     "labour": 0.048,
+     "commissions": 0.06,
+     "other": 0.012
     },
     "materialCycle": {
-     "labour": 0,
-     "materials": 0,
-     "other": 0.3
+     "labour": 0.105,
+     "materials": 0.165,
+     "other": 0.03
     },
     "nodeOptimization": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 0.12
+     "labour": 0.072,
+     "comms-cloud": 0.036,
+     "other": 0.012
     },
     "energySync": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 0.08
+     "labour": 0.032,
+     "comms-cloud": 0.04,
+     "other": 0.008
     }
    },
    "2035": {
     "maasOps": {
      "remote-labour": 0.81,
-     "maintenance-cleaning": 0,
+     "maintenance-cleaning": 1,
      "insurance": 0.04,
-     "comms-cloud": 0,
-     "energy": 0,
-     "vehicle-depreciation": 0,
-     "other": 21.95
+     "comms-cloud": 0.3,
+     "energy": 0.01,
+     "vehicle-depreciation": 2.5,
+     "other": 18.141
     },
     "remoteOps": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 2.1
+     "labour": 1.47,
+     "comms-cloud": 0.42,
+     "other": 0.21
     },
     "dispatchOps": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 4.2
+     "labour": 2.31,
+     "comms-cloud": 1.47,
+     "other": 0.42
     },
     "maintenance": {
-     "labour": 0,
-     "parts-materials": 0,
-     "other": 1.8
+     "labour": 0.81,
+     "parts-materials": 0.81,
+     "other": 0.18
     },
     "platformOps": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 6
+     "labour": 3.3,
+     "comms-cloud": 2.1,
+     "other": 0.6
     },
     "cloudOpsBase": {
-     "compute-storage": 0,
-     "network": 0,
-     "other": 3.799
+     "compute-storage": 2.659,
+     "network": 0.76,
+     "other": 0.38
     },
     "aiOps": {
-     "labour": 0,
-     "compute": 0,
-     "other": 2.4
+     "labour": 0.96,
+     "compute": 1.2,
+     "other": 0.24
     },
     "customerOps": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 1.5
+     "labour": 1.125,
+     "comms-cloud": 0.225,
+     "other": 0.15
     },
     "partnerOps": {
-     "labour": 0,
-     "commissions": 0,
-     "other": 1.1
+     "labour": 0.44,
+     "commissions": 0.55,
+     "other": 0.11
     },
     "materialCycle": {
-     "labour": 0,
-     "materials": 0,
-     "other": 1.8
+     "labour": 0.63,
+     "materials": 0.99,
+     "other": 0.18
     },
     "nodeOptimization": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 0.95
+     "labour": 0.57,
+     "comms-cloud": 0.285,
+     "other": 0.095
     },
     "energySync": {
-     "labour": 0,
-     "comms-cloud": 0,
-     "other": 0.6
+     "labour": 0.24,
+     "comms-cloud": 0.3,
+     "other": 0.06
     }
    }
   },
@@ -364,47 +364,47 @@
    },
    {
     "year": 2031,
-    "revenue": 47.066,
-    "ebitda": 15.595,
+    "revenue": 41.469,
+    "ebitda": 15.057,
     "capex": 23,
-    "fcf": -7.405,
+    "fcf": -7.943,
     "discountFactor": 0.63,
-    "dcf": -4.666,
-    "cumulativeFcf": -234.294,
-    "cumulativeDcf": -198.482
+    "dcf": -5.005,
+    "cumulativeFcf": -234.832,
+    "cumulativeDcf": -198.821
    },
    {
     "year": 2032,
-    "revenue": 66.059,
-    "ebitda": 20.219,
+    "revenue": 54.864,
+    "ebitda": 19.144,
     "capex": 22,
-    "fcf": -1.781,
+    "fcf": -2.856,
     "discountFactor": 0.583,
-    "dcf": -1.039,
-    "cumulativeFcf": -236.075,
-    "cumulativeDcf": -199.521
+    "dcf": -1.666,
+    "cumulativeFcf": -237.688,
+    "cumulativeDcf": -200.488
    },
    {
     "year": 2033,
-    "revenue": 87.013,
-    "ebitda": 26.455,
+    "revenue": 79.549,
+    "ebitda": 25.737,
     "capex": 31.2,
-    "fcf": -4.745,
+    "fcf": -5.463,
     "discountFactor": 0.54,
-    "dcf": -2.564,
-    "cumulativeFcf": -240.82,
-    "cumulativeDcf": -202.085
+    "dcf": -2.951,
+    "cumulativeFcf": -243.151,
+    "cumulativeDcf": -203.439
    },
    {
     "year": 2034,
-    "revenue": 110.016,
-    "ebitda": 34.309,
+    "revenue": 106.284,
+    "ebitda": 33.95,
     "capex": 32.2,
-    "fcf": 2.109,
+    "fcf": 1.75,
     "discountFactor": 0.5,
-    "dcf": 1.055,
-    "cumulativeFcf": -238.711,
-    "cumulativeDcf": -201.03
+    "dcf": 0.875,
+    "cumulativeFcf": -241.401,
+    "cumulativeDcf": -202.564
    },
    {
     "year": 2035,
@@ -414,79 +414,79 @@
     "fcf": 10.353,
     "discountFactor": 0.463,
     "dcf": 4.795,
-    "cumulativeFcf": -228.358,
-    "cumulativeDcf": -196.235
+    "cumulativeFcf": -231.048,
+    "cumulativeDcf": -197.768
    }
   ],
   "paybackExtension": [
    {
     "year": 2036,
-    "cumulativeFcf": -218.005
+    "cumulativeFcf": -220.695
    },
    {
     "year": 2037,
-    "cumulativeFcf": -207.652
+    "cumulativeFcf": -210.342
    },
    {
     "year": 2038,
-    "cumulativeFcf": -197.299
+    "cumulativeFcf": -199.989
    },
    {
     "year": 2039,
-    "cumulativeFcf": -186.946
+    "cumulativeFcf": -189.636
    },
    {
     "year": 2040,
-    "cumulativeFcf": -176.593
+    "cumulativeFcf": -179.283
    },
    {
     "year": 2041,
-    "cumulativeFcf": -166.24
+    "cumulativeFcf": -168.93
    },
    {
     "year": 2042,
-    "cumulativeFcf": -155.887
+    "cumulativeFcf": -158.577
    },
    {
     "year": 2043,
-    "cumulativeFcf": -145.534
+    "cumulativeFcf": -148.224
    },
    {
     "year": 2044,
-    "cumulativeFcf": -135.181
+    "cumulativeFcf": -137.871
    },
    {
     "year": 2045,
-    "cumulativeFcf": -124.828
+    "cumulativeFcf": -127.518
    }
   ],
   "sensitivity": {
    "noHpc": {
-    "irrPercent": -36.39,
-    "npv8": -190.321,
-    "npvHurdle": -178.298
+    "irrPercent": -37.39,
+    "npv8": -191.855,
+    "npvHurdle": -179.476
    },
    "hpcConservative": {
-    "irrPercent": -48.22,
-    "npv8": -200.365,
-    "npvHurdle": -185.983
+    "irrPercent": -49.69,
+    "npv8": -201.899,
+    "npvHurdle": -187.161
    },
    "hpcHigh": {
-    "irrPercent": -19.93,
-    "npv8": -171.651,
-    "npvHurdle": -165.064
+    "irrPercent": -20.35,
+    "npv8": -173.185,
+    "npvHurdle": -166.242
    },
    "npvBreakEvenExtraEbitda": {
     "reachable": 1,
-    "extraEbitdaPerYear2030to2035": 57.751,
+    "extraEbitdaPerYear2030to2035": 58.202,
     "irrPercent": 8,
     "npv8": 0,
-    "npvHurdle": -32.23
+    "npvHurdle": -32.229
    },
    "noDqc": {
-    "irrPercent": -77.97,
-    "npv8": -205.493,
-    "npvHurdle": -189.756
+    "irrPercent": -79.45,
+    "npv8": -207.027,
+    "npvHurdle": -190.934
    }
   }
  }
