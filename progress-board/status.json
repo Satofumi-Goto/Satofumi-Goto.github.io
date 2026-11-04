@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-04T01:38:53.860Z",
+  "generated_at": "2026-11-04T02:41:55.454Z",
   "source": "2026-11-04T01:38:53.860Z policy-first GitHub static diff: release_freeze.enabled=false, CI quota_recovery.state=quota_blocked. Seven current-main SHAs advanced; verified source/CI and isolated auxiliary publish only. New Seneschal formal run #41755033303 failed credential readiness; Fleet solver credential/initialization runs failed but token metadata readback passed; Federation monthly auxiliary publish #41753399714 does not pass ordered seven-app gate. Reviewed new auxiliary gate gap on Draft #779; no new Actions/Build/Publish/API/DB runs. Production acceptance remains 0/7; Matsuko #774 unchanged.",
   "completed_total": 0,
   "apps": [
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "f02043d631f7953855251a66ba5c168ac312acb5",
-      "summary": "2026-11-04T01:38:53.860Z: main f02043d6; free dispatch, OR-Tools routing, synchronization and solver/integration source advanced. Existing UI check #41749750949 and token registration metadata readback #41752035667 succeeded; credential configuration #41751659802 and token init #41751914561 failed. Neither establishes deployed routing, live authenticated API or Builder publish. Formal 7-app acceptance pending.",
+      "head": "ea6839f9970c6919659ded75f928c0c1876fd34a",
+      "summary": "2026-11-04T02:41:55.454Z: main ea6839f9 merged ORS edge-compatible redirect-safe transport. Existing production verification run #41757671110 (success) and docs/fleet-routing-production-status.md report authenticated deployed ORS routing, travel time and hosted sample planning 1 route/0 unassigned. VROOM_URL and ORTOOLS_URL remain absent: full three-solver deployment/synchronization, real-vehicle dispatch and exact current-SHA ordered formal release/E2E unverified.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "f02043d631f7953855251a66ba5c168ac312acb5",
+      "main_sha": "ea6839f9970c6919659ded75f928c0c1876fd34a",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "3fe0e2a0f6c55b9fd56d578cd5cb182e82e87fd9",
-      "summary": "2026-11-04T01:38:53.860Z: main 3fe0e2a0; map/startup assistant/UI source integrated. Existing guarded formal release #41755033303 failed at 'Require Base44 CLI key without exposing it'; downstream backend deploy, site Publish, signed E2E, voice browser tests skipped. Base44 credential readiness requires authorized configuration verification without revealing keys. PR #680 Guard failure and open PR #681 not merged; Matsuko independent research #774 remains blocked.",
+      "head": "309511af88caa18129c5311fa8d6a9a58a7e3047",
+      "summary": "2026-11-04T02:41:55.454Z: main 309511af integrated #685 rental-cycle layer and public GBFS inventory/availability with conservative map filtering. Formal release #41755033303 still failed Base44 CLI credential guard on older main 3fe0e2a0; no current-main exact Publish, voice/E2E. Independent Matsuko research #774 authentication, persistent DB/readback/backup still blocked.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "3fe0e2a0f6c55b9fd56d578cd5cb182e82e87fd9",
+      "main_sha": "309511af88caa18129c5311fa8d6a9a58a7e3047",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "bfcd676692c5c5a464239ea5c4867ddbd8a82b23",
-      "summary": "2026-11-04T01:38:53.860Z: main bfcd6766; engineering admin API inventory/monthly management frontend features source integrated. Auxiliary same-head monthly publication run #41753399714 served-SHA and limited browser tests passed; not an ordered all-seven release. Shared required predecessor gate absent in auxiliary publish entrypoints; review evidence added to Draft PR #779 (#6620171460), #883 still unmerged. Exact current-main Builder metadata, authorized Live Mission and seven-app E2E unverified.",
+      "head": "29dd7bcebe15612fa52cf9fc921b43c0d3b72832",
+      "summary": "2026-11-04T02:41:55.454Z: main 29dd7bce integrated #897 authenticated private support, incident tracking, plan usage limits source; earlier #893/#894 owner identity/release workflow merged, but current-main formal seven-app publication/E2E unverified. NEW live-source audit: product-operations-approved-release.yml and admin-controls-approved-release.yml both call deploy-admin-controls.mjs→publishFrontendArchive without required preceding six-app exact current-SHA authenticated release gate. Recorded new evidence on Draft/conflicted #779 comment #6621074139. No Actions run, Publish, or paid execution initiated.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "bfcd676692c5c5a464239ea5c4867ddbd8a82b23",
+      "main_sha": "29dd7bcebe15612fa52cf9fc921b43c0d3b72832",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -1098,7 +1098,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-04T01:38:53.860Z: canonical CI quota_recovery.state=quota_blocked unchanged. Existing main push tests and auxiliary frontend browser workflows executed, but no proof of formal recovery for seven-app release; no new probe. Seneschal release #41755033303 failed the Base44 CLI credential readiness guard before publish.",
+    "ci_state": "2026-11-04T02:41:55.454Z: policy release_freeze.enabled=false, CI quota_recovery.state=quota_blocked. Fleet #41757671110 existing ORS QA succeeded but three solver integration not complete; Seneschal #41755033303 Base44 credential gate failed before publish; Federation #897 new product operations code source integrated with ungated auxiliary publish path flagged to Draft #779 (#6621074139). No new Actions, Build, Publish or paid probes; formal seven-app acceptance 0/7.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1917,7 +1917,7 @@
         }
       }
     },
-    "last_cycle": "2026-11-04T01:38:53.860Z",
+    "last_cycle": "2026-11-04T02:41:55.454Z",
     "current_action": "2026-11-04T01:38:53.860Z: policy-first static review of 7 main heads, open PR ownership, GitHub Actions, Builder/public evidence, #774. Tracked 7 source changes and existing partial frontend success; documented latest Seneschal CLI credential blocker; added fail-closed auxiliary publish gate evidence to PR #779. No Actions rerun/build/publish or secret lookup; 17 owner rows and 10 queue entries preserved.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
@@ -3257,12 +3257,12 @@
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
       "activity": "5be0151e66a02a76f51622812d627ea9a73dba46",
-      "fleet": "f02043d631f7953855251a66ba5c168ac312acb5",
+      "fleet": "ea6839f9970c6919659ded75f928c0c1876fd34a",
       "service": "77588a7e51ff9d6605c677806027c09df506bae6",
       "urban": "a83c51ee3a1651359102baf3194ddd260fe2e85e",
       "simulator": "f3eaaaef2318c0b831ed059c7d9795976f6a5059",
-      "seneschal": "3fe0e2a0f6c55b9fd56d578cd5cb182e82e87fd9",
-      "federation": "bfcd676692c5c5a464239ea5c4867ddbd8a82b23"
+      "seneschal": "309511af88caa18129c5311fa8d6a9a58a7e3047",
+      "federation": "29dd7bcebe15612fa52cf9fc921b43c0d3b72832"
     },
     "mission_contract": {
       "modes": [
@@ -3298,6 +3298,7 @@
       "Simulator shared target-priority is read-only from Federation and reports revision/input identity"
     ],
     "blocked_by": [
+      "2026-11-04T02:41:55.454Z: Newly merged #897 added .github/workflows/product-operations-approved-release.yml (main marker push/manual) which can call deploy-admin-controls.mjs→publishFrontendArchive without six preceding app official same-current-SHA authenticated release acceptances. Existing admin-controls-approved-release.yml has same gap. Protected Draft #779 was informed via comment #6621074139; do not dispatch/retry or call auxiliary published SHA a formal seven-app acceptance.",
       "2026-11-01T03:38:39Z: Federation compensating run #41264396870 persisted four queued ingress receipts (activity 21f48039, fleet e1043a14, service 1169849e, urban e49a5f24); businessSynchronization unverified. Activity/Service/Urban manual releases failed after public exact SHA from scoped Federation API HTTP 401. Receipt persistence does NOT make official release workflow or authenticated production E2E pass. Simulator auxiliary UI published ed6b6031 but current main is c7ddffe4.",
       "2026-11-01T02:34:06Z: Merged Federation PR #803 adds owner/main/manual/first-attempt compensating receipt audit only; no audit workflow execution or durable release receipt proven. Service #41262021896 failed with federation-authentication-required after observed publication/health; an app-scoped token cannot authenticate a Federation administrator. This is not an authorization bypass, formal release success, or authenticated E2E. Verify four pinned public source manifests and owner Federation credentials without exposing secrets before any *separately approved* audit. Latest main 8bcd828b Builder state unverified; prior 79b8a1cb is stale. Preserve Activity-first publication gates and 0/7.",
       "2026-11-01T01:38:07.906Z: New Federation preflight run #41260707149 at main 9448b868 observes Base44 source/deployed 79b8a1cb (mismatch), Activity/Service/Urban metadata HTTP 404. Staging proxy auth and final E2E unverified.",
@@ -3328,7 +3329,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-04T01:38:53.860Z",
+    "latest_review_at": "2026-11-04T02:41:55.454Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
@@ -3337,7 +3338,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-11-04T01:38:53.860Z",
+    "last_review_at": "2026-11-04T02:41:55.454Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
