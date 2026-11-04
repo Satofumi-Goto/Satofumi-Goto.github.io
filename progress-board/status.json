@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-03T23:43:03.635Z",
+  "generated_at": "2026-11-04T00:45:03.250Z",
   "source": "Policy-first 2026-11-03T23:43:03.635Z: release_freeze.enabled=false; ci.quota_recovery.state=quota_blocked. Seven main heads refreshed; only Federation moved (e8a707f5 -> 53fed8a5). Federation artifact-evidence and operational-blueprints auxiliary site workflows succeeded through served-SHA and browser checks, but ordered 7-app release/Builder backend/authenticated E2E remains unproven (0/7). Activity/Fleet/Service/Urban exact Builder publish step still fails, latest Fleet release #41732892844 confirms same executed failure; no repeat jobs triggered. #774 independent Gemini receipt/DB recordId/hash/readback/backup unverified. This cycle: static reads and status update only; no Actions, build, Publish, API/DB writes or PR merges triggered.",
   "completed_total": 0,
   "apps": [
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "7998f0a0319f157f4c1dc6d00bf8e4cb914d13de",
-      "summary": "2026-11-04 JST: main 7998f0a0 merged PR #674: 問診票の帳票表示/印刷・領収書印刷をソース統合（問診データ新規保存なし）。PR記録ではローカルビルド未実行、現行main同一SHA CI・Base44 Publish・認証済み本番UI/voice/E2E未証明。旧Verify production #41396767778 のUI失敗も解消未確認。正式公開受入れ0/7。",
+      "head": "670ada6cd14cb07845a848d7d20b07caa589f4dd",
+      "summary": "2026-11-04T00:45:03.250Z: main 670ada6c (merged PR #677) stops fictitious POI rating/hours/phone/website/photo fallback for real places, leaving demo fixtures separately marked. Source integrated only. Latest PR Audits/Guards do not prove current-main Base44 publication, production voice, signed cross-app E2E or independently persistent Matsuko research; formal 7-app acceptance remains 0/7.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "7998f0a0319f157f4c1dc6d00bf8e4cb914d13de",
+      "main_sha": "670ada6cd14cb07845a848d7d20b07caa589f4dd",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "53fed8a56c1f7fabe4f267e3b806859a6946ca29",
-      "summary": "2026-11-03T23:43:03.635Z: main 53fed8a5 (7 commits since e8a707f5). Artifact evidence #41739729070 and operational decision Blueprints #41736649383 published and passed served-SHA and targeted real-browser frontend checks. These auxiliary successes do NOT establish ordered seven-app formal publication, backend/Builder full sync, Live Mission authenticated E2E; formal release acceptance remains 0/7. Six-console PR #879 open, not merged.",
+      "head": "9b35b5016688615d752f1591db29398d3e44388a",
+      "summary": "2026-11-04T00:45:03.250Z: main 9b35b501 (+4 from 53fed8a5) includes free engineering connectors and guarded-candidate publisher. Auxiliary run #41746005746 successfully published same-main served frontend SHA and passed focused live solver/browser tests, but its main push publication path lacks Activity→Fleet→Service→Urban→Simulator→Seneschal exact-main authenticated predecessor gate: not an approved ordered Federation production release. Draft #779 gate fix still unmerged. PR #883's similar publish path flagged for mandatory fail-closed review (comment #6619358005); PR #885 and #879 unmerged. Base44 Builder full current-main metadata sync and final authenticated Live Mission E2E unverified; 7-app acceptance 0/7.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "53fed8a56c1f7fabe4f267e3b806859a6946ca29",
+      "main_sha": "9b35b5016688615d752f1591db29398d3e44388a",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -1098,7 +1098,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-03T23:43:03.635Z: policy quota_recovery=quota_blocked unchanged; observed prior real runner steps on release jobs, but they fail in Builder publication. No new probe/retry.",
+    "ci_state": "2026-11-04T00:45:03.250Z: canonical policy quota_recovery=quota_blocked maintained. New existing auxiliary release workflow #41746005746 had executed steps and succeeded but is not the formal protected seven-app release. No new probe or retry.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1887,8 +1887,8 @@
         }
       }
     },
-    "last_cycle": "2026-11-03T23:43:03.635Z",
-    "current_action": "2026-11-03T23:43:03.635Z: policy-first, 7 main refs / recent workflows / #774 / PR #879 checked. Federation source advanced with two independently verified frontend partial publications; no formal full seven-app authenticated acceptance. Fleet newer publish #41732892844 repeats Builder exact revision step failure. Static validation / status-only write. No new Actions, retries, PR changes, paid Gemini or storage mutations.",
+    "last_cycle": "2026-11-04T00:45:03.250Z",
+    "current_action": "2026-11-04T00:45:03.250Z: policy-first static review of 7 main refs, latest actual workflow runs, PRs, published partial frontend, #774; identified and documented auxiliary Federation out-of-order publication gate gap; requested review on PR #883. No new Actions, API calls, Build, Publish, PR merges or research DB changes. 17 owner rows/10 queue items unchanged.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -2893,7 +2893,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-03T23:43:03.635Z",
+    "last_observed_at": "2026-11-04T00:45:03.250Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -3228,8 +3228,8 @@
       "service": "1d0543d4d837a8aff23ae43f6ab167fdfe1ec40e",
       "urban": "083ac19a1bf6ff9691abac1be3888cc3df37aa77",
       "simulator": "d4328689b14a16745a24c7ce2bfd13743a7039bf",
-      "seneschal": "7998f0a0319f157f4c1dc6d00bf8e4cb914d13de",
-      "federation": "53fed8a56c1f7fabe4f267e3b806859a6946ca29"
+      "seneschal": "670ada6cd14cb07845a848d7d20b07caa589f4dd",
+      "federation": "9b35b5016688615d752f1591db29398d3e44388a"
     },
     "mission_contract": {
       "modes": [
@@ -3277,7 +3277,8 @@
       "2026-10-31 13:35 JST source audit: Federation release workflow conditionally skips first-six public SHA prepublish gate on default workflow_dispatch (deploy_fed_actual_operation=false), but its Build and publish site step still runs when credential-ready. This is a fail-closed gate gap; no execution or publication was attempted. Repair via a non-overlapping reviewed protected PR, binding to current verified SHAs rather than the historical 2026-10-26 frozen set.",
       "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production.",
       "Staging route validation: read-only inventory run #41221332618 confirms API canonical /healthz=404 and Worker unauthenticated /api/auth/me=502/cloud-api-unavailable before merged #795 runtime repair. No post-fix live Worker deployment proof; authenticated login/CRUD and full E2E remain blocked. Do not misread inventory workflow success as staging readiness.",
-      "2026-11-01 17:39 JST: Later-app guarded site publication was dispatched while Activity authenticated release acceptance remained unverified; dependency sequence is not satisfied even where public SHA matches. Do not schedule further out-of-order releases."
+      "2026-11-01 17:39 JST: Later-app guarded site publication was dispatched while Activity authenticated release acceptance remained unverified; dependency sequence is not satisfied even where public SHA matches. Do not schedule further out-of-order releases.",
+      "2026-11-04: Independent auxiliary Federation free-engineering main push #41746005746 published site at 9b35b501 before first-six authenticated ordered release verification; policy deployment dependency gate was absent in that workflow. Similar risk identified in open PR #883, review comment #6619358005; do not merge/publish until fail-closed upstream checks and protected CI/review are complete."
     ],
     "completion_gate": "Only successful Fed seven-app production E2E after seven ordered exact-SHA authenticated production releases.",
     "release_ready_source": true,
@@ -3435,16 +3436,16 @@
       "at": "2026-10-29T04:37:13.162Z"
     },
     "latest_auxiliary_publication": {
-      "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41739729070",
-      "head_sha": "53fed8a56c1f7fabe4f267e3b806859a6946ca29",
+      "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41746005746",
+      "head_sha": "9b35b5016688615d752f1591db29398d3e44388a",
       "conclusion": "success",
-      "verification": "Exact served frontend SHA and real browser artifact evidence/download tests passed; auxiliary frontend scope only, not 7-app ordered production release or authenticated operational E2E.",
-      "main_sha_at_observation": "53fed8a56c1f7fabe4f267e3b806859a6946ca29",
+      "verification": "Main source matched served git-head.json and the focused live solver / browser proof ran successfully (real steps). Auxiliary frontend only; no seven-app ordered predecessor acceptance or authenticated full Live Mission E2E.",
+      "main_sha_at_observation": "9b35b5016688615d752f1591db29398d3e44388a",
       "current_main_equals_published": true,
       "formal_seven_app_release": false,
       "full_authenticated_e2e": false,
-      "release_order_gate": "not_proven_for_auxiliary_workflow",
-      "observed_at": "2026-11-03T23:43:03.635Z"
+      "release_order_gate": "absent_in_free_engineering_auxiliary_publish",
+      "observed_at": "2026-11-04T00:45:03.250Z"
     },
     "latest_simulator_scoped_release": {
       "run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40876494243",
