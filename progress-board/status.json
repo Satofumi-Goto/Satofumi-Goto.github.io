@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T02:45:27.354Z",
-  "source": "2026-11-04T14:41:00.000Z: policy first (release_freeze=false; quota_recovery=quota_blocked); 7 main heads/last Actions/PRs and #774 verified. New merged source: Activity #70/#71, Fleet #85, Service #58, Seneschal #759/#760; Urban/Simulator unchanged; Federation index-only head advanced. Seneschal #761 Audit succeeded but protected Guard executed failure; no protected approval. #779 Draft, #774 blocked, formal 0/7. No new Actions/Build/Publish/paid API/DB writes/merges.",
+  "generated_at": "2026-11-05T03:40:30.441Z",
+  "source": "2026-11-05T03:40:30.441Z: policy first; seven current main refs, targeted checks and exact-step release failures; 7/7 source advanced since previous status, Activity #79 repair source integrated, Seneschal single-route #776 merged with HOLD; formal 0/7; no orchestrator Actions/Build/Publish/paid Gemini/DB/PR merge.",
   "completed_total": 0,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
-      "head": "5a2ed505d3a9ce3d43d0834fc1916c8c4bcbebfc",
-      "summary": "2026-11-05T02:43:47.039Z: main 5a2ed505. Activity #75/#76/#78 source-integrated. Official manual release #41956309054 (source 5a2ed505) executed runner; Builder preflight matched; subsequent publication-sha-confirmed source/deployed/served 5a2ed505, but post-publication operational API returned HTTP 500, job failed and authenticated roundtrip/receipt E2E is NOT accepted. Current main 5a2ed505; no blind retry.",
+      "head": "01f43fdc9dc4697d913bbbffce4d739a2e73b1b9",
+      "summary": "2026-11-05T03:40:30.441Z: Current main 01f43fdc: #77 external API registry and #79 standalone mapPoiShared PAT package repair source-integrated, no live route change claimed. Earlier #41962212819 (812d4b59) formal release failed at 'Publish exact synchronized Builder revision with scoped PAT'; downstream operations/site E2E skipped. Current-head Export ZIP #41962727605 succeeded after #79, but repaired function has NOT passed a new approved formal release/authenticated E2E. HOLD.",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
-      "main_sha": "5a2ed505d3a9ce3d43d0834fc1916c8c4bcbebfc",
+      "main_sha": "01f43fdc9dc4697d913bbbffce4d739a2e73b1b9",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "455a2547183c35188b9d3610d6701e067ab21b96",
-      "summary": "2026-11-05T02:45:27.354Z: Fleet main 455a2547 includes #88 API acquisition inventory (no route cutover) and package update. Same-head Guard #41956630423 / Export ZIP #41956630054 succeeded. Previous source c09ba7bb official one-time release #41956594617 failed after Builder preflight: Builder source/deployed 90b22725 vs required c09ba7bb; prepublish gate failed. No source sync or site Publish verified. ORS and authenticated production dispatch E2E remain blocked.",
+      "head": "b13c27772d58a02b79ec65530669c38ff6147920",
+      "summary": "2026-11-05T03:40:30.441Z: Current main b13c2777: #89 three road/pedestrian/facility crowd layers source merged; same-head Guard #41960927644 and Export ZIP #41960927659 passed at b13c2777. Latest Builder read-only inspection #41961746202 failed; previous formal release #41956594617 Builder preflight mismatch. No ordered Base44 Publish/API E2E.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "455a2547183c35188b9d3610d6701e067ab21b96",
+      "main_sha": "b13c27772d58a02b79ec65530669c38ff6147920",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -31,22 +31,22 @@
     {
       "name": "Service Hub",
       "status": "red",
-      "summary": "2026-11-05T02:43:47.039Z: main 5a0e2714. #61 external API primary/secondary route inventory UI integrated without switching live sources. Current main Console CI #41956200078 / Guard #41956200089 success at 5a0e2714. Official Builder Publish and authenticated E2E unverified.",
+      "summary": "2026-11-05T03:40:30.441Z: Current main 25f915aa: #62 three congestion layers energy map source merged. Console CI #41960947653, Guard #41960947318, Export ZIP #41960947322 passed at 25f915aa. Source is not authenticated public release acceptance.",
       "url": "https://github.com/Satofumi-Goto/service-hub-console",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "f2692add810011da46f686d24bc98ba7f8713e1c",
       "freeze_head_matches_main": false,
-      "main_sha": "5a0e271409f8157a7f76290b4073b1111b5e3d4d",
-      "head": "5a0e271409f8157a7f76290b4073b1111b5e3d4d"
+      "main_sha": "25f915aa2e12fb76280db60b878574c6d64e9e76",
+      "head": "25f915aa2e12fb76280db60b878574c6d64e9e76"
     },
     {
       "name": "Urban",
       "status": "red",
-      "head": "83e650448a5aaa9d6149a21e628d7ab3d7d83145",
-      "summary": "2026-11-05T02:43:47.039Z: main 83e65044. #60 external API primary/secondary inventory UI source integrated without changing routes. Current main Console CI #41956190380 success at 83e65044. No authenticated public deployment E2E acceptance.",
+      "head": "3932ba0b3ce275c08a4967857588f66a2c903ced",
+      "summary": "2026-11-05T03:40:30.441Z: Current main 3932ba0b: #61 independent road, pedestrian and facility crowd layers source integrated; same-head Console CI #41958435365 success at 3932ba0b. Official publish #41960337011 failed at scoped PAT Builder publication; downstream site/E2E steps skipped; order Activity-first unmet.",
       "url": "https://github.com/Satofumi-Goto/urban-operation-console",
-      "main_sha": "83e650448a5aaa9d6149a21e628d7ab3d7d83145",
+      "main_sha": "3932ba0b3ce275c08a4967857588f66a2c903ced",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
@@ -55,10 +55,10 @@
     {
       "name": "Simulator",
       "status": "red",
-      "head": "0b278d6fe5cf7f58fb6edd47cd181789497090d6",
-      "summary": "2026-11-04T14:41:00.000Z: main 0b278d6f. mainは前回から不変。同一SHA CI成功、実計算2回/KPI・hash・receipt及びiframeの認証付き本番E2Eは未証明。",
+      "head": "18562a736094dcf9d1a33560ddc53d395b3bdedf",
+      "summary": "2026-11-05T03:40:30.441Z: Current main 18562a73: #135 API inventory primary/secondary providers source merged, live routes unchanged. CI #41957413155 succeeded at 18562a73, but iframe CSP/browser and two real calculations with KPI/hash/receipt authenticated E2E unverified.",
       "url": "https://github.com/Satofumi-Goto/mobility-business-lab",
-      "main_sha": "0b278d6fe5cf7f58fb6edd47cd181789497090d6",
+      "main_sha": "18562a736094dcf9d1a33560ddc53d395b3bdedf",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "23c226d97f7ab42468a3de4ce70f1da72f58c774",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "f119cd3baa37aa1fd60c63a33e1a1ffaa5aa9168",
-      "summary": "2026-11-05T02:45:27.354Z: Seneschal main f119cd3b integrates #766 thumb, #769 event Map POI, #770 acquisition inventory and #773 read-only parity guard; source only. Guard workflow #41956891400 completed, but its comparison detected current-main vs served drift and independent origin unverified; incident #775 records both public domains serving b2aa831b and missing standalone /healthz. #756 protected Guard #41956410598 fails on missing mandatory PR rationale sections. No official current-main Publish / voice E2E.",
+      "head": "3f212d457cf35a04daa8b362b0083e45a77c0e3f",
+      "summary": "2026-11-05T03:40:30.441Z: Current main 3f212d45: #773/#776 merged single fail-closed dual-runtime release path; #778 settings and #779 Hotpepper source ledger/browser regression also merged. Read-only Hotpepper production API POST #41960986570 executed successfully (Tokyo 4, AllThePlaces 9, Hotpepper 18, Rakuten unconfigured per PR #779); one-shot public Map UI browser #41962775950 FAILED. Guard #41962391314 failed as designed, later #41962584859 also failed; incident #775 has both public sites at 2faf49c3, identical assets, /healthz unavailable on purported independent origin. Current main differs; no same-SHA dual deploy, Map/Calendar/booking/voice E2E. HOLD.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "f119cd3baa37aa1fd60c63a33e1a1ffaa5aa9168",
+      "main_sha": "3f212d457cf35a04daa8b362b0083e45a77c0e3f",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "9e192feeb555d2ca24649ef569671bafca4ac781",
-      "summary": "2026-11-05T02:43:47.039Z: main 9e192fee. #948 guarded API-hub routing policy documented, no live cutover. Release gate #779 still Draft and conflict; Builder current-main metadata and seven-app formal release not proven. Independent Matsuko #774 remains blocked for authenticated grounding→independent durable Seneschal DB readback/restart/backup.",
+      "head": "5d41c17e3ace275d5cb15e09afcd1e25c9ff4e8a",
+      "summary": "2026-11-05T03:40:30.441Z: Current main 5d41c17e: #947 independent monitoring shared Activity POI source integrated; #951 log of Activity operational API 500 integrated. Release gate #779 Draft with conflict; current Builder exact SHA, final E2E and full 7-app ordered acceptance unproven. Matsuko #774 open; authenticated Gemini grounding receipt→Seneschal durable record ID/hash/readback after restart/backups still unproven; no paid execution.",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "9e192feeb555d2ca24649ef569671bafca4ac781",
+      "main_sha": "5d41c17e3ace275d5cb15e09afcd1e25c9ff4e8a",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -1243,7 +1243,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-05T02:45:27.354Z: Canonical policy freeze=false, quota_blocked. Activity manual release #41956309054 matched exact Builder/source/served 5a2ed505 but failed post-publication operational-api-http-500 (0/7 accepted). Fleet #41956594617 failed prepublish gate: Builder 90b22725 vs required c09ba7bb; current Fleet 455a2547 same SHA CI succeeded. Seneschal #773 guard is source-integrated, parity workflow #41956891400 detected public SHA drift and no verified standalone origin (incident #775). #756 protected Guard failed. Federation #779 Draft, research #774 blocked. No orchestrator-triggered release probes or paid external tasks.",
+    "ci_state": "2026-11-05T03:40:30.441Z: release_freeze=false, quota_recovery=quota_blocked. Activity #79 package repair source merged but #41962212819 failed prior reviewed Builder publication; no fresh release. Fleet Builder inspection #41961746202 failed, Urban #41960337011 failed. Seneschal #776 dual-runtime gate merged; guard fail-closed #41962391314, both URLs at 2faf49c3 and independent /healthz missing; Hotpepper backend read-only API #41960986570 success, public Chrome #41962775950 failed. Federation #779 Draft; Matsuko #774 blocked; 0/7 formally accepted. Render metadata listing blocked: no workspace selected. No action re-dispatched by orchestrator.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1310,18 +1310,17 @@
           "observed_at": "2026-11-01T03:38:39Z"
         },
         "latest_formal_release_attempt": {
-          "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41956309054",
-          "head_sha": "5a2ed505d3a9ce3d43d0834fc1916c8c4bcbebfc",
+          "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41962212819",
+          "head_sha": "812d4b59082b430a417bb2947af0c9953f9e5587",
           "conclusion": "failure",
           "executed_runner_steps": true,
           "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
-          "diagnostic": "publication-sha-confirmed; then operational-api-http-500",
-          "builder_source_sha": "5a2ed505d3a9ce3d43d0834fc1916c8c4bcbebfc",
-          "deployed_sha": "5a2ed505d3a9ce3d43d0834fc1916c8c4bcbebfc",
-          "served_sha": "5a2ed505d3a9ce3d43d0834fc1916c8c4bcbebfc",
+          "downstream_steps": "skipped",
           "authenticated_e2e": false,
-          "site_publish_and_authenticated_e2e_verified": false,
-          "observed_at": "2026-11-05T02:43:47.039Z"
+          "post_failure_fix": "https://github.com/Satofumi-Goto/life-transaction-console/pull/79",
+          "post_failure_fix_source_integrated": true,
+          "post_failure_fix_release_verified": false,
+          "observed_at": "2026-11-05T03:40:30.441Z"
         }
       },
       "fleet": {
@@ -1416,6 +1415,13 @@
           "ortools": "ready",
           "publish": "skipped",
           "observed_at": "2026-11-04T05:46:58.389Z"
+        },
+        "latest_builder_inspection": {
+          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41961746202",
+          "head_sha": "b13c27772d58a02b79ec65530669c38ff6147920",
+          "conclusion": "failure",
+          "failed_step": "Inspect exact Builder, deployed and served revisions and fresh-token health",
+          "observed_at": "2026-11-05T03:40:30.441Z"
         }
       },
       "service": {
@@ -1537,13 +1543,13 @@
           "observed_at": "2026-11-01T03:38:39Z"
         },
         "latest_formal_release_attempt": {
-          "run": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/41731765523",
-          "head_sha": "083ac19a1bf6ff9691abac1be3888cc3df37aa77",
+          "run": "https://github.com/Satofumi-Goto/urban-operation-console/actions/runs/41960337011",
+          "head_sha": "3932ba0b3ce275c08a4967857588f66a2c903ced",
           "conclusion": "failure",
           "executed_runner_steps": true,
           "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
-          "site_publish_and_authenticated_e2e_verified": false,
-          "observed_at": "2026-11-03T22:40:49.201Z"
+          "authenticated_e2e": false,
+          "observed_at": "2026-11-05T03:40:30.441Z"
         }
       },
       "simulator": {
@@ -1691,6 +1697,20 @@
           "items": 13,
           "formal_release": false,
           "authenticated_production_browser_e2e": false
+        },
+        "latest_dual_runtime_guard": {
+          "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41962391314",
+          "head_sha": "de8778f3a14e8557ccc9d1b703bbef2ba08d4959",
+          "conclusion": "failure",
+          "intended_fail_closed": true,
+          "public_sha": "2faf49c3e182ca34322427ce8cfb9c8cfba40819",
+          "standalone_origin_verified": false,
+          "release_route": "HOLD",
+          "incident": "https://github.com/Satofumi-Goto/seneschal/issues/775",
+          "public_browser": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41962775950",
+          "public_browser_conclusion": "failure",
+          "hotpepper_readonly_api": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41960986570",
+          "observed_at": "2026-11-05T03:40:30.441Z"
         }
       },
       "federation": {
@@ -2118,8 +2138,8 @@
         }
       }
     },
-    "last_cycle": "2026-11-05T00:35:50.211Z",
-    "current_action": "2026-11-04T14:41:00.000Z: Policy-first static_validation and read-only GitHub differential review. Five repo heads changed; new independent protected Guard failure for Seneschal #761 recorded. PR #779 remains Draft and #774 remains blocked; no new CI dispatch, deploy or paid operations.",
+    "last_cycle": "2026-11-05T03:40:30.441Z",
+    "current_action": "2026-11-05T03:40:30.441Z: Existing evidence read-only/static validation; review nonconflicting repair (#79 already merged), dual-runtime incident #775 and guarded failures. Next required: Activity scoped PAT backend corrected proof, run-bound source/Builder/site E2E; then order. No ungrounded retry.",
     "auto_merge_executable_code": false,
     "low_risk_progress_enabled": false,
     "release_pipelines": {
@@ -3124,7 +3144,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-05T02:45:27.354Z",
+    "last_observed_at": "2026-11-05T03:40:30.441Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -3475,13 +3495,13 @@
     "priority_policy_source_complete": true,
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "activity": "5a2ed505d3a9ce3d43d0834fc1916c8c4bcbebfc",
-      "fleet": "455a2547183c35188b9d3610d6701e067ab21b96",
-      "service": "5a0e271409f8157a7f76290b4073b1111b5e3d4d",
-      "urban": "83e650448a5aaa9d6149a21e628d7ab3d7d83145",
-      "simulator": "0b278d6fe5cf7f58fb6edd47cd181789497090d6",
-      "seneschal": "f119cd3baa37aa1fd60c63a33e1a1ffaa5aa9168",
-      "federation": "9e192feeb555d2ca24649ef569671bafca4ac781"
+      "activity": "01f43fdc9dc4697d913bbbffce4d739a2e73b1b9",
+      "fleet": "b13c27772d58a02b79ec65530669c38ff6147920",
+      "service": "25f915aa2e12fb76280db60b878574c6d64e9e76",
+      "urban": "3932ba0b3ce275c08a4967857588f66a2c903ced",
+      "simulator": "18562a736094dcf9d1a33560ddc53d395b3bdedf",
+      "seneschal": "3f212d457cf35a04daa8b362b0083e45a77c0e3f",
+      "federation": "5d41c17e3ace275d5cb15e09afcd1e25c9ff4e8a"
     },
     "mission_contract": {
       "modes": [
@@ -3553,7 +3573,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-05T02:43:47.039Z",
+    "latest_review_at": "2026-11-05T03:40:30.441Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
@@ -3562,7 +3582,7 @@
     "final_production_e2e_source_complete": true,
     "release_state_file_exists_on_main": false,
     "release_state_provenance": "NOT_USED_PREPUBLICATION",
-    "last_review_at": "2026-11-05T02:43:47.039Z",
+    "last_review_at": "2026-11-05T03:40:30.441Z",
     "frozen_heads": {
       "activity": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
       "fleet": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
