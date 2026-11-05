@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "name": "cooperative-development-work-ledger",
+  "charter": "docs/runbooks/cooperative-development-charter.md",
+  "canonical_policy": "progress-board/orchestrator-policy.json",
+  "owner_system": "existing-development-orchestrator",
+  "active_claim_source": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74",
+  "snapshot_only_not_authoritative_for_live_claims": true,
+  "slots": [
+    "collaborator-1",
+    "collaborator-2",
+    "collaborator-3",
+    "collaborator-4",
+    "collaborator-5",
+    "collaborator-6"
+  ],
+  "slots_are_role_placeholders_not_verified_running_agents": true,
+  "case_statuses": [
+    "backlog",
+    "claimed",
+    "investigating",
+    "implementing",
+    "in_review",
+    "ci_blocked",
+    "source_integrated",
+    "awaiting_owner_publish",
+    "post_publish_qa",
+    "blocked",
+    "done"
+  ],
+  "pr_disposition": [
+    "needed_no_conflict",
+    "needed_conflict_migrate",
+    "already_implemented_duplicate_close",
+    "obsolete_close"
+  ],
+  "case_schema": {
+    "id": "unique ID",
+    "repo": "owner/name",
+    "issue_urls": [],
+    "pr_urls": [],
+    "primary_owner": null,
+    "collaborators": [],
+    "files": [],
+    "status": "backlog",
+    "blocker": null,
+    "next_action": null,
+    "ci": {
+      "state": "not_checked",
+      "evidence": []
+    },
+    "review": {
+      "state": "not_checked",
+      "evidence": []
+    },
+    "source_sha": null,
+    "published_sha": null,
+    "browser_qa": {
+      "state": "not_checked",
+      "screenshots": []
+    },
+    "evidence": [],
+    "handoff": null
+  },
+  "cases": []
+}

@@ -391,5 +391,57 @@
     "publication_only": false,
     "unfrozen_at": "2026-10-29",
     "unfrozen_by": "owner_instruction"
+  },
+  "cooperative_development": {
+    "enabled": true,
+    "charter_file": "docs/runbooks/cooperative-development-charter.md",
+    "ledger_file": "progress-board/cooperative-work-ledger.json",
+    "live_claim_source": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74",
+    "ledger_is_snapshot_not_live_lock": true,
+    "orchestrator": "existing-hourly-development-orchestrator",
+    "new_recurring_jobs_allowed": false,
+    "coordinator_count": 1,
+    "collaborator_role_slots": 6,
+    "collaborator_slots_are_not_verified_running_agents": true,
+    "single_primary_owner_per_case": true,
+    "fixed_phase_silos": false,
+    "first_check": [
+      "release_freeze",
+      "ci.quota_recovery",
+      "main",
+      "existing_issue_pr",
+      "ledger_claims",
+      "changed_files"
+    ],
+    "workflow": [
+      "investigate",
+      "declare_claim",
+      "small_patch_branch",
+      "tests_ci_browser_qa",
+      "independent_review",
+      "merge_when_required_gates_pass",
+      "owner_publish",
+      "post_publish_sha_and_browser_e2e",
+      "evidence_and_pr_cleanup"
+    ],
+    "pr_classifications": [
+      "needed_no_conflict",
+      "needed_conflict_migrate",
+      "already_implemented_duplicate_close",
+      "obsolete_close"
+    ],
+    "completion_requires": [
+      "source_merged",
+      "required_ci",
+      "independent_review",
+      "old_pr_triage",
+      "owner_production_publish_if_required",
+      "real_browser_e2e",
+      "evidence",
+      "no_regression"
+    ],
+    "public_release_actor": "user_only",
+    "merge_is_not_completion": true,
+    "preserve_existing_status_rows": true
   }
 }
