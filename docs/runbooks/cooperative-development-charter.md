@@ -6,14 +6,14 @@
 目的は未完了案件を減らし、実製品を完成させ品質を継続向上すること。担当は工程別の固定分業をせず、全員が調査、コード修正、テスト、PR整理、レビュー、マージ、公開前QA、公開後実画面検証まで実行可能な開発者として振る舞う。**成果物はPR数でなく案件完遂**である。案件は公開・実機検証が済むまで完了としない。
 
 ## 2. チーム構成
-既存の**開発オーケストレータ1**の下に**同格の協調開発担当6枠**を置く。既存専門担当も必要時に参画する。恒久的な専属工程や上下関係を設けず、案件ごとに一時的な主担当1名を置き、他担当は調査・レビュー・テスト・追加修正で協力する。主担当の停止時は台帳を更新して他担当が引き継ぐ。
+既存の**開発オーケストレータ1**の下に**同格の協調開発担当最大8枠（稼働実体の証明がある担当のみ）**を置く。既存専門担当も必要時に参画する。恒久的な専属工程や上下関係を設けず、案件ごとに一時的な主担当1名を置き、他担当は調査・レビュー・テスト・追加修正で協力する。主担当の停止時は台帳を更新して他担当が引き継ぐ。
 
 **重要：枠を定義することと、実際に実行可能なエージェント・権限を配備することは別。** 登録・稼働・実行証拠のない担当を「起動済み」として報告しない。オーケストレータは交通整理・品質保証・優先順位・コスト制御に徹し、担当が安全に遂行できる案件に細かな許可を要求しない。
 
 ## 3. 共通フロー（全員）
 1. GitHub各repoの最新main、既存Issue/PR、CI、公開証拠、progress-board/orchestrator-policy.jsonを確認し、凍結・CI quota・費用・秘密情報・承認ゲートを先に判定する。
 2. 未完了、放置、競合、重複PRを洗い出し、既存PRへの追補を新規PRより優先する。
-3. 着手前に **GitHub Issue #984（`https://github.com/Satofumi-Goto/federation-portal/issues/74`）のCLAIM/UPDATE/HANDOFF** と `progress-board/cooperative-work-ledger.json` の案件情報を確認し、主担当・協力者・対象ファイル・PR・状態をIssueコメントに記録する。各製品の元Issueを案件固有の状態・検証証拠の正本、本repo #74を横断CLAIM索引の唯一の正本とする。旧索引 #77とFederation #984は参照用とし、競合するCLAIMを新規登録しない。JSON台帳は機械可読スナップショット／スキーマとして扱い、そこへの別PRが完了するまで作業を停止しない。main直接書込を禁止する。
+3. 着手前に **GitHub Issue #74（`https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74`）のCLAIM/UPDATE/HANDOFF** と `progress-board/cooperative-work-ledger.json` の案件情報を確認し、主担当・協力者・対象ファイル・PR・状態をIssueコメントに記録する。各製品の元Issueを案件固有の状態・検証証拠の正本、本repo #74を横断CLAIM索引の唯一の正本とする。旧索引 #77とFederation #984は参照用とし、競合するCLAIMを新規登録しない。JSON台帳は機械可読スナップショット／スキーマとして扱い、そこへの別PRが完了するまで作業を停止しない。main直接書込を禁止する。
 4. 最新mainから専用`feature/*`（既存規約の`fix/*`/`hotfix/*`も可）で最小差分を実装する。汚れた作業ツリーでbranch切替せず、変更ファイル所有を照合する。
 5. 差分・依存関係・大規模削除・import欠落・保護ファイル変更を検査し、テスト・必須CI・実ブラウザQAを実施する。
 6. PRを作成し**別担当**がレビューする。required CI・承認・保護条件を満たす非draftのみmainへ統合する。CI未実行、quota_blocked、承認不足を迂回しない。
@@ -37,5 +37,20 @@
 既存の毎時開発オーケストレータを**唯一の巡回管理役**として使い、同じ監視の定期ジョブは作らない。各回、台帳差分・GitHubの最新証拠を優先して読み、案件停止・競合・主担当不在の引継ぎ、優先順位を調整する。担当が次の案件を取得する前に台帳の占有状態と影響ファイルを確認する。活動がなければ同じログ・サイト・有料APIの再検査を繰り返さない。ユーザーへの通知は重要な障害、必要な承認、公開準備/完了、実E2E達成などの具体的な変化のみ。
 
 ## 7. 共通台帳の最低記録項目
-統括台帳：`https://github.com/Satofumi-Goto/federation-portal/issues/74`。CLAIMは `agent`（認証済み担当識別子）、`repo`、`issue`、`files`、`base SHA`、`reviewer` を含む。**代理での架空のCLAIMは禁止**。担当6名の実稼働は各担当の固有CLAIMと実操作ログで確認する。
+統括台帳：`https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74`。CLAIMは `agent`（認証済み担当識別子）、`repo`、`issue`、`files`、`base SHA`、`reviewer` を含む。**代理での架空のCLAIMは禁止**。最大8枠の実稼働は各担当の固有CLAIMと実操作ログで確認する。
 各案件に一意な`id`、`repo`、`issue_urls`、`pr_urls`、`primary_owner`、`collaborators`、`files`、`status`、`blocker`、`next_action`、`ci`、`review`、`source_sha`、`published_sha`、`browser_qa`、`evidence`、`handoff`を記録する。稼働者がいない場合は`primary_owner: null`とし、根拠なく割当済みとしない。既存の`progress-board/status.json`（17 owner rows等）はそのまま保持し、作業台帳と公開判定を混同しない。
+
+## 8. 緊急並列開発・公開準備（2026-11-05追加）
+
+- **P0**：Map表示、認証、Builder同期、予約・配車、公開SHA、Federation親子・独立コンソール接続の障害を優先。
+- **P1**：競合・重複・旧仕様・放置PRを整理。既存代表PRへ必要な差分を移植し、重複/不要PRは根拠を残してクローズ。
+- **P2**：Map／Calendar／予約／配車／Fleet／Simulator／独立コンソールの回帰検証。
+- **P3**：品質改善・新機能は公開を妨げない範囲のみ。未完成機能は公開対象から除外。
+
+公開候補は **採用／不採用／HOLD／main統合済みだが修復・除外が必要** に分ける。既存mainへ混入した不適切な変更は、正本mainからの専用最小差分PRで修復する。未マージPRがPublishで配信されるとは扱わない。
+
+各対象アプリの公開前判定は `progress-board/cooperative-work-ledger.json` の `publication_preflight` をスキーマとして使い、公開元ref・SHA、CI・独立レビュー、JS/CSS実バイト、API・認証・DB、主要画面、親子接続、実ブラウザ・スクリーンショット、回帰を **PASS／HOLD／対象外** に分けて根拠を記録する。未検証項目と公開後にしか確かめられない項目を公開前PASSにしない。対象外には理由を残す。
+
+担当が増えても同じファイルの並行修正は禁止。着手時・マージ直前に最新main SHA、元Issue、open PR、他担当の変更ファイル、依存CIを再照合し、CLAIMを再確認する。失敗CIやレビュー欠落を迂回しない。新規の定期ジョブ・無根拠なActions再実行・有料API連打は禁止する。
+
+**本番Publish／Deploy／DNS切替は既存方針どおりユーザー本人のみ。** 開発担当は公開前QAまで行い、ユーザーの公開後に実SHA・主要E2E・スクリーンショットで検証する。単なるmain統合・CI成功を本番完了と報告しない。
