@@ -13,7 +13,7 @@
 ## 3. 共通フロー（全員）
 1. GitHub各repoの最新main、既存Issue/PR、CI、公開証拠、progress-board/orchestrator-policy.jsonを確認し、凍結・CI quota・費用・秘密情報・承認ゲートを先に判定する。
 2. 未完了、放置、競合、重複PRを洗い出し、既存PRへの追補を新規PRより優先する。
-3. 着手前に **GitHub Issue #984（`https://github.com/Satofumi-Goto/federation-portal/issues/74`）のCLAIM/UPDATE/HANDOFF** と `progress-board/cooperative-work-ledger.json` の案件情報を確認し、主担当・協力者・対象ファイル・PR・状態をIssueコメントに記録する。各製品の元Issueを案件固有の状態・検証証拠の正本、本repo #74を横断CLAIM索引の唯一の正本とする。旧索引 #77とFederation #984は参照用とし、競合するCLAIMを新規登録しない。JSON台帳は機械可読スナップショット／スキーマとして扱い、そこへの別PRが完了するまで作業を停止しない。main直接書込を禁止する。
+3. 着手前に **GitHub Issue #74（`https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74`）のCLAIM/UPDATE/HANDOFF** と `progress-board/cooperative-work-ledger.json` の案件情報を確認し、主担当・協力者・対象ファイル・PR・状態をIssueコメントに記録する。各製品の元Issueを案件固有の状態・検証証拠の正本、本repo #74を横断CLAIM索引の唯一の正本とする。旧索引 #77とFederation #984は参照用とし、競合するCLAIMを新規登録しない。JSON台帳は機械可読スナップショット／スキーマとして扱い、そこへの別PRが完了するまで作業を停止しない。main直接書込を禁止する。
 4. 最新mainから専用`feature/*`（既存規約の`fix/*`/`hotfix/*`も可）で最小差分を実装する。汚れた作業ツリーでbranch切替せず、変更ファイル所有を照合する。
 5. 差分・依存関係・大規模削除・import欠落・保護ファイル変更を検査し、テスト・必須CI・実ブラウザQAを実施する。
 6. PRを作成し**別担当**がレビューする。required CI・承認・保護条件を満たす非draftのみmainへ統合する。CI未実行、quota_blocked、承認不足を迂回しない。
@@ -37,5 +37,5 @@
 既存の毎時開発オーケストレータを**唯一の巡回管理役**として使い、同じ監視の定期ジョブは作らない。各回、台帳差分・GitHubの最新証拠を優先して読み、案件停止・競合・主担当不在の引継ぎ、優先順位を調整する。担当が次の案件を取得する前に台帳の占有状態と影響ファイルを確認する。活動がなければ同じログ・サイト・有料APIの再検査を繰り返さない。ユーザーへの通知は重要な障害、必要な承認、公開準備/完了、実E2E達成などの具体的な変化のみ。
 
 ## 7. 共通台帳の最低記録項目
-統括台帳：`https://github.com/Satofumi-Goto/federation-portal/issues/74`。CLAIMは `agent`（認証済み担当識別子）、`repo`、`issue`、`files`、`base SHA`、`reviewer` を含む。**代理での架空のCLAIMは禁止**。担当6名の実稼働は各担当の固有CLAIMと実操作ログで確認する。
+統括台帳：`https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74`。CLAIMは `agent`（認証済み担当識別子）、`repo`、`issue`、`files`、`base SHA`、`reviewer` を含む。**代理での架空のCLAIMは禁止**。担当6名の実稼働は各担当の固有CLAIMと実操作ログで確認する。
 各案件に一意な`id`、`repo`、`issue_urls`、`pr_urls`、`primary_owner`、`collaborators`、`files`、`status`、`blocker`、`next_action`、`ci`、`review`、`source_sha`、`published_sha`、`browser_qa`、`evidence`、`handoff`を記録する。稼働者がいない場合は`primary_owner: null`とし、根拠なく割当済みとしない。既存の`progress-board/status.json`（17 owner rows等）はそのまま保持し、作業台帳と公開判定を混同しない。
