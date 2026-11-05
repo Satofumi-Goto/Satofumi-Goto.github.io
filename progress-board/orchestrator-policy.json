@@ -442,6 +442,12 @@
     ],
     "public_release_actor": "user_only",
     "merge_is_not_completion": true,
-    "preserve_existing_status_rows": true
+    "preserve_existing_status_rows": true,
+    "prepublish_preflight_schema": "progress-board/cooperative-work-ledger.json",
+    "prepublish_unknown_is_hold": true,
+    "require_source_ref_sha_and_accepted_change_manifest": true,
+    "require_ci_review_and_user_only_publish": true,
+    "recheck_open_pr_files_before_merge": true,
+    "no_new_recurring_checks": true
   }
 }
