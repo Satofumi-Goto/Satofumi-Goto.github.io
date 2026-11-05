@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T08:37:55.731Z",
+  "generated_at": "2026-11-05T09:41:10.285Z",
   "source": "2026-11-05T07:37:22.568Z: policy-first, seven main refs and compare; six sources advanced, latest-source checks and owner-dispatched publish failure steps reviewed. #774/#775/#809/#960. Source integration != publish; formal 0/7. No orchestration-triggered Actions/Build/Publish/Deploy/DB/paid API/PR merge.",
   "completed_total": 0,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
-      "head": "11b0c7699f3ddfc2b0201fbce88a5cf892658d5e",
-      "summary": "2026-11-05T08:37:55.731Z: current main 11b0c769。前回 Builder Publish は #41987490214 で失敗。新たな同一SHAの正式公開/認証E2E合格は未確認。",
+      "head": "769c201376be0a0668580f8c243602bd6c1e8cf7",
+      "summary": "2026-11-05T09:41:10.285Z: main 769c2013: Activity #122 祝日API限定・管理者用の署名付きshadow比較コード統合。公開URLは直近確認時旧11b0c769、Shadow関数GET=404（Federation #972）。Builder Publish/認証付きE2E未合格。公開・Secretsは所有者操作のみ。",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
-      "main_sha": "11b0c7699f3ddfc2b0201fbce88a5cf892658d5e",
+      "main_sha": "769c201376be0a0668580f8c243602bd6c1e8cf7",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "8b7f58eff7a90e3deb09c467d542e382d8ebb7be",
-      "summary": "2026-11-05T08:37:55.731Z: current main 8b7f58ef。HELLO CYCLING GBFS実フィードに合わせた10MiB安全上限と60秒cooldown、NASA POWER日射量参照等のsource統合。前head fa348c52でExport #41995393526/Guard #41995393533成功。新head 8b7f58efでExport #41995801669成功、Guard #41995801736は確認時in_progress。最新版での正式Publish/認証付きE2Eは未合格、Activity先行ゲート未達。",
+      "head": "eb8c43835c3ead6b760350d8a9aeb05734389c79",
+      "summary": "2026-11-05T09:41:10.285Z: main eb8c4383: GBFS upstream 503の安全な障害コード化 #102をソース統合。最新SHAの公開同期・実API roundtrip/認証付きE2Eは未合格。Activity先行ゲート待ち。",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "8b7f58eff7a90e3deb09c467d542e382d8ebb7be",
+      "main_sha": "eb8c43835c3ead6b760350d8a9aeb05734389c79",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -31,22 +31,22 @@
     {
       "name": "Service Hub",
       "status": "red",
-      "summary": "2026-11-05T08:37:55.731Z: current main f3bb7c96。気象・エネルギー連動デモとオフライン切替のloading修正がソース統合。同SHA Console CI #41990747246/Guard #41990747075/Export #41990747298成功。正式Publish/JEPX認証付きE2Eは未合格。",
+      "summary": "2026-11-05T09:41:10.285Z: main 5d159f74: JEPX Eleczの固定HTTPS fallback修正 #73をソース統合。外部データ実通信・認証付き本番E2E・公開最新SHA未証明。",
       "url": "https://github.com/Satofumi-Goto/service-hub-console",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "f2692add810011da46f686d24bc98ba7f8713e1c",
       "freeze_head_matches_main": false,
-      "main_sha": "f3bb7c96bbf4e51109399f3b34019b8a45d6fee6",
-      "head": "f3bb7c96bbf4e51109399f3b34019b8a45d6fee6"
+      "main_sha": "5d159f742059e7b125f5e651499adaf44faa4797",
+      "head": "5d159f742059e7b125f5e651499adaf44faa4797"
     },
     {
       "name": "Urban",
       "status": "red",
-      "head": "906bae08c969c616e7bb26a7b85deb81f46d7c68",
-      "summary": "2026-11-05T08:37:55.731Z: current main 906bae08。国交省MLIT施設POIを密集商業施設と別系統で保持するソース修正統合。同SHA Console CI #41989771545/Export #41989771824成功。正式Publish、実施設カード/認証付きE2E未検証。",
+      "head": "85cb01c5a6f6f84368d4a7099a7ffa443c05b1ab",
+      "summary": "2026-11-05T09:41:10.285Z: main 85cb01c5: 国交省医療/図書館/学校/公共施設POIの公式フィールド認識 #65をソース統合。実POI・カード/認証付き本番E2Eは未証明。",
       "url": "https://github.com/Satofumi-Goto/urban-operation-console",
-      "main_sha": "906bae08c969c616e7bb26a7b85deb81f46d7c68",
+      "main_sha": "85cb01c5a6f6f84368d4a7099a7ffa443c05b1ab",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "983c852acbd9ec1d24ccebf87c36230d5b0b86bd",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "6935083042b873bdebe228391ccdd7b201f60eb1",
-      "summary": "2026-11-05T08:37:55.731Z: current main 69350830。Street View表示/収録月、失敗経路復旧などをソース統合。現行main Audit #41989878531 は実Runner『Bookings and write operations』にてAIアシストproposalパネルがhiddenのまま15秒timeout、10フロー中9成功・1失敗。Issue #820で是正追跡。Dual-runtime #41989878177は公開SHA/真正独立親子origin未一致でHOLD、#775/#809の本番QA未合格。",
+      "head": "29971db428d3cec5bd5a498d7ebac82d847d0cd2",
+      "summary": "2026-11-05T09:41:10.285Z: main 29971db4: Map表示切替 #822と未回答RSVPベル #824等がソース統合。直近の二公開URLは旧69350830、真正独立origin/親Identity未証明（#775）。先行Audit #41989878531 のAI Assist実ブラウザ失敗 #820は新SHAで解消未証明。カレンダー/Map #809 E2Eも保留。",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "6935083042b873bdebe228391ccdd7b201f60eb1",
+      "main_sha": "29971db428d3cec5bd5a498d7ebac82d847d0cd2",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "26c96af9d88f3864dd258e8d1a4b4a73c8c03df4",
-      "summary": "2026-11-05T08:37:55.731Z: current main 26c96af9。API HubとFirewall Gatewayの責務分離docs統合。Builder HTTP422、#779 Draft、真正な独立親/認証済み本番E2E、マツコ研究#774の永続DB読戻し未証明。",
+      "head": "045c8a9e77ecdab1f434ffbfdfd0dbbca3a26479",
+      "summary": "2026-11-05T09:41:10.285Z: main 045c8a9e: Firewall署名経路の安全な秘匿監査 #971統合。直近のBase44公開マニフェストは同SHAを観測（#960）、ただし独立親本番/7アプリ認証付きE2E未完了。#779 Draft、マツコ研究 #774 未完了。Firewall #972 3経路すべてshadow HOLD。",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "26c96af9d88f3864dd258e8d1a4b4a73c8c03df4",
+      "main_sha": "045c8a9e77ecdab1f434ffbfdfd0dbbca3a26479",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -526,19 +526,19 @@
     "federation_iframe_keepalive": "https://github.com/Satofumi-Goto/federation-portal/pull/489",
     "federation_base44_sync_trigger": "https://github.com/Satofumi-Goto/federation-portal/pull/487",
     "federation_source_complete_head": "https://github.com/Satofumi-Goto/federation-portal/commit/5297d32bcffa55aa7c60ec5db7922cbcbf6cd9ea",
-    "federation_current_main": "https://github.com/Satofumi-Goto/federation-portal/commit/c60bd6eeeeb16124ec63853026b9eda8d086e8da",
-    "seneschal_current_main": "https://github.com/Satofumi-Goto/seneschal/commit/aeb1f700da6766947c917d3d475e89ad90343490",
-    "simulator_current_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/c1d8fafd461d842125b5c190c0c69dc6357679b4",
+    "federation_current_main": "https://github.com/Satofumi-Goto/federation-portal/commit/045c8a9e77ecdab1f434ffbfdfd0dbbca3a26479",
+    "seneschal_current_main": "https://github.com/Satofumi-Goto/seneschal/commit/29971db428d3cec5bd5a498d7ebac82d847d0cd2",
+    "simulator_current_main": "https://github.com/Satofumi-Goto/mobility-business-lab/commit/18562a736094dcf9d1a33560ddc53d395b3bdedf",
     "federation_auto_release": "https://github.com/Satofumi-Goto/federation-portal/pull/493",
     "seneschal_production_release_qa": "https://github.com/Satofumi-Goto/seneschal/pull/435",
     "simulator_auto_release": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/67",
     "federation_release_run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40191468185",
     "seneschal_release_run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/40191445607",
     "simulator_release_run": "https://github.com/Satofumi-Goto/mobility-business-lab/actions/runs/40191473064",
-    "activity_current_main": "https://github.com/Satofumi-Goto/life-transaction-console/commit/ca66303623a5cfa3fd90ec07ba573a363533052c",
-    "fleet_current_main": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/90b227251c353a909059d51845fdac32712476a0",
-    "service_current_main": "https://github.com/Satofumi-Goto/service-hub-console/commit/8d6609086cdfb9580b561b752550e55c88635e93",
-    "urban_current_main": "https://github.com/Satofumi-Goto/urban-operation-console/commit/f1aa0e8ca34127e45a0ea79afc3913016632aed4",
+    "activity_current_main": "https://github.com/Satofumi-Goto/life-transaction-console/commit/769c201376be0a0668580f8c243602bd6c1e8cf7",
+    "fleet_current_main": "https://github.com/Satofumi-Goto/fleet-operations-console/commit/eb8c43835c3ead6b760350d8a9aeb05734389c79",
+    "service_current_main": "https://github.com/Satofumi-Goto/service-hub-console/commit/5d159f742059e7b125f5e651499adaf44faa4797",
+    "urban_current_main": "https://github.com/Satofumi-Goto/urban-operation-console/commit/85cb01c5a6f6f84368d4a7099a7ffa443c05b1ab",
     "seven_app_release_gate": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/40919850787",
     "final_seven_app_e2e": "https://github.com/Satofumi-Goto/federation-portal/actions",
     "simulator_release_cross_app_e2e": "https://github.com/Satofumi-Goto/mobility-business-lab/pull/71",
@@ -1183,7 +1183,11 @@
       "verified": true
     },
     "activity_community_catalog_20261105": "https://github.com/Satofumi-Goto/life-transaction-console/pull/72",
-    "seneschal_community_calendar_20261105": "https://github.com/Satofumi-Goto/seneschal/pull/761"
+    "seneschal_community_calendar_20261105": "https://github.com/Satofumi-Goto/seneschal/pull/761",
+    "firewall_gateway_phase1": "https://github.com/Satofumi-Goto/federation-portal/issues/972",
+    "federation_parent_seneschal_child": "https://github.com/Satofumi-Goto/federation-portal/issues/960",
+    "seneschal_calendar_map_qa": "https://github.com/Satofumi-Goto/seneschal/issues/809",
+    "seneschal_qa_assist_failure": "https://github.com/Satofumi-Goto/seneschal/issues/820"
   },
   "notes": [
     "2026-10-28T13:38:06.173Z: RELEASE FREEZE policy-first read-only observation. Frozen MAIN integrity 0/7: Activity/Fleet/Service/Urban/Simulator each +1, Seneschal +327, Federation +100 (24 new commits since prior observation; MAIN 29112018, PR #526 merge unified settings). Historical seven required CI jobs still runnerless with zero executed steps; latest Actions and workflow_dispatch lists reviewed (no in-order release), Federation workflow_run E2E history empty. Nonrequired PR/Gemini/dynamic runners do not prove policy-required release recovery. Billing rollover 2026-11-01T00:00:00Z not reached: no release dispatch, reruns, or marker edits. Historical Seneschal fail-closed credential gate requires repository Actions Secret BASE44_API_KEY; never read value. Federation required release-state JSON 404 on frozen HEAD and MAIN; main preflight Activity/Seneschal SHA mismatches persist. Exact authenticated production SHA acceptance 0/7; final E2E unverified. No changes to the seven controlled repositories or PRs.",
@@ -1243,7 +1247,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-05T08:37:55.731Z: freeze=false, quota_recovery=quota_blocked; main activity=11b0c769,fleet=8b7f58ef,service=f3bb7c96,urban=906bae08,simulator=18562a73,seneschal=69350830,federation=26c96af9. Seneschal current-main Audit #41989878531 executed real test failure (AI Assist hidden; 9/10 QA), issue #820. Fleet/Service/Urban source CI evidence only, not production E2E. Seven formal acceptance 0/7. No Actions/Build/Publish/Deploy/DNS executed by orchestrator; user-exclusive production actions.",
+    "ci_state": "2026-11-05T09:41:10.285Z: policy freeze=false / quota_recovery=quota_blocked. mains activity=769c2013, fleet=eb8c4383, service=5d159f74, urban=85cb01c5, simulator=18562a73, seneschal=29971db4, federation=045c8a9e. Firewall #972 phase1 shadow: 3 routes gateway=false/legacy=true, Activity latest handler main integrated but published function not yet verified; owner publication gate. Seneschal #775 dual runtime HOLD, #820 AI Assist test failure not proven fixed, #809 UI QA open. Federation #774 authenticated Gemini → durable Seneschal DB not proven. Federated production E2E 0/7. No Actions/Build/Publish/Deploy/DNS/premium API triggered.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -3172,7 +3176,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-05T07:37:22.568Z",
+    "last_observed_at": "2026-11-05T09:41:10.285Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -3325,9 +3329,11 @@
       "priority": 2,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/life-transaction-console",
-      "action": "2026-11-05T06:46:23.512Z: Activity 9116ce2c guarded site job #41981867525 success, formal scoped-PAT Builder release #41981929621 failure。認証E2Eなし。本人による公開以外実施しない。",
+      "action": "2026-11-05T09:41:10.285Z: Activity main 769c2013 #122 Firewall祝日shadow関数ソース統合。直近公開11b0c769・新関数無認証GET404、最新SHA公開/署名E2E未合格（#972）。本人によるPublish・secret設定以外の書込みは禁止。",
       "blocked_by": [
-        "Formal same-main authenticated console health and durable release-event ACK not completed; all subsequent job steps skipped."
+        "Owner-operated Activity deployment of verified latest code not evidenced; Base44/Builder previous official publication failures",
+        "Firewall shadow signing secret and actual Activity→Render signed E2E not configured (do not request/view secret values)",
+        "Activity same-SHA authenticated production roundtrip/durable ACK and formal release acceptance missing"
       ],
       "evidence": [
         "https://github.com/Satofumi-Goto/life-transaction-console/commit/4ab1694c4be4ecc979c0f434f9303c9b09a56c08",
@@ -3339,7 +3345,8 @@
         "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41288307298",
         "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41732596818",
         "https://github.com/Satofumi-Goto/life-transaction-console/pull/72",
-        "https://github.com/Satofumi-Goto/life-transaction-console/commit/ca66303623a5cfa3fd90ec07ba573a363533052c"
+        "https://github.com/Satofumi-Goto/life-transaction-console/commit/ca66303623a5cfa3fd90ec07ba573a363533052c",
+        "https://github.com/Satofumi-Goto/federation-portal/issues/972"
       ],
       "freeze_is_release_gate": false
     },
@@ -3441,7 +3448,7 @@
       "priority": 7,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/seneschal",
-      "action": "2026-11-05T08:37:55.731Z: Seneschal main 69350830 current-main Audit #41989878531 failed 1/10 AI Assist browser flow (Issue #820). Parent-child independent origin/public parity HOLD #775. Owner-exclusive Publish.",
+      "action": "2026-11-05T09:41:10.285Z: Seneschal main 29971db4 (#822 Map切替、#824 RSVP)。公開URL直近は旧69350830。Dual-runtime #775 HOLD、#809 Calendar/Map UI QA未合格、#820 AI Assist先行Audit失敗の修正後検証未証明。ユーザー専任Publish。",
       "blocked_by": [
         "Seneschal BASE44 CLI credential and scoped Builder publication credential fail closed (secret values not inspected).",
         "Prior Simulator formal E2E missing.",
@@ -3461,7 +3468,9 @@
         "https://github.com/Satofumi-Goto/seneschal/pull/761",
         "https://github.com/Satofumi-Goto/seneschal/commit/aeb1f700da6766947c917d3d475e89ad90343490",
         "https://github.com/Satofumi-Goto/seneschal/issues/820",
-        "https://github.com/Satofumi-Goto/seneschal/actions/runs/41989878531"
+        "https://github.com/Satofumi-Goto/seneschal/actions/runs/41989878531",
+        "https://github.com/Satofumi-Goto/seneschal/issues/775",
+        "https://github.com/Satofumi-Goto/seneschal/issues/809"
       ],
       "freeze_is_release_gate": false,
       "summary": "2026-11-01T18:41:55.776Z: Seneschal PR #672 merged on main 636b7b30; PR-head Audit #41332117693 executed successful build, regression and browser smoke. Source integration only; current-main authenticated Base44 publish, exact served SHA, production voice and Federation signed E2E still unverified. Activity-first predecessor gates and quota_blocked policy remain; do not trigger retry."
@@ -3470,7 +3479,7 @@
       "priority": 8,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-05T06:46:23.512Z: Federation 952577bd; Builder site-only run #41975899288 HTTP422。Federation独立親・6先行正式公開未達、#779 Draft。",
+      "action": "2026-11-05T09:41:10.285Z: Federation main 045c8a9e / Base44公開SHAは直近一致 (#960)。ただし独立親本番・6先行受入れ・7アプリE2Eなし。#779 Draft、#774研究blocked、Firewall #972 Shadow HOLD。本人以外の公開は禁止。",
       "blocked_by": [
         "Whole Federation Builder/source/main SHA match unverified; individual deployed function hash match is insufficient.",
         "First six authenticated releases not accepted; PR #778/#779/#780 Draft.",
@@ -3485,7 +3494,9 @@
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41289274203",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41302191709",
         "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41301698444",
-        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41821734942"
+        "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41821734942",
+        "https://github.com/Satofumi-Goto/federation-portal/issues/960",
+        "https://github.com/Satofumi-Goto/federation-portal/issues/972"
       ],
       "freeze_is_release_gate": false
     },
@@ -3493,7 +3504,7 @@
       "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-05T06:46:23.512Z: 7アプリ正式認証付き本番受入れ 0/7。Seneschal独立Render staging単体liveは本番独立親子/Map/Calendarの完成ではない。利用枠 quota_blocked、追加Actions/Publish禁止。",
+      "action": "2026-11-05T09:41:10.285Z: 正式認証付き本番受入れは0/7。新たなsource統合・部分的Base44 SHA一致はリリース成功ではない。Policy quota_blockedを尊重。公開/Deploy/DNSは本人専任、GitHub Actions公開試行禁止（Seneschal）。",
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
         "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production.",
@@ -3526,13 +3537,13 @@
     "priority_policy_source_complete": true,
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "activity": "11b0c7699f3ddfc2b0201fbce88a5cf892658d5e",
-      "fleet": "8b7f58eff7a90e3deb09c467d542e382d8ebb7be",
-      "service": "f3bb7c96bbf4e51109399f3b34019b8a45d6fee6",
-      "urban": "906bae08c969c616e7bb26a7b85deb81f46d7c68",
+      "activity": "769c201376be0a0668580f8c243602bd6c1e8cf7",
+      "fleet": "eb8c43835c3ead6b760350d8a9aeb05734389c79",
+      "service": "5d159f742059e7b125f5e651499adaf44faa4797",
+      "urban": "85cb01c5a6f6f84368d4a7099a7ffa443c05b1ab",
       "simulator": "18562a736094dcf9d1a33560ddc53d395b3bdedf",
-      "seneschal": "6935083042b873bdebe228391ccdd7b201f60eb1",
-      "federation": "26c96af9d88f3864dd258e8d1a4b4a73c8c03df4"
+      "seneschal": "29971db428d3cec5bd5a498d7ebac82d847d0cd2",
+      "federation": "045c8a9e77ecdab1f434ffbfdfd0dbbca3a26479"
     },
     "mission_contract": {
       "modes": [
@@ -3604,7 +3615,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-05T08:37:55.731Z",
+    "latest_review_at": "2026-11-05T09:41:10.285Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
