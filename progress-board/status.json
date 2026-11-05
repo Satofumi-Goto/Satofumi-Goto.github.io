@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T05:39:21.624Z",
+  "generated_at": "2026-11-05T06:46:23.512Z",
   "source": "2026-11-05T03:40:30.441Z: policy first; seven current main refs, targeted checks and exact-step release failures; 7/7 source advanced since previous status, Activity #79 repair source integrated, Seneschal single-route #776 merged with HOLD; formal 0/7; no orchestrator Actions/Build/Publish/paid Gemini/DB/PR merge.",
   "completed_total": 0,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
-      "head": "c4fbfb2310492783023c87ec53a7aa983730f6c8",
-      "summary": "2026-11-05T05:39:21.624Z: main c4fbfb23。公開イベント/無料API安全化 #107/#108/#110 はソース統合、同SHA Export ZIP #41972870547成功。しかし #41972870945（owner-bound publish）と #41972886963（scoped-PAT Builder公開）は実runnerの公開工程で失敗。公開/認証付きAPI E2Eは未合格。公開操作はユーザー本人のみ。HOLD。",
+      "head": "9116ce2c61514c3a0d1ab396dcf0118b42204281",
+      "summary": "2026-11-05T06:46:23.512Z: main 9116ce2c。同SHA Export ZIP #41981867504、guarded site release #41981867525 は成功。ただし正式 Builder Publish #41981929621 は実Runnerの「Publish exact synchronized Builder revision with scoped PAT」で失敗。保護順序のActivity正式受入れ・認証E2Eは未合格。公開操作はユーザー本人のみ。HOLD。",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
-      "main_sha": "c4fbfb2310492783023c87ec53a7aa983730f6c8",
+      "main_sha": "9116ce2c61514c3a0d1ab396dcf0118b42204281",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "0694ec156f9faa34e2ea21a45289e3ae5c694e5e",
-      "summary": "2026-11-05T04:37:26.841Z: 最新main 0694ec15: #91でActivityをPOI正本とする読取専用連携へ切替、地図で直接Overpassに接続する経路と重複ピンを整理。正式公開 #41956594617 のBuilder SHA不一致および #41961746202 点検失敗は未解消の証跡。先行Activity受入れも未達。HOLD。",
+      "head": "0c359bb5b4a467856686991826fe7340fcd6f732",
+      "summary": "2026-11-05T06:46:23.512Z: main 0c359bb5。同SHA Guard #41981369189 と Export ZIP #41981369186 成功。既存Builder source不一致 #41956594617 の解消証跡なし、Activity正式受入れ未了。HOLD。",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "0694ec156f9faa34e2ea21a45289e3ae5c694e5e",
+      "main_sha": "0c359bb5b4a467856686991826fe7340fcd6f732",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "5c6a718e771932f44799cfcee59ae6306732a8c6",
-      "summary": "2026-11-05T05:39:21.624Z: main 5c6a718e。親確認 #794・Map #797/#798 をソース統合、同SHA Audit #41974172250 成功。Issue #775の2026-11-05T05:33Z観測でBase44と独自ドメイン両方のgit-head.json/アセットはmainと一致。ただし独自ドメインはBase44と同一資産で独立/healthz未確認、Federation独立親未到達。Guard #41974713285 は正しくHOLD。独立公開/認証付きMap・Calendar・予約E2E未完了。公開はユーザー本人のみ。",
+      "head": "519c6e7648ff15488da189064eba7bcddf1737fd",
+      "summary": "2026-11-05T06:46:23.512Z: main 519c6e76。Render独立無料staging service srv-dbm1hqlg1s2s73brdvgg は2026-11-05に作成済、deploy dep-dbm1r29srm7s73eqg4bg がSHA 51d2d3d9でlive（Render直接検証）。ただし現mainとstaging SHA不一致。staging /healthz=okはIssue #775証跡、実ブラウザMap Google Maps読み込み失敗・Calendar起動エラー。独自ドメインはBase44 alias、Federation独立親identity未証明。GitHub Actionsによる本番公開は使わず、公開/DNS操作はユーザーのみ。HOLD。",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "5c6a718e771932f44799cfcee59ae6306732a8c6",
+      "main_sha": "519c6e7648ff15488da189064eba7bcddf1737fd",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "655793ba4d401c8f01085c1495c02adc095726ca",
-      "summary": "2026-11-05T05:39:21.624Z: main 655793ba。独立親子管理 #959、生成ファイル読み取り専用診断 #962/#963/#964 ソース統合。旧head 3565a44 の Builder generated-file parity preflight #41974656889 は実検査工程で失敗、最新headのBuilderクリーン一致/Publishは未証明。公開ゲートPR #779はDraft、独立親 federation-runtime.com 未到達、マツコ研究 #774 認証済Grounding→永続DB保存/復元未証明。HOLD。",
+      "head": "952577bd1b19343530f42c37d406689ec9a1573a",
+      "summary": "2026-11-05T06:46:23.512Z: main 952577bd。#779はDraft。直近Builder site-only #41975899288 は実Runnerで安全なfast-forward bundle/Publish工程失敗、Issue #960ログ要約ではsandbox-bridge HTTP422。read-only generated-file preflight #41975099682 は旧SHA 655793baで成功しただけで現main/Builder/public一致証拠ではない。独立親未配備、Gemini研究 #774 永続DB認証E2E未証明。HOLD。",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "655793ba4d401c8f01085c1495c02adc095726ca",
+      "main_sha": "952577bd1b19343530f42c37d406689ec9a1573a",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -1243,7 +1243,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-05T05:39:21.624Z: policy release_freeze=false, quota_recovery=quota_blocked; current heads activity c4fbfb23, fleet 0694ec15, service bb83e4d5, urban 3932ba0b, simulator 18562a73, seneschal 5c6a718e, federation 655793ba。Activity #41972870945/#41972886963 Builder Publish失敗、Service Hub #41968980192 JEPX redeploy失敗、Federation #41974656889 Builder診断失敗（旧SHA）、Seneschal #775 同SHA公開マニフェストだが独立origin未証明。7-app authenticated production acceptance 0/7。GitHub Actions quota_blockedを維持し、新規workflowを起動していない。公開・DNS・Deployはユーザー本人のみ。",
+    "ci_state": "2026-11-05T06:46:23.512Z: policy release_freeze=false, quota_recovery=quota_blocked; main activity 9116ce2c, fleet 0c359bb5, service bb83e4d5, urban 3932ba0b, simulator 18562a73, seneschal 519c6e76, federation 952577bd。Activity #41981929621 Builder Publish失敗。Seneschal無料Render staging 51d2d3d9 deploy live（現mainとは未一致）／Map・Calendar E2E失敗／独立親未確認。Federation #41975899288 Builder 422失敗。7-app authenticated production acceptance 0/7。既存証跡・Render読み取りのみ。Publish/Deploy/DNSは本人のみ。",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -3255,7 +3255,7 @@
       "priority": 1,
       "owner": "Federation Builder recovery",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-04T11:48:26.325Z: Federation c60bd6ee. Site-only API archive #41821734942 verified c60bd6ee but did not check six official current-SHA releases/Builder metadata or full E2E. #779 Draft; new #945 publication entrypoint reviewed.",
+      "action": "2026-11-05T06:46:23.512Z: Federation 952577bd; #779 Draft、最新 site-only #41975899288 はbuilder sandbox-bridge 422で公開失敗。read-only #41975099682 success は旧SHAの静的診断であり現Builder同期証明ではない。公開は本人のみ。",
       "blocked_by": [
         "Current Federation main exact Builder/public SHA not proven; latest auxiliary success is older SHA.",
         "Previous six upstream app Base44 metadata 404 unverified resolution.",
@@ -3314,7 +3314,7 @@
       "priority": 2,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/life-transaction-console",
-      "action": "2026-11-05T00:35:50.211Z: main ca663036 #72 source integrated. Formal Builder Publish, same-main public SHA and authenticated production roundtrip still unverified. Existing release dependency order and quota_blocked apply; no rerun.",
+      "action": "2026-11-05T06:46:23.512Z: Activity 9116ce2c guarded site job #41981867525 success, formal scoped-PAT Builder release #41981929621 failure。認証E2Eなし。本人による公開以外実施しない。",
       "blocked_by": [
         "Formal same-main authenticated console health and durable release-event ACK not completed; all subsequent job steps skipped."
       ],
@@ -3336,7 +3336,7 @@
       "priority": 3,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
-      "action": "2026-11-04T10:41:49.453Z: Fleet main 90b22725 same-SHA Guard/Export success, but official manual release #41814635889 failed before Builder Publish at credential selection; Activity prerequisite also absent. Prior #41802913320 public hotspot red-render browser assertion failed.",
+      "action": "2026-11-05T06:46:23.512Z: Fleet 0c359bb5 Guard/Export success、Builder不一致の解消未証明。Activity正式受入れ待ち。",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity predecessor authenticated acceptance missing.",
@@ -3430,7 +3430,7 @@
       "priority": 7,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/seneschal",
-      "action": "2026-11-05T00:35:50.211Z: main aeb1f700 #761 source integrated. Formal Builder Publish, same-main public SHA and authenticated production roundtrip still unverified. Existing release dependency order and quota_blocked apply; no rerun.",
+      "action": "2026-11-05T06:46:23.512Z: Seneschal 519c6e76; Render無料staging srv-dbm1hqlg1s2s73brdvgg live (deployed 51d2d3d9)。独立staging Map/Calendar E2E失敗、Base44/独自本番SHAと独立親子identity未合格。公開は本人のみ。Issue #775 HOLD。",
       "blocked_by": [
         "Seneschal BASE44 CLI credential and scoped Builder publication credential fail closed (secret values not inspected).",
         "Prior Simulator formal E2E missing.",
@@ -3456,7 +3456,7 @@
       "priority": 8,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-04T11:48:26.325Z: Federation c60bd6ee consolidated API settings site-only archive published c60bd6ee with served-SHA match #41821734942; qa skipped, upstream 6-app formal authenticated releases missing. #945 newly uncovered skip path flagged on Draft #779.",
+      "action": "2026-11-05T06:46:23.512Z: Federation 952577bd; Builder site-only run #41975899288 HTTP422。Federation独立親・6先行正式公開未達、#779 Draft。",
       "blocked_by": [
         "Whole Federation Builder/source/main SHA match unverified; individual deployed function hash match is insufficient.",
         "First six authenticated releases not accepted; PR #778/#779/#780 Draft.",
@@ -3479,7 +3479,7 @@
       "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-04T11:48:26.325Z: Formal seven-app acceptance 0/7. Site-only API archive never substitutes full current-source Builder metadata, ordered upstream releases, Simulator computations, Seneschal voice and authenticated Federation Live Mission.",
+      "action": "2026-11-05T06:46:23.512Z: 7アプリ正式認証付き本番受入れ 0/7。Seneschal独立Render staging単体liveは本番独立親子/Map/Calendarの完成ではない。利用枠 quota_blocked、追加Actions/Publish禁止。",
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
         "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production.",
@@ -3512,13 +3512,13 @@
     "priority_policy_source_complete": true,
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "activity": "c4fbfb2310492783023c87ec53a7aa983730f6c8",
-      "fleet": "0694ec156f9faa34e2ea21a45289e3ae5c694e5e",
+      "activity": "9116ce2c61514c3a0d1ab396dcf0118b42204281",
+      "fleet": "0c359bb5b4a467856686991826fe7340fcd6f732",
       "service": "bb83e4d5b27903d040a8d93be04ecdf8658458aa",
       "urban": "3932ba0b3ce275c08a4967857588f66a2c903ced",
       "simulator": "18562a736094dcf9d1a33560ddc53d395b3bdedf",
-      "seneschal": "5c6a718e771932f44799cfcee59ae6306732a8c6",
-      "federation": "655793ba4d401c8f01085c1495c02adc095726ca"
+      "seneschal": "519c6e7648ff15488da189064eba7bcddf1737fd",
+      "federation": "952577bd1b19343530f42c37d406689ec9a1573a"
     },
     "mission_contract": {
       "modes": [
@@ -3590,7 +3590,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-05T05:39:21.624Z",
+    "latest_review_at": "2026-11-05T06:46:23.512Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
