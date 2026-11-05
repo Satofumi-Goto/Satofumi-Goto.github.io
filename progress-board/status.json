@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T09:41:10.285Z",
+  "generated_at": "2026-11-05T11:38:37.955Z",
   "source": "2026-11-05T07:37:22.568Z: policy-first, seven main refs and compare; six sources advanced, latest-source checks and owner-dispatched publish failure steps reviewed. #774/#775/#809/#960. Source integration != publish; formal 0/7. No orchestration-triggered Actions/Build/Publish/Deploy/DB/paid API/PR merge.",
   "completed_total": 0,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
-      "head": "769c201376be0a0668580f8c243602bd6c1e8cf7",
-      "summary": "2026-11-05T09:41:10.285Z: main 769c2013: Activity #122 祝日API限定・管理者用の署名付きshadow比較コード統合。公開URLは直近確認時旧11b0c769、Shadow関数GET=404（Federation #972）。Builder Publish/認証付きE2E未合格。公開・Secretsは所有者操作のみ。",
+      "head": "a9dec884af390e4ece867371b51f3ca4629562c0",
+      "summary": "2026-11-05T11:38:37.955Z: main a9dec884, Export ZIP same-head success #42019902774. Activity PR #131 Overpass限定fallback、#132 公開後healthの読取限定503再確認が統合。公開後API/認証付きE2Eは未合格。Firewall G1 GitHub OIDC署名付き祝日54件の全件一致 #42015685236 はPASS、Activity→Gateway HMAC/画面/WAFは未検証、切替0。",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
-      "main_sha": "769c201376be0a0668580f8c243602bd6c1e8cf7",
+      "main_sha": "a9dec884af390e4ece867371b51f3ca4629562c0",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
@@ -19,10 +19,10 @@
     {
       "name": "Fleet",
       "status": "red",
-      "head": "eb8c43835c3ead6b760350d8a9aeb05734389c79",
-      "summary": "2026-11-05T09:41:10.285Z: main eb8c4383: GBFS upstream 503の安全な障害コード化 #102をソース統合。最新SHAの公開同期・実API roundtrip/認証付きE2Eは未合格。Activity先行ゲート待ち。",
+      "head": "a690437652d92629201f53cf9db4d7812aed1ceb",
+      "summary": "2026-11-05T11:38:37.955Z: main a6904376、同SHA Guard/Export success。Builder公開SHA・運用API roundtrip・認証付きE2Eは未合格。Activityの正式受入れ待ち。",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
-      "main_sha": "eb8c43835c3ead6b760350d8a9aeb05734389c79",
+      "main_sha": "a690437652d92629201f53cf9db4d7812aed1ceb",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "d555d286aaeae84c4218869ed0bb0ad23c9c043d",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "29971db428d3cec5bd5a498d7ebac82d847d0cd2",
-      "summary": "2026-11-05T09:41:10.285Z: main 29971db4: Map表示切替 #822と未回答RSVPベル #824等がソース統合。直近の二公開URLは旧69350830、真正独立origin/親Identity未証明（#775）。先行Audit #41989878531 のAI Assist実ブラウザ失敗 #820は新SHAで解消未証明。カレンダー/Map #809 E2Eも保留。",
+      "head": "925219165b70754aeaab96b5771ec605c23e1ff6",
+      "summary": "2026-11-05T11:38:37.955Z: main 92521916、PR #845 でRender/Base44のビルド入力不一致原因を修正統合。#847はDockerfile修正重複のため既存PRにレビューコメント、テストのみ切出し要確認。新main Audit #42020011806 は確認時in_progressで合格未証明。Render staging直近LIVEは旧01156a3d、Base44/alias同SHAでも実JS SHA256不一致 #775。独立親/認証・Map/Calendar/予約QA #809・AI Assist #820 未完、HOLD。",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "29971db428d3cec5bd5a498d7ebac82d847d0cd2",
+      "main_sha": "925219165b70754aeaab96b5771ec605c23e1ff6",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "045c8a9e77ecdab1f434ffbfdfd0dbbca3a26479",
-      "summary": "2026-11-05T09:41:10.285Z: main 045c8a9e: Firewall署名経路の安全な秘匿監査 #971統合。直近のBase44公開マニフェストは同SHAを観測（#960）、ただし独立親本番/7アプリ認証付きE2E未完了。#779 Draft、マツコ研究 #774 未完了。Firewall #972 3経路すべてshadow HOLD。",
+      "head": "ce5fda9cef3a3426bb614df13950bf89887f780c",
+      "summary": "2026-11-05T11:38:37.955Z: main ce5fda9c。Firewall #976/#977 source統合、signed-live run #42015685236 がGitHub OIDC→Gateway→祝日提供元の署名付き実通信と54件データSHA256一致に成功。configは3経路ともgateway=false/legacy=true、Activity本番HMAC、WAF/画面/rollbackは未合格。Federation Builder同期/独立親/7アプリ認証E2Eと#774 Gemini→永続DB未証明、#779 Draft。",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "045c8a9e77ecdab1f434ffbfdfd0dbbca3a26479",
+      "main_sha": "ce5fda9cef3a3426bb614df13950bf89887f780c",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -189,60 +189,32 @@
     {
       "owner": "Chat：分析・独立検査",
       "status": "red",
-      "current": "2026-10-31T22:40:26.676Z: Federation main 8b5dc046 after merged #796–#798. Verified public read-only inventory https://github.com/Satofumi-Goto/federation-portal/actions/runs/41246756617: exact staging manifest SHA 8b5dc046, direct API and Worker auth/me 403/trusted-proxy-required, healthz 404, Cloud Run service Ready. Distinct isolated-staging source publication, NOT authenticated staging success or Base44 seven-app release. Policy freeze=false/quota_blocked; release acceptance 0/7.",
-      "next": "Inspect Worker→Cloud Run trusted-proxy contract and deployment variable/secret version references without reading secret values. No bypass or blind retry; perform a single approved unauthenticated 401 route verification only when configuration evidence changes. Continue Draft #778/#779/#780 review, Builder exact-current-main verification, and Activity-first release gates.",
+      "current": "2026-11-05T11:38:37.955Z: Policy-first GitHub 7main/CI read-only照合。Firewall G1 実署名OIDCテスト54件SHA256一致（#42015685236）を確認、Activity HMAC E2Eは未証明。Seneschal本番とRender stagingは旧01156a3d配信、同SHA JSバイト不一致、#845ビルド入力修正main統合、#847 Docker重複にレビューコメント。7アプリ正式本番受入れ0/7。",
+      "next": "現行quota・承認条件に従い、未完成のsame-head Auditを読み取り確認し、Owner正式公開後にSeneschalの配信JS/CSSハッシュ/独立親identity/Map・Calendar・予約を検証。FirewallはActivity実HMAC資格情報・WAF/rollback/本番UIが整うまで旧経路を維持。#774認証済みGemini→永続DBのE2E未達を継続記録。",
       "evidence": [
         {
-          "text": "Canonical policy",
-          "url": "https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/blob/main/progress-board/orchestrator-policy.json"
+          "text": "Firewall G1 signed OIDC + 54 parity",
+          "url": "https://github.com/Satofumi-Goto/federation-runtime/actions/runs/42015685236"
         },
         {
-          "text": "Seneschal source merge #653",
-          "url": "https://github.com/Satofumi-Goto/seneschal/pull/653"
+          "text": "Firewall route HOLD policy",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/blob/main/config/firewall-gateway-migration.json"
         },
         {
-          "text": "Federation source merge #777",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/777"
+          "text": "Seneschal #845 merged build fix",
+          "url": "https://github.com/Satofumi-Goto/seneschal/pull/845"
         },
         {
-          "text": "Seneschal PR Audit",
-          "url": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41015924326"
+          "text": "Seneschal review on overlapping #847",
+          "url": "https://github.com/Satofumi-Goto/seneschal/pull/847#issuecomment-6656990918"
         },
         {
-          "text": "Federation research worker CI",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41015673405"
+          "text": "Seneschal byte drift incident",
+          "url": "https://github.com/Satofumi-Goto/seneschal/issues/775"
         },
         {
-          "text": "Federation current-source release gate Draft #779",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/779"
-        },
-        {
-          "text": "Federation final E2E guarded Draft #780",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/780"
-        },
-        {
-          "text": "Federation Builder read-only diagnosis Draft #778",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/778"
-        },
-        {
-          "text": "Draft #780 run-bound attestation consumer implementation",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/commit/cdbeb1032de406cb3311d7af0a7b03482853874e"
-        },
-        {
-          "text": "Federation staged image build #792",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/792"
-        },
-        {
-          "text": "Federation staging API Worker bind #793",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/793"
-        },
-        {
-          "text": "Merged Worker entrypoint fix #798",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/pull/798"
-        },
-        {
-          "text": "Read-only staging diagnostic run",
-          "url": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41246756617"
+          "text": "Federation research blocked",
+          "url": "https://github.com/Satofumi-Goto/federation-portal/issues/774"
         }
       ]
     },
@@ -1240,14 +1212,15 @@
     "2026-11-04T13:41:51.000Z: Policy-first source/read-only validation: Activity main 5a04dfb9 (#69), Fleet a252e0cf (#84), Service d976822c (#56), Urban 50768a7c (#59), Seneschal 4cb2813c (#757). Simulator/Federation unchanged. Fleets's shared POI layer uses OSM Overpass and cache; Service/Urban viewer source shares Fleet origin and describes read-only embed; no browser acceptance. Independent Matsuko #774 unchanged, guarded release #779 Draft, policy quota_blocked; formal release 0/7. No Actions/Publish/Gemini/DB/merge run.",
     "2026-11-05T00:35:50.211Z: Policy-first source delta only. Activity #72 merged ca663036 (community event source catalog, permitted public feeds; main Export ZIP #41941577114 success), Seneschal #761 merged aeb1f700 (read-only Activity community suggestions, opt-in draft; PR Audit/Guard succeeded). Five other main heads stable. #774 remains blocked; Federation #779 Draft+conflict; current Builder/public SHA and authenticated E2E unverified. Canonical freeze=false, quota_blocked, 0/7 formal acceptance; 17 owners/10 queue; no new Actions/Build/Publish/Gemini/DB/merge by orchestrator.",
     "2026-11-05T02:43:47.039Z: Source-only sweep. Activity release #41956309054 at 5a2ed505 passed Builder SHA/public served SHA but hit post-publication operational-api-http-500, failing release receipt/auth E2E. Seneschal #756 Guard #41956410598 failed on missing protected-change PR rationale sections; #762/#764 closed unmerged, #766 source merged. Fleet #88, Service #61, Urban #60 API inventory merges and Federation #948 docs source merged. Current seven main heads refreshed; policy freeze=false quota_blocked; formal acceptance 0/7, #779 Draft, #774 blocked. No additional Actions or paid services triggered.",
-    "2026-11-05T02:45:27.354Z: Fleet official run #41956594617 guarded prepublish rejected stale Builder 90b22725 vs c09ba7bb. Seneschal new read-only parity workflow #41956891400 identified public Base44 and custom-domain served SHA b2aa831b vs main f119cd3b and missing independent /healthz; incident #775 open. No real runtime parity acceptance. Corrected main-head Fleet/Seneschal summaries and CI evidence without new Actions."
+    "2026-11-05T02:45:27.354Z: Fleet official run #41956594617 guarded prepublish rejected stale Builder 90b22725 vs c09ba7bb. Seneschal new read-only parity workflow #41956891400 identified public Base44 and custom-domain served SHA b2aa831b vs main f119cd3b and missing independent /healthz; incident #775 open. No real runtime parity acceptance. Corrected main-head Fleet/Seneschal summaries and CI evidence without new Actions.",
+    "2026-11-05T11:38:37.955Z: Updated four changed main heads (Activity/Fleet/Seneschal/Federation), confirmed existing CI, signed holiday G1 #42015685236 PASS 54/54 with HMAC cutover HOLD, Render LIVE old 01156a3d, #845 merged (build input parity root cause) and #847 overlapping Dockerfile review comment. Current Seneschal same-main Audit in progress; independent parent and all production E2E unverified. 17 owner rows, 10 queues, no workflow/production action triggered."
   ],
   "orchestrator": {
     "enabled": true,
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-05T09:41:10.285Z: policy freeze=false / quota_recovery=quota_blocked. mains activity=769c2013, fleet=eb8c4383, service=5d159f74, urban=85cb01c5, simulator=18562a73, seneschal=29971db4, federation=045c8a9e. Firewall #972 phase1 shadow: 3 routes gateway=false/legacy=true, Activity latest handler main integrated but published function not yet verified; owner publication gate. Seneschal #775 dual runtime HOLD, #820 AI Assist test failure not proven fixed, #809 UI QA open. Federation #774 authenticated Gemini → durable Seneschal DB not proven. Federated production E2E 0/7. No Actions/Build/Publish/Deploy/DNS/premium API triggered.",
+    "ci_state": "2026-11-05T11:38:37.955Z: policy freeze=false / quota_recovery=quota_blocked. main activity=a9dec884 fleet=a6904376 service=5d159f74 urban=85cb01c5 simulator=18562a73 seneschal=92521916 federation=ce5fda9c. Firewall G1 GitHub OIDC signed-live 54 provider-parity PASS, Activity HMAC/cutover HOLD. Seneschal #845 merged but published JS asset drift and staging behind, new SHA Audit pending. #774 independent research blocked. Seven authenticated production release E2E 0/7. No new workflow/Build/Publish/Deploy/DNS/premium API/DB action initiated.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -3329,7 +3302,7 @@
       "priority": 2,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/life-transaction-console",
-      "action": "2026-11-05T09:41:10.285Z: Activity main 769c2013 #122 Firewall祝日shadow関数ソース統合。直近公開11b0c769・新関数無認証GET404、最新SHA公開/署名E2E未合格（#972）。本人によるPublish・secret設定以外の書込みは禁止。",
+      "action": "2026-11-05T11:38:37.955Z: Activity main a9dec884。#131/#132 ソース統合/Export ZIP成功だが最新SHAのBuilder Publishと認証付き公開E2Eは未確認。Firewall祝日GitHub OIDC signed-live 54件一致はテスト経路の成功のみ。Activity HMAC資格情報と本番署名・画面・rollbackが未合格、公開は所有者専任。",
       "blocked_by": [
         "Owner-operated Activity deployment of verified latest code not evidenced; Base44/Builder previous official publication failures",
         "Firewall shadow signing secret and actual Activity→Render signed E2E not configured (do not request/view secret values)",
@@ -3354,7 +3327,7 @@
       "priority": 3,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/fleet-operations-console",
-      "action": "2026-11-05T06:46:23.512Z: Fleet 0c359bb5 Guard/Export success、Builder不一致の解消未証明。Activity正式受入れ待ち。",
+      "action": "2026-11-05T11:38:37.955Z: Fleet main a6904376、Guard/Export同SHA success。Builder本番同期・API roundtrip/E2E未証明、Activity先行ゲート待ち。",
       "blocked_by": [
         "operational-api-http-401:federation-authentication-required after published SHA verification.",
         "Activity predecessor authenticated acceptance missing.",
@@ -3448,7 +3421,7 @@
       "priority": 7,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/seneschal",
-      "action": "2026-11-05T09:41:10.285Z: Seneschal main 29971db4 (#822 Map切替、#824 RSVP)。公開URL直近は旧69350830。Dual-runtime #775 HOLD、#809 Calendar/Map UI QA未合格、#820 AI Assist先行Audit失敗の修正後検証未証明。ユーザー専任Publish。",
+      "action": "2026-11-05T11:38:37.955Z: Seneschal main 92521916、#845 build input修正マージ。#847の重複Dockerfile差分をPRコメントで指摘（#6656990918）。Audit最新は確認時in_progress、Render staging LIVE旧01156a3d・公開バンドル実バイト不一致。#775/#809/#820 HOLD、親独立identityとE2E未証明。本番公開は本人専任。",
       "blocked_by": [
         "Seneschal BASE44 CLI credential and scoped Builder publication credential fail closed (secret values not inspected).",
         "Prior Simulator formal E2E missing.",
@@ -3479,7 +3452,7 @@
       "priority": 8,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-05T09:41:10.285Z: Federation main 045c8a9e / Base44公開SHAは直近一致 (#960)。ただし独立親本番・6先行受入れ・7アプリE2Eなし。#779 Draft、#774研究blocked、Firewall #972 Shadow HOLD。本人以外の公開は禁止。",
+      "action": "2026-11-05T11:38:37.955Z: Federation main ce5fda9c。#977 祝日54件GitHub OIDC signed-live parity成功、実Activity HMAC/E2E・WAF・ロールバック未実証でgateway=false/legacy=true。#779 Draft、#774 Gemini durable DB blocked、Builder同期・独立親本番・7アプリ認証E2Eなし。",
       "blocked_by": [
         "Whole Federation Builder/source/main SHA match unverified; individual deployed function hash match is insufficient.",
         "First six authenticated releases not accepted; PR #778/#779/#780 Draft.",
@@ -3504,7 +3477,7 @@
       "priority": 9,
       "owner": "Federation production acceptance",
       "repo": "Satofumi-Goto/federation-portal",
-      "action": "2026-11-05T09:41:10.285Z: 正式認証付き本番受入れは0/7。新たなsource統合・部分的Base44 SHA一致はリリース成功ではない。Policy quota_blockedを尊重。公開/Deploy/DNSは本人専任、GitHub Actions公開試行禁止（Seneschal）。",
+      "action": "2026-11-05T11:38:37.955Z: 7アプリ公開受入れ0/7。現行Policy release_freeze=false、quota_recovery=quota_blocked。Seneschal同SHAバイト不一致HOLD。公開/Deploy/DNS操作はユーザー本人のみ、新たなActions probe/有料API実行なし。",
       "blocked_by": [
         "No seven exact-SHA authenticated production releases accepted; final E2E not observed.",
         "Draft #780 now contains a review-only run-bound attestation consumer (commit cdbeb103), linked to the exact successful guarded Federation release run from Draft #779 producer; 13/13 structural checks only. Producer and consumer remain Draft/unmerged, zero current-head required CI/reviews, with no actual artifact or authenticated production E2E. Historical TOCTOU fixed in Draft source only, NOT proven in production.",
@@ -3537,13 +3510,13 @@
     "priority_policy_source_complete": true,
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "activity": "769c201376be0a0668580f8c243602bd6c1e8cf7",
-      "fleet": "eb8c43835c3ead6b760350d8a9aeb05734389c79",
+      "activity": "a9dec884af390e4ece867371b51f3ca4629562c0",
+      "fleet": "a690437652d92629201f53cf9db4d7812aed1ceb",
       "service": "5d159f742059e7b125f5e651499adaf44faa4797",
       "urban": "85cb01c5a6f6f84368d4a7099a7ffa443c05b1ab",
       "simulator": "18562a736094dcf9d1a33560ddc53d395b3bdedf",
-      "seneschal": "29971db428d3cec5bd5a498d7ebac82d847d0cd2",
-      "federation": "045c8a9e77ecdab1f434ffbfdfd0dbbca3a26479"
+      "seneschal": "925219165b70754aeaab96b5771ec605c23e1ff6",
+      "federation": "ce5fda9cef3a3426bb614df13950bf89887f780c"
     },
     "mission_contract": {
       "modes": [
