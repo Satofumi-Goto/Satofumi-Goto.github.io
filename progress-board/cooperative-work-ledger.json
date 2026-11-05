@@ -12,7 +12,9 @@
     "collaborator-3",
     "collaborator-4",
     "collaborator-5",
-    "collaborator-6"
+    "collaborator-6",
+    "collaborator-7",
+    "collaborator-8"
   ],
   "slots_are_role_placeholders_not_verified_running_agents": true,
   "case_statuses": [
@@ -62,5 +64,30 @@
     "evidence": [],
     "handoff": null
   },
-  "cases": []
+  "cases": [],
+  "publication_preflight": {
+    "decision": "HOLD",
+    "snapshot_only": true,
+    "source_ref": null,
+    "source_sha": null,
+    "accepted_changes": [],
+    "rejected_changes": [],
+    "held_changes": [],
+    "merged_changes_requiring_remediation": [],
+    "criteria": [
+      "main_source_sha",
+      "required_ci_and_independent_review",
+      "served_js_css_bytes",
+      "api_auth_and_storage",
+      "map_calendar_booking_dispatch",
+      "federation_family_and_consoles",
+      "real_browser_qa",
+      "screenshots",
+      "no_regressions"
+    ],
+    "allowed_states": ["PASS", "HOLD", "NOT_APPLICABLE"],
+    "unverified_is_hold": true,
+    "post_publish_checks_separate": true,
+    "apps": ["Activity", "Fleet", "Service Hub", "Urban", "Simulator", "Seneschal", "Federation"]
+  }
 }
