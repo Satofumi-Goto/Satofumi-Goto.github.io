@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "name": "cooperative-development",
+  "enabled": true,
+  "adopted_at": "2026-11-05",
+  "inherits_from": "progress-board/orchestrator-policy.json",
+  "operating_manual": "progress-board/development-collaboration.md",
+  "monitoring": {
+    "reuse_existing_orchestrator": true,
+    "create_new_periodic_jobs": false,
+    "preserve_existing_status_rows": true
+  },
+  "team": {
+    "orchestrator_slots": 1,
+    "peer_developer_slots": 4,
+    "peer_min_active_goal": 3,
+    "equal_capability": true,
+    "fixed_stage_specialization": false,
+    "temporary_primary_per_case": 1,
+    "actual_agent_activation_must_be_verified": true,
+    "existing_specialists_may_join": true
+  },
+  "ledger": {
+    "status": "progress-board/status.json",
+    "case_record": "GitHub Issue + linked PR",
+    "claim_marker": "[WORK CLAIM]",
+    "required_fields": [
+      "issue",
+      "actual_actor",
+      "primary_slot",
+      "collaborators",
+      "base_main_sha",
+      "planned_files",
+      "related_prs",
+      "status",
+      "blocker",
+      "next_action",
+      "evidence",
+      "updated_at_utc"
+    ],
+    "check_claim_before_branch_and_merge": true,
+    "claim_is_advisory_not_atomic_lock": true
+  },
+  "lifecycle": [
+    "inspect_main_issues_prs",
+    "de_duplicate_and_detect_conflict",
+    "compare_planned_files",
+    "declare_claim",
+    "create_branch_from_latest_main",
+    "apply_minimal_patch",
+    "tests_ci_browser_qa",
+    "pull_request_peer_review",
+    "merge_only_if_required_gates_pass",
+    "prepublication_qa",
+    "owner_publish_then_live_verification",
+    "evidence_and_legacy_pr_cleanup"
+  ],
+  "pr_triage": {
+    "necessary_no_conflict": "review_ci_then_merge",
+    "necessary_conflict": "port_required_diff_to_current_main_and_retest",
+    "already_implemented": "close_with_main_and_validation_evidence",
+    "obsolete": "close_with_reason"
+  },
+  "branch": {
+    "pattern": "feature/*",
+    "direct_main_write": false,
+    "dirty_workspace_changes": false,
+    "large_rewrites": false,
+    "format_all": false
+  },
+  "protected": {
+    "areas": [
+      "App",
+      "Router",
+      "Provider",
+      "Google Maps"
+    ],
+    "requires_explicit_approval": true,
+    "require_root_cause_and_rollback": true,
+    "no_base44_ai_rewrite": true,
+    "no_duplicate_base44_and_standalone_impl": true,
+    "no_unapproved_secret_auth_billing_data_changes": true
+  },
+  "ci": {
+    "peer_review_required": true,
+    "required_checks_pass": true,
+    "do_not_bypass_branch_protection": true,
+    "do_not_retry_quota_blocked_without_recovery_evidence": true
+  },
+  "publish": {
+    "owner_only": [
+      "production_publish",
+      "production_deploy",
+      "dns_switch",
+      "production_release_workflow"
+    ],
+    "developer_responsibility": [
+      "prepublish_qa",
+      "postpublish_readonly_sha_check",
+      "served_asset_check",
+      "api_and_environment_check",
+      "browser_e2e",
+      "screenshots"
+    ],
+    "do_not_label_complete_before_live_verification": true
+  },
+  "statuses": [
+    "investigating",
+    "implementing",
+    "reviewing",
+    "blocked",
+    "source_merged",
+    "publication_pending",
+    "verifying",
+    "done"
+  ],
+  "done_requires": [
+    "merged_to_main",
+    "required_ci_success",
+    "peer_review",
+    "old_prs_triaged",
+    "owner_publication_complete",
+    "served_sha_and_assets_match",
+    "live_browser_e2e_pass",
+    "screenshots_and_evidence",
+    "no_regression"
+  ],
+  "handoff_fields": [
+    "issue",
+    "pr",
+    "branch",
+    "base_sha",
+    "changed_files",
+    "tested",
+    "untested",
+    "blockers",
+    "next_action",
+    "evidence"
+  ],
+  "precedence": [
+    "user_owner_publish_only",
+    "release_freeze",
+    "ci_quota_recovery",
+    "secret_auth_billing_protection",
+    "orchestrator_policy",
+    "collaboration_policy"
+  ],
+  "measure_success_by": "verified_done_cases_not_new_pr_count"
+}
