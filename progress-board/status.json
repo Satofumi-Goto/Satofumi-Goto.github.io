@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T02:43:47.039Z",
+  "generated_at": "2026-11-05T02:45:27.354Z",
   "source": "2026-11-04T14:41:00.000Z: policy first (release_freeze=false; quota_recovery=quota_blocked); 7 main heads/last Actions/PRs and #774 verified. New merged source: Activity #70/#71, Fleet #85, Service #58, Seneschal #759/#760; Urban/Simulator unchanged; Federation index-only head advanced. Seneschal #761 Audit succeeded but protected Guard executed failure; no protected approval. #779 Draft, #774 blocked, formal 0/7. No new Actions/Build/Publish/paid API/DB writes/merges.",
   "completed_total": 0,
   "apps": [
@@ -20,7 +20,7 @@
       "name": "Fleet",
       "status": "red",
       "head": "455a2547183c35188b9d3610d6701e067ab21b96",
-      "summary": "2026-11-05T02:43:47.039Z: main 455a2547. #88 external API primary/secondary source inventory integrated (no routing cutover). Current main Guard #41956142021 and Export ZIP #41956141829 succeeded at 754ed8cf. Existing ORS/Builder/publication and production dispatch E2E still unverified.",
+      "summary": "2026-11-05T02:45:27.354Z: Fleet main 455a2547 includes #88 API acquisition inventory (no route cutover) and package update. Same-head Guard #41956630423 / Export ZIP #41956630054 succeeded. Previous source c09ba7bb official one-time release #41956594617 failed after Builder preflight: Builder source/deployed 90b22725 vs required c09ba7bb; prepublish gate failed. No source sync or site Publish verified. ORS and authenticated production dispatch E2E remain blocked.",
       "url": "https://github.com/Satofumi-Goto/fleet-operations-console",
       "main_sha": "455a2547183c35188b9d3610d6701e067ab21b96",
       "release_verified": false,
@@ -68,7 +68,7 @@
       "name": "Seneschal",
       "status": "red",
       "head": "f119cd3baa37aa1fd60c63a33e1a1ffaa5aa9168",
-      "summary": "2026-11-05T02:43:47.039Z: main f119cd3b. #766 consolidated thumb UI, #769 event POI, #770 primary/secondary route inventory in source. PR #756 protected Guard #41956410598 executed but failed: required Root Cause/Impact/Validation/Revert sections missing for 3 protected files. PR #773 Guard success but production parity pending. Official current-SHA Publish/voice E2E unverified.",
+      "summary": "2026-11-05T02:45:27.354Z: Seneschal main f119cd3b integrates #766 thumb, #769 event Map POI, #770 acquisition inventory and #773 read-only parity guard; source only. Guard workflow #41956891400 completed, but its comparison detected current-main vs served drift and independent origin unverified; incident #775 records both public domains serving b2aa831b and missing standalone /healthz. #756 protected Guard #41956410598 fails on missing mandatory PR rationale sections. No official current-main Publish / voice E2E.",
       "url": "https://github.com/Satofumi-Goto/seneschal",
       "main_sha": "f119cd3baa37aa1fd60c63a33e1a1ffaa5aa9168",
       "release_verified": false,
@@ -1235,14 +1235,15 @@
     "2026-11-04T12:45:47.690Z: Concurrent Seneschal head refinement: e4926336 (#752) only changes SystemSettingsPanel UI guidance; POI live POST evidence and formal 0/7 acceptance unchanged.",
     "2026-11-04T13:41:51.000Z: Policy-first source/read-only validation: Activity main 5a04dfb9 (#69), Fleet a252e0cf (#84), Service d976822c (#56), Urban 50768a7c (#59), Seneschal 4cb2813c (#757). Simulator/Federation unchanged. Fleets's shared POI layer uses OSM Overpass and cache; Service/Urban viewer source shares Fleet origin and describes read-only embed; no browser acceptance. Independent Matsuko #774 unchanged, guarded release #779 Draft, policy quota_blocked; formal release 0/7. No Actions/Publish/Gemini/DB/merge run.",
     "2026-11-05T00:35:50.211Z: Policy-first source delta only. Activity #72 merged ca663036 (community event source catalog, permitted public feeds; main Export ZIP #41941577114 success), Seneschal #761 merged aeb1f700 (read-only Activity community suggestions, opt-in draft; PR Audit/Guard succeeded). Five other main heads stable. #774 remains blocked; Federation #779 Draft+conflict; current Builder/public SHA and authenticated E2E unverified. Canonical freeze=false, quota_blocked, 0/7 formal acceptance; 17 owners/10 queue; no new Actions/Build/Publish/Gemini/DB/merge by orchestrator.",
-    "2026-11-05T02:43:47.039Z: Source-only sweep. Activity release #41956309054 at 5a2ed505 passed Builder SHA/public served SHA but hit post-publication operational-api-http-500, failing release receipt/auth E2E. Seneschal #756 Guard #41956410598 failed on missing protected-change PR rationale sections; #762/#764 closed unmerged, #766 source merged. Fleet #88, Service #61, Urban #60 API inventory merges and Federation #948 docs source merged. Current seven main heads refreshed; policy freeze=false quota_blocked; formal acceptance 0/7, #779 Draft, #774 blocked. No additional Actions or paid services triggered."
+    "2026-11-05T02:43:47.039Z: Source-only sweep. Activity release #41956309054 at 5a2ed505 passed Builder SHA/public served SHA but hit post-publication operational-api-http-500, failing release receipt/auth E2E. Seneschal #756 Guard #41956410598 failed on missing protected-change PR rationale sections; #762/#764 closed unmerged, #766 source merged. Fleet #88, Service #61, Urban #60 API inventory merges and Federation #948 docs source merged. Current seven main heads refreshed; policy freeze=false quota_blocked; formal acceptance 0/7, #779 Draft, #774 blocked. No additional Actions or paid services triggered.",
+    "2026-11-05T02:45:27.354Z: Fleet official run #41956594617 guarded prepublish rejected stale Builder 90b22725 vs c09ba7bb. Seneschal new read-only parity workflow #41956891400 identified public Base44 and custom-domain served SHA b2aa831b vs main f119cd3b and missing independent /healthz; incident #775 open. No real runtime parity acceptance. Corrected main-head Fleet/Seneschal summaries and CI evidence without new Actions."
   ],
   "orchestrator": {
     "enabled": true,
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-05T02:43:47.039Z: Policy-first freeze=false, quota_blocked unchanged. 7 current main SHAs refreshed. Activity manual release #41956309054 exact 5a2ed505 Builder/source/deployed/served SHA confirmed but failed after site publication: operational-api-http-500, official E2E not accepted. Seneschal PR #756 protected-file Guard failed with executed steps. Fleet/Service/Urban current-SHA CI success, source API inventory merged; Federation #779 Draft, Matsuko #774 blocked. Formal seven-app acceptance 0/7. No orchestrator Actions/Build/Publish/Gemini/DB/merge.",
+    "ci_state": "2026-11-05T02:45:27.354Z: Canonical policy freeze=false, quota_blocked. Activity manual release #41956309054 matched exact Builder/source/served 5a2ed505 but failed post-publication operational-api-http-500 (0/7 accepted). Fleet #41956594617 failed prepublish gate: Builder 90b22725 vs required c09ba7bb; current Fleet 455a2547 same SHA CI succeeded. Seneschal #773 guard is source-integrated, parity workflow #41956891400 detected public SHA drift and no verified standalone origin (incident #775). #756 protected Guard failed. Federation #779 Draft, research #774 blocked. No orchestrator-triggered release probes or paid external tasks.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1353,14 +1354,14 @@
           "formal_release": false
         },
         "latest_observed_run": {
-          "id": 41255405120,
+          "id": 41956630423,
           "name": "Guard",
           "event": "push",
           "conclusion": "success",
-          "head_sha": "56ef2a339e60bda28a1a0abcdffecb7e35e54f66",
-          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41255405120",
+          "head_sha": "455a2547183c35188b9d3610d6701e067ab21b96",
+          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41956630423",
           "formal_release": false,
-          "observed_at": "2026-11-01T00:40:08.000Z"
+          "observed_at": "2026-11-05T02:45:27.354Z"
         },
         "manual_release_gate": {
           "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41254987483",
@@ -1381,13 +1382,17 @@
           "post_fix_release_unverified": true
         },
         "latest_formal_release_attempt": {
-          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41732371715",
-          "head_sha": "e537271cb8b32ffcb184d8eaa3f5dc1ae4c8ed8e",
+          "run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41956594617",
+          "head_sha": "c09ba7bbb2e684c3dd63b3ad78e008c4694944e7",
           "conclusion": "failure",
           "executed_runner_steps": true,
           "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
+          "failure_detail": "builder-preflight observed Builder source/deployed 90b22725; required c09ba7bb; prepublish gate failed",
+          "builder_source_sha": "90b227251c353a909059d51845fdac32712476a0",
+          "builder_deployed_sha": "90b227251c353a909059d51845fdac32712476a0",
+          "required_sha": "c09ba7bbb2e684c3dd63b3ad78e008c4694944e7",
           "site_publish_and_authenticated_e2e_verified": false,
-          "observed_at": "2026-11-03T22:40:49.201Z"
+          "observed_at": "2026-11-05T02:45:27.354Z"
         },
         "latest_solver_credentials": {
           "configure_run": "https://github.com/Satofumi-Goto/fleet-operations-console/actions/runs/41751659802",
@@ -3119,7 +3124,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-05T02:43:47.039Z",
+    "last_observed_at": "2026-11-05T02:45:27.354Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
