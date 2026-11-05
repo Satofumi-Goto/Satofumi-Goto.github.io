@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T04:37:26.841Z",
+  "generated_at": "2026-11-05T05:39:21.624Z",
   "source": "2026-11-05T03:40:30.441Z: policy first; seven current main refs, targeted checks and exact-step release failures; 7/7 source advanced since previous status, Activity #79 repair source integrated, Seneschal single-route #776 merged with HOLD; formal 0/7; no orchestrator Actions/Build/Publish/paid Gemini/DB/PR merge.",
   "completed_total": 0,
   "apps": [
     {
       "name": "Activity",
       "status": "red",
-      "head": "08d7f3b84e82b4f9151fe345181151e8f11f4521",
-      "summary": "2026-11-05T04:37:26.841Z: 最新main 08d7f3b8: 共有POIの安全な由来調査・限定公開診断のソース更新（#84〜#91）を統合。公開イベント5情報源 #92は未マージ。旧正式公開 #41962212819 はBuilder公開段階で失敗；最新SHAのBuilder・Publish・認証付きAPI E2Eは未証明。HOLD。",
+      "head": "c4fbfb2310492783023c87ec53a7aa983730f6c8",
+      "summary": "2026-11-05T05:39:21.624Z: main c4fbfb23。公開イベント/無料API安全化 #107/#108/#110 はソース統合、同SHA Export ZIP #41972870547成功。しかし #41972870945（owner-bound publish）と #41972886963（scoped-PAT Builder公開）は実runnerの公開工程で失敗。公開/認証付きAPI E2Eは未合格。公開操作はユーザー本人のみ。HOLD。",
       "url": "https://github.com/Satofumi-Goto/life-transaction-console",
-      "main_sha": "08d7f3b84e82b4f9151fe345181151e8f11f4521",
+      "main_sha": "c4fbfb2310492783023c87ec53a7aa983730f6c8",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "3991dd2f6b51aef5aee9428fbba650aa15529af2",
@@ -31,14 +31,14 @@
     {
       "name": "Service Hub",
       "status": "red",
-      "summary": "2026-11-05T04:37:26.841Z: 最新main f08b748d: #68でBase44 energySpotPricesのmain.ts配置を保持し、Git entry.tsと実テキスト一致を検証するソース修正を統合。v1/v2の失敗後に生成されたv3公開ワークフローの実成功・JEPX本番応答・正式Publish/認証E2Eは未確認。HOLD。",
+      "summary": "2026-11-05T05:39:21.624Z: main bb83e4d5。#69 JEPX限定再配備ソース統合、同SHA Console CI/Guard/Export成功（#41968980215/#41968980302）。単発JEPX本番再配備 #41968980192 は実行工程失敗。JEPX実応答、Builder/Publish、認証付き本番E2E未証明。HOLD。",
       "url": "https://github.com/Satofumi-Goto/service-hub-console",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "f2692add810011da46f686d24bc98ba7f8713e1c",
       "freeze_head_matches_main": false,
-      "main_sha": "f08b748d7ffbb3ae17fb1002909889bd31048a7a",
-      "head": "f08b748d7ffbb3ae17fb1002909889bd31048a7a"
+      "main_sha": "bb83e4d5b27903d040a8d93be04ecdf8658458aa",
+      "head": "bb83e4d5b27903d040a8d93be04ecdf8658458aa"
     },
     {
       "name": "Urban",
@@ -67,10 +67,10 @@
     {
       "name": "Seneschal",
       "status": "red",
-      "head": "bd48d016e93f55a6fb618eeb71d586c7607818bc",
-      "summary": "2026-11-05T04:37:26.841Z: 最新main bd48d016: #781でmain Audit/Render真正SHA照合、#777でJMA雨雲・日射予報・認可制花粉、#786で限定PATサイト単発公開経路をソース統合。main Audit #41965968018は成功したが新しい#786 merge SHAでの合格は未確認。同期Issue #775は両URLが旧a96cbba4、独立/healthz未確認。Render一覧にSeneschalサービス不在、private repo GitHub App権限と正式BASE44_API_KEY未設定を確認。環境・本番Map/Calendar/予約E2EはHOLD。",
+      "head": "5c6a718e771932f44799cfcee59ae6306732a8c6",
+      "summary": "2026-11-05T05:39:21.624Z: main 5c6a718e。親確認 #794・Map #797/#798 をソース統合、同SHA Audit #41974172250 成功。Issue #775の2026-11-05T05:33Z観測でBase44と独自ドメイン両方のgit-head.json/アセットはmainと一致。ただし独自ドメインはBase44と同一資産で独立/healthz未確認、Federation独立親未到達。Guard #41974713285 は正しくHOLD。独立公開/認証付きMap・Calendar・予約E2E未完了。公開はユーザー本人のみ。",
       "url": "https://github.com/Satofumi-Goto/seneschal",
-      "main_sha": "bd48d016e93f55a6fb618eeb71d586c7607818bc",
+      "main_sha": "5c6a718e771932f44799cfcee59ae6306732a8c6",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "841199084403b6edfa9b5927400ef9fd78acd9c7",
@@ -79,10 +79,10 @@
     {
       "name": "Federation",
       "status": "red",
-      "head": "930673faa8e6295c02dad5d140a69130cbb383b6",
-      "summary": "2026-11-05T04:37:26.841Z: 最新main 930673fa: #957でAPI inventoryの27件対29件ずれをソース修正（追加2関数）。Build/Builder本番Publishの再成功は未証明。#779はDraft、Builder同一SHAと7アプリE2E未証明。マツコ研究#774は実Gemini groundingと独立永続DB保存/復元証跡がなくblocked。",
+      "head": "655793ba4d401c8f01085c1495c02adc095726ca",
+      "summary": "2026-11-05T05:39:21.624Z: main 655793ba。独立親子管理 #959、生成ファイル読み取り専用診断 #962/#963/#964 ソース統合。旧head 3565a44 の Builder generated-file parity preflight #41974656889 は実検査工程で失敗、最新headのBuilderクリーン一致/Publishは未証明。公開ゲートPR #779はDraft、独立親 federation-runtime.com 未到達、マツコ研究 #774 認証済Grounding→永続DB保存/復元未証明。HOLD。",
       "url": "https://github.com/Satofumi-Goto/federation-portal",
-      "main_sha": "930673faa8e6295c02dad5d140a69130cbb383b6",
+      "main_sha": "655793ba4d401c8f01085c1495c02adc095726ca",
       "release_verified": false,
       "release_state": "source_advanced_publication_and_authenticated_e2e_unverified",
       "frozen_sha": "a5fa3f2a63461ede0d94c5521e86b04f10e76e7d",
@@ -1243,7 +1243,7 @@
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-05T04:37:26.841Z: release_freeze=false, quota_recovery=quota_blocked. activity 08d7f3b8, fleet 0694ec15, service f08b748d, seneschal bd48d016, federation 930673fa. This is source change evidence only; no protected current-head publish or authenticated 7-app E2E. Seneschal #775 HOLD (Render service absent; Base44 credential absent); Federation #779 Draft / #774 blocked. Official acceptance 0/7. No Actions, Build, Deploy, paid API, DB or secret operations were triggered.",
+    "ci_state": "2026-11-05T05:39:21.624Z: policy release_freeze=false, quota_recovery=quota_blocked; current heads activity c4fbfb23, fleet 0694ec15, service bb83e4d5, urban 3932ba0b, simulator 18562a73, seneschal 5c6a718e, federation 655793ba。Activity #41972870945/#41972886963 Builder Publish失敗、Service Hub #41968980192 JEPX redeploy失敗、Federation #41974656889 Builder診断失敗（旧SHA）、Seneschal #775 同SHA公開マニフェストだが独立origin未証明。7-app authenticated production acceptance 0/7。GitHub Actions quota_blockedを維持し、新規workflowを起動していない。公開・DNS・Deployはユーザー本人のみ。",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -1310,17 +1310,15 @@
           "observed_at": "2026-11-01T03:38:39Z"
         },
         "latest_formal_release_attempt": {
-          "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41962212819",
-          "head_sha": "812d4b59082b430a417bb2947af0c9953f9e5587",
+          "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41972886963",
+          "head_sha": "c4fbfb2310492783023c87ec53a7aa983730f6c8",
           "conclusion": "failure",
           "executed_runner_steps": true,
           "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
-          "downstream_steps": "skipped",
+          "also_failed": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/41972870945",
+          "published": false,
           "authenticated_e2e": false,
-          "post_failure_fix": "https://github.com/Satofumi-Goto/life-transaction-console/pull/79",
-          "post_failure_fix_source_integrated": true,
-          "post_failure_fix_release_verified": false,
-          "observed_at": "2026-11-05T03:40:30.441Z"
+          "observed_at": "2026-11-05T05:39:21.624Z"
         }
       },
       "fleet": {
@@ -1486,6 +1484,15 @@
           "failed_step": "Publish exact synchronized Builder revision with scoped PAT",
           "site_publish_and_authenticated_e2e_verified": false,
           "observed_at": "2026-11-03T22:40:49.201Z"
+        },
+        "latest_jepx_isolate_attempt": {
+          "run": "https://github.com/Satofumi-Goto/service-hub-console/actions/runs/41968980192",
+          "head_sha": "bb83e4d5b27903d040a8d93be04ecdf8658458aa",
+          "conclusion": "failure",
+          "failed_step": "Redeploy only Service HUB energySpotPrices once",
+          "executed_runner_steps": true,
+          "authenticated_e2e": false,
+          "observed_at": "2026-11-05T05:39:21.624Z"
         }
       },
       "urban": {
@@ -1699,18 +1706,18 @@
           "authenticated_production_browser_e2e": false
         },
         "latest_dual_runtime_guard": {
-          "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41962391314",
-          "head_sha": "de8778f3a14e8557ccc9d1b703bbef2ba08d4959",
+          "run": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41974713285",
+          "head_sha": "5c6a718e771932f44799cfcee59ae6306732a8c6",
           "conclusion": "failure",
           "intended_fail_closed": true,
-          "public_sha": "2faf49c3e182ca34322427ce8cfb9c8cfba40819",
+          "base44_public_sha": "5c6a718e771932f44799cfcee59ae6306732a8c6",
+          "custom_domain_public_sha": "5c6a718e771932f44799cfcee59ae6306732a8c6",
+          "same_bundles": true,
           "standalone_origin_verified": false,
+          "federation_parent_verified": false,
           "release_route": "HOLD",
           "incident": "https://github.com/Satofumi-Goto/seneschal/issues/775",
-          "public_browser": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41962775950",
-          "public_browser_conclusion": "failure",
-          "hotpepper_readonly_api": "https://github.com/Satofumi-Goto/seneschal/actions/runs/41960986570",
-          "observed_at": "2026-11-05T03:40:30.441Z"
+          "observed_at": "2026-11-05T05:39:21.624Z"
         }
       },
       "federation": {
@@ -1905,6 +1912,16 @@
           "browser_qa": "skipped",
           "current_main_matches_run": false,
           "observed_at": "2026-11-04T05:46:58.389Z"
+        },
+        "latest_builder_parity_preflight": {
+          "run": "https://github.com/Satofumi-Goto/federation-portal/actions/runs/41974656889",
+          "head_sha": "3565a44c7b34ecb8874609dbdaac9325a0f8350b",
+          "conclusion": "failure",
+          "failed_step": "Read-only compare of Builder-generated manifest with reproducible source",
+          "latest_main_sha": "655793ba4d401c8f01085c1495c02adc095726ca",
+          "latest_diagnostic_pr": 964,
+          "latest_main_e2e": false,
+          "observed_at": "2026-11-05T05:39:21.624Z"
         }
       },
       "seneschal_schedule_observation": {
@@ -3144,7 +3161,7 @@
       "observed_at": "2026-10-30T03:42:43.655Z"
     },
     "policy_release_freeze_enabled": false,
-    "last_observed_at": "2026-11-05T04:37:26.841Z",
+    "last_observed_at": "2026-11-05T05:39:21.624Z",
     "runner_recovery": {
       "policy_state": "quota_blocked",
       "runner_available_by_executed_evidence": true,
@@ -3495,13 +3512,13 @@
     "priority_policy_source_complete": true,
     "seneschal_durable_ingress_source_complete": true,
     "main_heads": {
-      "activity": "08d7f3b84e82b4f9151fe345181151e8f11f4521",
+      "activity": "c4fbfb2310492783023c87ec53a7aa983730f6c8",
       "fleet": "0694ec156f9faa34e2ea21a45289e3ae5c694e5e",
-      "service": "f08b748d7ffbb3ae17fb1002909889bd31048a7a",
+      "service": "bb83e4d5b27903d040a8d93be04ecdf8658458aa",
       "urban": "3932ba0b3ce275c08a4967857588f66a2c903ced",
       "simulator": "18562a736094dcf9d1a33560ddc53d395b3bdedf",
-      "seneschal": "bd48d016e93f55a6fb618eeb71d586c7607818bc",
-      "federation": "930673faa8e6295c02dad5d140a69130cbb383b6"
+      "seneschal": "5c6a718e771932f44799cfcee59ae6306732a8c6",
+      "federation": "655793ba4d401c8f01085c1495c02adc095726ca"
     },
     "mission_contract": {
       "modes": [
@@ -3573,7 +3590,7 @@
     "final_e2e_workflow": "Fed seven-app production E2E",
     "final_e2e_source_ready": true,
     "release_workflow_drift": null,
-    "latest_review_at": "2026-11-05T04:37:26.841Z",
+    "latest_review_at": "2026-11-05T05:39:21.624Z",
     "source_complete": true,
     "release_ready": false,
     "source_frozen": false,
