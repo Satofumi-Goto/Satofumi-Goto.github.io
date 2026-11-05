@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-05T11:38:37.955Z",
+  "generated_at": "2026-11-05T11:39:14.752Z",
   "source": "2026-11-05T07:37:22.568Z: policy-first, seven main refs and compare; six sources advanced, latest-source checks and owner-dispatched publish failure steps reviewed. #774/#775/#809/#960. Source integration != publish; formal 0/7. No orchestration-triggered Actions/Build/Publish/Deploy/DB/paid API/PR merge.",
   "completed_total": 0,
   "apps": [
@@ -68,7 +68,7 @@
       "name": "Seneschal",
       "status": "red",
       "head": "925219165b70754aeaab96b5771ec605c23e1ff6",
-      "summary": "2026-11-05T11:38:37.955Z: main 92521916、PR #845 でRender/Base44のビルド入力不一致原因を修正統合。#847はDockerfile修正重複のため既存PRにレビューコメント、テストのみ切出し要確認。新main Audit #42020011806 は確認時in_progressで合格未証明。Render staging直近LIVEは旧01156a3d、Base44/alias同SHAでも実JS SHA256不一致 #775。独立親/認証・Map/Calendar/予約QA #809・AI Assist #820 未完、HOLD。",
+      "summary": "2026-11-05T11:38:37.955Z: main 92521916、PR #845 でRender/Base44のビルド入力不一致原因を修正統合。#847はDockerfile修正重複のため既存PRにレビューコメント、テストのみ切出し要確認。新main Audit #42020011806 はキャンセル終了、同一SHAのAudit成功は未証明。Render staging直近LIVEは旧01156a3d、Base44/alias同SHAでも実JS SHA256不一致 #775。独立親/認証・Map/Calendar/予約QA #809・AI Assist #820 未完、HOLD。",
       "url": "https://github.com/Satofumi-Goto/seneschal",
       "main_sha": "925219165b70754aeaab96b5771ec605c23e1ff6",
       "release_verified": false,
@@ -189,7 +189,7 @@
     {
       "owner": "Chat：分析・独立検査",
       "status": "red",
-      "current": "2026-11-05T11:38:37.955Z: Policy-first GitHub 7main/CI read-only照合。Firewall G1 実署名OIDCテスト54件SHA256一致（#42015685236）を確認、Activity HMAC E2Eは未証明。Seneschal本番とRender stagingは旧01156a3d配信、同SHA JSバイト不一致、#845ビルド入力修正main統合、#847 Docker重複にレビューコメント。7アプリ正式本番受入れ0/7。",
+      "current": "2026-11-05T11:38:37.955Z: Policy-first GitHub 7main/CI read-only照合。Firewall G1 実署名OIDCテスト54件SHA256一致（#42015685236）を確認、Activity HMAC E2Eは未証明。Seneschal本番とRender stagingは旧01156a3d配信、同SHA JSバイト不一致、#845ビルド入力修正main統合、#847 Docker重複にレビューコメント。7アプリ正式本番受入れ0/7。 追跡結果: Seneschal当該mainのAudit #42020011806 はcancelledで成功ではない。",
       "next": "現行quota・承認条件に従い、未完成のsame-head Auditを読み取り確認し、Owner正式公開後にSeneschalの配信JS/CSSハッシュ/独立親identity/Map・Calendar・予約を検証。FirewallはActivity実HMAC資格情報・WAF/rollback/本番UIが整うまで旧経路を維持。#774認証済みGemini→永続DBのE2E未達を継続記録。",
       "evidence": [
         {
@@ -1213,14 +1213,15 @@
     "2026-11-05T00:35:50.211Z: Policy-first source delta only. Activity #72 merged ca663036 (community event source catalog, permitted public feeds; main Export ZIP #41941577114 success), Seneschal #761 merged aeb1f700 (read-only Activity community suggestions, opt-in draft; PR Audit/Guard succeeded). Five other main heads stable. #774 remains blocked; Federation #779 Draft+conflict; current Builder/public SHA and authenticated E2E unverified. Canonical freeze=false, quota_blocked, 0/7 formal acceptance; 17 owners/10 queue; no new Actions/Build/Publish/Gemini/DB/merge by orchestrator.",
     "2026-11-05T02:43:47.039Z: Source-only sweep. Activity release #41956309054 at 5a2ed505 passed Builder SHA/public served SHA but hit post-publication operational-api-http-500, failing release receipt/auth E2E. Seneschal #756 Guard #41956410598 failed on missing protected-change PR rationale sections; #762/#764 closed unmerged, #766 source merged. Fleet #88, Service #61, Urban #60 API inventory merges and Federation #948 docs source merged. Current seven main heads refreshed; policy freeze=false quota_blocked; formal acceptance 0/7, #779 Draft, #774 blocked. No additional Actions or paid services triggered.",
     "2026-11-05T02:45:27.354Z: Fleet official run #41956594617 guarded prepublish rejected stale Builder 90b22725 vs c09ba7bb. Seneschal new read-only parity workflow #41956891400 identified public Base44 and custom-domain served SHA b2aa831b vs main f119cd3b and missing independent /healthz; incident #775 open. No real runtime parity acceptance. Corrected main-head Fleet/Seneschal summaries and CI evidence without new Actions.",
-    "2026-11-05T11:38:37.955Z: Updated four changed main heads (Activity/Fleet/Seneschal/Federation), confirmed existing CI, signed holiday G1 #42015685236 PASS 54/54 with HMAC cutover HOLD, Render LIVE old 01156a3d, #845 merged (build input parity root cause) and #847 overlapping Dockerfile review comment. Current Seneschal same-main Audit in progress; independent parent and all production E2E unverified. 17 owner rows, 10 queues, no workflow/production action triggered."
+    "2026-11-05T11:38:37.955Z: Updated four changed main heads (Activity/Fleet/Seneschal/Federation), confirmed existing CI, signed holiday G1 #42015685236 PASS 54/54 with HMAC cutover HOLD, Render LIVE old 01156a3d, #845 merged (build input parity root cause) and #847 overlapping Dockerfile review comment. Current Seneschal same-main Audit in progress; independent parent and all production E2E unverified. 17 owner rows, 10 queues, no workflow/production action triggered.",
+    "2026-11-05T11:39Z: Seneschal current-head Audit #42020011806 was cancelled (not a passed Audit); no new CI probe dispatched. Hold unchanged."
   ],
   "orchestrator": {
     "enabled": true,
     "cadence": "hourly",
     "mode": "development",
     "policy": "progress-board/orchestrator-policy.json",
-    "ci_state": "2026-11-05T11:38:37.955Z: policy freeze=false / quota_recovery=quota_blocked. main activity=a9dec884 fleet=a6904376 service=5d159f74 urban=85cb01c5 simulator=18562a73 seneschal=92521916 federation=ce5fda9c. Firewall G1 GitHub OIDC signed-live 54 provider-parity PASS, Activity HMAC/cutover HOLD. Seneschal #845 merged but published JS asset drift and staging behind, new SHA Audit pending. #774 independent research blocked. Seven authenticated production release E2E 0/7. No new workflow/Build/Publish/Deploy/DNS/premium API/DB action initiated.",
+    "ci_state": "2026-11-05T11:38:37.955Z: policy freeze=false / quota_recovery=quota_blocked. main activity=a9dec884 fleet=a6904376 service=5d159f74 urban=85cb01c5 simulator=18562a73 seneschal=92521916 federation=ce5fda9c. Firewall G1 GitHub OIDC signed-live 54 provider-parity PASS, Activity HMAC/cutover HOLD. Seneschal #845 merged but published JS asset drift and staging behind, new SHA Audit #42020011806 cancelled (no same-head PASS). #774 independent research blocked. Seven authenticated production release E2E 0/7. No new workflow/Build/Publish/Deploy/DNS/premium API/DB action initiated.",
     "ci_evidence": {
       "activity": {
         "run": "https://github.com/Satofumi-Goto/life-transaction-console/actions/runs/40242651279",
@@ -3421,7 +3422,7 @@
       "priority": 7,
       "owner": "Base44 publication",
       "repo": "Satofumi-Goto/seneschal",
-      "action": "2026-11-05T11:38:37.955Z: Seneschal main 92521916、#845 build input修正マージ。#847の重複Dockerfile差分をPRコメントで指摘（#6656990918）。Audit最新は確認時in_progress、Render staging LIVE旧01156a3d・公開バンドル実バイト不一致。#775/#809/#820 HOLD、親独立identityとE2E未証明。本番公開は本人専任。",
+      "action": "2026-11-05T11:38:37.955Z: Seneschal main 92521916、#845 build input修正マージ。#847の重複Dockerfile差分をPRコメントで指摘（#6656990918）。Audit #42020011806 はcancelled、Render staging LIVE旧01156a3d・公開バンドル実バイト不一致。#775/#809/#820 HOLD、親独立identityとE2E未証明。本番公開は本人専任。",
       "blocked_by": [
         "Seneschal BASE44 CLI credential and scoped Builder publication credential fail closed (secret values not inspected).",
         "Prior Simulator formal E2E missing.",
