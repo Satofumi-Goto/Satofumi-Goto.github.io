@@ -443,5 +443,46 @@
     "public_release_actor": "user_only",
     "merge_is_not_completion": true,
     "preserve_existing_status_rows": true
+  },
+  "single_source_dual_runtime_guard": {
+    "enabled": true,
+    "scope": [
+      "seneschal",
+      "federation",
+      "simulator",
+      "independent_consoles"
+    ],
+    "canonical_source": "reviewed GitHub main per repository",
+    "required_flow": [
+      "inspect_current_main_and_existing_prs",
+      "claim_and_avoid_file_conflicts",
+      "minimal_patch_in_feature_branch",
+      "independent_review_and_required_ci",
+      "merge_to_main",
+      "verify_approved_release_sha",
+      "synchronize_base44_and_independent_from_same_approved_sha",
+      "verify_both_served_sha_and_asset_bytes",
+      "authenticated_browser_e2e_and_evidence"
+    ],
+    "forbidden": [
+      "base44_ai_direct_edits",
+      "separate_duplicate_implementation_for_base44_and_independent",
+      "direct_main_writes",
+      "force_sync_or_overwrite",
+      "release_unapproved_sha",
+      "skip_ci_or_review",
+      "claim_completion_from_source_merge_only"
+    ],
+    "fail_closed_on": [
+      "source_sha_mismatch",
+      "asset_digest_mismatch",
+      "missing_required_ci",
+      "missing_independent_review",
+      "unknown_runtime_origin",
+      "missing_backend_or_auth_e2e",
+      "unresolved_conflict_or_duplicate"
+    ],
+    "production_publish_requires": "explicit owner authorization and valid runtime deployment permissions",
+    "note": "Policy documents coordinate agents; hard enforcement requires branch protection and release pipeline gates in each repository."
   }
 }
