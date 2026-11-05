@@ -37,5 +37,5 @@
 既存の毎時開発オーケストレータを**唯一の巡回管理役**として使い、同じ監視の定期ジョブは作らない。各回、台帳差分・GitHubの最新証拠を優先して読み、案件停止・競合・主担当不在の引継ぎ、優先順位を調整する。担当が次の案件を取得する前に台帳の占有状態と影響ファイルを確認する。活動がなければ同じログ・サイト・有料APIの再検査を繰り返さない。ユーザーへの通知は重要な障害、必要な承認、公開準備/完了、実E2E達成などの具体的な変化のみ。
 
 ## 7. 共通台帳の最低記録項目
-統括台帳：`https://github.com/Satofumi-Goto/federation-portal/issues/74`。CLAIMは `agent`（認証済み担当識別子）、`repo`、`issue`、`files`、`base SHA`、`reviewer` を含む。**代理での架空のCLAIMは禁止**。担当6名の実稼働は各担当の固有CLAIMと実操作ログで確認する。
+統括台帳：`https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74`。CLAIMは `agent`（認証済み担当識別子）、`repo`、`issue`、`files`、`base SHA`、`reviewer` を含む。**代理での架空のCLAIMは禁止**。実稼働担当は人数を仮定せず各担当の固有CLAIMと実操作ログで確認する。
 各案件に一意な`id`、`repo`、`issue_urls`、`pr_urls`、`primary_owner`、`collaborators`、`files`、`status`、`blocker`、`next_action`、`ci`、`review`、`source_sha`、`published_sha`、`browser_qa`、`evidence`、`handoff`を記録する。稼働者がいない場合は`primary_owner: null`とし、根拠なく割当済みとしない。既存の`progress-board/status.json`（17 owner rows等）はそのまま保持し、作業台帳と公開判定を混同しない。
