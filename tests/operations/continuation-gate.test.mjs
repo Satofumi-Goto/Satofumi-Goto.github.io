@@ -18,3 +18,10 @@ test('external CI blocker is not bypassed',()=>{
 test('conflicting file claim cannot receive handoff',()=>{
   assert.equal(planContinuation({cases:[item],agents:[{id:'new',authenticated:true,connected:true,lastRunAt:now,claimedFiles:['a.js']}],now})[0].decision,'HOLD');
 });
+
+test('future-dated heartbeat cannot masquerade as active',()=>{
+  assert.equal(planContinuation({cases:[item],agents:[{id:'old',authenticated:true,connected:true,lastRunAt:now+60000}],now})[0].decision,'HOLD');
+});
+test('stale receiver cannot accept a handoff',()=>{
+  assert.equal(planContinuation({cases:[item],agents:[{id:'new',authenticated:true,connected:true,lastRunAt:now-7200001,claimedFiles:[]}],now})[0].decision,'HOLD');
+});
