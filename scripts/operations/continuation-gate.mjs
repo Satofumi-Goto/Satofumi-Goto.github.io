@@ -8,6 +8,18 @@ export function planContinuation({ cases, agents, now }) {
   const duplicates = new Set([...counts].filter(([, count]) => count > 1).map(([id]) => id));
   const fresh = agents.filter(a => typeof a?.id === 'string' && a.id && a.authenticated === true && a.connected === true && Number.isFinite(a.lastRunAt) && a.lastRunAt <= now && now - a.lastRunAt <= 7200000);
   const unique = fresh.filter(a => !duplicates.has(a.id));
+  // Reserve all verified live owners first, regardless of case ordering.
+  const activeByPath = new Map();
+  for (const [index, entry] of cases.entries()) {
+    if (!entry || typeof entry.repo !== 'string' || !entry.repo || !validFiles(entry.changed_files)) continue;
+    if (!unique.some(agent => agent.id === entry.agent_id)) continue;
+    for (const file of entry.changed_files) {
+      const key = entry.repo + '\0' + file;
+      const owners = activeByPath.get(key) || new Set();
+      owners.add(index);
+      activeByPath.set(key, owners);
+    }
+  }
   const reserved = new Set();
   return cases.map(c => {
     const caseId = c?.case_id ?? null;
@@ -17,8 +29,10 @@ export function planContinuation({ cases, agents, now }) {
     if (!validFiles(c.changed_files)) return {case_id:caseId,decision:'HOLD',reason:'ownership-unverified'};
     if (duplicates.has(c.agent_id)) return {case_id:caseId,decision:'HOLD',reason:'ambiguous-agent-identity'};
     const owner = unique.find(a => a.id === c.agent_id);
+    const keys = c.changed_files.map(f => c.repo + '\0' + f);
+    if (keys.some(key => (activeByPath.get(key)?.size || 0) > 1)) return {case_id:caseId,decision:'HOLD',reason:'ambiguous-active-owner'};
     if (owner) return {case_id:caseId,decision:'KEEP',owner:c.agent_id};
-    const keys = c.changed_files.map(f => `${c.repo}\0${f}`);
+    if (keys.some(key => activeByPath.has(key))) return {case_id:caseId,decision:'HOLD',reason:'active-owner-conflict'};
     if (keys.some(key => reserved.has(key))) return {case_id:caseId,decision:'HOLD',reason:'overlapping-proposed-claim'};
     const alternatives = unique.filter(a => a.id !== c.agent_id);
     const eligible = alternatives.filter(a => validFiles(a.claimedFiles));
