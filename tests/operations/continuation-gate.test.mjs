@@ -25,3 +25,33 @@ test('future-dated heartbeat cannot masquerade as active',()=>{
 test('stale receiver cannot accept a handoff',()=>{
   assert.equal(planContinuation({cases:[item],agents:[{id:'new',authenticated:true,connected:true,lastRunAt:now-7200001,claimedFiles:[]}],now})[0].decision,'HOLD');
 });
+
+test('completed label alone cannot mark verified DONE',()=>{
+  assert.deepEqual(planContinuation({cases:[{...item,status:'completed'}],agents:[],now})[0],{case_id:item.case_id,decision:'HOLD',reason:'completion-evidence-unverified'});
+});
+test('missing receiver file ownership is HOLD',()=>{
+  assert.equal(planContinuation({cases:[item],agents:[{id:'new',authenticated:true,connected:true,lastRunAt:now}],now})[0].reason,'ownership-unverified');
+});
+test('missing source changed_files is HOLD',()=>{
+  assert.equal(planContinuation({cases:[{...item,changed_files:undefined}],agents:[{id:'new',authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]}],now})[0].reason,'ownership-unverified');
+});
+test('duplicate authenticated agent ID does not silently overwrite claims',()=>{
+  const agents=[{id:'new',authenticated:true,connected:true,lastRunAt:now,claimedFiles:['a.js']},{id:'new',authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]}];
+  assert.equal(planContinuation({cases:[item],agents,now})[0].reason,'ambiguous-agent-identity');
+});
+test('one batch does not propose simultaneous handoff of the same repo file',()=>{
+  const agents=[{id:'new',authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]}];
+  const result=planContinuation({cases:[item,{...item,case_id:'repo#90'}],agents,now});
+  assert.equal(result[0].decision,'HANDOFF_PROPOSED');
+  assert.equal(result[1].reason,'overlapping-proposed-claim');
+});
+test('invalid receiver claimedFiles type fails closed without exception',()=>{
+  const agents=[{id:'new',authenticated:true,connected:true,lastRunAt:now,claimedFiles:'unknown'}];
+  assert.equal(planContinuation({cases:[item],agents,now})[0].reason,'ownership-unverified');
+});
+test('invalid source file list does not interrupt other valid cases',()=>{
+  const agents=[{id:'new',authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]}];
+  const results=planContinuation({cases:[{...item,changed_files:'unknown'},{...item,case_id:'repo#91'}],agents,now});
+  assert.equal(results[0].reason,'ownership-unverified');
+  assert.equal(results[1].decision,'HANDOFF_PROPOSED');
+});
