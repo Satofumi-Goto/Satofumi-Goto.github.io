@@ -55,3 +55,31 @@ test('invalid source file list does not interrupt other valid cases',()=>{
   assert.equal(results[0].reason,'ownership-unverified');
   assert.equal(results[1].decision,'HANDOFF_PROPOSED');
 });
+
+test('existing live claim blocks a stalled handoff regardless of case order',()=>{
+  const live={id:'live',authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]};
+  const owned={...item,case_id:'repo#live',agent_id:'live'};
+  const stalled={...item,case_id:'repo#stalled'};
+  for(const cases of [[owned,stalled],[stalled,owned]]){
+    const result=planContinuation({cases,agents:[live],now});
+    assert.equal(result.find(x=>x.case_id==='repo#live').decision,'KEEP');
+    assert.deepEqual(result.find(x=>x.case_id==='repo#stalled'),
+      {case_id:'repo#stalled',decision:'HOLD',reason:'active-owner-conflict'});
+  }
+});
+test('multiple live owners claiming one repo file are both HOLD',()=>{
+  const agents=['live-a','live-b'].map(id=>({id,authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]}));
+  const cases=[{...item,case_id:'repo#a',agent_id:'live-a'},{...item,case_id:'repo#b',agent_id:'live-b'}];
+  for(const items of [cases,[...cases].reverse()]){
+    const result=planContinuation({cases:items,agents,now});
+    assert.ok(result.every(x=>x.decision==='HOLD'&&x.reason==='ambiguous-active-owner'));
+  }
+});
+test('different files and repositories stay independently eligible for handoff',()=>{
+  const agents=[{id:'live',authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]}];
+  const live={...item,case_id:'repo#live',agent_id:'live'};
+  const unrelated={...item,case_id:'other#stalled',repo:'other',agent_id:'old'};
+  const result=planContinuation({cases:[live,unrelated],agents,now});
+  assert.equal(result[0].decision,'KEEP');
+  assert.equal(result[1].decision,'HANDOFF_PROPOSED');
+});
