@@ -187,7 +187,10 @@ def cycle(config, state_path, runner=subprocess.run):
         raise ValueError("worker-state-must-be-outside-repository-or-inside-git-dir")
     source_sha = _repo_sha(config["workspace"])
     if source_sha is None:
-        return _read_state(state_path)
+        snapshot = _read_state(state_path)
+        # Preserve historic events on disk but never report old success for a
+        # checkout whose current identity cannot be established.
+        return {**snapshot, "completed": [], "workspace_verified": False}
     for agent in config["agents"]:
         if (agent.get("model") != "python" or not agent.get("connected")
             or not agent.get("authenticated") or agent.get("busy")
@@ -210,7 +213,12 @@ def cycle(config, state_path, runner=subprocess.run):
         if _repo_sha(config["workspace"]) != source_sha:
             ok, detail = False, "workspace-SHA-or-cleanliness-drift"
         _commit(state_path, agent, claim, (ok, detail, exit_code))
-    return _read_state(state_path)
+    snapshot = _read_state(state_path)
+    if snapshot.get("source_sha") != source_sha:
+        # If all agents are unavailable or an old lease is still active,
+        # recorded success belongs to a different commit, not current HEAD.
+        return {**snapshot, "completed": [], "source_generation_verified": False}
+    return {**snapshot, "source_generation_verified": True}
 
 
 if __name__ == "__main__":
