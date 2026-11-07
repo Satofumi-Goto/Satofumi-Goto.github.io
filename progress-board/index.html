@@ -110,6 +110,27 @@ const statusMeta={
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function link(url,label){return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>':esc(label)}
 function shortText(value,n=72){const t=String(value??'').replace(/\s+/g,' ').trim();return t.length>n?t.slice(0,n-1)+'…':t}
+function hasFreshExecutionProof(w){
+  const r=w?.runtime_receipt;
+  if(w?.status!=="running"||w.executor_verified!==true||w.runtime_source!=="authenticated_execution_api")return false;
+  if(r?.signature_verified!==true||r.authenticated!==true||!Number.isInteger(r.pid)||r.pid<=0)return false;
+  if(!/^[a-f0-9]{40}$/i.test(String(r.repo_sha||""))||!/^https:\/\//.test(String(r.evidence_url||"")))return false;
+  const age=Date.now()-Date.parse(r.heartbeat_at||"");
+  return Number.isFinite(age)&&age>=0&&age<=15*60*1000;
+}
+async function fetchAllIntakeComments(request=fetch,maxPages=20){
+  const comments=[];
+  for(let page=1;page<=maxPages;page++){
+    const url="https://api.github.com/repos/Satofumi-Goto/Satofumi-Goto.github.io/issues/92/comments?per_page=100&page="+page;
+    const response=await request(url,{headers:{Accept:"application/vnd.github+json"},cache:"no-store"});
+    if(!response.ok)throw Error("GitHub HTTP "+response.status);
+    const batch=await response.json();
+    if(!Array.isArray(batch))throw Error("受付データ形式が不正");
+    comments.push(...batch);
+    if(batch.length<100)return comments;
+  }
+  throw Error("受付が多く全件取得できないため要再確認");
+}
 function render(d){
   const dt=new Date(d.generated_at);
   document.getElementById("updated").textContent=isNaN(dt)?d.generated_at:dt.toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
@@ -161,19 +182,19 @@ function render(d){
       '<td><details><summary>根拠</summary>'+ev+'</details></td></tr>'
   }).join("");
 }
+let lastIntakeRefresh=0;
 async function loadCommandIntake(){
   const state=document.getElementById("commandIntakeStatus");
   const recent=document.getElementById("commandIntakeRecent");
+  if(Date.now()-lastIntakeRefresh<5*60*1000)return;
+  lastIntakeRefresh=Date.now();
   try{
-    const url="https://api.github.com/repos/Satofumi-Goto/Satofumi-Goto.github.io/issues/92/comments?per_page=10";
-    const response=await fetch(url,{headers:{Accept:"application/vnd.github+json"},cache:"no-store"});
-    if(!response.ok)throw new Error("HTTP "+response.status);
-    const comments=await response.json();
-    if(!Array.isArray(comments))throw new Error("応答形式が不正です");
-    state.textContent="指示コメント "+comments.length+"件取得（最新10件まで）。受付件数であり実行件数ではありません。";
-    recent.innerHTML=comments.slice(-5).reverse().map(c=>'<li>'+link(c.html_url,((c.body||"").replaceAll("\n"," ").replaceAll("\r"," ").slice(0,120)||"指示コメント"))+' <small>'+esc(c.created_at||"")+'</small></li>').join("");
+    const comments=await fetchAllIntakeComments();
+    state.textContent="受付 "+comments.length+"件（最新5件を表示）。受付と実行は別です。";
+    recent.innerHTML=comments.slice(-5).reverse().map(c=>'<li>'+link(c.html_url,((c.body||"").replaceAll("\n"," ").replaceAll("\r"," ").slice(0,85)||"指示コメント"))+' <small>'+esc(c.created_at||"")+'</small></li>').join("");
   }catch(e){
-    state.textContent="指示受付の自動取得不可（認証・API制限の可能性）: "+e.message+"。GitHub窓口で確認してください。";
+    lastIntakeRefresh=0;
+    state.textContent="指示受付の取得未完了: "+e.message+"。GitHubで確認してください。";
     recent.innerHTML="";
   }
 }
@@ -186,16 +207,16 @@ async function loadChatWorkers(){
     const workers=Array.isArray(data.workers)?data.workers:[];
     const executors=Array.isArray(data.additional_executors)?data.additional_executors:[];
     document.getElementById("executorWorkers").innerHTML=executors.map(e=>{
-      const verified=Boolean(e.connected&&e.last_observed_at&&e.evidence?.length);
+      const verified=Boolean(e.connected&&hasFreshExecutionProof(e));
       return '<article class="chatCell"><strong>'+esc(e.name)+'</strong><p><span class="badge '+(verified?'green':'yellow')+'">'+(verified?'接続証拠あり':'未接続・未検証')+'</span></p><p>方式: '+esc(e.executor_type)+'</p><p>案件: '+esc(e.task||'未割当')+'</p><small>最終観測: '+esc(e.last_observed_at||'なし')+'</small></article>';
     }).join("");
-    const verified=workers.filter(w=>w.status==="running"&&w.last_observed_at&&Array.isArray(w.evidence)&&w.evidence.length);
+    const verified=workers.filter(hasFreshExecutionProof);
     document.getElementById("chatBoardSummary").textContent="登録 "+workers.length+"件 / 実行証拠付き稼働 "+verified.length+"担当 / 未確認 "+workers.filter(w=>w.status==="unverified").length+"担当";
     box.innerHTML=workers.map(w=>{
       const progress=Number.isFinite(w.progress_percent)?Math.max(0,Math.min(100,w.progress_percent)):null;
       const evidence=(w.evidence||[]).filter(e=>e?.url&&String(e.url).startsWith("https://"));
-      const running=w.status==="running"&&w.last_observed_at&&evidence.length>0;
-      const state=running?"実行証拠あり":w.status==="blocked"?"停止・阻害":"未確認";
+      const running=hasFreshExecutionProof(w);
+      const state=running?"新鮮な実行証拠あり":w.status==="blocked"?"停止・阻害":"未確認";
       return '<article class="chatCell"><strong>'+esc(w.title)+'</strong>'+
         '<p><span class="badge '+(running?"green":w.status==="blocked"?"red":"yellow")+'">'+esc(state)+'</span></p>'+
         '<p>実行方式: '+esc(w.executor_type||"未分類")+(w.executor_verified?"（接続確認）":"（未検証）")+'</p>'+
