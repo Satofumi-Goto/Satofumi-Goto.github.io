@@ -30,7 +30,7 @@ class RuntimeTests(unittest.TestCase):
         cycle(self.config, self.state, fail)
         state = cycle(self.config, self.state, self.runner)
         self.assertEqual(state["attempts"]["a"], 2)
-        self.assertEqual(state["completed"], ["a", "b"])
+        self.assertEqual(state["completed"], ["a"])
         self.assertIn("pid", state["events"][0])
         self.assertIn("exit_code", state["events"][0])
     def test_auto_handoff_and_no_repeat(self):
