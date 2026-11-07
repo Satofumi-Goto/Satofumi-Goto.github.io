@@ -64,9 +64,16 @@ def _claim_file_key(workspace, relative_path):
     return real.relative_to(root).as_posix()
 
 
-def _claim(config, state_path, agent, max_attempts):
+def _claim(config, state_path, agent, max_attempts, source_sha=None):
     def mutate(state):
         now = time.time()
+        # Completed task IDs are scoped to a specific clean source generation.
+        # Never reuse success from another commit after HEAD changes.
+        if source_sha is not None and state.get("source_sha") != source_sha:
+            if state["inflight"]:
+                return None  # old generation must finish or be safely recovered
+            state["completed"], state["failed"], state["attempts"] = [], [], {}
+            state["source_sha"] = source_sha
         # Abandoned leases are recovered only if the same host proves the
         # originating controller PID has exited; otherwise remain HOLD.
         for task_id, old in list(state["inflight"].items()):
@@ -79,7 +86,11 @@ def _claim(config, state_path, agent, max_attempts):
         occupied = {_claim_file_key(config["workspace"], f) for f in config.get("reserved_files", [])}
         for old in state["inflight"].values():
             occupied.update(_claim_file_key(config["workspace"], f) for f in old["files"])
-        if any(old["agent"] == agent["id"] for old in state["inflight"].values()):
+        maximum = config.get("max_parallel", 20)
+        if type(maximum) is not int or not 0 <= maximum <= 20:
+            raise ValueError("invalid-max-parallel")
+        if len(state["inflight"]) >= maximum or any(
+                old["agent"] == agent["id"] for old in state["inflight"].values()):
             return None
         for task in sorted(config["tasks"], key=lambda t: (-t.get("priority", 0), t["id"])):
             files = task.get("files", [])
@@ -168,18 +179,21 @@ def cycle(config, state_path, runner=subprocess.run):
         raise ValueError("workspace path required")
     if not isinstance(config.get("reserved_files", []), list):
         raise ValueError("reserved_files must be a list")
-    source_sha = _repo_sha(config["workspace"])
     root = Path(config["workspace"]).resolve()
     state_location = Path(state_path).resolve()
-    if (source_sha and state_location.is_relative_to(root)
-            and not state_location.is_relative_to(root / ".git")):
+    # A process may only attest execution against a clean, real Git HEAD.
+    # Keep unverified workspaces read-only; never mark their tasks completed.
+    if state_location.is_relative_to(root) and not state_location.is_relative_to(root / ".git"):
         raise ValueError("worker-state-must-be-outside-repository-or-inside-git-dir")
+    source_sha = _repo_sha(config["workspace"])
+    if source_sha is None:
+        return _read_state(state_path)
     for agent in config["agents"]:
         if (agent.get("model") != "python" or not agent.get("connected")
             or not agent.get("authenticated") or agent.get("busy")
             or not agent.get("runtime_verified", False)):
             continue
-        claim = _claim(config, state_path, agent, limit)
+        claim = _claim(config, state_path, agent, limit, source_sha=source_sha)
         if not claim:
             continue
         task = claim["task"]
@@ -193,7 +207,7 @@ def cycle(config, state_path, runner=subprocess.run):
             detail = (str(completed.stdout or "") + str(completed.stderr or ""))[-3000:]
         except (OSError, subprocess.TimeoutExpired) as exc:
             ok, detail, exit_code = False, str(exc), None
-        if source_sha and _repo_sha(config["workspace"]) != source_sha:
+        if _repo_sha(config["workspace"]) != source_sha:
             ok, detail = False, "workspace-SHA-or-cleanliness-drift"
         _commit(state_path, agent, claim, (ok, detail, exit_code))
     return _read_state(state_path)
