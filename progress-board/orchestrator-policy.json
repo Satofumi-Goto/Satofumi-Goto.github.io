@@ -70,58 +70,66 @@
       "quota_blocked_label": "CI usage quota blocked"
     },
     "quota_recovery": {
-      "state": "quota_blocked",
+      "state": "actions_disabled",
       "periodic_rerun": false,
       "recovery_evidence": [
-        "a newly triggered non-dynamic required workflow obtains runner_id > 0 and at least one executed step",
-        "GitHub account usage/billing evidence shows the Actions quota is available again",
-        "billing period rollover at or after 2026-11-01T00:00:00Z permits one Activity release probe"
+        "No quota rollover or billing credit authorizes re-enabling GitHub Actions; use local/native-host verification only"
       ],
       "probe_policy": {
-        "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": true,
-        "max_probe_workflows": 1,
-        "preferred_probe": "Activity manual Base44 release workflow_dispatch",
+        "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": false,
+        "max_probe_workflows": 0,
+        "preferred_probe": "none_actions_disabled",
         "success_requires": [
-          "runner_id_nonzero",
-          "runner_name_nonempty",
-          "executed_steps_nonempty"
+          "host_native_build_pass",
+          "deployed_sha_verified"
         ],
-        "on_success": "continue the seven-app release sequence one app at a time",
-        "on_failure_before_steps": "return to quota_blocked without additional reruns",
-        "release_probe_order": [
-          "activity",
-          "fleet",
-          "service",
-          "urban",
-          "simulator",
-          "seneschal",
-          "federation"
-        ],
-        "activity_is_single_initial_probe": true
+        "on_success": "proceed via reviewed source and native host only",
+        "on_failure_before_steps": "HOLD without GitHub Actions retry",
+        "release_probe_order": [],
+        "activity_is_single_initial_probe": false
       }
+    },
+    "actions_execution": {
+      "enabled": false,
+      "required_mode": "local_pre_push_tests_and_native_host_builds",
+      "repository_policy": "GitHub Actions disabled for all seven private app repositories 2026-11-07",
+      "prohibited_actions": [
+        "workflow_dispatch",
+        "rerun_workflow_run",
+        "rerun_failed_jobs",
+        "create_or_modify_actions_workflow",
+        "enable_actions"
+      ],
+      "on_attempt": "HOLD; do not attempt a workflow or use private hosted runner",
+      "local_quality_gate": "federation-portal/scripts/actions-free/portable-gate.mjs",
+      "same_sha_review_required": true,
+      "git_source_of_truth": "main",
+      "portfolio_pages_exception": "Satofumi-Goto.github.io remains enabled only until Pages deployment is replaced and verified"
     }
   },
   "auto_merge": {
     "allowed_when": [
       "non_draft",
       "mergeable",
-      "required_ci_success",
+      "local_quality_evidence_for_exact_sha",
       "scope_is_expected",
       "no_secret_or_token_change",
       "no_billing_or_budget_change",
       "no_auth_grant_change",
-      "no_irreversible_external_action"
+      "no_irreversible_external_action",
+      "human_pr_review_complete"
     ],
     "denied_when": [
       "ci_infrastructure_blocked_for_executable_code",
       "draft",
       "conflict",
-      "required_ci_unknown",
+      "local_quality_evidence_unknown",
       "secret_or_token_change",
       "billing_or_budget_change",
       "auth_grant_change",
       "data_deletion",
-      "external_transaction_or_booking_or_message"
+      "external_transaction_or_booking_or_message",
+      "github_actions_requested"
     ]
   },
   "deployment": {
@@ -152,7 +160,9 @@
           "authenticated_console_health",
           "durable_release_event_ack"
         ],
-        "preferred_trigger": "workflow_dispatch"
+        "preferred_trigger": "native_host_exact_sha_or_owner_verified_manual_publish",
+        "legacy_workflow_disabled": true,
+        "actions_execution_allowed": false
       },
       "fleet": {
         "repo": "Satofumi-Goto/fleet-operations-console",
@@ -166,7 +176,9 @@
           "authenticated_console_health",
           "durable_release_event_ack"
         ],
-        "preferred_trigger": "workflow_dispatch"
+        "preferred_trigger": "native_host_exact_sha_or_owner_verified_manual_publish",
+        "legacy_workflow_disabled": true,
+        "actions_execution_allowed": false
       },
       "service": {
         "repo": "Satofumi-Goto/service-hub-console",
@@ -180,7 +192,9 @@
           "authenticated_console_health",
           "durable_release_event_ack"
         ],
-        "preferred_trigger": "workflow_dispatch"
+        "preferred_trigger": "native_host_exact_sha_or_owner_verified_manual_publish",
+        "legacy_workflow_disabled": true,
+        "actions_execution_allowed": false
       },
       "urban": {
         "repo": "Satofumi-Goto/urban-operation-console",
@@ -194,7 +208,9 @@
           "authenticated_console_health",
           "durable_release_event_ack"
         ],
-        "preferred_trigger": "workflow_dispatch"
+        "preferred_trigger": "native_host_exact_sha_or_owner_verified_manual_publish",
+        "legacy_workflow_disabled": true,
+        "actions_execution_allowed": false
       },
       "simulator": {
         "repo": "Satofumi-Goto/mobility-business-lab",
@@ -210,7 +226,9 @@
           "priority_read",
           "simulator_to_federation_info_health"
         ],
-        "preferred_trigger": "workflow_dispatch"
+        "preferred_trigger": "native_host_exact_sha_or_owner_verified_manual_publish",
+        "legacy_workflow_disabled": true,
+        "actions_execution_allowed": false
       },
       "seneschal": {
         "repo": "Satofumi-Goto/seneschal",
@@ -225,7 +243,9 @@
           "durable_source_change_ack",
           "production_voice_ui"
         ],
-        "preferred_trigger": "workflow_dispatch"
+        "preferred_trigger": "native_host_exact_sha_or_owner_verified_manual_publish",
+        "legacy_workflow_disabled": true,
+        "actions_execution_allowed": false
       },
       "federation": {
         "repo": "Satofumi-Goto/federation-portal",
@@ -239,15 +259,17 @@
           "served_sha_or_ancestry",
           "all_federation_backends_deployed"
         ],
-        "preferred_trigger": "workflow_dispatch"
+        "preferred_trigger": "native_host_exact_sha_or_owner_verified_manual_publish",
+        "legacy_workflow_disabled": true,
+        "actions_execution_allowed": false
       }
     },
     "base44_key_gate": {
       "secret_name": "BASE44_API_KEY",
       "secret_value_must_never_be_read_or_exposed": true,
-      "readiness_source": "release workflow fail-closed credential step",
+      "readiness_source": "native hosting secret configuration attestations (never disclose or read value)",
       "on_missing_or_invalid": "stop_release_retries_and_notify_one_time_setup_required",
-      "on_ready": "continue_deploy_and_public_sha_validation"
+      "on_ready": "continue host-native reviewed exact-SHA publication and public version validation"
     },
     "final_e2e": {
       "repo": "Satofumi-Goto/federation-portal",
@@ -269,42 +291,42 @@
       {
         "order": 1,
         "app": "activity",
-        "action": "Run Base44 release — Federation operational proxy on main"
+        "action": "manual Render exact-SHA release after independent source and credential gates; verify live Activity"
       },
       {
         "order": 2,
         "app": "fleet",
-        "action": "Run Base44 release — Federation operational proxy on main"
+        "action": "manual Render exact-SHA release after independent source and credential gates; verify live Fleet"
       },
       {
         "order": 3,
         "app": "service",
-        "action": "Run Base44 release — Federation operational proxy on main"
+        "action": "Render native auto-deploy on reviewed main; verify build, health and SHA"
       },
       {
         "order": 4,
         "app": "urban",
-        "action": "Run Base44 release — Federation operational proxy on main"
+        "action": "Render native auto-deploy on reviewed main; verify build, health and SHA"
       },
       {
         "order": 5,
         "app": "simulator",
-        "action": "Run Base44 release — Fed actual-operation on main"
+        "action": "Render native auto-deploy on reviewed main; verify build, health and SHA"
       },
       {
         "order": 6,
         "app": "seneschal",
-        "action": "Run Base44 release — Fed actual-operation on main"
+        "action": "manual Render exact-SHA release after independent source and credential gates; verify live Seneschal"
       },
       {
         "order": 7,
         "app": "federation",
-        "action": "Run Federation release reality check on main with deploy_fed_actual_operation=true"
+        "action": "Render native auto-deploy on reviewed main; verify build, health and SHA"
       },
       {
         "order": 8,
         "app": "final",
-        "action": "Fed seven-app production E2E runs automatically after successful Federation release"
+        "action": "External read-only seven-app E2E, independent of GitHub Actions; compare real published revisions"
       }
     ],
     "no_marker_commit_required_for_publication": true,
@@ -387,7 +409,7 @@
       "security-critical defect discovered in the frozen release candidate"
     ],
     "old_open_prs_are_deferred_backlog_not_release_blockers": true,
-    "preferred_release_trigger": "manual workflow_dispatch on main; do not create new marker commits",
+    "preferred_release_trigger": "native host build/release for reviewed SHA, never GitHub Actions workflow_dispatch",
     "publication_only": false,
     "unfrozen_at": "2026-10-29",
     "unfrozen_by": "owner_instruction"
@@ -407,7 +429,7 @@
     "fixed_phase_silos": false,
     "first_check": [
       "release_freeze",
-      "ci.quota_recovery",
+      "ci.actions_execution",
       "main",
       "existing_issue_pr",
       "ledger_claims",
@@ -417,7 +439,7 @@
       "investigate",
       "declare_claim",
       "small_patch_branch",
-      "tests_ci_browser_qa",
+      "local_tests_native_build_browser_qa",
       "independent_review",
       "merge_when_required_gates_pass",
       "owner_publish",
@@ -432,7 +454,7 @@
     ],
     "completion_requires": [
       "source_merged",
-      "required_ci",
+      "verified_local_quality_and_native_build",
       "independent_review",
       "old_pr_triage",
       "owner_production_publish_if_required",
@@ -443,5 +465,16 @@
     "public_release_actor": "user_only",
     "merge_is_not_completion": true,
     "preserve_existing_status_rows": true
+  },
+  "actions_free_migration": {
+    "effective_date": "2026-11-07",
+    "private_repositories": 7,
+    "settings_state": "disabled_verified",
+    "unresolved": [
+      "local hook installation on every executor",
+      "enforceable PR branch protection",
+      "exact SHA native publish verification where auto-deploy OFF"
+    ],
+    "re_enable_prohibited": true
   }
 }
