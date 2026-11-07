@@ -40,6 +40,37 @@ class InventoryTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 mod.pages("repos/example/issues", "dummy", limit=2)
 
+    def test_coordination_inbox_collects_pages_without_auto_dispatch(self):
+        from unittest.mock import patch
+        samples = {
+            "issues/92/comments": [
+                {"id": 42, "user": {"login": "Satofumi-Goto"},
+                 "body": "<unsafe>" + "x" * 200, "created_at": "2026-11-07T00:00:00Z"},
+                {"id": 43, "user": {"login": "unknown"},
+                 "body": "Another request", "created_at": "2026-11-07T01:00:00Z"},
+            ],
+            "issues/74/comments": [{"id": 30}],
+        }
+        def fake_pages(path, token):
+            return next(rows for marker, rows in samples.items() if marker in path)
+        with patch.object(mod, "pages", side_effect=fake_pages) as mock:
+            result = mod.coordination_inbox("dummy")
+        self.assertEqual(mock.call_count, 2)
+        self.assertEqual(result["intake_comments_seen"], 2)
+        self.assertEqual(result["claim_comments_seen"], 1)
+        self.assertFalse(result["claim_file_ownership_verified"])
+        self.assertEqual(result["intake_requests"][0]["triage_state"], "unreviewed")
+        self.assertFalse(result["intake_requests"][0]["execution_authorized"])
+        self.assertEqual(len(result["intake_requests"][0]["summary"]), 120)
+        self.assertEqual(result["intake_requests"][1]["author"], "unknown")
+
+    def test_coordination_inbox_invalid_id_fails_closed(self):
+        from unittest.mock import patch
+        with patch.object(mod, "pages", side_effect=[
+                [{"id": "not-an-int", "user": {}, "body": "hello"}], []]):
+            with self.assertRaisesRegex(ValueError, "invalid-intake-id"):
+                mod.coordination_inbox("dummy")
+
     def test_no_fake_running_agents(self):
         self.assertEqual(mod.plan([], {}, 5)["workers_actually_running"], "not_verified")
 
