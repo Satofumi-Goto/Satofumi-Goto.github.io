@@ -60,6 +60,7 @@ details{margin-top:5px}details summary{font-size:.76rem;color:var(--blue);cursor
     <h2>自動開発オーケストレータ</h2>
     <p id="orchestratorState">読込中…</p>
     <p id="orchestratorAction"></p>
+    <details><summary>オーケストレータ詳細</summary><p id="orchestratorFullState"></p></details>
     <ol class="queue" id="actionQueue"></ol>
   </section>
 
@@ -67,8 +68,7 @@ details{margin-top:5px}details summary{font-size:.76rem;color:var(--blue);cursor
     <h2>Fed実運用</h2>
     <p id="fedOperationState"></p>
     <div class="fedopGrid" id="fedOperationHeads"></div>
-    <p id="fedOperationGate"></p>
-    <ol class="queue" id="fedOperationBlocks"></ol>
+    <details><summary>公開ゲート・阻害の詳細</summary><p id="fedOperationGate"></p><ol class="queue" id="fedOperationBlocks"></ol></details>
   </section>
 
   <section class="orchestrator" aria-label="担当Chat進捗" id="chatBoard">
@@ -125,9 +125,10 @@ function render(d){
   document.getElementById("mAuto").textContent=outdated?"要再確認":(o.enabled?"稼働中":"停止");
   const ciLabel={infrastructure_blocked:"CI基盤停止",quota_blocked:"CI利用枠停止"}[o.ci_state]||(o.ci_state||"確認中");
   const ciBlocked=["infrastructure_blocked","quota_blocked"].includes(o.ci_state);
-  document.getElementById("orchestratorState").innerHTML="<strong>"+esc(o.enabled?"自動開発: 稼働中":"自動開発: 停止")+"</strong> / "+(ciBlocked?'<span class="ciBlocked">'+esc(ciLabel)+'</span>':esc(ciLabel))+" / "+esc(o.cadence||"");
+  document.getElementById("orchestratorState").innerHTML="<strong>"+esc(outdated?"記録が古い":(o.enabled?"自動開発: 稼働中":"自動開発: 停止"))+"</strong> / "+esc(shortText(ciLabel,84));
+  document.getElementById("orchestratorFullState").textContent=ciLabel+" / "+String(o.cadence||"");
   document.getElementById("orchestratorAction").textContent=(outdated?"前回の記録: ":"現在: ")+shortText(o.current_action||"次アクション判定中",100);
-  document.getElementById("actionQueue").innerHTML=(d.action_queue||[]).slice(0,5).map(q=>"<li><strong>#"+esc(q.priority)+" "+esc(q.owner)+"</strong> — "+esc(q.action)+(q.blocked_by?.length?" <span class=\"ciBlocked\">("+esc(q.blocked_by.join(" / "))+")</span>":"")+"</li>").join("");
+  document.getElementById("actionQueue").innerHTML=(d.action_queue||[]).slice(0,5).map(q=>"<li><strong>#"+esc(q.priority)+" "+esc(q.owner)+"</strong> — "+esc(shortText(q.action,80))+"<details><summary>原因・対応詳細</summary><p>"+esc(q.action||"")+"</p>"+(q.blocked_by?.length?"<p class=\"ciBlocked\">"+esc(q.blocked_by.join(" / "))+"</p>":"")+"</details></li>").join("");
   const f=d.fed_actual_operation;
   const fbox=document.getElementById("fedOperation");
   if(f){
