@@ -84,7 +84,8 @@ def _claim(config, state_path, agent, max_attempts):
             token = f"{os.getpid()}:{time.time_ns()}:{task_id}"
             state["inflight"][task_id] = {"token": token, "agent": agent["id"],
                 "files": sorted(set(files)), "controller_pid": os.getpid(),
-                "host": os.uname().nodename, "started_at": now}
+                "host": os.uname().nodename, "started_at": now,
+                "workspace": config["workspace"]}
             state["attempts"][task_id] = state["attempts"].get(task_id, 0) + 1
             return {"task": task, "token": token,
                     "attempt": state["attempts"][task_id], "started_at": now}
@@ -118,8 +119,21 @@ def _commit(state_path, agent, claim, result):
             "finished_at": time.time(), "exit_code": exit_code,
             "attempt": claim["attempt"], "workspace": workspace,
             "command_sha256": hashlib.sha256(repr(command).encode()).hexdigest(),
+            "repo_sha": claim.get("repo_sha"), "repo_sha_verified": bool(claim.get("repo_sha")),
             "claim_token": claim["token"]})
     _locked_update(state_path, mutate)
+
+
+def _repo_sha(workspace):
+    """Read the exact source HEAD when available, never invent a SHA."""
+    try:
+        result = subprocess.run(["git", "-C", workspace, "rev-parse", "--verify", "HEAD"],
+            capture_output=True, text=True, timeout=5, check=False)
+        sha = result.stdout.strip()
+        return sha if (result.returncode == 0 and len(sha) == 40
+                       and all(char in "0123456789abcdef" for char in sha.lower())) else None
+    except (OSError, subprocess.TimeoutExpired):
+        return None
 
 
 def cycle(config, state_path, runner=subprocess.run):
@@ -133,6 +147,7 @@ def cycle(config, state_path, runner=subprocess.run):
         raise ValueError("workspace path required")
     if not isinstance(config.get("reserved_files", []), list):
         raise ValueError("reserved_files must be a list")
+    source_sha = _repo_sha(config["workspace"])
     for agent in config["agents"]:
         if (agent.get("model") != "python" or not agent.get("connected")
             or not agent.get("authenticated") or agent.get("busy")
@@ -142,6 +157,7 @@ def cycle(config, state_path, runner=subprocess.run):
         if not claim:
             continue
         task = claim["task"]
+        claim["repo_sha"] = source_sha
         try:
             completed = runner(COMMANDS[task["kind"]], cwd=config["workspace"],
                                timeout=120, capture_output=True, text=True, check=False)
