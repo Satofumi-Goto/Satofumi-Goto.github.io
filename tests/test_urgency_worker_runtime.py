@@ -160,6 +160,31 @@ class RuntimeTests(unittest.TestCase):
         self.assertNotEqual(second["events"][1]["repo_sha"], old_sha)
         self.assertEqual(len(self.calls), 2)
 
+    def test_dirty_checkout_masks_historic_completed_without_running(self):
+        first = cycle(self.config, self.state, self.runner)
+        self.assertEqual(first["completed"], ["a"])
+        (Path(self.tmp.name) / "source.txt").write_text("dirty", encoding="utf-8")
+        second = cycle(self.config, self.state, self.runner)
+        self.assertEqual(second["completed"], [])
+        self.assertFalse(second["workspace_verified"])
+        self.assertEqual(len(self.calls), 1)
+        # The receipt remains on disk for audit, not a claim of current success.
+        saved = json.loads(self.state.read_text(encoding="utf-8"))
+        self.assertEqual(saved["completed"], ["a"])
+
+    def test_new_commit_with_no_agents_masks_prior_generation(self):
+        first = cycle(self.config, self.state, self.runner)
+        self.assertEqual(first["completed"], ["a"])
+        root = Path(self.tmp.name)
+        (root / "source.txt").write_text("new SHA", encoding="utf-8")
+        subprocess.run(["git", "add", "source.txt"], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-qm", "new generation"], cwd=root, check=True)
+        self.config["agents"] = []
+        second = cycle(self.config, self.state, self.runner)
+        self.assertEqual(second["completed"], [])
+        self.assertFalse(second["source_generation_verified"])
+        self.assertEqual(len(self.calls), 1)
+
     def test_zero_parallel_limit_holds_all_tasks(self):
         self.config["max_parallel"] = 0
         self.assertEqual(cycle(self.config, self.state, self.runner)["completed"], [])
