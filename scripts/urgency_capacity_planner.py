@@ -21,6 +21,11 @@ def plan(data):
     paid_slots = 0 if urgency < 35 else (1 if urgency < 75 else maximum)
     remaining = max(0, budget - spent)
     assignments, occupied, selected = [], set(), set()
+    # Existing CLAIMs are hard locks even when their owner is not in this cycle.
+    reserved = set(data.get("reserved_files", []))
+    if any(not isinstance(f, str) or not f for f in reserved):
+        raise ValueError("invalid reserved_files")
+    occupied |= reserved
     for agent in sorted(agents, key=lambda a: (a.get("estimated_cost", 0), a["id"])):
         if len(assignments) >= maximum:
             break
@@ -35,6 +40,8 @@ def plan(data):
         if model != "python" and (not data.get("paid_execution_approved") or paid_slots == 0 or cost <= 0 or cost > remaining):
             continue
         for task in sorted(tasks, key=lambda t: (-t.get("priority", 0), t["id"])):
+            if task.get("priority", 0) not in range(0, 101):
+                raise ValueError("priority must be 0..100")
             files = set(task.get("files", []))
             if (task["id"] in selected or task.get("blocked") or not files or files & occupied
                 or task.get("claimed_by") not in (None, agent["id"])
