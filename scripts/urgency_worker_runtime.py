@@ -152,6 +152,11 @@ def cycle(config, state_path, runner=subprocess.run):
     if not isinstance(config.get("reserved_files", []), list):
         raise ValueError("reserved_files must be a list")
     source_sha = _repo_sha(config["workspace"])
+    root = Path(config["workspace"]).resolve()
+    state_location = Path(state_path).resolve()
+    if (source_sha and state_location.is_relative_to(root)
+            and not state_location.is_relative_to(root / ".git")):
+        raise ValueError("worker-state-must-be-outside-repository-or-inside-git-dir")
     for agent in config["agents"]:
         if (agent.get("model") != "python" or not agent.get("connected")
             or not agent.get("authenticated") or agent.get("busy")
@@ -164,7 +169,8 @@ def cycle(config, state_path, runner=subprocess.run):
         claim["repo_sha"] = source_sha
         try:
             completed = runner(COMMANDS[task["kind"]], cwd=config["workspace"],
-                               timeout=120, capture_output=True, text=True, check=False)
+                               timeout=120, capture_output=True, text=True, check=False,
+                               env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
             exit_code = completed.returncode
             ok = exit_code == 0
             detail = (str(completed.stdout or "") + str(completed.stderr or ""))[-3000:]
