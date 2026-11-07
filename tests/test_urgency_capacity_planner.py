@@ -40,6 +40,14 @@ class SchedulerTests(unittest.TestCase):
         self.data["tasks"][0]["claimed_by"] = "another-worker"
         self.assertNotIn("a", [x["task"] for x in plan(self.data)["assignments"]])
 
+    def test_reserved_files_prevent_collision(self):
+        self.data["reserved_files"] = ["map.js"]
+        result = plan(self.data)
+        self.assertEqual([x["task"] for x in result["assignments"]], ["c"])
+
+    def test_unconnected_agent_not_counted(self):
+        self.assertNotIn("c", [x["agent"] for x in plan(self.data)["assignments"]])
+
     def test_invalid_urgency(self):
         self.data["urgency"] = 101
         with self.assertRaises(ValueError):
