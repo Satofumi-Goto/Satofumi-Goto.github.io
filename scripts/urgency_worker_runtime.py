@@ -151,12 +151,17 @@ def cycle(config, state_path, runner=subprocess.run):
         raise ValueError("workspace path required")
     if not isinstance(config.get("reserved_files", []), list):
         raise ValueError("reserved_files must be a list")
-    source_sha = _repo_sha(config["workspace"])
     root = Path(config["workspace"]).resolve()
     state_location = Path(state_path).resolve()
-    if (source_sha and state_location.is_relative_to(root)
+    # Validate the state destination even when the workspace is dirty/non-Git.
+    # Otherwise a state write can mutate the workspace before verification.
+    if (state_location.is_relative_to(root)
             and not state_location.is_relative_to(root / ".git")):
         raise ValueError("worker-state-must-be-outside-repository-or-inside-git-dir")
+    source_sha = _repo_sha(config["workspace"])
+    # Never claim or run work without a verified clean source revision.
+    if source_sha is None:
+        return _read_state(state_path)
     for agent in config["agents"]:
         if (agent.get("model") != "python" or not agent.get("connected")
             or not agent.get("authenticated") or agent.get("busy")
