@@ -6,7 +6,7 @@ export function planContinuation({ cases, agents, now }) {
   // separate authenticated worktree validation, never silently assumed safe.
   const fileKey = file => {
     if (typeof file !== 'string' || !file || file.trim() !== file ||
-        file.includes('\\0') || file.includes('\\\\') || file.startsWith('/')) return null;
+        file.includes('\0') || file.includes('\\') || file.startsWith('/')) return null;
     const parts = file.split('/');
     if (parts.includes('..')) return null;
     const clean = parts.filter(segment => segment && segment !== '.');
