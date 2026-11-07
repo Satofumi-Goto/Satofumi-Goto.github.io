@@ -1,0 +1,25 @@
+name: Python worker runtime verification
+on:
+  pull_request:
+    paths:
+      - 'scripts/urgency_worker_runtime.py'
+      - 'scripts/urgency_capacity_planner.py'
+      - 'tests/test_urgency_worker_runtime.py'
+      - 'tests/test_urgency_capacity_planner.py'
+      - '.github/workflows/python-worker-runtime.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  runtime-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify local Python runtime and planner
+        run: |
+          python -m unittest discover -s tests -p 'test_urgency_worker_runtime.py' -v
+          python -m unittest discover -s tests -p 'test_urgency_capacity_planner.py' -v
