@@ -3,6 +3,15 @@
 export function planContinuation({ cases, agents, now }) {
   if (!Array.isArray(cases) || !Array.isArray(agents) || !Number.isFinite(now)) throw Error('invalid-input');
   const validFiles = value => Array.isArray(value) && value.every(f => typeof f === 'string' && f.length > 0 && f.trim() === f && !f.includes('\0'));
+  // Legacy bare paths conservatively reserve the name across repositories.
+  // New repo-qualified claims avoid false collisions between separate repos.
+  const validClaimedFiles = value => Array.isArray(value) && value.every(f =>
+    typeof f === 'string' ? validFiles([f]) :
+    f && typeof f === 'object' && !Array.isArray(f) &&
+    typeof f.repo === 'string' && f.repo.trim() === f.repo && f.repo.length > 0 &&
+    validFiles([f.path]));
+  const conflictsWith = (claim, repo, file) => typeof claim === 'string'
+    ? claim === file : claim.repo === repo && claim.path === file;
   const counts = new Map();
   for (const a of agents) if (typeof a?.id === 'string' && a.id) counts.set(a.id, (counts.get(a.id) || 0) + 1);
   const duplicates = new Set([...counts].filter(([, count]) => count > 1).map(([id]) => id));
@@ -35,10 +44,11 @@ export function planContinuation({ cases, agents, now }) {
     if (keys.some(key => activeByPath.has(key))) return {case_id:caseId,decision:'HOLD',reason:'active-owner-conflict'};
     if (keys.some(key => reserved.has(key))) return {case_id:caseId,decision:'HOLD',reason:'overlapping-proposed-claim'};
     const alternatives = unique.filter(a => a.id !== c.agent_id);
-    const eligible = alternatives.filter(a => validFiles(a.claimedFiles));
-    const claimed = new Set(eligible.flatMap(a => a.claimedFiles));
-    if (c.changed_files.some(f => claimed.has(f))) return {case_id:caseId,decision:'HOLD',reason:'handoff-claim-collision'};
-    const receiver = eligible.find(a => a.claimedFiles.every(f => !c.changed_files.includes(f)));
+    const eligible = alternatives.filter(a => validClaimedFiles(a.claimedFiles));
+    const claimed = eligible.flatMap(a => a.claimedFiles);
+    if (c.changed_files.some(f => claimed.some(claim => conflictsWith(claim,c.repo,f)))) return {case_id:caseId,decision:'HOLD',reason:'handoff-claim-collision'};
+    const receiver = eligible.find(a => c.changed_files.every(f =>
+      a.claimedFiles.every(claim => !conflictsWith(claim,c.repo,f))));
     if (!receiver) return {case_id:caseId,decision:'HOLD',reason:duplicates.size?'ambiguous-agent-identity':alternatives.length?'ownership-unverified':'no-verified-receiver'};
     keys.forEach(key => reserved.add(key));
     return {case_id:caseId,decision:'HANDOFF_PROPOSED',from:c.agent_id ?? null,to:receiver.id,reason:'stalled-owner'};
