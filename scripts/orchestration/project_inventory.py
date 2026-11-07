@@ -41,7 +41,7 @@ def fetch(path, token):
         return json.load(response)
 
 
-def pages(path, token, limit=4):
+def pages(path, token, limit=100):
     result = []
     for page in range(1, limit + 1):
         separator = "&" if "?" in path else "?"
@@ -51,6 +51,8 @@ def pages(path, token, limit=4):
         result.extend(batch)
         if len(batch) < 100:
             break
+    else:
+        raise RuntimeError("Pagination limit reached; refusing incomplete inventory")
     return result
 
 
@@ -93,14 +95,14 @@ def inventory(repos, token):
 def plan(records, connectors, budget):
     """Suggest capacity only. Never count unverified connectors as running."""
     pending = sorted(records, key=lambda r: (PRIORITY[r["priority"]], r["repo"], r["number"]))
-    active = [k for k, v in connectors.items() if v.get("authenticated") and v.get("executable")]
+    active = [k for k, v in connectors.items() if v.get("authenticated") and v.get("executable") and v.get("verified_by_runtime") and v.get("heartbeat_ok")]
     # Conservative: one proposed worker per distinct repository, bounded by authenticated
     # connectors and explicit budget; no fixed ten-person target.
     eligible = {r["repo"] for r in pending if r["priority"] in ("P0", "P1")}
     slots = min(len(eligible), len(active), max(0, budget))
     return {
         "proposed_parallel_workers": slots,
-        "available_verified_connector_types": active,
+        "runtime_attested_connector_types": active,
         "workers_actually_running": "not_verified",
         "reason": "Capacity suggestion only; CLAIM/file ownership and dependencies must be checked before dispatch",
         "next_cases": pending[:20],
@@ -130,7 +132,7 @@ def main():
     }
     try:
         report["cases"] = inventory(args.repos, token)
-    except (urllib.error.URLError, KeyError, ValueError) as exc:
+    except (urllib.error.URLError, KeyError, ValueError, RuntimeError) as exc:
         print("GitHub inventory failed: " + type(exc).__name__, file=sys.stderr)
         return 2
     report["plan"] = plan(report["cases"], connectors, args.max_workers)
