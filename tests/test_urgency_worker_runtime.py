@@ -1,8 +1,24 @@
 import tempfile
 import unittest
+import multiprocessing
+import time
 from pathlib import Path
 from types import SimpleNamespace
 from scripts.urgency_worker_runtime import cycle
+
+def concurrent_worker(workspace, state_path, marker):
+    from scripts.urgency_worker_runtime import cycle
+    from types import SimpleNamespace
+    from pathlib import Path
+    def slow_runner(*args, **kwargs):
+        with open(marker, "a", encoding="utf-8") as out:
+            out.write("run\\n")
+        time.sleep(0.15)
+        return SimpleNamespace(returncode=0, stdout="ok", stderr="")
+    config = {"workspace": workspace, "agents": [{"id": "python", "model": "python",
+              "connected": True, "authenticated": True, "runtime_verified": True}],
+              "tasks": [{"id": "one", "files": ["same.py"], "kind": "python-test"}]}
+    cycle(config, state_path, slow_runner)
 
 class RuntimeTests(unittest.TestCase):
     def setUp(self):
@@ -19,6 +35,16 @@ class RuntimeTests(unittest.TestCase):
     def runner(self, cmd, **kwargs):
         self.calls.append(cmd)
         return SimpleNamespace(returncode=0, stdout="ok", stderr="")
+    def test_concurrent_processes_execute_single_claim(self):
+        marker = str(Path(self.tmp.name) / "runs.log")
+        ctx = multiprocessing.get_context("fork")
+        processes = [ctx.Process(target=concurrent_worker, args=(self.tmp.name, str(self.state), marker))
+                     for _ in range(3)]
+        for process in processes: process.start()
+        for process in processes:
+            process.join(timeout=10)
+            self.assertEqual(process.exitcode, 0)
+        self.assertEqual(Path(marker).read_text(encoding="utf-8").splitlines(), ["run"])
     def test_unverified_worker_cannot_run(self):
         self.config["agents"][0]["runtime_verified"] = False
         self.assertEqual(cycle(self.config, self.state, self.runner)["completed"], [])
