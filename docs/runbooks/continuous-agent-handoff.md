@@ -35,6 +35,10 @@ Prevent a single execution ending from being mistaken for completion of an unfin
 }
 ```
 
+## File-claim interpretation (safe cross-repository handoff)
+
+For a verified receiving agent, prefer `claimedFiles: [{ "repo": "owner/repo", "path": "src/file.js" }]` so independent repositories using the same relative path do not cause a false collision. Legacy bare strings such as `["src/file.js"]` remain supported but **conservatively reserve that relative path across all repositories** until migrated. Invalid or incomplete claims fail closed. A `HANDOFF_PROPOSED` result is only a plan: a separate authenticated execution API and canonical Issue #74 CLAIM update must confirm the real receiver before any code edit.
+
 ## Recovery and acceptance
 - Mark an agent stalled only after its expected execution cadence has elapsed and its last real execution log is inspected.
 - If an authenticated execution API is available, resume the agent with its checkpoint; otherwise record `resume_api_unavailable` and offer the case to an independently verified active agent.
