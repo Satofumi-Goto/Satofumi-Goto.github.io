@@ -12,7 +12,7 @@ python3 scripts/orchestration/project_inventory.py --output project-inventory.js
 python3 -m unittest discover -s scripts/orchestration -p 'test_*.py'
 ```
 
-To specify more product repositories, use `--repos owner/repo ...`. A JSON connector capability file may contain `{"codex":{"authenticated":true,"executable":true}}`; this is an operator-provided assertion, **not** a live authentication check. Without one, proposed workers are zero. `--max-workers` is a resource budget, **not** a fixed headcount.
+To specify more product repositories, use `--repos owner/repo ...`. A connector file may contain `{"codex":{"authenticated":true,"executable":true,"verified_by_runtime":true,"heartbeat_ok":true}}`, but this is still an **operator assertion, not a live verification**. Do not mark these fields true without independently captured connector/session and heartbeat evidence. Without the four true flags, proposed workers are zero. `--max-workers` is a resource budget, **not** a fixed headcount.
 
 ## Required phase 2 before unattended execution
 
@@ -22,3 +22,5 @@ To specify more product repositories, use `--repos owner/repo ...`. A JSON conne
 4. Publish readiness must be evaluated separately for each app. Owner-only Publish/Deploy remains protected.
 
 **Release state: HOLD** until independent review, CI and real end-to-end tests.
+
+Pagination is fail-closed: a full final page at the 100-page safety cap raises an error rather than silently omitting cases. The inventory is a read-only snapshot, not a lock or exhaustive proof of active workers.
