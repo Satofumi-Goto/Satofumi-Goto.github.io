@@ -105,3 +105,33 @@ test('malformed repo-qualified claims fail closed',()=>{
     claimedFiles:[{repo:'repo',path:''}]};
   assert.equal(planContinuation({cases:[item],agents:[agent],now})[0].reason,'ownership-unverified');
 });
+
+test('same-repo path alias from an active owner prevents stalled takeover',()=>{
+  const current={...item,case_id:'repo#active',agent_id:'live',changed_files:['a.js']};
+  const stalled={...item,case_id:'repo#stalled',changed_files:['./a.js']};
+  const agent={id:'live',authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]};
+  for(const cases of [[current,stalled],[stalled,current]]){
+    const decisions=planContinuation({cases,agents:[agent],now});
+    assert.equal(decisions.find(c=>c.case_id==='repo#active').decision,'KEEP');
+    assert.equal(decisions.find(c=>c.case_id==='repo#stalled').reason,'active-owner-conflict');
+  }
+});
+test('legacy unqualified claim blocks dot-slash file alias',()=>{
+  const agent={id:'receiver',authenticated:true,connected:true,lastRunAt:now,claimedFiles:['./a.js']};
+  const c={...item,changed_files:['a.js']};
+  assert.equal(planContinuation({cases:[c],agents:[agent],now})[0].reason,'handoff-claim-collision');
+});
+test('repo-qualified claim blocks dot-slash file alias without crossing repositories',()=>{
+  const agent={id:'receiver',authenticated:true,connected:true,lastRunAt:now,
+    claimedFiles:[{repo:'repo',path:'./a.js'}]};
+  assert.equal(planContinuation({cases:[item],agents:[agent],now})[0].reason,'handoff-claim-collision');
+  const other={...item,repo:'different',case_id:'different#89'};
+  assert.equal(planContinuation({cases:[other],agents:[agent],now})[0].decision,'HANDOFF_PROPOSED');
+});
+test('noncanonical traversal and absolute paths cannot acquire handoff',()=>{
+  const agent={id:'receiver',authenticated:true,connected:true,lastRunAt:now,claimedFiles:[]};
+  for(const file of ['../a.js','/a.js','a/../b.js','a\\b.js','.', './', 'a\0b.js']){
+    const c={...item,changed_files:[file]};
+    assert.equal(planContinuation({cases:[c],agents:[agent],now})[0].reason,'ownership-unverified',file);
+  }
+});
