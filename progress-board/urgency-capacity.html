@@ -20,11 +20,39 @@
     {"id":"calendar","priority":80,"files":["tests/calendar.test.js"]}
   ]
 }</textarea>
-<p><button id="generate" type="button">計画入力JSONを保存</button></p><p id="message" role="status"></p>
+<p><button id="calculate" type="button">割当計画を計算</button> <button id="generate" type="button">計画入力JSONを保存</button></p><pre id="result" aria-live="polite" style="white-space:pre-wrap;overflow-wrap:anywhere"></pre><p id="message" role="status"></p>
 <small>この画面はPythonプランナーの入力作成用です。実際の割当結果は scripts/urgency_capacity_planner.py で算出してください。無料Python実行環境と外部AI接続は別途必要です。</small>
 </main><script>
 const slider=document.querySelector('#urgency'),value=document.querySelector('#value'),input=document.querySelector('#input'),message=document.querySelector('#message');
 slider.addEventListener('input',()=>{value.textContent=slider.value});
+function calculate(d){
+ const urgency=d.urgency, limit=d.max_parallel??d.agents.length;
+ if(!Number.isInteger(urgency)||urgency<0||urgency>100||!Number.isInteger(limit)||limit<0)throw Error('緊急度または並列数が不正です');
+ const reserved=new Set(d.reserved_files||[]),used=new Set(reserved),assigned=new Set(),out=[];
+ const paidAllowed=d.paid_execution_approved===true;
+ let budget=Math.max(0,(d.approved_paid_budget||0)-(d.paid_spent||0));
+ let paidSlots=urgency<35?0:urgency<75?1:limit;
+ const agents=[...d.agents].sort((a,b)=>(a.estimated_cost||0)-(b.estimated_cost||0)||a.id.localeCompare(b.id));
+ const tasks=[...d.tasks].sort((a,b)=>(b.priority||0)-(a.priority||0)||a.id.localeCompare(b.id));
+ for(const a of agents){
+  if(out.length>=limit)break;
+  if(!a.connected||!a.authenticated||a.busy||!['python','gemini','chatgpt','claude'].includes(a.model))continue;
+  const cost=a.estimated_cost||0;
+  if(a.model!=='python'&&(!paidAllowed||paidSlots===0||cost<=0||cost>budget))continue;
+  for(const t of tasks){
+   if(assigned.has(t.id)||t.blocked||!Array.isArray(t.files)||!t.files.length||t.files.some(f=>used.has(f))||(t.claimed_by&&t.claimed_by!==a.id)||(t.allowed_models&&!t.allowed_models.includes(a.model)))continue;
+   out.push({agent:a.id,model:a.model,task:t.id,files:t.files});
+   assigned.add(t.id);t.files.forEach(f=>used.add(f));
+   if(a.model!=='python'){budget-=cost;paidSlots--}
+   break;
+  }
+ }
+ return {urgency,assignments:out,active_count:out.length,unassigned_tasks:tasks.filter(t=>!assigned.has(t.id)).map(t=>t.id),launch_performed:false};
+}
+document.querySelector('#calculate').addEventListener('click',()=>{
+ try{const obj=JSON.parse(input.value);obj.urgency=Number(slider.value);document.querySelector('#result').textContent=JSON.stringify(calculate(obj),null,2);message.textContent='計画計算のみ完了。実際のワーカーは起動していません。'}
+ catch(e){message.textContent='計算エラー: '+e.message}
+});
 document.querySelector('#generate').addEventListener('click',()=>{
  try {
   const obj=JSON.parse(input.value);
