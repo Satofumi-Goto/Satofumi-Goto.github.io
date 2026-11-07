@@ -12,7 +12,7 @@ def concurrent_worker(workspace, state_path, marker):
     from pathlib import Path
     def slow_runner(*args, **kwargs):
         with open(marker, "a", encoding="utf-8") as out:
-            out.write("run\\n")
+            out.write("run\n")
         time.sleep(0.15)
         return SimpleNamespace(returncode=0, stdout="ok", stderr="")
     config = {"workspace": workspace, "agents": [{"id": "python", "model": "python",
