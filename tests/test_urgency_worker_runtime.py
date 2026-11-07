@@ -2,6 +2,7 @@ import tempfile
 import unittest
 import multiprocessing
 import time
+import json
 from pathlib import Path
 from types import SimpleNamespace
 from scripts.urgency_worker_runtime import cycle
@@ -19,6 +20,22 @@ def concurrent_worker(workspace, state_path, marker):
               "connected": True, "authenticated": True, "runtime_verified": True}],
               "tasks": [{"id": "one", "files": ["same.py"], "kind": "python-test"}]}
     cycle(config, state_path, slow_runner)
+
+
+def independent_worker(workspace, state_path, agent_id):
+    from scripts.urgency_worker_runtime import cycle
+    from types import SimpleNamespace
+    import time
+    def slow_runner(*args, **kwargs):
+        time.sleep(0.4)
+        return SimpleNamespace(returncode=0, stdout="ok", stderr="")
+    config = {"workspace": workspace,
+              "agents": [{"id": agent_id, "model": "python",
+                           "connected": True, "authenticated": True, "runtime_verified": True}],
+              "tasks": [{"id": "a", "priority": 2, "files": ["a.py"], "kind": "python-test"},
+                        {"id": "b", "priority": 1, "files": ["b.py"], "kind": "python-test"}]}
+    cycle(config, state_path, slow_runner)
+
 
 class RuntimeTests(unittest.TestCase):
     def setUp(self):
@@ -45,6 +62,29 @@ class RuntimeTests(unittest.TestCase):
             process.join(timeout=10)
             self.assertEqual(process.exitcode, 0)
         self.assertEqual(Path(marker).read_text(encoding="utf-8").splitlines(), ["run"])
+    def test_parallel_unrelated_files(self):
+        ctx = multiprocessing.get_context("fork")
+        procs = [ctx.Process(target=independent_worker,
+                 args=(self.tmp.name, str(self.state), "worker-" + str(n)))
+                 for n in range(2)]
+        for proc in procs: proc.start()
+        for proc in procs:
+            proc.join(timeout=10)
+            self.assertEqual(proc.exitcode, 0)
+        state = json.loads(self.state.read_text(encoding="utf-8"))
+        events = [e for e in state["events"] if e.get("success")]
+        self.assertEqual(set(state["completed"]), {"a", "b"})
+        self.assertEqual(state["inflight"], {})
+        self.assertEqual(len(events), 2)
+        self.assertLess(max(e["started_at"] for e in events),
+                        min(e["finished_at"] for e in events))
+
+    def test_unverified_repo_sha_is_not_invented(self):
+        result = cycle(self.config, self.state, self.runner)
+        self.assertIsNone(result["events"][0]["repo_sha"])
+        self.assertFalse(result["events"][0]["repo_sha_verified"])
+        self.assertEqual(result["events"][0]["pid_kind"], "controller")
+
     def test_unverified_worker_cannot_run(self):
         self.config["agents"][0]["runtime_verified"] = False
         self.assertEqual(cycle(self.config, self.state, self.runner)["completed"], [])
