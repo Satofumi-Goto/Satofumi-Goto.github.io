@@ -39,7 +39,7 @@ def _cycle_locked(config, state_path, runner=subprocess.run):
             continue
         for task in sorted(config["tasks"], key=lambda t: (-t.get("priority", 0), t["id"])):
             files = set(task.get("files", []))
-            if (task["id"] in state["completed"] or task["id"] in state["failed"] or task["id"] in selected
+            if (task["id"] in state["completed"] or task["id"] in selected
                 or state["attempts"].get(task["id"], 0) >= max_attempts
                 or not files or files & occupied or task.get("blocked")
                 or task.get("claimed_by") not in (None, agent["id"]) or task.get("kind") not in COMMANDS):
