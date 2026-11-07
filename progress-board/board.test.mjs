@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 
 const html=readFileSync(new URL('./index.html',import.meta.url),'utf8');
-const script=html.match(/<script>([\\s\\S]*?)<\\/script>/)?.[1];
+const script=html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
 test('canonical board has a parseable inline script',()=>{
   assert.ok(script);
   new Function(script);
