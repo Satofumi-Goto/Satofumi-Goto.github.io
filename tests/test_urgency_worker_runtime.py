@@ -95,6 +95,7 @@ class RuntimeTests(unittest.TestCase):
         tracked.write_text("clean", encoding="utf-8")
         subprocess.run(["git", "add", "tracked.txt"], cwd=root, check=True)
         subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
+        self.state = root / ".git" / "worker-state.json"
         tracked.write_text("dirty", encoding="utf-8")
         result = cycle(self.config, self.state, self.runner)
         self.assertIsNone(result["events"][0]["repo_sha"])
@@ -109,6 +110,7 @@ class RuntimeTests(unittest.TestCase):
         tracked.write_text("clean", encoding="utf-8")
         subprocess.run(["git", "add", "tracked.txt"], cwd=root, check=True)
         subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
+        self.state = root / ".git" / "worker-state.json"
         def mutate_during_run(*args, **kwargs):
             tracked.write_text("changed", encoding="utf-8")
             return SimpleNamespace(returncode=0, stdout="passed", stderr="")
@@ -116,6 +118,17 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(result["completed"], [])
         self.assertIn("a", result["failed"])
         self.assertEqual(result["events"][0]["detail"], "workspace-SHA-or-cleanliness-drift")
+
+    def test_git_worktree_state_path_is_rejected(self):
+        root = Path(self.tmp.name)
+        subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.email", "qa@localhost"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.name", "Isolated QA"], cwd=root, check=True)
+        (root / "tracked.txt").write_text("clean", encoding="utf-8")
+        subprocess.run(["git", "add", "tracked.txt"], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
+        with self.assertRaisesRegex(ValueError, "worker-state-must-be-outside"):
+            cycle(self.config, self.state, self.runner)
 
     def test_unverified_worker_cannot_run(self):
         self.config["agents"][0]["runtime_verified"] = False
