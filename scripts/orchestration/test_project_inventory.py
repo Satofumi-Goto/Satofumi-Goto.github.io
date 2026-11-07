@@ -71,6 +71,31 @@ class InventoryTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "invalid-intake-id"):
                 mod.coordination_inbox("dummy")
 
+    def test_malformed_connector_payload_fails_closed(self):
+        cases = [{"repo": "r1", "number": 1, "priority": "P0"}]
+        for malformed in ({"codex": None}, {"codex": []},
+                          {"codex": "verified"}, {"unknown": {}}, []):
+            with self.subTest(malformed=malformed):
+                with self.assertRaisesRegex(ValueError, "invalid-connector-capabilities"):
+                    mod.plan(cases, malformed, 2)
+
+    def test_worker_budget_fails_closed(self):
+        for invalid in (-1, 101, True, "2"):
+            with self.subTest(invalid=invalid):
+                with self.assertRaisesRegex(ValueError, "invalid-worker-budget"):
+                    mod.plan([], {}, invalid)
+        self.assertEqual(mod.plan([], {}, 0)["proposed_parallel_workers"], 0)
+
+    def test_repository_names_are_strict(self):
+        valid = ("Satofumi-Goto/seneschal", "Satofumi-Goto/Satofumi-Goto.github.io")
+        invalid = ("Satofumi-Goto/../secrets", "/repos/other", "owner/repo?state=all",
+                   "owner/repo/extra", "owner/repo%2Fother", "../owner/repo")
+        for name in valid:
+            self.assertTrue(mod.REPO_NAME.fullmatch(name))
+            self.assertNotIn("..", name)
+        for name in invalid:
+            self.assertTrue(not mod.REPO_NAME.fullmatch(name) or ".." in name)
+
     def test_no_fake_running_agents(self):
         self.assertEqual(mod.plan([], {}, 5)["workers_actually_running"], "not_verified")
 
