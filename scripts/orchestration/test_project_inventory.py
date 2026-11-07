@@ -98,6 +98,14 @@ class InventoryTests(unittest.TestCase):
                     mod.plan([], {}, invalid)
         self.assertEqual(mod.plan([], {}, 0)["proposed_parallel_workers"], 0)
 
+    def test_all_known_project_repos_including_gateway_are_discoverable(self):
+        self.assertEqual(len(mod.DEFAULT_REPOS), 9)
+        self.assertEqual(len(set(mod.DEFAULT_REPOS)), 9)
+        for repo in ("Satofumi-Goto/federation-runtime",
+                     "Satofumi-Goto/Satofumi-Goto.github.io",
+                     "Satofumi-Goto/seneschal"):
+            self.assertIn(repo, mod.DEFAULT_REPOS)
+
     def test_repository_names_are_strict(self):
         valid = ("Satofumi-Goto/seneschal", "Satofumi-Goto/Satofumi-Goto.github.io")
         invalid = ("Satofumi-Goto/../secrets", "/repos/other", "owner/repo?state=all",
