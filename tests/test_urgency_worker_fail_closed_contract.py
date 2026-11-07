@@ -75,6 +75,18 @@ class FailClosedContracts(unittest.TestCase):
         (self.workspace / "src" / "a.py").write_text("print('changed')\n", encoding="utf-8")
         self.assert_no_unverified_execution()
 
+    def test_dirty_workspace_does_not_report_prior_completed_tasks(self):
+        self.make_clean_git()
+        self.state.write_text(
+            '{"completed":["test-1"],"failed":[],"events":[],"attempts":{},'
+            '"inflight":{},"source_sha":"stale"}',
+            encoding="utf-8",
+        )
+        (self.workspace / "src" / "a.py").write_text(
+            "print('changed')\\n", encoding="utf-8",
+        )
+        self.assert_no_unverified_execution()
+
     def test_git_read_failure_is_not_executed(self):
         self.make_clean_git()
         with patch.object(worker, "_repo_sha", return_value=None):
