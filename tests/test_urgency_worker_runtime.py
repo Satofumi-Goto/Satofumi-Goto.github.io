@@ -1,4 +1,6 @@
 import tempfile
+import os
+from unittest.mock import patch
 import unittest
 import multiprocessing
 import time
@@ -186,6 +188,24 @@ class RuntimeTests(unittest.TestCase):
         self.assertEqual(second["completed"], [])
         self.assertFalse(second["source_generation_verified"])
         self.assertEqual(len(self.calls), 1)
+
+    def test_runner_env_never_inherits_host_credentials(self):
+        captured = []
+        def capture(_cmd, **kwargs):
+            captured.append(kwargs["env"])
+            return SimpleNamespace(returncode=0, stdout="ok", stderr="")
+        with patch.dict(os.environ, {
+            "GITHUB_TOKEN": "unittest-dummy",
+            "BASE44_API_KEY": "unittest-dummy",
+            "ANTHROPIC_API_KEY": "unittest-dummy",
+        }):
+            result = cycle(self.config, self.state, capture)
+        self.assertEqual(result["completed"], ["a"])
+        self.assertEqual(len(captured), 1)
+        for key in ("GITHUB_TOKEN", "BASE44_API_KEY", "ANTHROPIC_API_KEY"):
+            self.assertNotIn(key, captured[0])
+        self.assertEqual(captured[0]["PYTHONDONTWRITEBYTECODE"], "1")
+        self.assertEqual(captured[0]["PYTHONNOUSERSITE"], "1")
 
     def test_zero_parallel_limit_holds_all_tasks(self):
         self.config["max_parallel"] = 0
