@@ -4,6 +4,15 @@ from pathlib import Path
 
 COMMANDS = {"python-test": [sys.executable, "-m", "unittest", "discover"]}
 
+def _safe_worker_env():
+    """Never hand host tokens, API keys, or other arbitrary env to tests."""
+    allow = ("PATH", "LANG", "LC_ALL", "LC_CTYPE", "TMPDIR", "TZ")
+    limited = {key: os.environ[key] for key in allow if key in os.environ}
+    limited["PYTHONDONTWRITEBYTECODE"] = "1"
+    limited["PYTHONNOUSERSITE"] = "1"
+    return limited
+
+
 def save(path, state):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -204,7 +213,7 @@ def cycle(config, state_path, runner=subprocess.run):
         try:
             completed = runner(COMMANDS[task["kind"]], cwd=config["workspace"],
                                timeout=120, capture_output=True, text=True, check=False,
-                               env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"})
+                               env=_safe_worker_env())
             exit_code = completed.returncode
             ok = exit_code == 0
             detail = (str(completed.stdout or "") + str(completed.stderr or ""))[-3000:]
