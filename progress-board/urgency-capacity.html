@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>開発緊急度・並列計画</title>
+<style>body{font:16px system-ui,sans-serif;max-width:780px;margin:2rem auto;padding:0 1rem;background:#101827;color:#f3f6fc}main{background:#1d293a;padding:1.5rem;border-radius:16px}input[type=range]{width:100%}textarea{width:100%;min-height:260px;box-sizing:border-box;background:#0d1420;color:#e5eef9;border:1px solid #68758b;border-radius:8px;padding:12px;font:13px monospace}button{padding:12px 18px;background:#a9c8ff;color:#101827;border:0;border-radius:8px;font-weight:bold;cursor:pointer}output{font-size:1.5rem}p{line-height:1.6}small{color:#b9c5d8}</style></head>
+<body><main><h1>開発緊急度・並列計画</h1><p>実接続済み担当だけを入力し、無料Pythonを優先して非競合の割当案を作成します。実行・課金・CLAIM登録は行いません。</p>
+<label for="urgency">緊急度 <output id="value">50</output>%</label><input id="urgency" type="range" min="0" max="100" value="50" step="5">
+<p><label for="input">ワーカー・案件・予算（JSON）</label></p>
+<textarea id="input" spellcheck="false">{
+  "max_parallel": 4,
+  "paid_execution_approved": false,
+  "approved_paid_budget": 0,
+  "paid_spent": 0,
+  "reserved_files": ["src/Map.jsx"],
+  "agents": [
+    {"id":"python-1","model":"python","connected":true,"authenticated":true},
+    {"id":"gemini-1","model":"gemini","connected":false,"authenticated":false,"estimated_cost":1}
+  ],
+  "tasks": [
+    {"id":"map","priority":100,"files":["src/Map.jsx"]},
+    {"id":"calendar","priority":80,"files":["tests/calendar.test.js"]}
+  ]
+}</textarea>
+<p><button id="generate" type="button">計画入力JSONを保存</button></p><p id="message" role="status"></p>
+<small>この画面はPythonプランナーの入力作成用です。実際の割当結果は scripts/urgency_capacity_planner.py で算出してください。無料Python実行環境と外部AI接続は別途必要です。</small>
+</main><script>
+const slider=document.querySelector('#urgency'),value=document.querySelector('#value'),input=document.querySelector('#input'),message=document.querySelector('#message');
+slider.addEventListener('input',()=>{value.textContent=slider.value});
+document.querySelector('#generate').addEventListener('click',()=>{
+ try {
+  const obj=JSON.parse(input.value);
+  if(!Array.isArray(obj.agents)||!Array.isArray(obj.tasks))throw Error('agentsとtasksは配列で指定してください');
+  obj.urgency=Number(slider.value);
+  const file=new Blob([JSON.stringify(obj,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(file);const a=document.createElement('a');a.href=url;a.download='urgency-plan-input.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  message.textContent='入力JSONを保存しました。担当の実行や課金は行っていません。';
+ } catch(e){message.textContent='入力エラー: '+e.message}
+});
+</script></body></html>
