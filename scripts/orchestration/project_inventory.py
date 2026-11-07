@@ -93,8 +93,10 @@ def inventory(repos, token):
 
 
 def plan(records, connectors, budget):
-    """Suggest capacity only. Never count unverified connectors as running."""
+    """Suggest capacity only; connector file booleans are untrusted operator claims."""
     pending = sorted(records, key=lambda r: (PRIORITY[r["priority"]], r["repo"], r["number"]))
+    # These booleans arrive from an operator-supplied JSON file, not a live heartbeat API.
+    # They can guide a proposal but cannot certify an executing worker.
     active = [k for k, v in connectors.items() if v.get("authenticated") and v.get("executable") and v.get("verified_by_runtime") and v.get("heartbeat_ok")]
     # Conservative: one proposed worker per distinct repository, bounded by authenticated
     # connectors and explicit budget; no fixed ten-person target.
@@ -102,7 +104,8 @@ def plan(records, connectors, budget):
     slots = min(len(eligible), len(active), max(0, budget))
     return {
         "proposed_parallel_workers": slots,
-        "runtime_attested_connector_types": active,
+        "operator_claimed_capability_types": active,
+        "connector_attestation": "not_verified_by_this_inventory",
         "workers_actually_running": "not_verified",
         "reason": "Capacity suggestion only; CLAIM/file ownership and dependencies must be checked before dispatch",
         "next_cases": pending[:20],
