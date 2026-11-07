@@ -2,7 +2,17 @@
 // The caller MUST validate authenticated execution receipts and the canonical live CLAIM index.
 export function planContinuation({ cases, agents, now }) {
   if (!Array.isArray(cases) || !Array.isArray(agents) || !Number.isFinite(now)) throw Error('invalid-input');
-  const validFiles = value => Array.isArray(value) && value.every(f => typeof f === 'string' && f.length > 0 && f.trim() === f && !f.includes('\0'));
+  // Normalize purely lexical relative paths; real filesystem symlinks are a
+  // separate authenticated worktree validation, never silently assumed safe.
+  const fileKey = file => {
+    if (typeof file !== 'string' || !file || file.trim() !== file ||
+        file.includes('\\0') || file.includes('\\\\') || file.startsWith('/')) return null;
+    const parts = file.split('/');
+    if (parts.includes('..')) return null;
+    const clean = parts.filter(segment => segment && segment !== '.');
+    return clean.length ? clean.join('/') : null;
+  };
+  const validFiles = value => Array.isArray(value) && value.every(f => fileKey(f) !== null);
   // Legacy bare paths conservatively reserve the name across repositories.
   // New repo-qualified claims avoid false collisions between separate repos.
   const validClaimedFiles = value => Array.isArray(value) && value.every(f =>
@@ -11,7 +21,7 @@ export function planContinuation({ cases, agents, now }) {
     typeof f.repo === 'string' && f.repo.trim() === f.repo && f.repo.length > 0 &&
     validFiles([f.path]));
   const conflictsWith = (claim, repo, file) => typeof claim === 'string'
-    ? claim === file : claim.repo === repo && claim.path === file;
+    ? fileKey(claim) === fileKey(file) : claim.repo === repo && fileKey(claim.path) === fileKey(file);
   const counts = new Map();
   for (const a of agents) if (typeof a?.id === 'string' && a.id) counts.set(a.id, (counts.get(a.id) || 0) + 1);
   const duplicates = new Set([...counts].filter(([, count]) => count > 1).map(([id]) => id));
@@ -23,7 +33,7 @@ export function planContinuation({ cases, agents, now }) {
     if (!entry || typeof entry.repo !== 'string' || !entry.repo || !validFiles(entry.changed_files)) continue;
     if (!unique.some(agent => agent.id === entry.agent_id)) continue;
     for (const file of entry.changed_files) {
-      const key = entry.repo + '\0' + file;
+      const key = entry.repo + '\0' + fileKey(file);
       const owners = activeByPath.get(key) || new Set();
       owners.add(index);
       activeByPath.set(key, owners);
@@ -38,7 +48,7 @@ export function planContinuation({ cases, agents, now }) {
     if (!validFiles(c.changed_files)) return {case_id:caseId,decision:'HOLD',reason:'ownership-unverified'};
     if (duplicates.has(c.agent_id)) return {case_id:caseId,decision:'HOLD',reason:'ambiguous-agent-identity'};
     const owner = unique.find(a => a.id === c.agent_id);
-    const keys = c.changed_files.map(f => c.repo + '\0' + f);
+    const keys = c.changed_files.map(f => c.repo + '\0' + fileKey(f));
     if (keys.some(key => (activeByPath.get(key)?.size || 0) > 1)) return {case_id:caseId,decision:'HOLD',reason:'ambiguous-active-owner'};
     if (owner) return {case_id:caseId,decision:'KEEP',owner:c.agent_id};
     if (keys.some(key => activeByPath.has(key))) return {case_id:caseId,decision:'HOLD',reason:'active-owner-conflict'};
