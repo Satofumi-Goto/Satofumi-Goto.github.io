@@ -42,7 +42,14 @@ class RuntimeTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
-        self.state = Path(self.tmp.name) / "state.json"
+        root = Path(self.tmp.name)
+        subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.email", "qa@localhost"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.name", "Isolated QA"], cwd=root, check=True)
+        (root / "source.txt").write_text("initial", encoding="utf-8")
+        subprocess.run(["git", "add", "source.txt"], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-qm", "source fixture"], cwd=root, check=True)
+        self.state = root / ".git" / "state.json"
         self.calls = []
         self.config = {"workspace": self.tmp.name, "agents": [
             {"id": "python", "model": "python", "connected": True, "authenticated": True, "runtime_verified": True},
@@ -54,7 +61,7 @@ class RuntimeTests(unittest.TestCase):
         self.calls.append(cmd)
         return SimpleNamespace(returncode=0, stdout="ok", stderr="")
     def test_concurrent_processes_execute_single_claim(self):
-        marker = str(Path(self.tmp.name) / "runs.log")
+        marker = str(Path(self.tmp.name) / ".git" / "runs.log")
         ctx = multiprocessing.get_context("fork")
         processes = [ctx.Process(target=concurrent_worker, args=(self.tmp.name, str(self.state), marker))
                      for _ in range(3)]
@@ -80,10 +87,10 @@ class RuntimeTests(unittest.TestCase):
         self.assertLess(max(e["started_at"] for e in events),
                         min(e["finished_at"] for e in events))
 
-    def test_unverified_repo_sha_is_not_invented(self):
+    def test_clean_git_sha_is_verified(self):
         result = cycle(self.config, self.state, self.runner)
-        self.assertIsNone(result["events"][0]["repo_sha"])
-        self.assertFalse(result["events"][0]["repo_sha_verified"])
+        self.assertRegex(result["events"][0]["repo_sha"], r"^[0-9a-f]{40}$")
+        self.assertTrue(result["events"][0]["repo_sha_verified"])
         self.assertEqual(result["events"][0]["pid_kind"], "controller")
 
     def test_dirty_git_checkout_never_attests_clean_sha(self):
@@ -98,8 +105,9 @@ class RuntimeTests(unittest.TestCase):
         self.state = root / ".git" / "worker-state.json"
         tracked.write_text("dirty", encoding="utf-8")
         result = cycle(self.config, self.state, self.runner)
-        self.assertIsNone(result["events"][0]["repo_sha"])
-        self.assertFalse(result["events"][0]["repo_sha_verified"])
+        self.assertEqual(result["completed"], [])
+        self.assertEqual(result["events"], [])
+        self.assertEqual(self.calls, [])
 
     def test_checkout_drift_during_execution_blocks_completion(self):
         root = Path(self.tmp.name)
@@ -127,8 +135,35 @@ class RuntimeTests(unittest.TestCase):
         (root / "tracked.txt").write_text("clean", encoding="utf-8")
         subprocess.run(["git", "add", "tracked.txt"], cwd=root, check=True)
         subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
+        self.state = root / "worker-state.json"
         with self.assertRaisesRegex(ValueError, "worker-state-must-be-outside"):
             cycle(self.config, self.state, self.runner)
+
+    def test_non_git_workspace_cannot_execute_or_claim_success(self):
+        import shutil
+        shutil.rmtree(Path(self.tmp.name) / ".git")
+        result = cycle(self.config, self.state, self.runner)
+        self.assertEqual(result["completed"], [])
+        self.assertEqual(result["events"], [])
+        self.assertEqual(self.calls, [])
+
+    def test_source_commit_change_rechecks_tasks_not_old_success(self):
+        root = Path(self.tmp.name)
+        first = cycle(self.config, self.state, self.runner)
+        old_sha = first["events"][0]["repo_sha"]
+        (root / "source.txt").write_text("next generation", encoding="utf-8")
+        subprocess.run(["git", "add", "source.txt"], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-qm", "new generation"], cwd=root, check=True)
+        second = cycle(self.config, self.state, self.runner)
+        self.assertEqual(second["completed"], ["a"])
+        self.assertEqual(len(second["events"]), 2)
+        self.assertNotEqual(second["events"][1]["repo_sha"], old_sha)
+        self.assertEqual(len(self.calls), 2)
+
+    def test_zero_parallel_limit_holds_all_tasks(self):
+        self.config["max_parallel"] = 0
+        self.assertEqual(cycle(self.config, self.state, self.runner)["completed"], [])
+        self.assertEqual(self.calls, [])
 
     def test_unverified_worker_cannot_run(self):
         self.config["agents"][0]["runtime_verified"] = False
