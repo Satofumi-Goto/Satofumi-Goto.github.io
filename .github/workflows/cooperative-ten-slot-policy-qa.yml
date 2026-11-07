@@ -1,0 +1,22 @@
+name: Cooperative development role-slot policy QA
+on:
+  pull_request:
+    paths:
+      - 'progress-board/orchestrator-policy.json'
+      - 'progress-board/cooperative-work-ledger.json'
+      - 'docs/runbooks/cooperative-development-charter.md'
+      - 'tests/operations/cooperative-ten-slot-policy.test.mjs'
+      - '.github/workflows/cooperative-ten-slot-policy-qa.yml'
+permissions:
+  contents: read
+jobs:
+  role-slot-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify ten placeholders, single CLAIM index, and owner-only release guard
+        run: node --test tests/operations/cooperative-ten-slot-policy.test.mjs
