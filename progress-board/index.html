@@ -166,7 +166,7 @@ async function loadCommandIntake(){
     const comments=await response.json();
     if(!Array.isArray(comments))throw new Error("応答形式が不正です");
     state.textContent="指示コメント "+comments.length+"件取得（最新10件まで）。受付件数であり実行件数ではありません。";
-    recent.innerHTML=comments.slice(-5).reverse().map(c=>'<li>'+link(c.html_url,((c.body||"").replace(/\\s+/g," ").slice(0,120)||"指示コメント"))+' <small>'+esc(c.created_at||"")+'</small></li>').join("");
+    recent.innerHTML=comments.slice(-5).reverse().map(c=>'<li>'+link(c.html_url,((c.body||"").replaceAll("\n"," ").replaceAll("\r"," ").slice(0,120)||"指示コメント"))+' <small>'+esc(c.created_at||"")+'</small></li>').join("");
   }catch(e){
     state.textContent="指示受付の自動取得不可（認証・API制限の可能性）: "+e.message+"。GitHub窓口で確認してください。";
     recent.innerHTML="";
@@ -188,7 +188,7 @@ async function loadChatWorkers(){
     document.getElementById("chatBoardSummary").textContent="登録 "+workers.length+"担当 / 実行証拠付き稼働 "+verified.length+"担当 / 未確認 "+workers.filter(w=>w.status==="unverified").length+"担当";
     box.innerHTML=workers.map(w=>{
       const progress=Number.isFinite(w.progress_percent)?Math.max(0,Math.min(100,w.progress_percent)):null;
-      const evidence=(w.evidence||[]).filter(e=>e?.url&&/^https:\\/\\//.test(e.url));
+      const evidence=(w.evidence||[]).filter(e=>e?.url&&String(e.url).startsWith("https://"));
       const running=w.status==="running"&&w.last_observed_at&&evidence.length>0;
       const state=running?"実行証拠あり":w.status==="blocked"?"停止・阻害":"未確認";
       return '<article class="chatCell"><strong>'+esc(w.slot)+'. '+esc(w.title)+'</strong>'+
