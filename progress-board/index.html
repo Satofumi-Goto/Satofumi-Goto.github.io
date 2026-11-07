@@ -52,6 +52,8 @@ footer{margin-top:12px;color:var(--muted);font-size:.75rem}
     <p>どのChatからでも同じGitHub Issueに指示を登録できます。投稿は受付であり、担当Chatの自動起動・作業完了を意味しません。</p>
     <p><a href="https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/92" target="_blank" rel="noopener noreferrer">共通指示窓口 #92 を開く</a> ／ <a href="https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74" target="_blank" rel="noopener noreferrer">担当CLAIM #74 を確認</a></p>
     <p>各Chatで「オーケストレータに指示して」と依頼するときは、#92へのコメント登録を明示してください。進捗・実行証拠はこのボードで確認します。</p>
+    <p id="commandIntakeStatus" aria-live="polite">指示受付状況を確認中…</p>
+    <ol class="queue" id="commandIntakeRecent"></ol>
   </section>
   <section class="orchestrator">
     <h2>自動開発オーケストレータ</h2>
@@ -154,6 +156,22 @@ function render(d){
       '<td>'+ev+'</td></tr>'
   }).join("");
 }
+async function loadCommandIntake(){
+  const state=document.getElementById("commandIntakeStatus");
+  const recent=document.getElementById("commandIntakeRecent");
+  try{
+    const url="https://api.github.com/repos/Satofumi-Goto/Satofumi-Goto.github.io/issues/92/comments?per_page=10";
+    const response=await fetch(url,{headers:{Accept:"application/vnd.github+json"},cache:"no-store"});
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    const comments=await response.json();
+    if(!Array.isArray(comments))throw new Error("応答形式が不正です");
+    state.textContent="指示コメント "+comments.length+"件取得（最新10件まで）。受付件数であり実行件数ではありません。";
+    recent.innerHTML=comments.slice(-5).reverse().map(c=>'<li>'+link(c.html_url,((c.body||"").replace(/\\s+/g," ").slice(0,120)||"指示コメント"))+' <small>'+esc(c.created_at||"")+'</small></li>').join("");
+  }catch(e){
+    state.textContent="指示受付の自動取得不可（認証・API制限の可能性）: "+e.message+"。GitHub窓口で確認してください。";
+    recent.innerHTML="";
+  }
+}
 async function loadChatWorkers(){
   const box=document.getElementById("chatWorkers");
   try{
@@ -192,7 +210,7 @@ async function load(){
     const r=await fetch("status.json?ts="+Date.now(),{cache:"no-store"});
     if(!r.ok)throw new Error("HTTP "+r.status);
     render(await r.json());
-    await loadChatWorkers();
+    await Promise.all([loadChatWorkers(),loadCommandIntake()]);
   }catch(e){
     document.getElementById("stale").textContent="⚠ 状態データの取得に失敗: "+e.message;
   }
