@@ -18,12 +18,12 @@ h1{font-size:1.45rem;margin:0 0 6px}.sub{color:var(--muted);font-size:.9rem}.sta
 section.board{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .legend{display:flex;gap:8px;flex-wrap:wrap}.warn{font-size:.8rem;color:var(--red);font-weight:700}
-.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+.chatGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0}.chatCell{border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0;background:#fafbfc}.chatCell strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chatCell p{font-size:.78rem;overflow-wrap:anywhere}.chatCell small{color:var(--muted)}.chatCell progress{width:100%;height:8px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
 th{position:sticky;top:0;background:#fafbfc;font-size:.77rem;color:var(--muted);z-index:1}td{font-size:.82rem}tr:last-child td{border-bottom:0}
 .owner{font-weight:700;min-width:210px}.evidence{min-width:360px}.next{min-width:330px}
 a{color:#0b63ce;text-decoration:none}a:hover{text-decoration:underline}
 footer{margin-top:12px;color:var(--muted);font-size:.75rem}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.apps,.fedopGrid{grid-template-columns:1fr}.stamp{text-align:left}}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.apps,.fedopGrid,.chatGrid{grid-template-columns:1fr}.stamp{text-align:left}}
 </style>
 </head>
 <body>
@@ -62,6 +62,12 @@ footer{margin-top:12px;color:var(--muted);font-size:.75rem}
     <ol class="queue" id="fedOperationBlocks"></ol>
   </section>
 
+  <section class="orchestrator" aria-label="10担当Chat進捗" id="chatBoard">
+    <h2>10担当Chatの進捗・実行証拠</h2>
+    <p>Chatの登録と実稼働は別です。最新の返信・GitHub証拠がない担当は「未確認」と表示します。</p>
+    <p id="chatBoardSummary">担当情報を読み込み中…</p>
+    <div class="chatGrid" id="chatWorkers"></div>
+  </section>
   <div class="apps" id="apps"></div>
 
   <section class="board">
@@ -142,11 +148,39 @@ function render(d){
       '<td>'+ev+'</td></tr>'
   }).join("");
 }
+async function loadChatWorkers(){
+  const box=document.getElementById("chatWorkers");
+  try{
+    const response=await fetch("chat-workers.json?ts="+Date.now(),{cache:"no-store"});
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    const data=await response.json();
+    const workers=Array.isArray(data.workers)?data.workers:[];
+    const verified=workers.filter(w=>w.status==="running"&&w.last_observed_at&&Array.isArray(w.evidence)&&w.evidence.length);
+    document.getElementById("chatBoardSummary").textContent="登録 "+workers.length+"担当 / 実行証拠付き稼働 "+verified.length+"担当 / 未確認 "+workers.filter(w=>w.status==="unverified").length+"担当";
+    box.innerHTML=workers.map(w=>{
+      const progress=Number.isFinite(w.progress_percent)?Math.max(0,Math.min(100,w.progress_percent)):null;
+      const evidence=(w.evidence||[]).filter(e=>e?.url&&/^https:\\/\\//.test(e.url));
+      const running=w.status==="running"&&w.last_observed_at&&evidence.length>0;
+      const state=running?"実行証拠あり":w.status==="blocked"?"停止・阻害":"未確認";
+      return '<article class="chatCell"><strong>'+esc(w.slot)+'. '+esc(w.title)+'</strong>'+
+        '<p><span class="badge '+(running?"green":w.status==="blocked"?"red":"yellow")+'">'+esc(state)+'</span></p>'+
+        '<p>'+esc(w.task||"案件未確認")+'</p>'+
+        (progress===null?'<small>進捗率: 未計測</small>':'<progress max="100" value="'+progress+'"></progress><small>'+progress+'%（根拠要確認）</small>')+
+        '<p><small>最終観測: '+esc(w.last_observed_at||"未確認")+'</small></p>'+
+        '<p>'+link(w.chat_url,"担当Chatを開く")+'</p>'+
+        evidence.map(e=>'<p>'+link(e.url,e.text||"GitHub証拠")+'</p>').join("")+'</article>'
+    }).join("");
+  }catch(e){
+    document.getElementById("chatBoardSummary").textContent="⚠ 担当データ取得失敗: "+e.message;
+    box.innerHTML="";
+  }
+}
 async function load(){
   try{
     const r=await fetch("status.json?ts="+Date.now(),{cache:"no-store"});
     if(!r.ok)throw new Error("HTTP "+r.status);
     render(await r.json());
+    await loadChatWorkers();
   }catch(e){
     document.getElementById("stale").textContent="⚠ 状態データの取得に失敗: "+e.message;
   }
