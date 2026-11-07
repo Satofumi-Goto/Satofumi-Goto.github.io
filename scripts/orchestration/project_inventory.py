@@ -17,6 +17,7 @@ import urllib.request
 DEFAULT_REPOS = (
     "Satofumi-Goto/seneschal",
     "Satofumi-Goto/federation-portal",
+    "Satofumi-Goto/federation-runtime",
     "Satofumi-Goto/mobility-business-lab",
     "Satofumi-Goto/life-transaction-console",
     "Satofumi-Goto/fleet-operations-console",
