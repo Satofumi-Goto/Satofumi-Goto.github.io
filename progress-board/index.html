@@ -70,8 +70,8 @@ footer{margin-top:12px;color:var(--muted);font-size:.75rem}
     <ol class="queue" id="fedOperationBlocks"></ol>
   </section>
 
-  <section class="orchestrator" aria-label="10担当Chat進捗" id="chatBoard">
-    <h2>10担当Chatの進捗・実行証拠</h2>
+  <section class="orchestrator" aria-label="担当Chat進捗" id="chatBoard">
+    <h2>担当別Chatの進捗・実行証拠</h2>
     <p>Chatの登録と実稼働は別です。最新の返信・GitHub証拠がない担当は「未確認」と表示します。</p>
     <p id="chatBoardSummary">担当情報を読み込み中…</p>
     <div class="chatGrid" id="chatWorkers"></div><h3>実行基盤・モデル別接続</h3><p>Python / Codex / Claude / GeminiはChatとは別の実行主体です。実行ログが確認されるまで未接続と表示します。</p><div class="chatGrid" id="executorWorkers"></div>
@@ -185,13 +185,13 @@ async function loadChatWorkers(){
       return '<article class="chatCell"><strong>'+esc(e.name)+'</strong><p><span class="badge '+(verified?'green':'yellow')+'">'+(verified?'接続証拠あり':'未接続・未検証')+'</span></p><p>方式: '+esc(e.executor_type)+'</p><p>案件: '+esc(e.task||'未割当')+'</p><small>最終観測: '+esc(e.last_observed_at||'なし')+'</small></article>';
     }).join("");
     const verified=workers.filter(w=>w.status==="running"&&w.last_observed_at&&Array.isArray(w.evidence)&&w.evidence.length);
-    document.getElementById("chatBoardSummary").textContent="登録 "+workers.length+"担当 / 実行証拠付き稼働 "+verified.length+"担当 / 未確認 "+workers.filter(w=>w.status==="unverified").length+"担当";
+    document.getElementById("chatBoardSummary").textContent="登録 "+workers.length+"件 / 実行証拠付き稼働 "+verified.length+"担当 / 未確認 "+workers.filter(w=>w.status==="unverified").length+"担当";
     box.innerHTML=workers.map(w=>{
       const progress=Number.isFinite(w.progress_percent)?Math.max(0,Math.min(100,w.progress_percent)):null;
       const evidence=(w.evidence||[]).filter(e=>e?.url&&String(e.url).startsWith("https://"));
       const running=w.status==="running"&&w.last_observed_at&&evidence.length>0;
       const state=running?"実行証拠あり":w.status==="blocked"?"停止・阻害":"未確認";
-      return '<article class="chatCell"><strong>'+esc(w.slot)+'. '+esc(w.title)+'</strong>'+
+      return '<article class="chatCell"><strong>'+esc(w.title)+'</strong>'+
         '<p><span class="badge '+(running?"green":w.status==="blocked"?"red":"yellow")+'">'+esc(state)+'</span></p>'+
         '<p>実行方式: '+esc(w.executor_type||"未分類")+(w.executor_verified?"（接続確認）":"（未検証）")+'</p>'+
         '<p>'+esc(w.task||"案件未確認")+'</p>'+
