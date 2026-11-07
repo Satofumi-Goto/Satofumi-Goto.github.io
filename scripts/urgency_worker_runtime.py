@@ -130,8 +130,12 @@ def _repo_sha(workspace):
         result = subprocess.run(["git", "-C", workspace, "rev-parse", "--verify", "HEAD"],
             capture_output=True, text=True, timeout=5, check=False)
         sha = result.stdout.strip()
-        return sha if (result.returncode == 0 and len(sha) == 40
-                       and all(char in "0123456789abcdef" for char in sha.lower())) else None
+        if result.returncode != 0 or len(sha) != 40 or any(
+                char not in "0123456789abcdef" for char in sha.lower()):
+            return None
+        dirty = subprocess.run(["git", "-C", workspace, "status", "--porcelain"],
+            capture_output=True, text=True, timeout=5, check=False)
+        return sha if dirty.returncode == 0 and not dirty.stdout.strip() else None
     except (OSError, subprocess.TimeoutExpired):
         return None
 
@@ -166,6 +170,8 @@ def cycle(config, state_path, runner=subprocess.run):
             detail = (str(completed.stdout or "") + str(completed.stderr or ""))[-3000:]
         except (OSError, subprocess.TimeoutExpired) as exc:
             ok, detail, exit_code = False, str(exc), None
+        if source_sha and _repo_sha(config["workspace"]) != source_sha:
+            ok, detail = False, "workspace-SHA-or-cleanliness-drift"
         _commit(state_path, agent, claim, (ok, detail, exit_code))
     return _read_state(state_path)
 
