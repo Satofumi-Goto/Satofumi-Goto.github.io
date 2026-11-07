@@ -7,6 +7,8 @@ import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 from scripts.urgency_worker_runtime import cycle
+# Execute the independent alias/symlink regression class in this existing test job.
+from test_urgency_worker_file_alias_contract import WorkerFileAliasContractTests
 
 def concurrent_worker(workspace, state_path, marker):
     from scripts.urgency_worker_runtime import cycle
