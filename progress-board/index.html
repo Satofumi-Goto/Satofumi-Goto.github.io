@@ -23,6 +23,7 @@ th{position:sticky;top:0;background:#fafbfc;font-size:.77rem;color:var(--muted);
 .owner{font-weight:700;min-width:210px}.evidence{min-width:360px}.next{min-width:330px}
 a{color:#0b63ce;text-decoration:none}a:hover{text-decoration:underline}
 footer{margin-top:12px;color:var(--muted);font-size:.75rem}
+details{margin-top:5px}details summary{font-size:.76rem;color:var(--blue);cursor:pointer}details>p{overflow-wrap:anywhere} .shortline{overflow-wrap:anywhere} .oldData{color:var(--muted);font-size:.78rem}
 @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.apps,.fedopGrid,.chatGrid{grid-template-columns:1fr}.stamp{text-align:left}}
 </style>
 </head>
@@ -108,21 +109,24 @@ const statusMeta={
 };
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function link(url,label){return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>':esc(label)}
+function shortText(value,n=72){const t=String(value??'').replace(/\s+/g,' ').trim();return t.length>n?t.slice(0,n-1)+'…':t}
 function render(d){
   const dt=new Date(d.generated_at);
   document.getElementById("updated").textContent=isNaN(dt)?d.generated_at:dt.toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
+  const age=(Date.now()-dt.getTime())/60000;
+  const outdated=!Number.isFinite(age)||age>90;
   const rows=d.rows||[];
   const running=rows.filter(r=>r.status==="green"||r.status==="orange").length;
-  document.getElementById("mRunning").textContent=running;
-  document.getElementById("mWaiting").textContent=rows.filter(r=>r.status==="yellow").length;
-  document.getElementById("mBlocked").textContent=rows.filter(r=>r.status==="red").length;
+  document.getElementById("mRunning").textContent=outdated?"要更新":running;
+  document.getElementById("mWaiting").textContent=outdated?"—":rows.filter(r=>r.status==="yellow").length;
+  document.getElementById("mBlocked").textContent=outdated?"—":rows.filter(r=>r.status==="red").length;
   document.getElementById("mDone").textContent=d.completed_total??0;
   const o=d.orchestrator||{};
-  document.getElementById("mAuto").textContent=o.enabled?"稼働中":"停止";
+  document.getElementById("mAuto").textContent=outdated?"要再確認":(o.enabled?"稼働中":"停止");
   const ciLabel={infrastructure_blocked:"CI基盤停止",quota_blocked:"CI利用枠停止"}[o.ci_state]||(o.ci_state||"確認中");
   const ciBlocked=["infrastructure_blocked","quota_blocked"].includes(o.ci_state);
   document.getElementById("orchestratorState").innerHTML="<strong>"+esc(o.enabled?"自動開発: 稼働中":"自動開発: 停止")+"</strong> / "+(ciBlocked?'<span class="ciBlocked">'+esc(ciLabel)+'</span>':esc(ciLabel))+" / "+esc(o.cadence||"");
-  document.getElementById("orchestratorAction").textContent="現在: "+(o.current_action||"次アクション判定中");
+  document.getElementById("orchestratorAction").textContent=(outdated?"前回の記録: ":"現在: ")+shortText(o.current_action||"次アクション判定中",100);
   document.getElementById("actionQueue").innerHTML=(d.action_queue||[]).slice(0,5).map(q=>"<li><strong>#"+esc(q.priority)+" "+esc(q.owner)+"</strong> — "+esc(q.action)+(q.blocked_by?.length?" <span class=\"ciBlocked\">("+esc(q.blocked_by.join(" / "))+")</span>":"")+"</li>").join("");
   const f=d.fed_actual_operation;
   const fbox=document.getElementById("fedOperation");
@@ -136,24 +140,24 @@ function render(d){
     document.getElementById("fedOperationGate").innerHTML="<strong>完了条件:</strong> "+esc(f.completion_gate||"");
     document.getElementById("fedOperationBlocks").innerHTML=(f.blocked_by||[]).map(x=>"<li>"+esc(x)+"</li>").join("");
   }else fbox.hidden=true;
-  const age=(Date.now()-dt.getTime())/60000;
-  document.getElementById("stale").textContent=age>90?"⚠ データが90分以上更新されていません":"";
+  document.getElementById("stale").textContent=outdated?"⚠ 90分超の古い記録です。現在の停止件数・稼働者数ではありません":"";
   document.getElementById("apps").innerHTML=(d.apps||[]).map(a=>{
     const s=statusMeta[a.status]||statusMeta.yellow;
     return '<article class="app"><h2>'+esc(a.name)+'</h2>'+
-      '<p><span class="badge '+s.cls+'">'+s.label+'</span></p>'+
-      '<p>最新: <span class="mono">'+esc(a.head||"–")+'</span></p>'+
-      '<p>'+esc(a.summary||"")+'</p>'+
+      '<p><span class="badge '+(outdated?"done":s.cls)+'">'+(outdated?"前回記録（要再確認）":s.label)+'</span></p>'+
+      '<p class="shortline">'+esc(shortText(a.summary||"確認記録なし",70))+'</p>'+
+      '<details><summary>詳細・版情報</summary><p>'+esc(a.summary||"")+'</p>'+
+      '<p>SHA: <span class="mono">'+esc(a.head||"–")+'</span></p></details>'+
       '<p>'+link(a.url,"GitHubを開く")+'</p></article>'
   }).join("");
   document.getElementById("rows").innerHTML=rows.map(r=>{
     const s=statusMeta[r.status]||statusMeta.yellow;
     const ev=(r.evidence||[]).map(x=>x.url?link(x.url,x.text):esc(x.text)).join("<br>");
     return '<tr><td class="owner">'+esc(r.owner)+'</td>'+
-      '<td><span class="badge '+s.cls+'">'+s.label+'</span></td>'+
-      '<td class="evidence">'+esc(r.current||"")+'</td>'+
-      '<td class="next">'+esc(r.next||"")+'</td>'+
-      '<td>'+ev+'</td></tr>'
+      '<td><span class="badge '+(outdated?"done":s.cls)+'">'+(outdated?"要最新確認":s.label)+'</span></td>'+
+      '<td class="evidence"><span class="shortline">'+esc(shortText(r.current||"調査待ち",70))+'</span><details><summary>説明</summary><p>'+esc(r.current||"")+'</p></details></td>'+
+      '<td class="next"><span class="shortline">'+esc(shortText(r.next||"次の対応を確認",70))+'</span><details><summary>手順</summary><p>'+esc(r.next||"")+'</p></details></td>'+
+      '<td><details><summary>根拠</summary>'+ev+'</details></td></tr>'
   }).join("");
 }
 async function loadCommandIntake(){
