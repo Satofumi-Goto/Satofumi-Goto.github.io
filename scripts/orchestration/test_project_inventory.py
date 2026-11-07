@@ -79,6 +79,18 @@ class InventoryTests(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError, "invalid-connector-capabilities"):
                     mod.plan(cases, malformed, 2)
 
+    def test_connector_attestation_flags_require_real_booleans(self):
+        cases = [{"repo": "r1", "number": 1, "priority": "P0"}]
+        flags = ("authenticated", "executable", "verified_by_runtime", "heartbeat_ok")
+        valid = {flag: True for flag in flags}
+        self.assertEqual(mod.plan(cases, {"codex": valid}, 1)["proposed_parallel_workers"], 1)
+        for flag in flags:
+            for invalid in ("false", "true", 1, 0, None, []):
+                with self.subTest(flag=flag, invalid=invalid):
+                    malformed = dict(valid, **{flag: invalid})
+                    with self.assertRaisesRegex(ValueError, "invalid-connector-capabilities"):
+                        mod.plan(cases, {"codex": malformed}, 1)
+
     def test_worker_budget_fails_closed(self):
         for invalid in (-1, 101, True, "2"):
             with self.subTest(invalid=invalid):
