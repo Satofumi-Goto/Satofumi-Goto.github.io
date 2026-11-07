@@ -17,7 +17,7 @@ DEFAULT_REPOS = (
     "Satofumi-Goto/seneschal",
     "Satofumi-Goto/federation-portal",
     "Satofumi-Goto/mobility-business-lab",
-    "Satofumi-Goto/activity-console",
+    "Satofumi-Goto/life-transaction-console",
     "Satofumi-Goto/fleet-operations-console",
     "Satofumi-Goto/service-hub-console",
     "Satofumi-Goto/urban-operation-console",
