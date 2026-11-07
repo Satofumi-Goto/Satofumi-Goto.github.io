@@ -3,6 +3,7 @@ import unittest
 import multiprocessing
 import time
 import json
+import subprocess
 from pathlib import Path
 from types import SimpleNamespace
 from scripts.urgency_worker_runtime import cycle
@@ -84,6 +85,37 @@ class RuntimeTests(unittest.TestCase):
         self.assertIsNone(result["events"][0]["repo_sha"])
         self.assertFalse(result["events"][0]["repo_sha_verified"])
         self.assertEqual(result["events"][0]["pid_kind"], "controller")
+
+    def test_dirty_git_checkout_never_attests_clean_sha(self):
+        root = Path(self.tmp.name)
+        subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.email", "qa@localhost"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.name", "Isolated QA"], cwd=root, check=True)
+        tracked = root / "tracked.txt"
+        tracked.write_text("clean", encoding="utf-8")
+        subprocess.run(["git", "add", "tracked.txt"], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
+        tracked.write_text("dirty", encoding="utf-8")
+        result = cycle(self.config, self.state, self.runner)
+        self.assertIsNone(result["events"][0]["repo_sha"])
+        self.assertFalse(result["events"][0]["repo_sha_verified"])
+
+    def test_checkout_drift_during_execution_blocks_completion(self):
+        root = Path(self.tmp.name)
+        subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.email", "qa@localhost"], cwd=root, check=True)
+        subprocess.run(["git", "config", "user.name", "Isolated QA"], cwd=root, check=True)
+        tracked = root / "tracked.txt"
+        tracked.write_text("clean", encoding="utf-8")
+        subprocess.run(["git", "add", "tracked.txt"], cwd=root, check=True)
+        subprocess.run(["git", "commit", "-qm", "fixture"], cwd=root, check=True)
+        def mutate_during_run(*args, **kwargs):
+            tracked.write_text("changed", encoding="utf-8")
+            return SimpleNamespace(returncode=0, stdout="passed", stderr="")
+        result = cycle(self.config, self.state, mutate_during_run)
+        self.assertEqual(result["completed"], [])
+        self.assertIn("a", result["failed"])
+        self.assertEqual(result["events"][0]["detail"], "workspace-SHA-or-cleanliness-drift")
 
     def test_unverified_worker_cannot_run(self):
         self.config["agents"][0]["runtime_verified"] = False
