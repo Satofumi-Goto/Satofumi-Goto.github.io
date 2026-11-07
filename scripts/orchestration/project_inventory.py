@@ -137,7 +137,12 @@ def coordination_inbox(token):
 
 def plan(records, connectors, budget):
     """Suggest capacity only; connector file booleans are untrusted operator claims."""
-    if not isinstance(connectors, dict) or any(k not in AI_TYPES or not isinstance(v, dict) for k, v in connectors.items()):
+    if not isinstance(connectors, dict) or any(
+        k not in AI_TYPES or not isinstance(v, dict) or
+        any(type(v.get(flag, False)) is not bool for flag in
+            ("authenticated", "executable", "verified_by_runtime", "heartbeat_ok"))
+        for k, v in connectors.items()
+    ):
         raise ValueError("invalid-connector-capabilities")
     if type(budget) is not int or not 0 <= budget <= 100:
         raise ValueError("invalid-worker-budget")
@@ -177,7 +182,12 @@ def main():
     if args.connectors:
         with open(args.connectors, encoding="utf-8") as stream:
             connectors = json.load(stream)
-        if not isinstance(connectors, dict) or any(k not in AI_TYPES or not isinstance(v, dict) for k, v in connectors.items()):
+        if not isinstance(connectors, dict) or any(
+        k not in AI_TYPES or not isinstance(v, dict) or
+        any(type(v.get(flag, False)) is not bool for flag in
+            ("authenticated", "executable", "verified_by_runtime", "heartbeat_ok"))
+        for k, v in connectors.items()
+    ):
             ap.error("Invalid connector capabilities")
     report = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
