@@ -25,6 +25,7 @@ DEFAULT_REPOS = (
 )
 PRIORITY = {"P0": 0, "P1": 1, "P2": 2, "P3": 3}
 AI_TYPES = ("python", "gemini", "chat", "codex", "claude")
+COORDINATION_REPO = "Satofumi-Goto/Satofumi-Goto.github.io"
 
 
 def fetch(path, token):
@@ -92,6 +93,46 @@ def inventory(repos, token):
     return records
 
 
+def coordination_inbox(token):
+    """Read both shared issue threads; never turn a comment into an executable task.
+
+    #92 is the request inbox. #74 is the CLAIM source, but a comment count is
+    NOT a verified lock or proof of agent execution. Another authenticated
+    component must reconcile live owners/files before dispatch.
+    """
+    intake = pages("repos/" + COORDINATION_REPO + "/issues/92/comments", token)
+    claims = pages("repos/" + COORDINATION_REPO + "/issues/74/comments", token)
+    requests = []
+    for row in intake:
+        if not isinstance(row, dict):
+            raise ValueError("invalid-intake-comment")
+        ident = row.get("id")
+        if type(ident) is not int or ident < 1:
+            raise ValueError("invalid-intake-id")
+        author = row.get("user") or {}
+        if not isinstance(author, dict):
+            raise ValueError("invalid-intake-author")
+        title = str(row.get("body") or "").splitlines()
+        requests.append({
+            "id": ident,
+            "url": "https://github.com/" + COORDINATION_REPO +
+                   "/issues/92#issuecomment-" + str(ident),
+            "author": str(author.get("login") or "unknown")[:80],
+            "summary": (title[0].strip() if title else "")[:120],
+            "created_at": row.get("created_at"),
+            "triage_state": "unreviewed",
+            "execution_authorized": False,
+        })
+    return {
+        "claim_source": "https://github.com/" + COORDINATION_REPO + "/issues/74",
+        "claim_comments_seen": len(claims),
+        "claim_file_ownership_verified": False,
+        "intake_source": "https://github.com/" + COORDINATION_REPO + "/issues/92",
+        "intake_comments_seen": len(intake),
+        "intake_requests": requests,
+    }
+
+
 def plan(records, connectors, budget):
     """Suggest capacity only; connector file booleans are untrusted operator claims."""
     pending = sorted(records, key=lambda r: (PRIORITY[r["priority"]], r["repo"], r["number"]))
@@ -135,6 +176,7 @@ def main():
     }
     try:
         report["cases"] = inventory(args.repos, token)
+        report["coordination"] = coordination_inbox(token)
     except (urllib.error.URLError, KeyError, ValueError, RuntimeError) as exc:
         print("GitHub inventory failed: " + type(exc).__name__, file=sys.stderr)
         return 2
