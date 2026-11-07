@@ -83,3 +83,25 @@ test('different files and repositories stay independently eligible for handoff',
   assert.equal(result[0].decision,'KEEP');
   assert.equal(result[1].decision,'HANDOFF_PROPOSED');
 });
+
+test('repo-qualified claims do not falsely block an unrelated repository',()=>{
+  const source={...item,case_id:'other#stalled',repo:'other'};
+  const agent={id:'new',authenticated:true,connected:true,lastRunAt:now,
+    claimedFiles:[{repo:'another',path:'a.js'}]};
+  assert.equal(planContinuation({cases:[source],agents:[agent],now})[0].decision,'HANDOFF_PROPOSED');
+});
+test('repo-qualified claims still reject a real same-repository collision',()=>{
+  const agent={id:'new',authenticated:true,connected:true,lastRunAt:now,
+    claimedFiles:[{repo:'repo',path:'a.js'}]};
+  assert.equal(planContinuation({cases:[item],agents:[agent],now})[0].reason,'handoff-claim-collision');
+});
+test('legacy unqualified file claims remain conservative until migrated',()=>{
+  const agent={id:'new',authenticated:true,connected:true,lastRunAt:now,claimedFiles:['a.js']};
+  const foreign={...item,repo:'another',case_id:'another#stalled'};
+  assert.equal(planContinuation({cases:[foreign],agents:[agent],now})[0].reason,'handoff-claim-collision');
+});
+test('malformed repo-qualified claims fail closed',()=>{
+  const agent={id:'new',authenticated:true,connected:true,lastRunAt:now,
+    claimedFiles:[{repo:'repo',path:''}]};
+  assert.equal(planContinuation({cases:[item],agents:[agent],now})[0].reason,'ownership-unverified');
+});
