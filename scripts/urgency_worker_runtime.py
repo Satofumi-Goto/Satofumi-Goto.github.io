@@ -51,6 +51,19 @@ def _alive(pid):
         return True
 
 
+def _claim_file_key(workspace, relative_path):
+    """Canonical repo-relative key; block traversal and symlink escapes."""
+    if (not isinstance(relative_path, str) or not relative_path
+            or Path(relative_path).is_absolute()
+            or ".." in Path(relative_path).parts):
+        raise ValueError("invalid-claim-file")
+    root = Path(workspace).resolve()
+    real = (root / relative_path).resolve()
+    if not real.is_relative_to(root) or real == root:
+        raise ValueError("claim-file-outside-workspace")
+    return real.relative_to(root).as_posix()
+
+
 def _claim(config, state_path, agent, max_attempts):
     def mutate(state):
         now = time.time()
@@ -63,9 +76,9 @@ def _claim(config, state_path, agent, max_attempts):
                 state["events"].append({"task": task_id, "success": False,
                     "reason": "abandoned-lease-recovered", "at": now})
                 del state["inflight"][task_id]
-        occupied = set(config.get("reserved_files", []))
+        occupied = {_claim_file_key(config["workspace"], f) for f in config.get("reserved_files", [])}
         for old in state["inflight"].values():
-            occupied.update(old["files"])
+            occupied.update(_claim_file_key(config["workspace"], f) for f in old["files"])
         if any(old["agent"] == agent["id"] for old in state["inflight"].values()):
             return None
         for task in sorted(config["tasks"], key=lambda t: (-t.get("priority", 0), t["id"])):
@@ -74,16 +87,20 @@ def _claim(config, state_path, agent, max_attempts):
                     not isinstance(x, str) or not x or x.startswith("/")
                     or ".." in Path(x).parts for x in files):
                 continue
+            try:
+                keys = {_claim_file_key(config["workspace"], f) for f in files}
+            except ValueError:
+                continue
             task_id = task["id"]
             if (task_id in state["completed"] or task_id in state["inflight"]
                 or state["attempts"].get(task_id, 0) >= max_attempts
-                or set(files) & occupied or task.get("blocked")
+                or keys & occupied or task.get("blocked")
                 or task.get("claimed_by") not in (None, agent["id"])
                 or task.get("kind") not in COMMANDS):
                 continue
             token = f"{os.getpid()}:{time.time_ns()}:{task_id}"
             state["inflight"][task_id] = {"token": token, "agent": agent["id"],
-                "files": sorted(set(files)), "controller_pid": os.getpid(),
+                "files": sorted(keys), "controller_pid": os.getpid(),
                 "host": os.uname().nodename, "started_at": now,
                 "workspace": config["workspace"]}
             state["attempts"][task_id] = state["attempts"].get(task_id, 0) + 1
