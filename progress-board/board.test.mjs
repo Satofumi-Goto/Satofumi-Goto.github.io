@@ -44,3 +44,35 @@ test('stale snapshot hides misleading live blocked counts and collapses details'
   assert.doesNotMatch(get('rows').innerHTML,/<img/);
   assert.match(get('rows').innerHTML,/https:\/\/github.com\/example/);
 });
+
+test('stale or unverified worker receipts do not count as running',()=>{
+  const prelude=script.slice(0,script.indexOf('function render(d)'));
+  const now=new Date(Date.now()-60_000).toISOString();
+  const receipt={signature_verified:true,authenticated:true,pid:12,repo_sha:'a'.repeat(40),
+    evidence_url:'https://github.com/example/receipt',heartbeat_at:now};
+  const worker={status:'running',executor_verified:true,
+    runtime_source:'authenticated_execution_api',runtime_receipt:receipt};
+  const verify=w=>runInNewContext(prelude+';hasFreshExecutionProof(worker)',{worker:w});
+  assert.equal(verify(worker),true);
+  assert.equal(verify({...worker,executor_verified:false}),false);
+  assert.equal(verify({...worker,runtime_receipt:{...receipt,heartbeat_at:'2020-01-01T00:00:00Z'}}),false);
+  assert.equal(verify({...worker,runtime_source:'manual_json'}),false);
+  assert.equal(verify({...worker,runtime_receipt:{...receipt,signature_verified:false}}),false);
+});
+
+test('common instruction intake paginates past first ten and fails closed if truncated',async()=>{
+  const prelude=script.slice(0,script.indexOf('function render(d)'));
+  const pages=[];
+  const mockFetch=async url=>{
+    pages.push(url);
+    return {ok:true,json:async()=>url.includes('page=1')?
+      Array.from({length:100},(_,i)=>({id:i})):
+      Array.from({length:15},(_,i)=>({id:i+100}))};
+  };
+  const all=await runInNewContext(prelude+';fetchAllIntakeComments(mockFetch,3)',{mockFetch});
+  assert.equal(all.length,115);
+  assert.equal(all[114].id,114);
+  assert.equal(pages.length,2);
+  const full=async()=>({ok:true,json:async()=>Array.from({length:100},(_,i)=>({id:i}))});
+  await assert.rejects(runInNewContext(prelude+';fetchAllIntakeComments(full,1)',{full}),/全件取得できない/);
+});
