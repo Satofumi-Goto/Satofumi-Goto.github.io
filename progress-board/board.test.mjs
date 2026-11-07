@@ -65,7 +65,7 @@ test('common instruction intake paginates past first ten and fails closed if tru
   const pages=[];
   const mockFetch=async url=>{
     pages.push(url);
-    return {ok:true,json:async()=>url.includes('page=1')?
+    return {ok:true,json:async()=>new URL(url).searchParams.get('page')==='1'?
       Array.from({length:100},(_,i)=>({id:i})):
       Array.from({length:15},(_,i)=>({id:i+100}))};
   };
