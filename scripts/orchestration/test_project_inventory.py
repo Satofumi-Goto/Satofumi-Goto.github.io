@@ -20,7 +20,11 @@ class InventoryTests(unittest.TestCase):
         connectors = {"codex": {"authenticated": True, "executable": True, "verified_by_runtime": True, "heartbeat_ok": True},
                       "claude": {"authenticated": True, "executable": True},
                       "gemini": {"authenticated": False, "executable": True}}
-        self.assertEqual(mod.plan(cases, connectors, 10)["proposed_parallel_workers"], 2)
+        # Only Codex declares the four required capability flags; Claude is not verified.
+        self.assertEqual(mod.plan(cases, connectors, 10)["proposed_parallel_workers"], 1)
+        self.assertEqual(mod.plan(cases, connectors, 10)["operator_claimed_capability_types"], ["codex"])
+        self.assertEqual(mod.plan(cases, connectors, 10)["connector_attestation"], "not_verified_by_this_inventory")
+        self.assertEqual(mod.plan(cases, connectors, 10)["workers_actually_running"], "not_verified")
         self.assertEqual(mod.plan(cases, connectors, 1)["proposed_parallel_workers"], 1)
         self.assertEqual(mod.plan(cases, {}, 10)["proposed_parallel_workers"], 0)
 
