@@ -29,7 +29,7 @@
 1. 対象PRを非draftとし、作業対象リポジトリのmainを直前に再取得する。変更ファイルの競合・全文置換・大量削除・意図しないProvider／Router／地図基盤の変更を検査する。main直接pushは禁止。
 2. PR本文またはコメントに **PR URL／厳密なHEAD SHA／main SHA／対象ファイル／Root Cause・Impact・Validation・Revert／テスト・ビルド・実ブラウザ結果（できない場合はNOT VERIFIED）／公開状態**を明示する。ソースの検査を別人のレビューと呼ばない。
 3. オーナーの明示承認が本会話・IssueまたはGitHub上に記録されていること。保護ファイルは従来通り、**そのHEAD SHAに一致する`protected-approved-<SHA先頭12文字>`ラベル**と、GitHubが確認できるwrite/maintain/admin権限者のラベル付与イベントが必須。HEADを更新した場合は保護承認も再取得する。
-4. 同HEADのローカル品質ゲート／ネイティブホストビルド／必要なブラウザ検証が実施されること。GitHub Actionsは再有効化・手動実行しない。ビルドや検証の欠落を過去の別SHA成功で補ってはならず、未確認ならHOLD。
+4. 同HEADのローカル品質ゲート／ネイティブホストビルド／必要なブラウザ検証が実施されること。2026-11-08に本人が明示許可した`Satofumi-Goto/federation-portal`の検証専用GitHub Actionsのみ、月額90米ドルの停止上限、同HEAD確認、費用・シークレット・実行権限の事前照合を条件に利用できる。他リポジトリのActions再有効化、無承認のworkflow修正、公開・有料AIのActions実行は禁止する。ビルドや検証の欠落を過去の別SHA成功で補ってはならず、未確認ならHOLD。
 5. Secrets、認証・権限拡張、請求・予算、不可逆データ変更、外部取引／送信等は従来通り個別・明示的なオーナー承認が必須。単独方式で承認省略・安全チェック無効化・保護ルール変更をしない。GitHubの実際のbranch protection／rulesetが禁止する操作も回避しない。
 6. マージ後も公開は別ゲート。本番Publish・Deploy・DNS・認証切替は既存のオーナー専任方針を維持し、**マージ済みと公開済みを混同しない**。公開SHA／稼働API／Map・Calendar・予約・配車のブラウザE2Eを検証してから完了とする。
 

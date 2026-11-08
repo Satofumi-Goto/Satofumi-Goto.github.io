@@ -73,7 +73,7 @@
       "state": "owner_reported_actions_reenabled_pending_live_budget_verification",
       "periodic_rerun": false,
       "recovery_evidence": [
-        "Owner explicitly confirmed Actions available on 2026-11-08; GitHub run/remaining-budget evidence still required before claiming CI recovered"
+        "Owner verified Actions enabled in federation-portal and set account-wide USD 90/month budget with stop-at-limit on 2026-11-08; actual runner and remaining-balance proof is still required before CI is called recovered"
       ],
       "probe_policy": {
         "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": true,
@@ -92,15 +92,28 @@
     "actions_execution": {
       "enabled": true,
       "required_mode": "bounded_existing_workflows_plus_local_native_quality_gate",
-      "repository_policy": "Owner confirmed GitHub Actions re-enabled on 2026-11-08; per-repository availability and remaining budget require live verification",
+      "repository_policy": "Owner re-enabled GitHub Actions only in Satofumi-Goto/federation-portal on 2026-11-08; per-repository quota and actual runner must be checked",
+      "allowed_repositories": [
+        "Satofumi-Goto/federation-portal"
+      ],
+      "allowed_manual_workflows": [
+        "independent-runtime-pr-check.yml",
+        "federation-shared-api-ci.yml"
+      ],
+      "max_manual_dispatch_per_workflow_per_exact_head": 1,
+      "monthly_actions_budget_usd": 90,
+      "stop_usage_when_budget_reached": true,
+      "budget_blocked_is_not_build_success": true,
       "prohibited_actions": [
         "enable_actions_without_owner_authorization",
         "unbounded_workflow_dispatch",
         "blind_rerun_without_failure_diagnosis",
         "create_or_modify_actions_workflow_without_review",
-        "bypass_required_review_or_protected_checks"
+        "bypass_required_review_or_protected_checks",
+        "enable_actions_in_other_repositories_without_owner_approval",
+        "production_publish_or_paid_ai_execution_via_source_qa"
       ],
-      "on_attempt": "Only run an existing reviewed workflow after verifying repository enablement, exact HEAD, remaining budget and no duplicate in-progress run; otherwise HOLD",
+      "on_attempt": "Only run an allowlisted source-only QA workflow for Satofumi-Goto/federation-portal after exact HEAD, owner approval, USD 90/month stop setting, available budget, and no duplicate in-progress run are verified; otherwise HOLD; never deploy",
       "local_quality_gate": "federation-portal/scripts/actions-free/portable-gate.mjs",
       "same_sha_review_required": true,
       "git_source_of_truth": "main",
@@ -505,12 +518,14 @@
   "actions_free_migration": {
     "effective_date": "2026-11-07",
     "private_repositories": 7,
-    "settings_state": "disabled_verified",
+    "settings_state": "federation_portal_actions_enabled_other_repositories_unverified",
     "unresolved": [
       "local hook installation on every executor",
       "enforceable PR branch protection",
       "exact SHA native publish verification where auto-deploy OFF"
     ],
-    "re_enable_prohibited": true
+    "re_enable_prohibited": false,
+    "exception_scope": "Satofumi-Goto/federation-portal existing source-only QA workflows only; other repositories require separate owner approval",
+    "no_workflow_changes_or_production_deploy_from_this_policy": true
   }
 }
