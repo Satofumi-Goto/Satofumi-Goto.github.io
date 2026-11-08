@@ -70,37 +70,37 @@
       "quota_blocked_label": "CI usage quota blocked"
     },
     "quota_recovery": {
-      "state": "actions_disabled",
+      "state": "owner_reported_actions_reenabled_pending_live_budget_verification",
       "periodic_rerun": false,
       "recovery_evidence": [
-        "No quota rollover or billing credit authorizes re-enabling GitHub Actions; use local/native-host verification only"
+        "Owner explicitly confirmed Actions available on 2026-11-08; GitHub run/remaining-budget evidence still required before claiming CI recovered"
       ],
       "probe_policy": {
-        "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": false,
-        "max_probe_workflows": 0,
-        "preferred_probe": "none_actions_disabled",
+        "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": true,
+        "max_probe_workflows": 1,
+        "preferred_probe": "one_existing_reviewed_workflow_for_exact_pr_sha",
         "success_requires": [
           "host_native_build_pass",
           "deployed_sha_verified"
         ],
         "on_success": "proceed via reviewed source and native host only",
-        "on_failure_before_steps": "HOLD without GitHub Actions retry",
+        "on_failure_before_steps": "HOLD; diagnose quota/runner before any retry",
         "release_probe_order": [],
         "activity_is_single_initial_probe": false
       }
     },
     "actions_execution": {
-      "enabled": false,
-      "required_mode": "local_pre_push_tests_and_native_host_builds",
-      "repository_policy": "GitHub Actions disabled for all seven private app repositories 2026-11-07",
+      "enabled": true,
+      "required_mode": "bounded_existing_workflows_plus_local_native_quality_gate",
+      "repository_policy": "Owner confirmed GitHub Actions re-enabled on 2026-11-08; per-repository availability and remaining budget require live verification",
       "prohibited_actions": [
-        "workflow_dispatch",
-        "rerun_workflow_run",
-        "rerun_failed_jobs",
-        "create_or_modify_actions_workflow",
-        "enable_actions"
+        "enable_actions_without_owner_authorization",
+        "unbounded_workflow_dispatch",
+        "blind_rerun_without_failure_diagnosis",
+        "create_or_modify_actions_workflow_without_review",
+        "bypass_required_review_or_protected_checks"
       ],
-      "on_attempt": "HOLD; do not attempt a workflow or use private hosted runner",
+      "on_attempt": "Only run an existing reviewed workflow after verifying repository enablement, exact HEAD, remaining budget and no duplicate in-progress run; otherwise HOLD",
       "local_quality_gate": "federation-portal/scripts/actions-free/portable-gate.mjs",
       "same_sha_review_required": true,
       "git_source_of_truth": "main",
