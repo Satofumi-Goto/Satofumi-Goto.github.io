@@ -117,8 +117,44 @@
       "no_billing_or_budget_change",
       "no_auth_grant_change",
       "no_irreversible_external_action",
-      "human_pr_review_complete"
+      "review_gate_satisfied_for_exact_sha"
     ],
+    "review_gate": {
+      "mode": "independent_review_or_owner_approved_solo",
+      "owner_account": "Satofumi-Goto",
+      "owner_solo_policy_approved_on": "2026-11-08",
+      "owner_solo_is_independent_review": false,
+      "independent_review_preferred_when_real_reviewer_is_available": true,
+      "solo_allowed_only_when": [
+        "sole_verified_repository_maintainer_no_distinct_reviewer_available",
+        "explicit_owner_authorization_for_solo_workflow_recorded",
+        "owner_review_recorded_on_pr_for_exact_head_sha",
+        "full_diff_and_latest_main_scope_checked",
+        "native_local_test_and_build_evidence_or_explicit_hold",
+        "required_protected_file_sha_label_from_authorized_owner_if_applicable",
+        "no_missing_required_quality_or_security_gate"
+      ],
+      "solo_evidence_fields": [
+        "pr_url",
+        "head_sha",
+        "base_main_sha",
+        "changed_paths",
+        "risk_and_revert",
+        "test_build_and_browser_evidence",
+        "owner_approval_evidence",
+        "protected_file_label_if_applicable",
+        "published_sha_or_not_published"
+      ],
+      "sensitive_changes_never_silently_auto_approved": [
+        "secrets",
+        "authentication_authorization_grants",
+        "billing_and_budget",
+        "irreversible_data_changes",
+        "external_transactions_or_messages"
+      ],
+      "branch_protection_and_existing_protected_checks_remain_enforced": true,
+      "owner_solo_review_does_not_authorize_deployment": true
+    },
     "denied_when": [
       "ci_infrastructure_blocked_for_executable_code",
       "draft",
@@ -440,7 +476,7 @@
       "declare_claim",
       "small_patch_branch",
       "local_tests_native_build_browser_qa",
-      "independent_review",
+      "independent_review_or_owner_approved_solo",
       "merge_when_required_gates_pass",
       "owner_publish",
       "post_publish_sha_and_browser_e2e",
@@ -455,7 +491,7 @@
     "completion_requires": [
       "source_merged",
       "verified_local_quality_and_native_build",
-      "independent_review",
+      "review_gate_satisfied_for_exact_sha",
       "old_pr_triage",
       "owner_production_publish_if_required",
       "real_browser_e2e",
