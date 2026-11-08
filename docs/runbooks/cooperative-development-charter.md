@@ -16,9 +16,24 @@
 3. 着手前に **GitHub Issue #984（`https://github.com/Satofumi-Goto/federation-portal/issues/74`）のCLAIM/UPDATE/HANDOFF** と `progress-board/cooperative-work-ledger.json` の案件情報を確認し、主担当・協力者・対象ファイル・PR・状態をIssueコメントに記録する。各製品の元Issueを案件固有の状態・検証証拠の正本、本repo #74を横断CLAIM索引の唯一の正本とする。旧索引 #77とFederation #984は参照用とし、競合するCLAIMを新規登録しない。JSON台帳は機械可読スナップショット／スキーマとして扱い、そこへの別PRが完了するまで作業を停止しない。main直接書込を禁止する。
 4. 最新mainから専用`feature/*`（既存規約の`fix/*`/`hotfix/*`も可）で最小差分を実装する。汚れた作業ツリーでbranch切替せず、変更ファイル所有を照合する。
 5. 差分・依存関係・大規模削除・import欠落・保護ファイル変更を検査し、テスト・必須CI・実ブラウザQAを実施する。
-6. PRを作成し**別担当**がレビューする。required CI・承認・保護条件を満たす非draftのみmainへ統合する。CI未実行、quota_blocked、承認不足を迂回しない。
+6. PRを作成し、有効な**レビューゲート**を満たす。別の実在GitHubレビュアーがいる場合は独立レビューを優先する。オーナー1人で実際に運営され、他のレビュアーが存在しない場合のみ、下記「単独オーナー承認方式」を利用できる。required quality・保護条件を満たす非draftのみmainへ統合し、CI未実行・quota_blocked・承認不足を偽装しない。
 7. 依存するPRや旧PRを整理する。PRは「必要・競合なし→審査後merge」「必要・競合あり→最新mainへ移植して再検証」「実装済み・重複→証拠を添えてclose」「旧仕様・不要→理由を添えてclose」の4分類とする。保留はblocker、解除条件、次の行動を残す。
 8. 公開前QA、ユーザーによる本番公開後の読取専用実画面QA、証跡と履歴、回帰確認まで案件を追跡する。別担当へ交代する場合はIssue・PR・ブランチ・変更ファイル・残QAを明記する。
+
+## 3A. 単独オーナー承認方式（2026-11-08 JST、本人明示承認）
+
+現状、GitHubの実所有者・PR作成者は `Satofumi-Goto` であり、実在する別レビュー担当アカウントは確認されていない。**別人がレビューしたことにせず**、別レビュー担当が不在の間だけ、オーナー本人の明示承認とPR上の同SHAレビュー証拠を正式な代替レビューゲートとする。独立レビューが実行可能なら引き続きそちらを優先する。この方式はGitHub上の`APPROVED`提出（PR作成者は自分のPRをApproveできない）を要求・偽装するものではない。
+
+単独オーナー方式の必須条件：
+
+1. 対象PRを非draftとし、作業対象リポジトリのmainを直前に再取得する。変更ファイルの競合・全文置換・大量削除・意図しないProvider／Router／地図基盤の変更を検査する。main直接pushは禁止。
+2. PR本文またはコメントに **PR URL／厳密なHEAD SHA／main SHA／対象ファイル／Root Cause・Impact・Validation・Revert／テスト・ビルド・実ブラウザ結果（できない場合はNOT VERIFIED）／公開状態**を明示する。ソースの検査を別人のレビューと呼ばない。
+3. オーナーの明示承認が本会話・IssueまたはGitHub上に記録されていること。保護ファイルは従来通り、**そのHEAD SHAに一致する`protected-approved-<SHA先頭12文字>`ラベル**と、GitHubが確認できるwrite/maintain/admin権限者のラベル付与イベントが必須。HEADを更新した場合は保護承認も再取得する。
+4. 同HEADのローカル品質ゲート／ネイティブホストビルド／必要なブラウザ検証が実施されること。GitHub Actionsは再有効化・手動実行しない。ビルドや検証の欠落を過去の別SHA成功で補ってはならず、未確認ならHOLD。
+5. Secrets、認証・権限拡張、請求・予算、不可逆データ変更、外部取引／送信等は従来通り個別・明示的なオーナー承認が必須。単独方式で承認省略・安全チェック無効化・保護ルール変更をしない。GitHubの実際のbranch protection／rulesetが禁止する操作も回避しない。
+6. マージ後も公開は別ゲート。本番Publish・Deploy・DNS・認証切替は既存のオーナー専任方針を維持し、**マージ済みと公開済みを混同しない**。公開SHA／稼働API／Map・Calendar・予約・配車のブラウザE2Eを検証してから完了とする。
+
+共通機械可読正本：`progress-board/orchestrator-policy.json` の `auto_merge.review_gate`。単独方式の利用時は `review_mode: owner_approved_solo`、`independent_review: not_performed`、`owner_approval_evidence` をPR／Issueに記録する。
 
 ## 4. 競合・品質・安全
 - **GitHub mainが唯一のコード正本。** main直接変更、Base44 AI指示/全文overwrite、format-all、関係ない差分、二重実装は禁止。
@@ -31,7 +46,7 @@
 ## 5. 本番公開と完了判定
 **本番Publish／Deploy／DNS切替はユーザー本人のみ実行。** 開発担当はPR・CI・レビュー・merge・公開前QAまでを担当し、本番公開を代行しない。ユーザーが公開した後に公開SHA vs main、配信JS/CSS、実際のhostとAPI/DB・認証境界、Map/Calendar/予約/配車、Federation親→独立コンソール、実ブラウザ操作・スクショ、回帰を確認する。
 
-案件の完了条件：必要差分がmain統合、必須CIと別担当レビュー合格、旧PR整理、必要な本番公開、該当機能の実画面QA、証跡・変更履歴、回帰なし。未公開／本番E2E未実施ならIssueを閉じず「source_integrated」または「awaiting_owner_publish」と明示する。URL 200やSHA一致のみで完了としない。
+案件の完了条件：必要差分がmain統合、必須品質ゲートと有効なレビューゲート（独立レビューまたは条件を満たす単独オーナー承認）合格、旧PR整理、必要な本番公開、該当機能の実画面QA、証跡・変更履歴、回帰なし。未公開／本番E2E未実施ならIssueを閉じず「source_integrated」または「awaiting_owner_publish」と明示する。URL 200やSHA一致のみで完了としない。
 
 ## 6. オーケストレーションと報告
 既存の毎時開発オーケストレータを**唯一の巡回管理役**として使い、同じ監視の定期ジョブは作らない。各回、台帳差分・GitHubの最新証拠を優先して読み、案件停止・競合・主担当不在の引継ぎ、優先順位を調整する。担当が次の案件を取得する前に台帳の占有状態と影響ファイルを確認する。活動がなければ同じログ・サイト・有料APIの再検査を繰り返さない。ユーザーへの通知は重要な障害、必要な承認、公開準備/完了、実E2E達成などの具体的な変化のみ。
