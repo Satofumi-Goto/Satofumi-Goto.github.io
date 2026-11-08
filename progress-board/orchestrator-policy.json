@@ -70,37 +70,50 @@
       "quota_blocked_label": "CI usage quota blocked"
     },
     "quota_recovery": {
-      "state": "actions_disabled",
+      "state": "owner_reported_actions_reenabled_pending_live_budget_verification",
       "periodic_rerun": false,
       "recovery_evidence": [
-        "No quota rollover or billing credit authorizes re-enabling GitHub Actions; use local/native-host verification only"
+        "Owner verified Actions enabled in federation-portal and set account-wide USD 90/month budget with stop-at-limit on 2026-11-08; actual runner and remaining-balance proof is still required before CI is called recovered"
       ],
       "probe_policy": {
-        "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": false,
-        "max_probe_workflows": 0,
-        "preferred_probe": "none_actions_disabled",
+        "automatic_probe_only_after_external_recovery_evidence_or_billing_rollover": true,
+        "max_probe_workflows": 1,
+        "preferred_probe": "one_existing_reviewed_workflow_for_exact_pr_sha",
         "success_requires": [
           "host_native_build_pass",
           "deployed_sha_verified"
         ],
         "on_success": "proceed via reviewed source and native host only",
-        "on_failure_before_steps": "HOLD without GitHub Actions retry",
+        "on_failure_before_steps": "HOLD; diagnose quota/runner before any retry",
         "release_probe_order": [],
         "activity_is_single_initial_probe": false
       }
     },
     "actions_execution": {
-      "enabled": false,
-      "required_mode": "local_pre_push_tests_and_native_host_builds",
-      "repository_policy": "GitHub Actions disabled for all seven private app repositories 2026-11-07",
-      "prohibited_actions": [
-        "workflow_dispatch",
-        "rerun_workflow_run",
-        "rerun_failed_jobs",
-        "create_or_modify_actions_workflow",
-        "enable_actions"
+      "enabled": true,
+      "required_mode": "bounded_existing_workflows_plus_local_native_quality_gate",
+      "repository_policy": "Owner re-enabled GitHub Actions only in Satofumi-Goto/federation-portal on 2026-11-08; per-repository quota and actual runner must be checked",
+      "allowed_repositories": [
+        "Satofumi-Goto/federation-portal"
       ],
-      "on_attempt": "HOLD; do not attempt a workflow or use private hosted runner",
+      "allowed_manual_workflows": [
+        "independent-runtime-pr-check.yml",
+        "federation-shared-api-ci.yml"
+      ],
+      "max_manual_dispatch_per_workflow_per_exact_head": 1,
+      "monthly_actions_budget_usd": 90,
+      "stop_usage_when_budget_reached": true,
+      "budget_blocked_is_not_build_success": true,
+      "prohibited_actions": [
+        "enable_actions_without_owner_authorization",
+        "unbounded_workflow_dispatch",
+        "blind_rerun_without_failure_diagnosis",
+        "create_or_modify_actions_workflow_without_review",
+        "bypass_required_review_or_protected_checks",
+        "enable_actions_in_other_repositories_without_owner_approval",
+        "production_publish_or_paid_ai_execution_via_source_qa"
+      ],
+      "on_attempt": "Only run an allowlisted source-only QA workflow for Satofumi-Goto/federation-portal after exact HEAD, owner approval, USD 90/month stop setting, available budget, and no duplicate in-progress run are verified; otherwise HOLD; never deploy",
       "local_quality_gate": "federation-portal/scripts/actions-free/portable-gate.mjs",
       "same_sha_review_required": true,
       "git_source_of_truth": "main",
@@ -165,7 +178,7 @@
       "auth_grant_change",
       "data_deletion",
       "external_transaction_or_booking_or_message",
-      "github_actions_requested"
+      "unbounded_or_unreviewed_github_actions_requested"
     ]
   },
   "deployment": {
@@ -505,12 +518,14 @@
   "actions_free_migration": {
     "effective_date": "2026-11-07",
     "private_repositories": 7,
-    "settings_state": "disabled_verified",
+    "settings_state": "federation_portal_actions_enabled_other_repositories_unverified",
     "unresolved": [
       "local hook installation on every executor",
       "enforceable PR branch protection",
       "exact SHA native publish verification where auto-deploy OFF"
     ],
-    "re_enable_prohibited": true
+    "re_enable_prohibited": false,
+    "exception_scope": "Satofumi-Goto/federation-portal existing source-only QA workflows only; other repositories require separate owner approval",
+    "no_workflow_changes_or_production_deploy_from_this_policy": true
   }
 }
