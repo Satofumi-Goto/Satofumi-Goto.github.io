@@ -3,9 +3,459 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>公開終了</title>
-  <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f7f9fb;color:#17243a;font:16px/1.7 sans-serif}main{padding:32px}h1{font-size:1.5rem}p{color:#536277}</style>
+  <meta name="description" content="後藤悟文の事業開発・システム企画、モビリティ事業構想と試作システム。">
+  <title>事業開発・システム企画 | 後藤 悟文</title>
+  <style>
+    :root { color-scheme: light; --ink: #17243a; --muted: #536277; --line: #dbe4ed; --accent: #075b78; --paper: #fff; --bg: #f7f9fb; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    a { color: var(--accent); }
+    a:focus-visible { outline: 3px solid #e5a64a; outline-offset: 4px; border-radius: 3px; }
+    .wrap { width: calc(100% - 40px); margin-inline: auto; }
+    header { background: #14253c; color: #fff; padding: 64px 0 68px; }
+    .eyebrow { margin: 0 0 16px; color: #86d5e3; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { max-width: none; margin: 0; font-size: clamp(2.35rem, 5vw, 3.8rem); line-height: 1.16; letter-spacing: -.04em; }
+    .lead { max-width: none; margin: 22px 0 0; color: #d7e3eb; font-size: clamp(1.03rem, 1.8vw, 1.18rem); line-height: 1.6; }
+    main { padding: 50px 0 70px; }
+    section + section { margin-top: 48px; }
+    .section-head { margin-bottom: 16px; }
+    h2 { margin: 0 0 5px; font-size: 1.45rem; line-height: 1.3; letter-spacing: -.025em; }
+    .section-head p { margin: 0; color: var(--muted); }
+    .profile-text p { margin: 0 0 18px; }
+    .profile-text p:last-child { margin-bottom: 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card { display: flex; flex-direction: column; min-height: 165px; padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); text-decoration: none; color: inherit; transition: border-color .15s, box-shadow .15s; }
+    .card:hover { border-color: #76aebe; box-shadow: 0 6px 20px rgba(24, 44, 66, .07); }
+    .card.featured { min-height: 0; border-left: 3px solid #458ca1; }
+    .tag { color: #4d7280; font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    h3 { margin: 9px 0 6px; font-size: 1.2rem; line-height: 1.35; letter-spacing: -.02em; }
+    .card p { margin: 0; color: var(--muted); }
+    .action { margin-top: auto; padding-top: 14px; color: var(--accent); font-size: .94rem; font-weight: 650; }
+
+    /* Compact, scroll-safe simulator showcase */
+    .simulation-section { display:grid; grid-template-columns:minmax(230px,.8fr) minmax(0,1.3fr); gap:24px; align-items:center; position:static; transform:none; width:100%; padding-block:28px; }
+    .simulation-section .section-head { margin:0; }
+    .simulation-section h2 { margin:8px 0 12px; font-size:clamp(1.4rem,2.3vw,1.9rem); line-height:1.2; }
+    .simulation-section .section-head p { font-size:.9rem; line-height:1.55; margin:10px 0; color:var(--muted); }
+    .simulation-stage { min-width:0; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:#fff; box-shadow:0 8px 28px #183c4210; }
+    .simulation-preview { position:relative; height:260px; overflow:hidden; background:#faf9f6; }
+    .simulation-preview iframe { position:absolute; top:0; left:0; width:1280px; height:720px; border:0; transform-origin:top left; pointer-events:none; }
+    .simulation-open { position:absolute; inset:0; width:100%; border:0; background:linear-gradient(transparent 55%,#123c4255); cursor:pointer; display:flex; justify-content:center; align-items:flex-end; padding:18px; }
+    .simulation-open span { background:#0c6f73; color:#fff; border-radius:7px; padding:10px 22px; font:600 14px/1.4 Arial,sans-serif; box-shadow:0 4px 16px #0002; }
+    .simulation-open:hover span { background:#08595c; }
+    .simulation-open:focus-visible { outline:3px solid #0c6f73; outline-offset:-4px; }
+    .simulation-caption { padding:10px 14px; color:var(--muted); font-size:.75rem; display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+    .simulation-caption a { color:var(--accent); }
+    .simulation-dialog { padding:0; border:1px solid var(--line); border-radius:12px; width:calc(100vw - 32px); max-width: none; height:calc(100dvh - 32px); max-height:none; overflow:hidden; background:#faf9f6; }
+    .simulation-dialog::backdrop { background:#102c38b8; }
+    .simulation-dialog[open] { display:flex; flex-direction:column; }
+    .simulation-dialog-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 16px; background:white; border-bottom:1px solid var(--line); font-size:.85rem; }
+    .simulation-dialog-bar button { border:1px solid var(--line); border-radius:6px; padding:8px 14px; background:white; cursor:pointer; color:var(--ink); }
+    .simulation-dialog iframe { flex:1; width:100%; min-height:0; border:0; }
+    body.simulation-expanded { overflow:hidden; }
+    @media(max-width:680px) { .simulation-section { grid-template-columns:1fr; gap:16px; } .simulation-preview { height:210px; } .simulation-dialog { width:100%; height:100dvh; border-radius:0; border:0; } }
+    footer { border-top: 1px solid var(--line); padding: 25px 0 42px; color: var(--muted); font-size: .88rem; }
+    footer p { margin: 0; }
+    @media (max-width: 680px) { header { padding: 48px 0 54px; } main { padding-top: 38px; } .grid { grid-template-columns: 1fr; } .card, .card.featured { min-height: 0; } }
+
+    .business-case { grid-column:1 / -1; border-top:1px solid var(--line); padding-top:14px; }
+    .business-case summary { cursor:pointer; color:var(--accent); font-weight:650; font-size:.9rem; }
+    .business-case summary span { color:var(--muted); font-weight:400; font-size:.78rem; margin-left:14px; }
+    .business-case-intro { max-width: none; padding:16px 0 8px; }
+    .business-case h3 { margin:8px 0; font-size:1.1rem; line-height:1.35; }
+    .business-case p { font-size:.88rem; line-height:1.65; color:var(--muted); margin:10px 0; }
+    .business-case-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+    .business-case-steps article { padding:18px; border:1px solid var(--line); border-radius:10px; background:#fff; }
+    .business-case .case-step { color:var(--accent); font-size:.7rem; font-weight:700; letter-spacing:.07em; }
+    .business-case strong { color:var(--ink); }
+    .business-case-footer { margin-top:16px; padding:16px 20px; background:#eef5f3; border-radius:10px; }
+    .business-case .case-scope { font-size:.75rem; }
+    .case-launch { border:0; border-radius:6px; background:#0c6f73; color:#fff; padding:11px 16px; cursor:pointer; font:600 .85rem Arial,sans-serif; }
+    @media(max-width:760px) { .business-case-steps { grid-template-columns:1fr; } .business-case summary span { display:block; margin:4px 0 0 18px; } }
+
+
+    /* Revision log (Rev. 1, 19 Oct 2026) */
+    .card-wrap { display:flex; flex-direction:column; min-width:0; }
+    .card-wrap > .card { flex:1; border-bottom-left-radius:0; border-bottom-right-radius:0; border-bottom-style:dashed; }
+    .grid:has(.rev[open]) { align-items:start; }
+    .rev { border:1px solid var(--line); border-top:0; border-radius:0 0 10px 10px; background:var(--paper); padding:12px 24px; }
+    .rev summary { cursor:pointer; color:var(--accent); font-size:.88rem; font-weight:650; }
+    .rev summary span { color:var(--muted); font-weight:400; font-size:.76rem; margin-left:10px; }
+    .rev summary:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; border-radius:3px; }
+    .rev-body { padding:12px 0 4px; }
+    .rev-head { margin:0 0 10px; color:var(--ink); font-size:.95rem; font-weight:650; line-height:1.5; }
+    .rev ul { margin:0; padding-left:1.15em; color:var(--muted); font-size:.88rem; line-height:1.6; }
+    .rev li { margin:0 0 6px; }
+    .rev li strong { color:var(--ink); font-weight:650; }
+    .rev-note { margin:10px 0 0; color:var(--muted); font-size:.78rem; line-height:1.55; }
+    .simulation-section > .rev { grid-column:1 / -1; border:0; border-top:1px solid var(--line); border-radius:0; background:none; padding:14px 0 0; }
+    @media (max-width:680px) { .grid:has(.rev[open]) { align-items:stretch; } .rev { padding:12px 18px; } .simulation-section > .rev { padding:14px 0 0; } }
+
+    /* Mobility World — concept film */
+    .vision-film { display:block; min-width:0; }
+    .vision-film .film-kicker { margin:0 0 10px; color:var(--accent); font-size:.75rem; font-weight:700; letter-spacing:.09em; }
+    .vision-film h2 { margin:0 0 12px; color:var(--ink); font-size:clamp(1.6rem,3.4vw,2.3rem); line-height:1.25; letter-spacing:-.025em; }
+    .vision-film .film-description { max-width: none; margin:0 0 22px; color:var(--muted); line-height:1.7; }
+    .vision-film video { display:block; width:100%; height:auto; aspect-ratio:16 / 9; background:#14253c; border:1px solid var(--line); border-radius:12px; box-shadow:0 12px 34px #183c4214; }
+    .vision-film video:focus-visible, .vision-film summary:focus-visible { outline:3px solid #e5a64a; outline-offset:4px; }
+    .vision-film .film-meta { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; margin:12px 0 0; color:var(--muted); font-size:.8rem; }
+    .vision-film .film-credits { margin-top:14px; color:var(--muted); font-size:.76rem; line-height:1.6; }
+    .vision-film .film-credits summary { width:fit-content; cursor:pointer; color:var(--accent); }
+    .vision-film .film-credits p { margin:10px 0 0; font-size:inherit; line-height:inherit; }
+
+    .vision-film .film-player { position:relative; }
+    .vision-film .film-start { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; border:0; border-radius:12px; background:linear-gradient(transparent 40%,#102c3833); cursor:pointer; }
+    .vision-film .film-start[hidden] { display:none; }
+    .vision-film .film-start span { color:#fff; background:#075b78ed; border:1px solid #ffffff66; border-radius:100px; padding:16px 28px; font:600 clamp(.9rem,2vw,1.1rem)/1.4 sans-serif; box-shadow:0 4px 28px #0004; }
+    .vision-film .film-start:focus-visible { outline:3px solid #e5a64a; outline-offset:4px; }
+    .vision-film .film-fullscreen { border:0; padding:0; background:none; color:var(--accent); font:inherit; text-decoration:underline; cursor:pointer; }
+  
+    /* Paired film and simulator: desktop columns, mobile stack. */
+    .experience-pair { min-width:0; }
+    @media (min-width: 960px) {
+      .experience-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 28px; align-items:start; }
+      .experience-pair > .vision-film,
+      .experience-pair > .simulation-section {
+        display:grid; grid-template-columns:minmax(0,1fr); grid-template-rows:subgrid;
+        grid-row:span 4; gap:18px; align-items:start; min-width:0;
+        margin:0; padding-block:28px; border-top:1px solid var(--line);
+      }
+      .experience-pair .film-intro { grid-row:1; }
+      .experience-pair .film-player { grid-row:2; }
+      .experience-pair .film-meta { grid-row:3; margin:0; }
+      .experience-pair .film-credits { grid-row:4; margin:0; }
+      .experience-pair .simulation-section > .section-head { grid-row:1; margin:0; }
+      .experience-pair .simulation-stage { grid-row:2; }
+      .experience-pair .business-case { grid-row:3; }
+      .experience-pair .simulation-section > .rev { grid-row:4; }
+      .experience-pair .simulation-preview { height:auto; aspect-ratio:16 / 9; }
+      .experience-pair h2 { font-size:1.55rem; line-height:1.3; }
+      .experience-pair .film-description { margin-bottom:0; font-size:.9rem; }
+      .experience-pair .business-case-steps { grid-template-columns:1fr; }
+    }
+
+    .experience-pair, .experience-pair + section { margin-top:48px; }
+    .film-language-label { display:flex; align-items:center; gap:10px; margin:0 0 14px; font-size:.85rem; color:var(--muted); }
+    .film-language { font:inherit; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:6px; padding:6px 10px; }
+    .film-language:focus-visible { outline:3px solid #e5a64a; outline-offset:3px; }
+</style>
+  <link rel="stylesheet" href="/media/experience-pair.css?v=20261022-7">
+  <script defer src="/media/vendor/hls-1.7.3.min.js"></script>
+  <script defer src="/media/film-player.js?v=12"></script>
 </head>
-<body><main><h1>このページの公開は終了しました</h1><p>This page is no longer available.</p></main></body>
+<body>
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">後藤 悟文 · 事業開発・システム企画</p>
+      <h1>モビリティの構想を、持続可能な運行事業へ。</h1>
+      <p class="lead">自動車・モビリティ領域での経験を基に、顧客の課題を事業機会へ変えていきます。技術、専門人材、サービス運用を結び、構想から社会実装・成長までを一貫して設計します。</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section aria-labelledby="profile-heading">
+      <div class="section-head">
+        <h2 id="profile-heading">プロフィール</h2>
+      </div>
+      <div class="profile-text">
+        <p>1997年にデンソーへ入社し自動車営業に従事。2013年からはCASE・MaaS領域の事業開発に取り組んできました。</p>
+        <p>現在はHondaの事業開発部門にて、PEFC外販に向けた事業成立条件の整理と製品要件の検討を行っています。</p>
+        <p>自動車単体から運行・サービス全体へ価値創出の軸が移るなか、これまでの経験を土台に、AIによる産業変革をモビリティと結び付け、事業とサービスの変革へ取り組みたいと考えています。</p>
+        <p>私の強みは、領域を横断して構造的な課題を解決することです。さまざまな影響要因と運行条件をシステム要件へ落とし込み、全体最適と実装をつなぎます。</p>
+        <p>今後はAI技術と各分野の知見を組み合わせ、車両・運行・サービスを構想から実装まで総合的に捉えます。AIエージェントによってサービスを変革し、自動運転による新たな顧客価値を生み出すことを目指します。</p>
+      </div>
+    </section>
+
+    <div class="experience-pair">
+    <section class="vision-film" id="vision-film" aria-labelledby="vision-film-heading">
+      <div class="film-intro">
+        <p class="film-kicker">未来構想アニメーション · 日本語／英語</p>
+        <h2 id="vision-film-heading">暮らしから、街をつくる。</h2>
+        <div class="film-copy">
+          <p class="film-description">約5分（4分41秒）のコンセプト映像。子どもたちの学童、高齢者の集い、移動するお店。Seneschalが支える日常から、FCスケートボードとNodeがつながり、街が育っていく未来を描きます。</p>
+          <p class="film-description">自動駐車、店舗の載せ替え、エネルギーの共有が、日常のサービスと街の運行基盤をどう結ぶかを紹介します。 <a class="film-overview" href="/Autonomous_Mobility_Overview.pdf" target="_blank" rel="noopener noreferrer">構想の全体像（Overview・英語PDF）↗</a> ・ <a class="film-overview" href="/node-mesh/?lang=ja" target="_blank" rel="noopener noreferrer">Nodeの詳細（操作できるページ）↗</a></p>
+          <label class="film-language-label" for="film-language">動画の言語 <select class="film-language" id="film-language" aria-label="動画の言語"><option value="ja" selected>日本語</option><option value="en">English</option></select></label>
+        </div>
+      </div>
+      <div class="film-player">
+        <video id="vision-film-video" playsinline preload="none" width="1280" height="720" poster="/media/mobility-world-city.webp" data-stream="/media/mobility-world-v7/ja/film.m3u8" data-stream-en="/media/mobility-world-v7/en/film.m3u8" aria-label="暮らしから、街をつくる。" aria-describedby="vision-film-note"></video>
+        <button class="film-close" type="button" hidden>閉じる ×</button>
+        <button class="film-start" type="button" aria-controls="vision-film-video"><span>拡大して見る▶︎</span></button>
+      </div>
+      <div class="film-meta">
+        <span id="vision-film-note">音楽と街の音も、一緒にお楽しみください。</span>
+        <button class="film-fullscreen" type="button">全画面で見る ↗</button>
+      </div>
+      <details class="film-credits">
+        <summary>音楽・環境音クレジット</summary>
+        <p>“Felicity”, “Where Stars Fall”, “Born Of The Sky” by <a href="https://www.scottbuckley.com.au/">Scott Buckley</a> — released under <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a>.<br>楽曲の一部を使用し、クロスフェード・音量調整・環境音とのミックスを行っています。 <a href="/media/mobility-world-credits.txt">クレジット全文</a></p>
+      </details>
+    </section>
+
+    <section class="simulation-section" aria-labelledby="simulation-heading">
+      <div class="section-head">
+        <span class="tag">地域モビリティ・ラボ · 操作できるデモ</span>
+        <h2 id="simulation-heading">運行を賢くすれば、モビリティ事業は成立するか。</h2>
+        <div class="simulation-copy">
+        <p>車両を増やす前に、空車回送と需要に応じた駐車・夜間作業の集約を比較します。</p>
+        <p>同じ需要・車両条件で運行方式を比較。駐車待機、点検・清掃の集約、相乗り・貨客混載が、サービス水準・運行費用・事業成立性に与える影響を検討できます。</p>
+        <p style="font-size:.75rem">地域別の共通入力、地図上の運行再生、編集可能な前提条件を備えた一つのシミュレータです。地図の経路は仮想データで、外部アプリとのリアルタイム連携とは区別しています。</p>
+        </div>
+      </div>
+      <div class="simulation-stage">
+        <div class="simulation-preview">
+          <img class="simulation-preview-image" src="https://satofumi-goto.github.io/media/simulator-comparison-preview.jpg" alt="シミュレータの操作画面：駐車・運行方式の比較と成立条件の探索" width="1348" height="926">
+          <button class="simulation-open" type="button" aria-haspopup="dialog" aria-controls="simulation-dialog"><span>拡大して操作 ↗</span></button>
+        </div>
+        <div class="simulation-caption"><span>運行方式と事業成立性を比較</span><a href="https://mobility-lab-flow.base44.app/planning" target="_blank" rel="noopener noreferrer">シミュレータを開く · 日本語／英語 ↗</a></div>
+      </div>
+
+      <details class="business-case">
+        <summary>シミュレーションから事業化へ <span>比較 → パートナー連携 → 実証判断</span></summary>
+        <div class="business-case-intro">
+          <h3>車両を増やす前に、フリートの運行方法を改善する。</h3>
+          <p>車両数が同じでも、需要に応じた駐車と夜間点検・清掃の集約によってサービス提供力や収益性は改善できるか。シミュレータで効果とトレードオフを比較し、実証に必要な連携先と検証項目を明確にします。</p>
+        </div>
+        <div class="business-case-steps">
+          <article>
+            <p class="case-step">01／比較</p>
+            <h3>運行方式を比較検証する</h3>
+            <p>潜在需要と車両台数を固定し、空車回送、夜間の点検・清掃集約、近隣の民間駐車場活用、両方の組み合わせを比較します。</p>
+            <p><strong>採算へのつながり：</strong> 予約完了数と迎車待ち時間 → 空車走行距離と道路利用 → エネルギー消費量と蓄電設備投資 → 駐車・作業費を差し引いた日次収益。</p>
+            <p><strong>前提条件を揺さぶる：</strong> 時間当たり駐車料金を2倍にする、車両数を減らす、駐車台数の上限を変えるなどして再計算し、効果が成立しなくなる条件を確認します。</p>
+          </article>
+          <article>
+            <p class="case-step">02／事業連携</p>
+            <h3>実行できる合意を組み立てる</h3>
+            <p><strong>運行事業者：</strong> 配車、車両稼働率、サービス品質、運行データ。 <strong>駐車場保有者：</strong> 場所、利用可能時間、入退場手段、料金。</p>
+            <p><strong>点検・清掃事業者：</strong> 業務範囲、人員配置、処理能力、作業完了記録。 <strong>自治体・地域サービス：</strong> 地域需要、関係者調整、適切な乗降場所。</p>
+            <p><strong>事業開発の役割：</strong> 各主体を結び、責任分担や取引条件を調整。運行上の要求をシステム仕様と受入基準へ展開します。</p>
+          </article>
+          <article>
+            <p class="case-step">03／検証</p>
+            <h3>拡大すべきかを判断する</h3>
+            <p>まず限定したサービス地域で少数の車両と駐車拠点を使い、実測基準を確立。需要・車両稼働・サービス条件を記録しながら、同等の運行期間で比較します。</p>
+            <p><strong>計測項目：</strong> 空車走行距離、迎車待ち時間、予約完了数、エネルギー使用量、駐車料金、夜間作業完了率。蓄電設備の必要容量は実測エネルギー特性から見積もります。</p>
+            <p><strong>事業化判断のゲート：</strong> 実証前に目標値を合意。サービス品質、費用控除後の利益、夜間処理能力が目標に届いた場合のみ展開し、届かない場合は価格・場所・人員・車両配分を変更して再検証します。</p>
+          </article>
+        </div>
+        <div class="business-case-footer">
+          <p><strong>具体的な検討の進め方：</strong> 地域需要を仮定し、ひとつの事業制約を一緒に変え、次に合意・計測すべき条件を特定します。</p>
+          <p class="case-scope">仮想地域と編集可能な前提条件に基づく試算であり、運行実績や提携実績ではありません。道路利用の指標は渋滞緩和を予測するものではありません。蓄電設備投資は計画上の概算であり、実容量にはエネルギー実測と技術検証が必要です。事業連携や実証の段階は提案する実行計画です。</p>
+          <button type="button" class="case-launch">シミュレータで前提条件を検証 ↗</button>
+        </div>
+      </details>
+      <details class="rev" data-rev="1" data-card="sim">
+        <summary>改訂履歴 <span>第1回改訂 · 2026年10月22日更新</span></summary>
+        <div class="rev-body">
+          <p class="rev-head">運行方式の比較から投資回収までをつなぎ、モビリティ事業が成立する条件を検討できる環境へ拡張しました。</p>
+          <ul>
+            <li><strong>事業目標から、実行条件を探る。</strong>目標を入力すると、運行条件の探索・候補比較・ストレステストまでを実行。どの条件を変えれば目標に近づくかを、画面を操作しながら検討できます。</li>
+            <li><strong>地域が変わっても、同じ基準で比較。</strong>東京・名古屋・豊田を共通条件で比較し、待機・夜間拠点の配置を変更。予約受付から乗車まで追うことで、拠点配置が運行に与える影響を確認できます。</li>
+            <li><strong>顧客接点の価値を、配車と収益で検討。</strong>利用者接点を持つことが配車・収益にどう効くかをモデル化。運行障害を加えた比較で、平常時の採算と障害時の対応力を併せて検討できます。</li>
+            <li><strong>運行計画を、投資判断につなぐ。</strong>運行の計算と損益・キャッシュフローを統合し、税金や設備更新まで含めた投資回収を評価。費用の内訳と感度分析から、事業成立を左右する条件を探れます。</li>
+            <li><strong>施策の効果と代償を、導入前に比較。</strong>都市運行・サービス・相乗り・制御の施策を、Federationの実演と連動して変更前後で比較。改善点と悪化点を確認し、利益改善案を技術目標の検討へつなげられます。</li>
+            <li><strong>条件の揺らぎまで含めて判断。</strong>複数の試行と感度分析で結果の幅を示し、厳しい条件での運行を確認。収益性の高い候補も比較材料として提示し、採用する計画は利用者が決められます。</li>
+            <li><strong>結論から根拠まで、一つの画面で確認。</strong>主要な投資指標を素早く把握し、必要に応じて損益の内訳・計算根拠・入力の出所まで確認できます。Federationと入力を連携し、関連資料と共通の計算結果で議論を進められます。</li>
+          </ul>
+          <p class="rev-note">地域や運行経路は仮想条件で、入力値は編集可能です。結果は事業計画の試算であり、運行実績ではありません。</p>
+        </div>
+      </details>
+    </section>
+    </div>
+
+    <section aria-labelledby="planning-heading">
+      <div class="section-head">
+        <h2 id="planning-heading">事業開発・システム企画</h2>
+        <p>顧客課題から事業化までをつなぐ経験と進め方を、モビリティサービス構想とシステム設計案で紹介します。</p>
+      </div>
+      <div class="grid">
+        <div class="card-wrap">
+<a class="card" href="documents/Business_Development_Capabilities_Portfolio.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="tag">事業開発 · 日本語PDF · 14ページ</span>
+          <h3>事業開発の実践力</h3>
+          <p>顧客ニーズ、技術、サービス運用を結ぶ経験と手法を整理した資料です。法人営業・事業企画・技術企画で培った知見を基に、顧客価値、運行要件、役割分担、事業採算を検討しています。FCAD-MaaSに関連する車両・運用基盤・サービス拠点の一体的な検討は、自動運転事業の成立条件を説明するものであり、Hondaとして当該構想全体を正式に採用・承認し、実行又は開発着手を決定したことを示すものではありません。</p>
+          <span class="action">資料を見る ↗</span>
+        </a>
+<details class="rev" data-rev="1" data-card="bizdev">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月22日更新</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">顧客課題を事業機会へ変え、パートナー連携と実証判断まで進める事業開発の道筋を明確にしました。</p>
+    <ul>
+      <li><strong>顧客価値から、事業化の要件へ。</strong>顧客にもたらす価値を起点に、法人営業・事業企画・技術企画の経験を整理。顧客ニーズを運行要件やシステム要件へ展開する進め方を示しました。</li>
+      <li><strong>関係者を結び、実行できる計画へ。</strong>車両・サービス・拠点などの役割と責任、取引条件を整理。分野をまたぐ構想を、事業パートナーが連携して進めるための具体的な検討につなげました。</li>
+      <li><strong>比較検討を、実証するかの判断へ。</strong>シミュレータによる比較、パートナー間の役割整理、実証判断を一続きに整理。構想を次の段階へ進めるために、何を確認するかを示しました。</li>
+    </ul>
+  </div>
+</details>
+</div>
+        <div class="card-wrap">
+<a class="card" href="documents/System_Planning_Initial_Concept_Portfolio.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="tag">初期構想 · 英語PDF · 30ページ</span>
+          <h3>システム企画 — 初期構想</h3>
+          <p>利用者体験・MVP・KPIと、予約・配車・エネルギー調整・遠隔支援をつなぐシステム企画です。車載ADSは、TIER IVが基盤技術とするAutowareの公開アーキテクチャ（センシング・地図・自己位置推定・認識・計画・制御・車両インターフェース）を技術的な前提とし、外部の配車・遠隔支援とはAutoware AD API等を介した連携を検討します。相乗り・貨客混載も運用条件として整理しています。TIER IVとの提携・導入・実車接続やODD・安全性の検証完了を示すものではありません。</p>
+          <span class="action">初期構想を見る ↗</span>
+        </a>
+<details class="rev" data-rev="1" data-card="concept">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月22日更新</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">モビリティの構想を運用・検証の要件へ具体化し、サービスの実現条件を議論できる資料へ深めました。</p>
+    <ul>
+      <li><strong>構想を、動かすための要件へ。</strong>顧客接点の仕組みと検証方法まで運用仕様を具体化。どのようなサービスを提供し、そのために何を確かめるかを一続きで追えるようにしました。</li>
+      <li><strong>サービス品質と採算を、同時に検討。</strong>相乗り・貨客混載について、車両容量・サービス品質・採算の制約を整理。複数の需要を組み合わせる際に、成立条件とトレードオフを検討できます。</li>
+      <li><strong>事業とシステムを、共通の前提で議論。</strong>シミュレータ・事業性資料・Federationの設計基準を接続。運行条件と数値の前提をそろえ、事業計画とシステム設計を対応づけて検討できる構成にしました。</li>
+    </ul>
+    <p class="rev-note">自動運転システムは、事業構想上TIER IV（ティアフォー／Autoware）を前提とします。導入や提携の実績を示すものではありません。</p>
+  </div>
+</details>
+</div>
+      </div>
+    </section>
+
+    <section aria-labelledby="portfolio-heading">
+      <div class="section-head">
+        <h2 id="portfolio-heading">事業検討資料</h2>
+        <p>ビジネスモデルと、運行を成立させる条件について検討した資料です。</p>
+      </div>
+      <div class="grid">
+        <div class="card-wrap">
+<a class="card" href="documents/Autonomous_Driving_Service_Business_Model_Portfolio.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="tag">ビジネスモデル · 日本語PDF · 9ページ</span>
+          <h3>自動運転サービスのビジネスモデル検討</h3>
+          <p>移動需要と多様なサービスを結び、車両・拠点・エネルギーを一体で捉えた事業成立条件の検討資料です。FCスケートボードは、自動運転モビリティの事業成立条件を検討するための車両構想の一例として示したものであり、Hondaによる正式な採用、製品化方針の決定又は開発着手を示すものではありません。技術の実現性、安全性、運用条件及び採算は今後の検証対象です。</p>
+          <span class="action">検討資料を見る ↗</span>
+        </a>
+<details class="rev" data-rev="1" data-card="bmstudy">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月22日更新</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">移動サービスと運行基盤の関係を整理し、顧客価値から事業成立条件まで読み解ける構成にしました。</p>
+    <ul>
+      <li><strong>サービスと、その成立条件を一体で捉える。</strong>移動需要と多様なサービスを、車両・拠点・エネルギーの構想と結び付けて説明。利用者に届ける価値と、それを支える運行基盤の関係を追えるようにしました。</li>
+      <li><strong>構想の関係を、図と説明で把握。</strong>FCスケートボードの図と関連資料の説明をそろえ、車両構想とサービスのつながりを視覚的にも確認できるようにしました。</li>
+    </ul>
+  </div>
+</details>
+</div>
+        <div class="card-wrap">
+<a class="card" href="documents/Autonomous_Mobility_System_Business_Feasibility_Portfolio.pdf" target="_blank" rel="noopener noreferrer">
+          <span class="tag">システム・事業性 · 英語PDF · 15ページ</span>
+          <h3>自動運転システム・事業成立性の検証</h3>
+          <p>需要・配車・車両稼働・エネルギーを統合した運行システムと事業成立条件を、シナリオと試算で整理した英語資料です。車載ADSはTIER IV／Autowareを検討上の技術基準とし、センサー・車載計算機・車両インターフェース等の構成値は本構想の設計目標・仮定であってTIER IVの製品仕様を示すものではありません。TIER IVによる正式採用・承認、実車導入又は検証完了を示すものではありません。</p>
+          <span class="action">検討資料を見る ↗</span>
+        </a>
+<details class="rev" data-rev="1" data-card="feasibility">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月23日更新</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">運行・収支・投資回収を共通の前提で検証し、事業化に向けて解くべき条件を明確にしました。</p>
+    <ul>
+      <li><strong>運行規模から投資回収まで、つながる評価へ。</strong>旅客売上・水素需要・減価償却の前提をそろえ、運行と収支の関係を追えるようにしました。シミュレータと共通の数値に基づき、事業成立条件を検討できます。</li>
+      <li><strong>黒字化と投資回収を分け、次の課題を明確に。</strong>営業黒字でも投資回収に至らない計画であることを、キャッシュフローと投資指標で明示。2035年のキャッシュフローを延長しても未回収という結果を示し、事業化に向けた追加検討の必要性を明確にしました。</li>
+      <li><strong>共用インフラを、新たな収益機会として評価。</strong>水素冷却拠点の冷却・建屋・電力・通信を量子計算に共用する案を追加。追加設備・運用費と時間販売による収益を計上し、量子計算を含まない場合と投資指標を比較できるようにしました。</li>
+    </ul>
+    <p class="rev-note">編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。</p>
+  </div>
+</details>
+</div>
+      </div>
+    </section>
+
+    <section aria-labelledby="systems-heading">
+      <div class="section-head">
+        <h2 id="systems-heading">システム・試作アプリ</h2>
+        <p>サービス構想を具体的な操作体験につなぐ試作アプリです。</p>
+      </div>
+      <div class="grid">
+        <div class="card-wrap">
+<a class="card" href="https://seneschal.base44.app" target="_blank" rel="noopener noreferrer">
+          <span class="tag">アプリケーション試作</span>
+          <h3>Seneschal</h3>
+          <p>Seneschalは、MaaSのワンストップ性と、行動を中心に移動を組み立てるActivity-based Mobilityを融合するアプリです。単なるAPI接続だけでは埋まらない機能を補い、行動・サービス・移動を一体の選択肢として比較できます。AIに手配を任せる、自分で選択・調整する、サービスと移動の状況を確認する、という一連の体験を揃えます。</p>
+          <span class="action">Seneschalを開く ↗</span>
+        </a>
+<details class="rev" data-rev="1" data-card="seneschal">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月27日更新</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">利用者に合う担当セネシャル、使い方の案内、予定と移動の支援をつなぎ、日常の行動を相談から操作まで進められるアプリへ拡張しました。</p>
+    <ul>
+      <li><strong>自分に合う担当セネシャルを選べる。</strong>Seneschalをアバター化し、見た目・性格・会話スタイル・運用ルールを個別化。お客様の好みや使い方に合わせて、担当セネシャルを選択・設定できるようにしました。</li>
+      <li><strong>利用プランとAI契約に合わせて選べる。</strong>利用プランとお客様のAIサービス契約との連携状況に応じ、使える機能を明確化。利用条件を確認しながら、自分に合う使い方を選べるようにしました。</li>
+      <li><strong>検索バーから質問、操作箇所まで案内。</strong>各ページの検索バーで使い方を質問すると、担当セネシャルが案内カードで回答し、該当する操作箇所を示します。説明を読みながら操作を進められ、通常の検索・予定照会・操作依頼も優先して使えます。</li>
+      <li><strong>暮らしの情報を、予定と移動の判断へ。</strong>天気・災害・駐車・充電の情報を、カレンダーや案内につなぎました。電力需給や暑さの情報も取り込み、予約には渋滞を考慮した所要時間を反映。情報の確認から行動の検討へ進められます。</li>
+      <li><strong>予定づくりを相談し、納得して反映。</strong>一つの依頼から予定案を作り、利用者の承認を経てカレンダーへ反映。固定した予定を尊重し、提案を比較・確認してから決められる仕組みにしました。</li>
+      <li><strong>災害情報から、家族との合流を検討（デモ）。</strong>地震の警報から、帰宅や家族との合流候補を地図で確認する流れを追加。通行止めの情報を候補選択に反映し、提案を確認して判断する体験をデモで示しました。</li>
+      <li><strong>予定とサービスの候補を、一緒に検討。</strong>公開サンプルのGoogleカレンダーとの双方向同期と、Squareの検索候補を接続。予定を確認しながらサービスの選択肢を探せるようにしました。</li>
+      <li><strong>相談を整理し、続きから考えられる。</strong>担当セネシャルとの非公開の相談を、プロジェクトごとに整理して保存。会話例も用意し、何を相談するかを考えるところから継続的に支援します。</li>
+      <li><strong>必要な画面へ、軽快にアクセス。</strong>画面や機能を必要なときに読み込む構成へ改め、初期読み込みの負担を軽減。予定やサービスを確認する操作へ進みやすくしました。</li>
+    </ul>
+    <p class="rev-note">試作アプリです。デモデータを使う箇所はアプリ内に明記しています。外部情報は無料の公開APIを利用しています。</p>
+  </div>
+</details>
+</div>
+        <div class="card-wrap">
+<a class="card" href="https://federation.base44.app/" target="_blank" rel="noopener noreferrer">
+          <span class="tag">アプリケーション試作</span>
+          <h3>Federation</h3>
+          <p>Federationは「AI活用による産業革命」を、複数のAIとシステムが協働する運用基盤として具体化するものです。個別の自動化だけでは捉えきれない相互依存、需給、資源制約を総合的に把握し、業務の障害や予兆の検知から原因分析、対応の連携、運用復旧までを一体で扱う統合プラットフォームを構想しています。</p>
+          <span class="action">Federationを開く ↗</span>
+        </a>
+<details class="rev" data-rev="1" data-card="federation">
+  <summary>改訂履歴 <span>第1回改訂 · 2026年10月28日更新</span></summary>
+  <div class="rev-body">
+    <p class="rev-head">車両企画・サービス拠点の技術構成・事業性評価を一つの事業開発環境に統合。使い方案内と97枚の成果物資料を整え、構想から運用までの検討と判断を支援します。</p>
+    <ul>
+      <li><strong>チュートリアルとヘルプで、検討を進められる。</strong>マツコが37枚のチュートリアルで画面と検討の流れを案内し、設定内ヘルプとチャットで操作上の疑問に対応。運行の崩壊点を見つけて改善し、事業成立に必要な技術目標値を逆算する目的まで、一続きで理解できます。</li>
+      <li><strong>Seneschal・シミュレータ・4コンソールを、リアルタイム制御。</strong>Seneschalとシミュレータ、活動・フリート運用・サービス拠点・都市運行の4コンソールを接続。需要・車両・道路・拠点・エネルギーの状態と制約を共有し、個別の現場をまたいでサービス運行を調整する仕組みを実装しました。</li>
+      <li><strong>運行の崩壊点を自動で見つけ、改善を積み重ねる。</strong>整合・採点・自律エンジンを実装。サービス運行が成立しなくなる崩壊点を見つけ、原因分析・改善・再検証を繰り返す仕組みを構築しました。技術・運用・事業性のつながりを確認しながら、カイゼンを積み重ねられます。</li>
+      <li><strong>車両企画・拠点技術・事業性を、一体で評価。</strong>構想段階の車両企画とサービス拠点の技術構成を、運行・品質・収支・投資回収の評価につなぎました。技術条件がサービスと採算に与える影響を確認し、運用改善と次の技術開発を共通の成立条件から検討できます。要求と証跡から設計変更の上流・下流への影響と選択肢をたどり、分野をまたぐ判断を支援します。</li>
+      <li><strong>97枚の成果物で、構想を設計と実行へ。</strong>Artifact 69枚とBlueprint 28枚を整備。構想・要求・車両／拠点設計から、仕様・検証・運用手順・収支・投資判断・実行計画までを参照でき、関係者が具体的な資料に基づいて検討を進められます。</li>
+      <li><strong>共通の数値と採算の根拠から、改善策を選ぶ。</strong>シミュレータの計算結果とFederationの指数を連携し、関連アプリ・資料の前提を統一。損益・キャッシュフロー・投資指標と、売上・運行規模・投資・減価償却の整合を確認し、利益改善の候補を比較して採否を判断できます。</li>
+      <li><strong>外部情報を、判断できる更新提案へ。</strong>収集した外部データを日付付きの指数更新案として提示。変化を計画に取り込む前に、利用者が内容を確認し採否を決められます。</li>
+      <li><strong>AIが作る内容を、根拠付きで改善。</strong>設計・成果物カードへの独立レビューを、診断・修正・再確認につなぎました。未解決の指摘と証跡をたどり、レビューの見落としも検証して、改善すべき点を確認できます。</li>
+      <li><strong>異常の検知から、対応の引継ぎまで接続。</strong>検知・原因分析・候補比較・検証を一つの運用の流れに統合。実行記録と推定を区別し、担当者間で引継ぎ事項を共有して対応を進められます。</li>
+      <li><strong>関連する知見をたどり、検討を深める。</strong>自動運転サービスの運用知識を、出典付きのノートとして接続。関連する知見をグラフでたどり、設計や運用の検討に必要な情報へアクセスできます。</li>
+    </ul>
+    <p class="rev-note">編集可能な前提に基づく計画シナリオの値であり、運行実績ではありません。</p>
+  </div>
+</details>
+</div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="wrap">
+    <p style="margin-bottom: .9rem; line-height: 1.65;">掲載内容について：職務経歴・経験・専門性の説明と、会社の内部資料・公式成果物そのものの掲載は区別しています。本ページに紹介する構想・検討内容は、Hondaその他の勤務先による正式な採用・承認・開発着手・事業化を示すものではありません。過去の活動の業務該当性及び知的財産権の帰属は、本ページの表現によって確定しません。秘密保持及び知的財産に関する法令・契約上の義務を遵守します。</p>
+    <p>本サイトは公開情報と分析・検討内容を紹介するものです。© 2026 Satofumi Goto.</p>
+  </div></footer>
+
+  <dialog id="simulation-dialog" class="simulation-dialog" aria-label="地域モビリティ事業シミュレータ">
+    <div class="simulation-dialog-bar"><strong>地域モビリティ事業シミュレータ</strong><button type="button" class="simulation-close" autofocus>閉じる ×</button></div>
+    <iframe title="地域モビリティ事業シミュレータ" data-src="https://mobility-lab-flow.base44.app/planning" allow="fullscreen" allowfullscreen></iframe>
+  </dialog>
+  <script>
+  (() => {
+    const dialog = document.getElementById('simulation-dialog');
+    const open = document.querySelector('.simulation-open');
+    const frame = dialog.querySelector('iframe');
+    open.addEventListener('click', () => {
+      if (location.hostname !== 'satofumi-goto.github.io') {
+        window.open('https://mobility-lab-flow.base44.app/planning', '_blank', 'noopener,noreferrer');
+        return;
+      }
+      if (!frame.src) frame.src = frame.dataset.src;
+      dialog.showModal();
+      document.body.classList.add('simulation-expanded');
+    });
+    document.querySelector('.case-launch').addEventListener('click', () => open.click());
+    dialog.querySelector('.simulation-close').addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      document.body.classList.remove('simulation-expanded');
+      open.focus({preventScroll:true});
+    });
+  })();
+  </script>
+</body>
 </html>
+
+
+
