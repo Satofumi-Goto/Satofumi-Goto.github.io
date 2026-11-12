@@ -197,7 +197,8 @@ button { font: inherit; color: inherit; }
 @media (max-width: 1480px) { .app { grid-template-columns: 300px minmax(380px, 1fr) 440px; } .kpis { grid-template-columns: repeat(4, 1fr); } .fleetchips { display: none; } }
 @media (max-width: 1100px) {
   .app { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
-  .left { grid-template-rows: 420px 360px; } .center { grid-template-rows: 60vh 260px; } .right { max-height: none; }
+  .top, .kpis { order: 0; } .left { order: 1; } .right { order: 2; } .center { order: 3; }
+  .left { grid-template-rows: minmax(160px, auto) 360px; } .qlist { max-height: 420px; } .center { grid-template-rows: 60vh 260px; } .right { max-height: none; }
   .topright { flex-wrap: wrap; justify-content: flex-end; } .top { flex-wrap: wrap; }
   .zgrid, .team { grid-template-columns: 1fr 1fr; }
 }

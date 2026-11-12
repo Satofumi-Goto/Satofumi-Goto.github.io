@@ -276,6 +276,7 @@ function openTraining() {
     <div class="seg" id="trSpeed">${[0, 1, 2, 4].map(s => `<button data-s="${s}" class="${(S.paused ? 0 : S.speed) === s ? 'on' : ''}">${s === 0 ? '⏸' : s + '×'}</button>`).join('')}</div>
     <p><label class="chk"><input type="checkbox" id="trAuto" ${sim.settings.auto ? 'checked' : ''}> ${esc(t('ui_auto_inc'))}</label>
     <label class="chk"><input type="checkbox" id="trTeam" ${sim.settings.team ? 'checked' : ''}> ${esc(t('ui_team_auto'))}</label>
+    <label class="chk"><input type="checkbox" id="trDemo" ${sim.settings.teamAll ? 'checked' : ''}> ${esc(t('ui_demo'))}</label>
     <label class="chk">${esc(t('ui_intensity'))} <select id="trInt">${[0.5, 1, 2, 3].map(x => `<option ${sim.settings.intensity === x ? 'selected' : ''} value="${x}">${x}×</option>`).join('')}</select></label></p>
     </div><footer><button class="btn" id="trReset">${esc(t('ui_reset'))}</button><button class="btn pri" data-close>${esc(t('ui_close'))}</button></footer>`, true);
   const b = $('mbox');
@@ -289,6 +290,7 @@ function openTraining() {
   b.querySelectorAll('#trSpeed [data-s]').forEach(x => x.onclick = () => { const s = +x.dataset.s; S.paused = s === 0; if (s) S.speed = s; b.querySelectorAll('#trSpeed button').forEach(y => y.classList.toggle('on', y === x)); });
   $('trAuto').onchange = e => sim.settings.auto = e.target.checked;
   $('trTeam').onchange = e => sim.settings.team = e.target.checked;
+  $('trDemo').onchange = e => { sim.settings.teamAll = e.target.checked; if (e.target.checked) { sim.settings.team = true; $('trTeam').checked = true; } };
   $('trInt').onchange = e => sim.settings.intensity = +e.target.value;
   $('trReset').onclick = () => location.reload();
 }
@@ -361,7 +363,8 @@ function renderTop() {
     ['--muted', 'ui_c_chg', cnt(v => v.service !== 'IN_SERVICE'), ''],
     ['--crit', 'ui_c_p1', p1new, 'hot'],
   ];
-  setHTML($('fleetchips'), chips.map(([c2, k, n, hot]) => `<span class="chip ${n && hot ? hot : ''}"><i class="dot" style="background:${col(c2)}"></i>${esc(t(k))}<b>${n}</b></span>`).join(''));
+  if (sim.settings.teamAll) chips.unshift(['--violet', 'ui_demo_on', 1, '']);
+  setHTML($('fleetchips'), chips.map(([c2, k, n, hot]) => `<span class="chip ${n && hot ? hot : ''}"><i class="dot" style="background:${col(c2)}"></i>${esc(t(k))}${k === 'ui_demo_on' ? '' : `<b>${n}</b>`}</span>`).join(''));
   $('top').classList.toggle('alarm', p1new > 0);
   const k = sim.kpis();
   const onDuty = sim.ops.filter(o => !o.sv).length;
@@ -372,7 +375,7 @@ function renderTop() {
     ['ui_k_ack', `${k.ackAvg.toFixed(1)}s`, `P1 ≤${SLA[1]}s · P2 ≤${SLA[2]}s`, k.ackAvg > 20 ? 'bad' : k.ackAvg > 10 ? 'mid' : 'good'],
     ['ui_k_sla', `${k.sla.toFixed(0)}%`, t('ui_k_sla_t'), k.sla < 80 ? 'bad' : k.sla < 95 ? 'mid' : 'good'],
     ['ui_k_res', dur(k.resAvg), `${sim.stats.res.length} ${t('ui_k_cases')}`, ''],
-    ['ui_k_wait', `${k.waiting}`, `${t('ui_k_avgwait')} ${dur(k.waitAvg)}${k.held ? ' · ' + t('ui_held') + ' ' + k.held : ''}`, k.held ? 'mid' : ''],
+    ['ui_k_wait', `${k.waiting}`, `${t('ui_k_avgwait')} ${dur(k.waitAvg)}${k.held ? ' · ' + t('ui_held') + ' ' + k.held : ''}${sim.stats.cancelled ? ' · ' + t('ui_k_cancel') + ' ' + sim.stats.cancelled : ''}`, k.held ? 'mid' : ''],
     ['ui_k_late', `${k.late}`, t('ui_k_late_t'), k.late ? 'mid' : 'good'],
     ['ui_k_served', `${k.served}`, `${t('ui_k_avail')} ${k.inSvc}/${k.total}`, ''],
   ];

@@ -42,26 +42,29 @@ export const ITYPES = {
     { id: 'link_cam', kind: 'check', cam: 'front' },
     { id: 'pax_announce', kind: 'act', acts: ['announce', 'intercom'], req: i => i.data.pax > 0 },
     { id: 'diag', kind: 'act', acts: ['run_diag'] },
-    { id: 'resume_or_recover', kind: 'act', acts: ['resume', 'dispatch_crew'] },
-  ], rec: ['switch_carrier', 'run_diag', 'resume'] },
+    { id: 'mrc_crew', kind: 'act', acts: ['dispatch_crew'], req: i => i.data.diagFailed },
+    { id: 'alt_arranged', kind: 'act', acts: ['alt_vehicle', 'crew_escort'], req: i => i.data.paxNow > 0 && i.data.diagFailed },
+    { id: 'resume_or_recover', kind: 'act', acts: ['resume', 'manual_recover'] },
+  ], rec: ['switch_carrier', 'run_diag', 'resume', 'dispatch_crew', 'alt_vehicle', 'crew_escort', 'manual_recover'] },
   sos: { prio: 1, auto: false, cause: 'passenger', steps: [
     { id: 'sos_talk', kind: 'act', acts: ['intercom'] },
     { id: 'sos_cabin', kind: 'check', cam: 'cabin' },
     { id: 'sos_119', kind: 'act', acts: ['call_119'], req: i => i.data.subtype === 'medical' && i.data.revealed },
-    { id: 'sos_route', kind: 'act', acts: ['divert_hospital', 'pull_over'], req: i => i.data.subtype === 'medical' && i.data.revealed },
+    { id: 'sos_route', kind: 'act', acts: ['divert_hospital', 'pull_over'], req: i => i.data.subtype === 'medical' && i.data.revealed && (i.data.paxNow > 0 || !!i.steps.sos_route) },
   ], rec: ['intercom', 'call_119', 'divert_hospital'] },
   mrm: { prio: 1, auto: false, cause: 'vehicle', steps: [
     { id: 'mrc_cabin', kind: 'check', cam: 'cabin' },
     { id: 'mrc_rear', kind: 'check', cam: 'rear' },
     { id: 'pax_announce', kind: 'act', acts: ['announce', 'intercom'], req: i => i.data.pax > 0 },
     { id: 'diag', kind: 'act', acts: ['run_diag'] },
-    { id: 'resume_or_recover', kind: 'act', acts: ['resume', 'dispatch_crew'] },
-    { id: 'alt_arranged', kind: 'act', acts: ['alt_vehicle'], req: i => i.data.pax > 0 && i.data.diagFailed },
-  ], rec: ['announce', 'run_diag', 'resume', 'dispatch_crew', 'alt_vehicle'] },
+    { id: 'mrc_crew', kind: 'act', acts: ['dispatch_crew'], req: i => i.data.diagFailed },
+    { id: 'alt_arranged', kind: 'act', acts: ['alt_vehicle', 'crew_escort'], req: i => i.data.paxNow > 0 && i.data.diagFailed },
+    { id: 'resume_or_recover', kind: 'act', acts: ['resume', 'manual_recover'] },
+  ], rec: ['announce', 'run_diag', 'resume', 'dispatch_crew', 'alt_vehicle', 'crew_escort', 'manual_recover'] },
   signal: { prio: 2, auto: true, cause: 'infra', steps: [
     { id: 'sig_cam', kind: 'check', cam: 'front' },
     { id: 'sig_decide', kind: 'act', acts: ['approve_proceed', 'reroute'] },
-    { id: 'sig_avoid', kind: 'act', acts: ['avoid_node'] },
+    { id: 'sig_avoid', kind: 'act', acts: ['avoid_node'], req: i => i.data.active !== false || !!i.steps.sig_avoid },
     { id: 'sig_report', kind: 'act', acts: ['contact_road'] },
   ], rec: ['approve_proceed', 'avoid_node', 'contact_road'] },
   ev: { prio: 2, auto: true, cause: 'external', steps: [
@@ -72,7 +75,8 @@ export const ITYPES = {
     { id: 'wx_zone', kind: 'act', acts: ['zone_restrict', 'zone_suspend'] },
     { id: 'wx_vehicles', kind: 'check' },
     { id: 'wx_notify', kind: 'act', acts: ['notify_customers'] },
-  ], rec: ['zone_restrict', 'zone_suspend', 'notify_customers'] },
+    { id: 'wx_restore', kind: 'act', acts: ['zone_restore'], req: i => i.data.odd !== 'NORMAL' || !!i.steps.wx_restore },
+  ], rec: ['zone_restrict', 'zone_suspend', 'notify_customers', 'zone_restore'] },
   battery: { prio: 3, auto: true, cause: 'vehicle', steps: [
     { id: 'bat_hub', kind: 'act', acts: ['return_hub'] },
   ], rec: ['return_hub'] },
@@ -87,13 +91,15 @@ export const ITYPES = {
     { id: 'col_edr', kind: 'act', acts: ['edr_lock'] },
     { id: 'col_110', kind: 'act', acts: ['call_110'] },
     { id: 'col_crew', kind: 'act', acts: ['dispatch_crew'] },
-    { id: 'alt_arranged', kind: 'act', acts: ['alt_vehicle'], req: i => i.data.pax > 0 },
-  ], rec: ['edr_lock', 'call_110', 'dispatch_crew', 'alt_vehicle'] },
+    { id: 'alt_arranged', kind: 'act', acts: ['alt_vehicle', 'crew_escort'], req: i => i.data.paxNow > 0 || !!i.steps.alt_arranged },
+    { id: 'col_recover', kind: 'act', acts: ['manual_recover'] },
+  ], rec: ['edr_lock', 'call_110', 'dispatch_crew', 'alt_vehicle', 'crew_escort', 'manual_recover'] },
   wheelchair: { prio: 3, auto: true, cause: 'passenger', steps: [
     { id: 'wc_cam', kind: 'check', cam: 'cabin' },
     { id: 'wc_ramp', kind: 'act', acts: ['ramp'] },
   ], rec: ['ramp'] },
 };
+const LOGONLY = new Set(['announce', 'call_110', 'call_119', 'contact_road', 'notify_customers', 'hazard', 'intercom', 'edr_lock', 'speed_limit', 'hold']);
 export const CAUSES = ['external', 'vehicle', 'network', 'passenger', 'weather', 'infra', 'false_alarm', 'other'];
 export const CAMS = ['front', 'rear', 'left', 'right', 'cabin', 'bev'];
 
@@ -124,6 +130,7 @@ export const COMMANDS = {
   return_hub:      { group: 'ops', confirm: 1, scope: 'v' },
   dispatch_crew:   { group: 'ops', confirm: 1, scope: 's' },
   manual_recover:  { group: 'ops', confirm: 1, scope: 's' },
+  crew_escort:     { group: 'ops', confirm: 1, scope: 's' },
   avoid_node:      { group: 'ops', confirm: 1, scope: 's' },
   call_119:        { group: 'ext', confirm: 1, scope: 's' },
   call_110:        { group: 'ext', confirm: 1, scope: 's' },
@@ -146,7 +153,7 @@ export class Sim {
     this.outages = new Map();      // nodeId -> { until }
     this.avoid = new Set();        // nodes excluded from routing fleet-wide
     this.blocked = new Map();      // edgeKey -> until
-    this.settings = { auto: true, intensity: 1, team: true };
+    this.settings = { auto: true, intensity: 1, team: true, teamAll: false };
     this.ops = [
       { id: ME, me: true, name: { ja: 'あなた', en: 'You' } },
       { id: 'OP-03', name: { ja: '佐藤', en: 'Sato' } },
@@ -154,7 +161,7 @@ export class Sim {
       { id: 'SV-01', sv: true, name: { ja: '監督者 高橋', en: 'Supervisor Takahashi' } },
     ];
     this.seq = { inc: 0, bk: 0, cmd: 0, crew: 0 };
-    this.stats = { ack: [], res: [], slaMet: 0, slaMiss: 0, assists: 0, meters: 0, served: 0, delayed: 0 };
+    this.stats = { ack: [], res: [], slaMet: 0, slaMiss: 0, assists: 0, meters: 0, served: 0, delayed: 0, cancelled: 0 };
     this.listeners = [];
     this.nextBk = 3; this.nextInc = 12; this.dispatchTimer = 0; this.teamTimer = 0;
     this.initFleet();
@@ -284,6 +291,7 @@ export class Sim {
     const avoid = this.avoidSet();
     for (const v of this.vehicles) if (v.type === 'RT' && v.mode === 'IDLE' && !v.job && v.soc < 22 && v.service === 'IN_SERVICE' && !this.openIncs(v).length) { this.sendHub(v, 'charge'); v.mode = 'AUTO'; }
     for (const b of this.bookings) {
+      if ((b.status === 'WAITING' || b.status === 'HELD') && this.t - b.req > 900) { b.status = 'CANCELLED'; b.done = this.t; this.stats.cancelled++; continue; }
       if (b.status === 'HELD' && !avoid.has(b.o) && !avoid.has(b.d)) b.status = 'WAITING';
       if (b.status !== 'WAITING') continue;
       if (avoid.has(b.o) || avoid.has(b.d)) { b.status = 'HELD'; continue; }
@@ -321,7 +329,7 @@ export class Sim {
     this.updateIncidents(dt);
     for (const [k, until] of this.blocked) if (this.t > until) this.blocked.delete(k);
     for (const [n, o] of this.outages) if (this.t > o.until) { this.outages.delete(n); this.avoid.delete(n); this.log('info', 'lg_signal_restored', { node: n }); }
-    if ((this.nextBk -= dt) <= 0) { this.newBooking(); this.nextBk = 20 + this.r() * 22; }
+    if ((this.nextBk -= dt) <= 0) { this.newBooking(); this.nextBk = 34 + this.r() * 30; }
     if ((this.dispatchTimer -= dt) <= 0) { this.dispatch(); this.dispatchTimer = 1; }
     if (this.settings.auto && (this.nextInc -= dt * this.settings.intensity) <= 0) { this.randomIncident(); this.nextInc = 30 + this.r() * 45; }
     if (this.settings.team && (this.teamTimer -= dt) <= 0) { this.teamWork(); this.teamTimer = 2; }
@@ -382,9 +390,13 @@ export class Sim {
       if (v.dwell <= 0 && v.doors === 'CLOSED' && !needRamp && !holdForRamp) { v.ramp = null; this.afterDwell(v); }
       if (v.dwell < -1 && (needRamp || holdForRamp)) v.dwell = 0.5;
     }
+    if (v.mode === 'OUT_OF_SERVICE' && v.service === 'OUT_OF_SERVICE') {
+      v.maintT = (v.maintT || 0) + dt;
+      if (v.maintT > 600) { v.maintT = 0; Object.keys(v.sensors).forEach(k => v.sensors[k] = 'OK'); v.loc = 0.98; v.capAuto = null; v.diag = null; v.edr = false; v.hazard = false; v.crew = null; v.mode = 'CHARGING'; v.service = 'CHARGING'; this.log('info', 'lg_maint_done', {}, { vid: v.id }); }
+    }
     if (v.mode === 'CHARGING') {
       v.soc = Math.min(100, v.soc + 0.12 * dt);
-      if (v.soc >= 90 && v.service === 'CHARGING') { v.service = 'IN_SERVICE'; v.mode = 'IDLE'; v.leg = null; this.log('info', 'lg_charged', { soc: Math.round(v.soc) }, { vid: v.id }); }
+      if (v.soc >= 90 && v.service === 'CHARGING') { this.backToService(v); this.log('info', 'lg_charged', { soc: Math.round(v.soc) }, { vid: v.id }); }
     }
 
     // longitudinal control
@@ -496,12 +508,24 @@ export class Sim {
       }
       case 'HUB': {
         v.v = 0; v.after = null;
+        this.releaseJob(v);
         if (leg.why === 'maint') { v.mode = 'OUT_OF_SERVICE'; v.service = 'OUT_OF_SERVICE'; this.log('info', 'lg_hub_maint', {}, { vid: v.id }); }
         else { v.mode = 'CHARGING'; v.service = 'CHARGING'; this.log('info', 'lg_hub_charge', { soc: Math.round(v.soc) }, { vid: v.id }); }
         break;
       }
       case 'STAGE': default: v.mode = 'IDLE'; v.leg = null; break;
     }
+  }
+  releaseJob(v) {
+    if (!v.job) return;
+    const b = this.bookings.find(x => x.id === v.job);
+    if (b && b.status === 'ASSIGNED') { b.status = 'WAITING'; b.vid = null; b.promise = null; }
+    if (b && b.status === 'ONBOARD' && v.pax === 0) { b.status = 'WAITING'; b.vid = null; b.transfer = true; }
+    v.job = null;
+  }
+  backToService(v) {
+    v.service = 'IN_SERVICE'; v.leg = null; v.after = null; this.releaseJob(v);
+    if (v.line !== null) { v.lineIdx = Math.max(-1, v.lineIdx - 1); v.mode = 'AUTO'; this.nextLineLeg(v); } else v.mode = 'IDLE';
   }
   beginDwell(v, s) { v.mode = 'DWELL'; v.dwell = s; v.v = 0; v.doors = 'OPEN'; }
   afterDwell(v) {
@@ -533,7 +557,7 @@ export class Sim {
     const z = zoneId || (v ? this.zoneOf(v) : null);
     const inc = {
       id, type, prio: T.prio, vid: v ? v.id : null, zone: z, created: this.t, ack: null, assignee: null,
-      status: 'NEW', resolved: null, steps: {}, timeline: [], data: { ...data, pax: v ? v.pax : 0 }, escalated: false,
+      status: 'NEW', resolved: null, steps: {}, timeline: [], data: { ...data, pax: v ? v.pax : 0, paxNow: v ? v.pax : 0 }, escalated: false,
       camBase: v ? { ...v.camSec } : {}, x: v ? v.x : null, y: v ? v.y : null, cause: null, note: '', slaMissed: false,
       bookings: v ? this.affectedBookings(v).map(b => b.id) : this.zoneBookings(z).map(b => b.id), autoNote: null,
     };
@@ -618,6 +642,8 @@ export class Sim {
     const inc = this.inc(incId); if (!inc || inc.status === 'RESOLVED') return { ok: false };
     const pend = this.pendingSteps(inc);
     if (pend.length && !force) return { ok: false, reason: 'il_steps_pending', p: { n: pend.length } };
+    const vv = this.veh(inc.vid);
+    if (!force && vv && ['MRM', 'MRC'].includes(vv.mode) && ['mrm', 'link_loss', 'collision'].includes(inc.type)) return { ok: false, reason: 'il_vehicle_in_mrc' };
     if (!inc.ack) this.ack(incId, op);
     inc.status = 'RESOLVED'; inc.resolved = this.t; inc.cause = cause || ITYPES[inc.type].cause; inc.note = note; inc.closedBy = op; inc.forced = force && pend.length > 0;
     this.stats.res.push(this.t - inc.created);
@@ -639,20 +665,23 @@ export class Sim {
       const age = this.t - inc.created;
       if (!inc.ack && age > SLA[inc.prio] && !inc.slaMissed) { inc.slaMissed = true; this.stats.slaMiss++; this.escalate(inc.id, 'SYSTEM', true); this.emit({ type: 'sla', inc }); }
       const v = this.veh(inc.vid);
-      if (v) { inc.x = v.x; inc.y = v.y; }
+      if (v) { inc.x = v.x; inc.y = v.y; inc.data.paxNow = v.pax; }
+      if (inc.type === 'signal') inc.data.active = this.outages.has(inc.data.node);
+      if (inc.type === 'weather') { const z = this.zone(inc.zone); inc.data.odd = z.odd; inc.data.rain = z.rain; }
+      const free = v && !['WAIT_ASSIST', 'MRM', 'MRC'].includes(v.mode);
       if (inc.type === 'sos' && v && !inc.steps.sos_route && v.leg && ['HOSP', 'HOSP_DWELL'].includes(v.leg.kind)) inc.steps.sos_route = { t: this.t, by: 'SYSTEM', cmd: 'divert_hospital' };
       const T = ITYPES[inc.type]; if (!T.auto) continue;
       const stepsDone = this.pendingSteps(inc).length === 0;
       switch (inc.type) {
-        case 'obstacle': if (stepsDone && v.mode === 'AUTO') this.autoClose(inc, 'ac_assist_done'); break;
-        case 'pedestrian': if (inc.data.cleared && v.mode === 'AUTO') this.autoClose(inc, 'ac_self_cleared'); else if (stepsDone && v.mode === 'AUTO') this.autoClose(inc, 'ac_assist_done'); break;
+        case 'obstacle': if (stepsDone && free) this.autoClose(inc, 'ac_assist_done'); break;
+        case 'pedestrian': if (inc.data.cleared && free) this.autoClose(inc, 'ac_self_cleared'); else if (stepsDone && free) this.autoClose(inc, 'ac_assist_done'); break;
         case 'sensor': if (v.sensors.lidar === 'OK' && stepsDone) this.autoClose(inc, 'ac_recovered'); else if (v.service !== 'IN_SERVICE' && stepsDone) this.autoClose(inc, 'ac_withdrawn'); break;
         case 'latency': if (v.net.good > 5 && stepsDone) this.autoClose(inc, 'ac_recovered'); else if (age > 100 && v.net.degraded > 0 && v.net.degraded < 900) { v.net.degraded = 1400; this.log('crit', 'lg_latency_worse', {}, { vid: v.id, inc: inc.id }); } break;
-        case 'ev': if (v.mode === 'AUTO' && stepsDone) this.autoClose(inc, 'ac_assist_done'); break;
+        case 'ev': if (free && stepsDone) this.autoClose(inc, 'ac_assist_done'); break;
         case 'battery': if (v.leg && v.leg.kind === 'HUB' || v.mode === 'CHARGING') this.autoClose(inc, 'ac_to_hub'); break;
         case 'door': if (v.doors !== 'FAULT' && stepsDone) this.autoClose(inc, 'ac_recovered'); break;
         case 'wheelchair': if (v.ramp && v.ramp.done && stepsDone) this.autoClose(inc, 'ac_assist_done'); break;
-        case 'signal': if (stepsDone && v.mode === 'AUTO' && v.path.indexOf(inc.data.node, v.seg + 1) < 0) this.autoClose(inc, 'ac_assist_done'); break;
+        case 'signal': if (stepsDone && free && (v.path.indexOf(inc.data.node, v.seg + 1) < 0 || !inc.data.active)) this.autoClose(inc, 'ac_assist_done'); break;
       }
     }
   }
@@ -709,6 +738,7 @@ export class Sim {
     if (C.scope === 'z') {
       if (!zone) return 'il_no_zone';
       if (name === 'zone_restore' && zone.odd === 'NORMAL') return 'il_zone_normal';
+      if (name === 'zone_restore' && (zone.rain > 10 || zone.vis < 1000)) return 'il_wx_active';
       if (name === 'zone_restrict' && zone.odd === 'RESTRICTED') return 'il_already';
       if (name === 'zone_suspend' && zone.odd === 'SUSPENDED') return 'il_already';
       return null;
@@ -733,6 +763,7 @@ export class Sim {
         if (Object.values(v.sensors).includes('FAULT')) return 'il_sensor_fault';
         if (this.openIncs(v).some(i => i.type === 'collision')) return 'il_collision';
         const need = this.openIncs(v).find(i => ['mrm', 'link_loss'].includes(i.type));
+        if (v.diag && v.diag.done && !v.diag.pass) return 'il_diag_failed';
         if (need && !(v.diag && v.diag.done && v.diag.pass && v.diag.at >= need.created)) return 'il_diag_required';
         if (v.mode === 'WAIT_ASSIST' && assistInc(['obstacle', 'pedestrian', 'signal'])) return 'il_use_assist';
         if (v.mode === 'WAIT_ASSIST' && assistInc(['ev'])) return 'il_ev_wait';
@@ -768,6 +799,7 @@ export class Sim {
       case 'alt_vehicle': if (v.pax <= 0) return 'il_no_pax'; if (!stopped) return 'il_must_stop'; if (this.vehicles.some(x => x.rescueOf === v.id)) return 'il_already'; return this.findRescue(v) ? null : 'il_no_idle';
       case 'return_hub': if (v.service !== 'IN_SERVICE') return 'il_already'; if (v.leg && v.leg.kind === 'HUB') return 'il_already'; if (['MRC', 'MRM'].includes(v.mode)) return 'il_mrc_resume_first'; return null;
       case 'dispatch_crew': return v.crew ? 'il_already' : null;
+      case 'crew_escort': if (!v.crew || !v.crew.onsite) return 'il_crew_not_onsite'; if (v.pax <= 0) return 'il_no_pax'; return null;
       case 'manual_recover': if (!v.crew || !v.crew.onsite) return 'il_crew_not_onsite'; if (v.pax > 0) return 'il_pax_onboard'; if (v.mode === 'MANUAL') return 'il_already'; return null;
       case 'avoid_node': { const i = assistInc(['signal']); if (!i) return 'il_no_request'; if (this.avoid.has(i.data.node)) return 'il_already'; return null; }
       case 'call_119': case 'call_110': case 'contact_road': return null;
@@ -916,10 +948,18 @@ export class Sim {
         this.log('info', 'lg_crew', { id: cr.id, min: Math.ceil((cr.eta - this.t) / 60) }, ref); break;
       }
       case 'manual_recover': {
+        this.releaseJob(v);
         v.mode = 'MANUAL'; v.hazard = true; v.service = 'OUT_OF_SERVICE'; v.leg = { kind: 'HUB', target: HUB.node, why: 'maint' }; this.setDest(v, HUB.node);
         this.log('info', 'lg_manual', {}, ref);
         for (const i of this.openIncs(v)) if (i.type === 'collision') i.data.recovered = true;
         break;
+      }
+      case 'crew_escort': {
+        const st = this.nearestStop(v) || { node: nearestNode(v.x, v.y).id };
+        for (const b of this.bookings) if (b.vid === v.id && b.status === 'ONBOARD') { b.status = 'WAITING'; b.vid = null; b.o = st.node; b.req = this.t; b.transfer = true; }
+        if (v.job) { const b = this.bookings.find(x => x.id === v.job); if (b && b.status === 'ASSIGNED') { b.status = 'WAITING'; b.vid = null; } }
+        const n = v.pax; v.pax = 0; v.job = null;
+        this.log('info', 'lg_escort', { n, node: st.node }, ref); break;
       }
       case 'avoid_node': { const i = this.openIncs(v).find(x => x.type === 'signal'); if (i) { this.avoid.add(i.data.node); for (const x of this.vehicles) if (x !== v && x.leg && MOVING.has(x.mode) && x.path.indexOf(i.data.node, x.seg + 1) >= 0) this.setDest(x, x.leg.target); this.log('info', 'lg_avoid', { node: i.data.node }, ref); } break; }
       case 'call_119': this.log('crit', 'lg_119', {}, ref); break;
@@ -962,19 +1002,33 @@ export class Sim {
       if (inc.status === 'RESOLVED') continue;
       const age = this.t - inc.created;
       const mates = ['OP-03', 'OP-11'];
-      if (!inc.assignee && ((inc.prio === 3 && age > 25) || (inc.prio === 2 && mine >= 2 && age > 18))) {
+      if (!inc.assignee && (this.settings.teamAll ? age > 4 : ((inc.prio === 3 && age > 25) || (inc.prio === 2 && mine >= 2 && age > 18)))) {
         const load = op => this.incidents.filter(i => i.status !== 'RESOLVED' && i.assignee === op).length;
         const op = mates.sort((a, b) => load(a) - load(b))[0];
-        if (load(op) >= 2) continue;
+        if (load(op) >= (this.settings.teamAll ? 6 : 2)) continue;
         this.ack(inc.id, op); inc.status = 'IN_PROGRESS'; inc.teamAt = this.t + 12 + this.r() * 18;
       }
       if (mates.includes(inc.assignee) && inc.teamAt && this.t > inc.teamAt) {
         inc.teamAt = this.t + 6;
         const v = this.veh(inc.vid);
         const step = this.pendingSteps(inc)[0];
-        if (!step) { if (!ITYPES[inc.type].auto) this.resolve(inc.id, ITYPES[inc.type].cause, '', inc.assignee); continue; }
-        if (step.kind === 'check') this.checkStep(inc.id, step.id, inc.assignee);
-        else for (const a of step.acts) { const res = this.command(a, { vid: v && v.id, incId: inc.id, zoneId: inc.zone, op: inc.assignee }); if (res.ok) break; }
+        const tryCmds = list => { for (const a of list) { const res = this.command(a, { vid: v && v.id, incId: inc.id, zoneId: inc.zone, op: inc.assignee }); if (res.ok) return true; } return false; };
+        if (!step) {
+          if (!ITYPES[inc.type].auto) this.resolve(inc.id, inc.type === 'sos' && inc.data.subtype === 'mistake' ? 'false_alarm' : ITYPES[inc.type].cause, '', inc.assignee);
+          else tryCmds(ITYPES[inc.type].rec.filter(a => !LOGONLY.has(a)));
+          continue;
+        }
+        if (step.kind === 'check') { this.checkStep(inc.id, step.id, inc.assignee); continue; }
+        if (v && v.call && !v.call.lines.length) this.command('intercom', { vid: v.id, incId: inc.id, op: inc.assignee });
+        if (v && v.diag && !v.diag.done) continue; // wait for diagnostics
+        if (!tryCmds(step.acts)) {
+          const REMEDY = { il_doors: 'door_close', il_diag_required: 'run_diag', il_rtt: 'switch_carrier', il_crew_not_onsite: 'dispatch_crew', il_pax_onboard: 'crew_escort' };
+          const fix = step.acts.map(a => REMEDY[this.interlock(a, v, inc, null)]).find(Boolean);
+          if (fix && tryCmds([fix])) continue;
+          const others = this.pendingSteps(inc).filter(x => x !== step && x.kind === 'act');
+          if (!others.some(o => tryCmds(o.acts)) && v && v.crew && v.crew.onsite && v.pax > 0) tryCmds(['crew_escort']);
+          else if (!others.length && v && !v.crew && ['MRC'].includes(v.mode) && v.diag && v.diag.done && !v.diag.pass) tryCmds(['dispatch_crew']);
+        }
       }
     }
   }
