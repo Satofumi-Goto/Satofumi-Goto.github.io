@@ -18,12 +18,13 @@ h1{font-size:1.45rem;margin:0 0 6px}.sub{color:var(--muted);font-size:.9rem}.sta
 section.board{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
 .legend{display:flex;gap:8px;flex-wrap:wrap}.warn{font-size:.8rem;color:var(--red);font-weight:700}
-.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+.chatGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:12px 0}.chatCell{border:1px solid var(--line);border-radius:10px;padding:12px;min-width:0;background:#fafbfc}.chatCell strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chatCell p{font-size:.78rem;overflow-wrap:anywhere}.chatCell small{color:var(--muted)}.chatCell progress{width:100%;height:8px}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1050px}th,td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
 th{position:sticky;top:0;background:#fafbfc;font-size:.77rem;color:var(--muted);z-index:1}td{font-size:.82rem}tr:last-child td{border-bottom:0}
 .owner{font-weight:700;min-width:210px}.evidence{min-width:360px}.next{min-width:330px}
 a{color:#0b63ce;text-decoration:none}a:hover{text-decoration:underline}
 footer{margin-top:12px;color:var(--muted);font-size:.75rem}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.apps,.fedopGrid{grid-template-columns:1fr}.stamp{text-align:left}}
+details{margin-top:5px}details summary{font-size:.76rem;color:var(--blue);cursor:pointer}details>p{overflow-wrap:anywhere} .shortline{overflow-wrap:anywhere} .oldData{color:var(--muted);font-size:.78rem}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.apps,.fedopGrid,.chatGrid{grid-template-columns:1fr}.stamp{text-align:left}}
 </style>
 </head>
 <body>
@@ -47,10 +48,19 @@ footer{margin-top:12px;color:var(--muted);font-size:.75rem}
     <div class="metric"><b id="mAuto">–</b><span>自動開発</span></div>
   </div>
 
+  <section class="orchestrator" aria-label="共通指示窓口">
+    <h2>オーケストレータへの指示（全Chat共通）</h2>
+    <p>どのChatからでも同じGitHub Issueに指示を登録できます。投稿は受付であり、担当Chatの自動起動・作業完了を意味しません。</p>
+    <p><a href="https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/92" target="_blank" rel="noopener noreferrer">共通指示窓口 #92 を開く</a> ／ <a href="https://github.com/Satofumi-Goto/Satofumi-Goto.github.io/issues/74" target="_blank" rel="noopener noreferrer">担当CLAIM #74 を確認</a></p>
+    <p>各Chatで「オーケストレータに指示して」と依頼するときは、#92へのコメント登録を明示してください。進捗・実行証拠はこのボードで確認します。</p>
+    <p id="commandIntakeStatus" aria-live="polite">指示受付状況を確認中…</p>
+    <ol class="queue" id="commandIntakeRecent"></ol>
+  </section>
   <section class="orchestrator">
     <h2>自動開発オーケストレータ</h2>
     <p id="orchestratorState">読込中…</p>
     <p id="orchestratorAction"></p>
+    <details><summary>オーケストレータ詳細</summary><p id="orchestratorFullState"></p></details>
     <ol class="queue" id="actionQueue"></ol>
   </section>
 
@@ -58,10 +68,15 @@ footer{margin-top:12px;color:var(--muted);font-size:.75rem}
     <h2>Fed実運用</h2>
     <p id="fedOperationState"></p>
     <div class="fedopGrid" id="fedOperationHeads"></div>
-    <p id="fedOperationGate"></p>
-    <ol class="queue" id="fedOperationBlocks"></ol>
+    <details><summary>公開ゲート・阻害の詳細</summary><p id="fedOperationGate"></p><ol class="queue" id="fedOperationBlocks"></ol></details>
   </section>
 
+  <section class="orchestrator" aria-label="担当Chat進捗" id="chatBoard">
+    <h2>担当別Chatの進捗・実行証拠</h2>
+    <p>Chatの登録と実稼働は別です。最新の返信・GitHub証拠がない担当は「未確認」と表示します。</p>
+    <p id="chatBoardSummary">担当情報を読み込み中…</p>
+    <div class="chatGrid" id="chatWorkers"></div><h3>実行基盤・モデル別接続</h3><p>Python / Codex / Claude / GeminiはChatとは別の実行主体です。実行ログが確認されるまで未接続と表示します。</p><div class="chatGrid" id="executorWorkers"></div>
+  </section>
   <div class="apps" id="apps"></div>
 
   <section class="board">
@@ -94,22 +109,47 @@ const statusMeta={
 };
 function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function link(url,label){return url?'<a href="'+esc(url)+'" target="_blank" rel="noopener">'+esc(label)+'</a>':esc(label)}
+function shortText(value,n=72){const t=String(value??'').replace(/\s+/g,' ').trim();return t.length>n?t.slice(0,n-1)+'…':t}
+function hasFreshExecutionProof(w){
+  const r=w?.runtime_receipt;
+  if(w?.status!=="running"||w.executor_verified!==true||w.runtime_source!=="authenticated_execution_api")return false;
+  if(r?.signature_verified!==true||r.authenticated!==true||!Number.isInteger(r.pid)||r.pid<=0)return false;
+  if(!/^[a-f0-9]{40}$/i.test(String(r.repo_sha||""))||!/^https:\/\//.test(String(r.evidence_url||"")))return false;
+  const age=Date.now()-Date.parse(r.heartbeat_at||"");
+  return Number.isFinite(age)&&age>=0&&age<=15*60*1000;
+}
+async function fetchAllIntakeComments(request=fetch,maxPages=20){
+  const comments=[];
+  for(let page=1;page<=maxPages;page++){
+    const url="https://api.github.com/repos/Satofumi-Goto/Satofumi-Goto.github.io/issues/92/comments?per_page=100&page="+page;
+    const response=await request(url,{headers:{Accept:"application/vnd.github+json"},cache:"no-store"});
+    if(!response.ok)throw Error("GitHub HTTP "+response.status);
+    const batch=await response.json();
+    if(!Array.isArray(batch))throw Error("受付データ形式が不正");
+    comments.push(...batch);
+    if(batch.length<100)return comments;
+  }
+  throw Error("受付が多く全件取得できないため要再確認");
+}
 function render(d){
   const dt=new Date(d.generated_at);
   document.getElementById("updated").textContent=isNaN(dt)?d.generated_at:dt.toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
+  const age=(Date.now()-dt.getTime())/60000;
+  const outdated=!Number.isFinite(age)||age>90;
   const rows=d.rows||[];
   const running=rows.filter(r=>r.status==="green"||r.status==="orange").length;
-  document.getElementById("mRunning").textContent=running;
-  document.getElementById("mWaiting").textContent=rows.filter(r=>r.status==="yellow").length;
-  document.getElementById("mBlocked").textContent=rows.filter(r=>r.status==="red").length;
+  document.getElementById("mRunning").textContent=outdated?"要更新":running;
+  document.getElementById("mWaiting").textContent=outdated?"—":rows.filter(r=>r.status==="yellow").length;
+  document.getElementById("mBlocked").textContent=outdated?"—":rows.filter(r=>r.status==="red").length;
   document.getElementById("mDone").textContent=d.completed_total??0;
   const o=d.orchestrator||{};
-  document.getElementById("mAuto").textContent=o.enabled?"稼働中":"停止";
+  document.getElementById("mAuto").textContent=outdated?"要再確認":(o.enabled?"稼働中":"停止");
   const ciLabel={infrastructure_blocked:"CI基盤停止",quota_blocked:"CI利用枠停止"}[o.ci_state]||(o.ci_state||"確認中");
   const ciBlocked=["infrastructure_blocked","quota_blocked"].includes(o.ci_state);
-  document.getElementById("orchestratorState").innerHTML="<strong>"+esc(o.enabled?"自動開発: 稼働中":"自動開発: 停止")+"</strong> / "+(ciBlocked?'<span class="ciBlocked">'+esc(ciLabel)+'</span>':esc(ciLabel))+" / "+esc(o.cadence||"");
-  document.getElementById("orchestratorAction").textContent="現在: "+(o.current_action||"次アクション判定中");
-  document.getElementById("actionQueue").innerHTML=(d.action_queue||[]).slice(0,5).map(q=>"<li><strong>#"+esc(q.priority)+" "+esc(q.owner)+"</strong> — "+esc(q.action)+(q.blocked_by?.length?" <span class=\"ciBlocked\">("+esc(q.blocked_by.join(" / "))+")</span>":"")+"</li>").join("");
+  document.getElementById("orchestratorState").innerHTML="<strong>"+esc(outdated?"記録が古い":(o.enabled?"自動開発: 稼働中":"自動開発: 停止"))+"</strong> / "+esc(shortText(ciLabel,84));
+  document.getElementById("orchestratorFullState").textContent=ciLabel+" / "+String(o.cadence||"");
+  document.getElementById("orchestratorAction").textContent=(outdated?"前回の記録: ":"現在: ")+shortText(o.current_action||"次アクション判定中",100);
+  document.getElementById("actionQueue").innerHTML=(d.action_queue||[]).slice(0,5).map(q=>"<li><strong>#"+esc(q.priority)+" "+esc(q.owner)+"</strong> — "+esc(shortText(q.action,80))+"<details><summary>原因・対応詳細</summary><p>"+esc(q.action||"")+"</p>"+(q.blocked_by?.length?"<p class=\"ciBlocked\">"+esc(q.blocked_by.join(" / "))+"</p>":"")+"</details></li>").join("");
   const f=d.fed_actual_operation;
   const fbox=document.getElementById("fedOperation");
   if(f){
@@ -122,27 +162,78 @@ function render(d){
     document.getElementById("fedOperationGate").innerHTML="<strong>完了条件:</strong> "+esc(f.completion_gate||"");
     document.getElementById("fedOperationBlocks").innerHTML=(f.blocked_by||[]).map(x=>"<li>"+esc(x)+"</li>").join("");
   }else fbox.hidden=true;
-  const age=(Date.now()-dt.getTime())/60000;
-  document.getElementById("stale").textContent=age>90?"⚠ データが90分以上更新されていません":"";
+  document.getElementById("stale").textContent=outdated?"⚠ 90分超の古い記録です。現在の停止件数・稼働者数ではありません":"";
   document.getElementById("apps").innerHTML=(d.apps||[]).map(a=>{
     const s=statusMeta[a.status]||statusMeta.yellow;
     return '<article class="app"><h2>'+esc(a.name)+'</h2>'+
-      '<p><span class="badge '+s.cls+'">'+s.label+'</span></p>'+
-      '<p>最新: <span class="mono">'+esc(a.head||"–")+'</span></p>'+
-      '<p>'+esc(a.summary||"")+'</p>'+
+      '<p><span class="badge '+(outdated?"done":s.cls)+'">'+(outdated?"前回記録（要再確認）":s.label)+'</span></p>'+
+      '<p class="shortline">'+esc(shortText(a.summary||"確認記録なし",70))+'</p>'+
+      '<details><summary>詳細・版情報</summary><p>'+esc(a.summary||"")+'</p>'+
+      '<p>SHA: <span class="mono">'+esc(a.head||"–")+'</span></p></details>'+
       '<p>'+link(a.url,"GitHubを開く")+'</p></article>'
   }).join("");
   document.getElementById("rows").innerHTML=rows.map(r=>{
     const s=statusMeta[r.status]||statusMeta.yellow;
     const ev=(r.evidence||[]).map(x=>x.url?link(x.url,x.text):esc(x.text)).join("<br>");
     return '<tr><td class="owner">'+esc(r.owner)+'</td>'+
-      '<td><span class="badge '+s.cls+'">'+s.label+'</span></td>'+
-      '<td class="evidence">'+esc(r.current||"")+'</td>'+
-      '<td class="next">'+esc(r.next||"")+'</td>'+
-      '<td>'+ev+'</td></tr>'
+      '<td><span class="badge '+(outdated?"done":s.cls)+'">'+(outdated?"要最新確認":s.label)+'</span></td>'+
+      '<td class="evidence"><span class="shortline">'+esc(shortText(r.current||"調査待ち",70))+'</span><details><summary>説明</summary><p>'+esc(r.current||"")+'</p></details></td>'+
+      '<td class="next"><span class="shortline">'+esc(shortText(r.next||"次の対応を確認",70))+'</span><details><summary>手順</summary><p>'+esc(r.next||"")+'</p></details></td>'+
+      '<td><details><summary>根拠</summary>'+ev+'</details></td></tr>'
   }).join("");
 }
+let lastIntakeRefresh=0;
+async function loadCommandIntake(){
+  const state=document.getElementById("commandIntakeStatus");
+  const recent=document.getElementById("commandIntakeRecent");
+  if(Date.now()-lastIntakeRefresh<5*60*1000)return;
+  lastIntakeRefresh=Date.now();
+  try{
+    const comments=await fetchAllIntakeComments();
+    state.textContent="受付 "+comments.length+"件（最新5件を表示）。受付と実行は別です。";
+    recent.innerHTML=comments.slice(-5).reverse().map(c=>'<li>'+link(c.html_url,((c.body||"").replaceAll("\n"," ").replaceAll("\r"," ").slice(0,85)||"指示コメント"))+' <small>'+esc(c.created_at||"")+'</small></li>').join("");
+  }catch(e){
+    lastIntakeRefresh=0;
+    state.textContent="指示受付の取得未完了: "+e.message+"。GitHubで確認してください。";
+    recent.innerHTML="";
+  }
+}
+async function loadChatWorkers(){
+  const box=document.getElementById("chatWorkers");
+  try{
+    const response=await fetch("chat-workers.json?ts="+Date.now(),{cache:"no-store"});
+    if(!response.ok)throw new Error("HTTP "+response.status);
+    const data=await response.json();
+    const workers=Array.isArray(data.workers)?data.workers:[];
+    const executors=Array.isArray(data.additional_executors)?data.additional_executors:[];
+    document.getElementById("executorWorkers").innerHTML=executors.map(e=>{
+      const verified=Boolean(e.connected&&hasFreshExecutionProof(e));
+      return '<article class="chatCell"><strong>'+esc(e.name)+'</strong><p><span class="badge '+(verified?'green':'yellow')+'">'+(verified?'接続証拠あり':'未接続・未検証')+'</span></p><p>方式: '+esc(e.executor_type)+'</p><p>案件: '+esc(e.task||'未割当')+'</p><small>最終観測: '+esc(e.last_observed_at||'なし')+'</small></article>';
+    }).join("");
+    const verified=workers.filter(hasFreshExecutionProof);
+    document.getElementById("chatBoardSummary").textContent="登録 "+workers.length+"件 / 実行証拠付き稼働 "+verified.length+"担当 / 未確認 "+workers.filter(w=>w.status==="unverified").length+"担当";
+    box.innerHTML=workers.map(w=>{
+      const progress=Number.isFinite(w.progress_percent)?Math.max(0,Math.min(100,w.progress_percent)):null;
+      const evidence=(w.evidence||[]).filter(e=>e?.url&&String(e.url).startsWith("https://"));
+      const running=hasFreshExecutionProof(w);
+      const state=running?"新鮮な実行証拠あり":w.status==="blocked"?"停止・阻害":"未確認";
+      return '<article class="chatCell"><strong>'+esc(w.title)+'</strong>'+
+        '<p><span class="badge '+(running?"green":w.status==="blocked"?"red":"yellow")+'">'+esc(state)+'</span></p>'+
+        '<p>実行方式: '+esc(w.executor_type||"未分類")+(w.executor_verified?"（接続確認）":"（未検証）")+'</p>'+
+        '<p>'+esc(w.task||"案件未確認")+'</p>'+
+        (progress===null?'<small>進捗率: 未計測</small>':'<progress max="100" value="'+progress+'"></progress><small>'+progress+'%（根拠要確認）</small>')+
+        '<p><small>最終観測: '+esc(w.last_observed_at||"未確認")+'</small></p>'+
+        '<p>'+link(w.chat_url,"担当Chatを開く")+'</p>'+
+        evidence.map(e=>'<p>'+link(e.url,e.text||"GitHub証拠")+'</p>').join("")+'</article>'
+    }).join("");
+  }catch(e){
+    document.getElementById("chatBoardSummary").textContent="⚠ 担当データ取得失敗: "+e.message;
+    box.innerHTML="";
+  }
+}
 async function load(){
+  // Independent refreshes: stale application status must not hide chat or command intake.
+  const tasks=[loadChatWorkers(),loadCommandIntake()];
   try{
     const r=await fetch("status.json?ts="+Date.now(),{cache:"no-store"});
     if(!r.ok)throw new Error("HTTP "+r.status);
@@ -150,6 +241,7 @@ async function load(){
   }catch(e){
     document.getElementById("stale").textContent="⚠ 状態データの取得に失敗: "+e.message;
   }
+  await Promise.allSettled(tasks);
 }
 let left=30;
 setInterval(()=>{left--;if(left<=0){left=30;load()}document.getElementById("countdown").textContent="("+left+"秒)";},1000);
