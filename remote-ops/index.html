@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>遠隔監視・操作コンソール | UrbanOS</title>
+<meta name="description" content="レベル4自動運転MaaSの遠隔監視・遠隔支援コンソール（訓練用シミュレーション）。">
+<link rel="stylesheet" href="console.css">
+</head>
+<body>
+<div id="app" class="app">
+  <header class="top" id="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">◎</span>
+      <div><strong data-i="ui_title">遠隔監視・操作コンソール</strong><small>UrbanOS · Level 4 MaaS · <span data-i="ui_area">特定自動運行エリア</span></small></div>
+      <span class="badge train" data-i="ui_training" title="">訓練／シミュレーション</span>
+    </div>
+    <div class="fleetchips" id="fleetchips" aria-label="fleet status"></div>
+    <div class="topright">
+      <div class="clock"><b id="clock">--:--:--</b><small id="shift"></small></div>
+      <div class="opid"><b>OP-07</b><small data-i="ui_role">遠隔監視者</small></div>
+      <button class="ib" id="btnMute" title="M"><span id="muteIco">🔔</span><small id="muteTxt"></small></button>
+      <button class="ib" id="btnLang" title="Language">EN</button>
+      <button class="ib" id="btnTheme" title="Theme">◐</button>
+      <button class="ib" id="btnHandover" data-i="ui_shift_handover">引継ぎ</button>
+      <button class="ib" id="btnReport" data-i="ui_report">レポート</button>
+      <button class="ib" id="btnTrain" data-i="ui_scenario">訓練シナリオ</button>
+      <button class="ib" id="btnHelp" title="?">?</button>
+    </div>
+  </header>
+  <div class="kpis" id="kpis"></div>
+
+  <aside class="left">
+    <section class="panel queue">
+      <div class="ph"><h2 data-i="ui_alerts">アラート・支援要求</h2>
+        <div class="seg" id="qFilter"><button data-f="open" class="on" data-i="ui_f_open">未完了</button><button data-f="mine" data-i="ui_f_mine">担当</button><button data-f="done" data-i="ui_f_done">完了</button></div></div>
+      <div class="qlist" id="qlist" role="listbox" aria-label="alerts"></div>
+    </section>
+    <section class="panel fleet">
+      <div class="ph"><h2 data-i="ui_fleet">車両一覧</h2><small id="fleetCount"></small></div>
+      <div class="tablewrap"><table class="ftable"><thead><tr>
+        <th data-i="ui_th_id">車両</th><th data-i="ui_th_state">状態</th><th>km/h</th><th>SOC</th><th data-i="ui_th_pax">乗客</th><th>RTT</th></tr></thead>
+        <tbody id="ftable"></tbody></table></div>
+    </section>
+  </aside>
+
+  <main class="center">
+    <section class="panel mapwrap">
+      <canvas id="map" aria-label="operations map"></canvas>
+      <div class="maptools">
+        <button class="ib sm" id="mFit" title="G" data-i="ui_fit">全体</button>
+        <button class="ib sm" id="mFollow" title="F" data-i="ui_follow">追従</button>
+        <label class="chk"><input type="checkbox" id="lyZones" checked><span data-i="ui_ly_zones">ODDゾーン</span></label>
+        <label class="chk"><input type="checkbox" id="lyLabels" checked><span data-i="ui_ly_labels">ラベル</span></label>
+        <label class="chk"><input type="checkbox" id="lyNet"><span data-i="ui_ly_net">通信品質</span></label>
+      </div>
+      <div class="legend" id="legend"></div>
+    </section>
+    <section class="panel bottom">
+      <div class="ph tabs" id="btabs">
+        <button data-t="log" class="on" data-i="ui_tab_log">イベントログ</button>
+        <button data-t="bk" data-i="ui_tab_bk">予約・利用者影響</button>
+        <button data-t="zone" data-i="ui_tab_zone">ゾーン／ODD</button>
+        <button data-t="team" data-i="ui_tab_team">チーム</button>
+        <span class="grow"></span>
+        <div class="seg" id="logFilter"><button data-f="all" class="on" data-i="ui_lf_all">全て</button><button data-f="crit" data-i="ui_lf_crit">重要</button><button data-f="op" data-i="ui_lf_op">操作</button><button data-f="sel" data-i="ui_lf_sel">選択車両</button></div>
+      </div>
+      <div class="bbody" id="bbody"></div>
+    </section>
+  </main>
+
+  <aside class="right panel" id="vpanel"></aside>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<div class="modal" id="modal" hidden><div class="mbox" role="dialog" aria-modal="true" id="mbox"></div></div>
+<div class="flash" id="flash"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
