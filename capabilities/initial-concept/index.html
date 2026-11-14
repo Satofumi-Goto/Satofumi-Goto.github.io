@@ -18880,7 +18880,13 @@ stateRevision, evidenceRefs, policyVersion, actor</pre>
   if(o) o.addEventListener('click',function(){all().forEach(function(d){d.open=true;});});
   if(x) x.addEventListener('click',function(){all().forEach(function(d){d.open=false;});});
   window.addEventListener('beforeprint',function(){all().forEach(function(d){d.open=true;});});
-  function reveal(){var h=location.hash.slice(1); if(!h) return; var el=document.getElementById(h); if(!el) return; var d=el.closest('details'); while(d){d.open=true; d=d.parentElement&&d.parentElement.closest('details');} requestAnimationFrame(function(){requestAnimationFrame(function(){el.scrollIntoView({block:'start'});});}); }
+  function cnt(){ if(!c) return; var a=all(), n=0; a.forEach(function(d){ if(d.open) n++; }); c.textContent=a.length+' detail panels · '+n+' open'; }
+  document.addEventListener('toggle',function(e){ if(e.target&&e.target.matches&&e.target.matches('details.deep, details.io')) cnt(); },true); cnt();
+  var touched=false; ['wheel','touchstart','keydown','mousedown'].forEach(function(t){ window.addEventListener(t,function(){touched=true;},{passive:true,once:true}); });
+  function reveal(ev){var h=location.hash.slice(1); if(!h) return; var el=document.getElementById(h); if(!el) return; var d=el.closest('details'); while(d){d.open=true; d=d.parentElement&&d.parentElement.closest('details');}
+    var go=function(){ el.scrollIntoView({block:'start',behavior:ev?'auto':'instant'}); };
+    requestAnimationFrame(function(){requestAnimationFrame(go);});
+    if(!ev){ var again=function(){ if(!touched) go(); }; if(document.fonts&&document.fonts.ready) document.fonts.ready.then(again); window.addEventListener('load',again,{once:true}); setTimeout(again,1200); } }
   window.addEventListener('hashchange',reveal); reveal();
 })();
 </script>
