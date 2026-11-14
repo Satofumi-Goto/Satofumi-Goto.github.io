@@ -18886,8 +18886,8 @@ stateRevision, evidenceRefs, policyVersion, actor</pre>
   function reveal(ev){var h=location.hash.slice(1); if(!h) return; var el=document.getElementById(h); if(!el) return; var d=el.closest('details'); while(d){d.open=true; d=d.parentElement&&d.parentElement.closest('details');}
     var go=function(){ el.scrollIntoView({block:'start',behavior:ev?'auto':'instant'}); };
     requestAnimationFrame(function(){requestAnimationFrame(go);});
-    if(!ev){ var again=function(){ if(!touched) go(); }; if(document.fonts&&document.fonts.ready) document.fonts.ready.then(again); window.addEventListener('load',again,{once:true}); setTimeout(again,1200); } }
-  window.addEventListener('hashchange',reveal); reveal();
+    if(!ev){ var again=function(){ if(!touched && location.hash.slice(1)===h) go(); }; if(document.fonts&&document.fonts.ready) document.fonts.ready.then(again); window.addEventListener('load',again,{once:true}); setTimeout(again,1200); } }
+  window.addEventListener('hashchange',function(e){ touched=true; reveal(e); }); reveal();
 })();
 </script>
 
